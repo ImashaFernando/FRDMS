@@ -1,0 +1,378 @@
+/* =====================================================
+   FRDMS - Distribution Management
+   Color Palette
+   #1F3A60 - Dark Navy Blue
+   #3582B8 - Primary Blue
+   #85B6D6 - Light Blue
+   #EDF3F6 - Soft Background
+   #F7CF59 - Warm Yellow Accent
+   ===================================================== */
+
+
+/* ---------- Global ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #EDF3F6;
+    color: #1F3A60;
+    min-height: 100vh;
+}
+
+
+/* ---------- Page ---------- */
+
+.page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ---------- Header ---------- */
+
+.page-header {
+    background: #1F3A60;
+    color: white;
+    padding: 35px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #3582B8;
+    opacity: 0.25;
+    right: -70px;
+    top: -100px;
+}
+
+.header-content {
+    max-width: 1050px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.header-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #85B6D6;
+    margin-bottom: 8px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #EDF3F6;
+    font-size: 15px;
+    max-width: 650px;
+    line-height: 1.6;
+}
+
+
+/* ---------- Header Icon ---------- */
+
+.header-icon {
+    width: 58px;
+    height: 58px;
+    background: #F7CF59;
+    color: #1F3A60;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+    font-weight: 600;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ---------- Content ---------- */
+
+.content-area {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 45px 20px;
+    flex: 1;
+}
+
+
+/* ---------- Form Card ---------- */
+
+.form-card {
+    background: white;
+    border-radius: 18px;
+    padding: 35px;
+
+    box-shadow: 0 8px 30px rgba(31, 58, 96, 0.10);
+
+    border: 1px solid rgba(133, 182, 214, 0.35);
+}
+
+
+/* ---------- Card Title ---------- */
+
+.card-title {
+    border-bottom: 1px solid #EDF3F6;
+    padding-bottom: 22px;
+    margin-bottom: 28px;
+}
+
+.card-title h2 {
+    color: #1F3A60;
+    font-size: 21px;
+    margin-bottom: 6px;
+}
+
+.card-title p {
+    color: #6b7f91;
+    font-size: 14px;
+}
+
+
+/* ---------- Form ---------- */
+
+.requirement-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ---------- Labels ---------- */
+
+.form-group label {
+    color: #1F3A60;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.required {
+    color: #3582B8;
+    margin-left: 3px;
+}
+
+
+/* ---------- Inputs ---------- */
+
+.form-group input {
+    width: 100%;
+    height: 48px;
+
+    border: 1.5px solid #C9DCE8;
+    border-radius: 10px;
+
+    padding: 0 14px;
+
+    font-size: 14px;
+    color: #1F3A60;
+
+    background: #FAFCFD;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+}
+
+
+/* Placeholder */
+
+.form-group input::placeholder {
+    color: #9BAFBD;
+}
+
+
+/* Focus */
+
+.form-group input:focus {
+    border-color: #3582B8;
+    background: white;
+
+    box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
+}
+
+
+/* Hover */
+
+.form-group input:hover {
+    border-color: #85B6D6;
+}
+
+
+/* ---------- Error ---------- */
+
+.error-message {
+    color: #c0392b;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+
+/* ---------- Actions ---------- */
+
+.form-actions {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 10px;
+    padding-top: 25px;
+
+    border-top: 1px solid #EDF3F6;
+}
+
+
+/* ---------- Primary Button ---------- */
+
+.primary-button {
+    height: 46px;
+
+    padding: 0 25px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #3582B8;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.primary-button:hover {
+    background: #1F3A60;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 6px 15px rgba(31, 58, 96, 0.18);
+}
+
+
+/* ---------- Secondary Button ---------- */
+
+.secondary-button {
+    height: 46px;
+
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1.5px solid #85B6D6;
+    border-radius: 10px;
+
+    background: white;
+    color: #3582B8;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.secondary-button:hover {
+    background: #EDF3F6;
+    border-color: #3582B8;
+}
+
+
+/* ---------- Footer ---------- */
+
+.page-footer {
+    background: #1F3A60;
+    color: #85B6D6;
+
+    text-align: center;
+
+    padding: 18px;
+
+    font-size: 12px;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 700px) {
+
+    .page-header {
+        padding: 28px 18px;
+    }
+
+    .header-content {
+        align-items: flex-start;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .header-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 25px;
+    }
+
+    .content-area {
+        padding: 25px 15px;
+    }
+
+    .form-card {
+        padding: 24px 18px;
+    }
+
+    .requirement-form {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-actions {
+        grid-column: auto;
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+}
