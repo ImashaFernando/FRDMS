@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Flood Event Details | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #E6E8E9;
+            color: #0C1721;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0C1721;
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 3px 10px rgba(12, 23, 33, 0.25);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .module {
+            color: #8DB5E8;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* ================= MAIN CARD ================= */
+
+        .card {
+            background: white;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
+            border-top: 5px solid #248BE0;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #0B2A4A;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #28888F;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* ================= EVENT INFORMATION ================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #CFE8F7;
+            color: #0B2A4A;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .section-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #28888F;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .detail {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #0B2A4A;
+            margin-bottom: 7px;
+            font-size: 15px;
+        }
+
+        .value {
+            padding: 14px;
+            background: #F4F6F8;
+            border: 1px solid #D8DDE0;
+            border-radius: 7px;
+            line-height: 1.5;
+        }
+
+        /* ================= DATE ================= */
+
+        .date-value {
+            font-weight: bold;
+            color: #0B2A4A;
+        }
+
+        /* ================= AFFECTED AREAS ================= */
+
+        .affected-section {
+            margin-top: 35px;
+        }
+
+        .area-card {
+            background: #F4F8FB;
+            border-left: 5px solid #248BE0;
+            border-radius: 7px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(12, 23, 33, 0.06);
+        }
+
+        .area-name {
+            color: #0B2A4A;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .area-description {
+            color: #4E5961;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .no-area {
+            background: #FFF7E6;
+            border-left: 5px solid #E0A800;
+            padding: 15px;
+            border-radius: 6px;
+            color: #6B5200;
+            margin-bottom: 20px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .button-area {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #E6E8E9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #248BE0;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0B2A4A;
+        }
+
+        .btn-teal {
+            background: #28888F;
+            color: white;
+        }
+
+        .btn-teal:hover {
+            background: #0B2A4A;
+        }
+
+        .btn-secondary {
+            background: #E6E8E9;
+            color: #0B2A4A;
+            border: 1px solid #B9BEC1;
+        }
+
+        .btn-secondary:hover {
+            background: #CFE8F7;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .page {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .button-area {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="brand">
+        Flood Disaster Relief System
+    </div>
+
+    <div class="module">
+        Disaster Management Module
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN PAGE ================= -->
+
+<main class="page">
+
+    <div class="card">
+
+        <!-- ================= TITLE ================= -->
+
+        <h1>
+            Flood Event Details
+        </h1>
+
+        <p class="subtitle">
+            View complete information about this flood event and its affected areas.
+        </p>
+
+
+        <!-- =====================================================
+             SECTION 1 - FLOOD EVENT INFORMATION
+             DM-01 / DM-02
+             ===================================================== -->
+
+        <div class="section-title">
+
+            <span class="section-number">
+                1
+            </span>
+
+            Flood Event Information
+
+        </div>
+
+
+        <!-- EVENT NAME -->
+
+        <div class="detail">
+
+            <div class="label">
+                Flood Event Name
+            </div>
+
+            <div class="value"
+                 th:text="${disaster.eventName}">
+            </div>
+
+        </div>
+
+
+        <!-- EVENT DATE -->
+
+        <div class="detail">
+
+            <div class="label">
+                Event Date
+            </div>
+
+            <div class="value date-value"
+                 th:text="${disaster.eventDate}">
+            </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="detail">
+
+            <div class="label">
+                Flood Event Description
+            </div>
+
+            <div class="value"
+                 th:text="${disaster.description}">
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SECTION 2 - AFFECTED AREAS
+             DM-03 / DM-04
+             ===================================================== -->
+
+        <div class="affected-section">
+
+            <div class="section-title">
+
+                <span class="section-number">
+                    2
+                </span>
+
+                Affected Areas
+
+            </div>
+
+
+            <!-- NO AREAS -->
+
+            <div class="no-area"
+                 th:if="${#lists.isEmpty(affectedAreas)}">
+
+                <strong>
+                    No affected areas have been added yet.
+                </strong>
+
+                <br><br>
+
+                The Relief Coordinator can add the affected areas
+                for this flood event.
+
+            </div>
+
+
+            <!-- ================= AREA LIST ================= -->
+
+            <div th:each="area : ${affectedAreas}"
+                 class="area-card">
+
+                <div class="area-name">
+
+                    <span th:text="${area.areaName}">
+                    </span>
+
+                </div>
+
+
+                <div class="area-description">
+
+                    <span th:text="${area.description}">
+                    </span>
+
+                </div>
+
+
+                <!-- EDIT AREA -->
+
+                <a class="btn btn-primary"
+                   th:href="@{/affected-areas/edit/{id}(id=${area.id})}">
+
+                    ✏ Edit Affected Area
+
+                </a>
+
+            </div>
+
+
+            <!-- ================= ADD AREA ================= -->
+
+            <a class="btn btn-teal"
+               th:href="@{/affected-areas/new/{id}(id=${disaster.id})}">
+
+                + Add Affected Area
+
+            </a>
+
+        </div>
+
+
+        <!-- ================= BUTTONS ================= -->
+
+        <div class="button-area">
+
+            <a class="btn btn-primary"
+               th:href="@{/disasters/edit/{id}(id=${disaster.id})}">
+
+                ✏ Edit Flood Event
+
+            </a>
+
+
+            <a class="btn btn-secondary"
+               th:href="@{/disasters}">
+
+                ← Back to Flood Events
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

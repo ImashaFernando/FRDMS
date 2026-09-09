@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Flood Events | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #E6E8E9;
+      color: #0C1721;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+      background: #0C1721;
+      color: white;
+      padding: 20px 40px;
+      box-shadow: 0 3px 10px rgba(12, 23, 33, 0.25);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .module-name {
+      color: #8DB5E8;
+      font-size: 14px;
+    }
+
+    /* ================= PAGE ================= */
+
+    .page {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* ================= TOP CARD ================= */
+
+    .page-header {
+      background: white;
+      padding: 30px 35px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
+      border-top: 5px solid #248BE0;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      margin: 0;
+      color: #0B2A4A;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      margin: 8px 0 25px;
+      color: #28888F;
+      font-size: 15px;
+    }
+
+    /* ================= CREATE BUTTON ================= */
+
+    .create-button {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #248BE0;
+      color: white;
+      text-decoration: none;
+      border-radius: 7px;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .create-button:hover {
+      background: #0B2A4A;
+    }
+
+    /* ================= TABLE CARD ================= */
+
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
+      overflow: hidden;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    /* ================= TABLE HEADER ================= */
+
+    th {
+      background: #0B2A4A;
+      color: white;
+      padding: 17px 16px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    /* ================= TABLE BODY ================= */
+
+    td {
+      padding: 17px 16px;
+      border-bottom: 1px solid #E6E8E9;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
+    tbody tr {
+      transition: 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background: #CFE8F7;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ================= ID ================= */
+
+    .id-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 35px;
+      height: 35px;
+
+      background: #CFE8F7;
+      color: #0B2A4A;
+
+      border-radius: 50%;
+
+      font-weight: bold;
+    }
+
+    /* ================= EVENT NAME ================= */
+
+    .event-name {
+      font-weight: bold;
+      color: #0B2A4A;
+    }
+
+    /* ================= DATE ================= */
+
+    .event-date {
+      color: #28888F;
+      font-weight: 600;
+    }
+
+    /* ================= DESCRIPTION ================= */
+
+    .description {
+      max-width: 350px;
+      line-height: 1.5;
+      color: #3f4a50;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 190px;
+    }
+
+    .details-button,
+    .edit-button {
+      display: block;
+      text-align: center;
+      padding: 10px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    /* View details */
+
+    .details-button {
+      background: #28888F;
+      color: white;
+    }
+
+    .details-button:hover {
+      background: #0B2A4A;
+    }
+
+    /* Edit */
+
+    .edit-button {
+      background: #E6E8E9;
+      color: #0B2A4A;
+      border: 1px solid #B9BEC1;
+    }
+
+    .edit-button:hover {
+      background: #CFE8F7;
+      border-color: #8DB5E8;
+    }
+
+    /* ================= EMPTY STATE ================= */
+
+    .empty-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b747a;
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .empty-title {
+      color: #0B2A4A;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .empty-text {
+      font-size: 14px;
+    }
+
+    /* ================= FOOTER INFO ================= */
+
+    .info-bar {
+      padding: 15px 20px;
+      background: #CFE8F7;
+      color: #0B2A4A;
+      font-size: 13px;
+      border-top: 1px solid #8DB5E8;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 700px) {
+
+      .header {
+        padding: 18px 20px;
+      }
+
+      .header-content {
+        display: block;
+      }
+
+      .module-name {
+        margin-top: 5px;
+      }
+
+      .page {
+        margin: 25px auto;
+      }
+
+      .page-header {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .create-button {
+        width: 100%;
+        text-align: center;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+  <div class="header-content">
+
+    <div class="brand">
+      Flood Disaster Relief System
+    </div>
+
+    <div class="module-name">
+      Disaster Management Module
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- ================= MAIN PAGE ================= -->
+
+<main class="page">
+
+
+  <!-- ================= PAGE HEADER ================= -->
+
+  <section class="page-header">
+
+    <h1>
+      Flood Events
+    </h1>
+
+    <p class="subtitle">
+      View and manage recorded flood events and their affected areas.
+    </p>
+
+
+    <!-- CREATE FLOOD EVENT -->
+
+    <a
+            class="create-button"
+            th:href="@{/disasters/new}">
+
+      + Create New Flood Event
+
+    </a>
+
+  </section>
+
+
+  <!-- ================= FLOOD EVENTS TABLE ================= -->
+
+  <section class="table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>
+            ID
+          </th>
+
+          <th>
+            Flood Event
+          </th>
+
+          <th>
+            Event Date
+          </th>
+
+          <th>
+            Description
+          </th>
+
+          <th>
+            Actions
+          </th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        <!-- ================= FLOOD EVENT ROW ================= -->
+
+        <tr th:each="disaster : ${disasters}">
+
+
+          <!-- ID -->
+
+          <td>
+
+                        <span
+                                class="id-badge"
+                                th:text="${disaster.id}">
+                        </span>
+
+          </td>
+
+
+          <!-- EVENT NAME -->
+
+          <td>
+
+            <div
+                    class="event-name"
+                    th:text="${disaster.eventName}">
+            </div>
+
+          </td>
+
+
+          <!-- EVENT DATE -->
+
+          <td>
+
+                        <span
+                                class="event-date"
+                                th:text="${disaster.eventDate}">
+                        </span>
+
+          </td>
+
+
+          <!-- DESCRIPTION -->
+
+          <td>
+
+            <div
+                    class="description"
+                    th:text="${disaster.description}">
+            </div>
+
+          </td>
+
+
+          <!-- ================= ACTIONS ================= -->
+
+          <td>
+
+            <div class="actions">
+
+
+              <!-- VIEW DETAILS -->
+
+              <a
+                      class="details-button"
+                      th:href="@{/disasters/details/{id}(id=${disaster.id})}">
+
+                ▶ View Flood Event Details
+
+              </a>
+
+
+              <!-- EDIT EVENT -->
+
+              <a
+                      class="edit-button"
+                      th:href="@{/disasters/edit/{id}(id=${disaster.id})}">
+
+                ✏ Edit Flood Event
+
+              </a>
+
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        <!-- ================= EMPTY STATE ================= -->
+
+        <tr
+                th:if="${#lists.isEmpty(disasters)}">
+
+          <td
+                  colspan="5"
+                  class="empty-message">
+
+            <div class="empty-icon">
+              🌊
+            </div>
+
+            <div class="empty-title">
+              No Flood Events Recorded
+            </div>
+
+            <div class="empty-text">
+              Create a new flood event to begin recording disaster information.
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ================= INFORMATION BAR ================= -->
+
+    <div class="info-bar">
+
+      💡 Select
+      <strong>View Flood Event Details</strong>
+      to see the complete event information, including affected areas.
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+</body>
+
+</html>

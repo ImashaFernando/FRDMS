@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Flood Event | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #E6E8E9;
+            color: #0C1721;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0C1721;
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 3px 10px rgba(12, 23, 33, 0.25);
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .module-name {
+            color: #8DB5E8;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 35px 40px;
+            box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
+            border-top: 5px solid #248BE0;
+        }
+
+        h1 {
+            color: #0B2A4A;
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #28888F;
+            margin-top: 8px;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 30px 0 22px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #CFE8F7;
+            color: #0B2A4A;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .section-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #28888F;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0B2A4A;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .required {
+            color: #28888F;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #B9BEC1;
+            border-radius: 7px;
+            background: white;
+            color: #0C1721;
+            font-size: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #248BE0;
+            box-shadow: 0 0 0 3px rgba(36, 139, 224, 0.15);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* ================= READ ONLY DATE ================= */
+
+        .readonly-date {
+            background: #E6E8E9;
+            color: #0B2A4A;
+            cursor: not-allowed;
+            font-weight: bold;
+            border: 1px solid #B9BEC1;
+        }
+
+        .readonly-date:focus {
+            outline: none;
+            border-color: #B9BEC1;
+            box-shadow: none;
+        }
+
+        .help-text {
+            margin-top: 7px;
+            color: #6b747a;
+            font-size: 13px;
+        }
+
+        /* ================= VALIDATION ================= */
+
+        .error {
+            color: #b42318;
+            margin-top: 6px;
+            font-size: 13px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .button-area {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #E6E8E9;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #248BE0;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #0B2A4A;
+        }
+
+        .btn-secondary {
+            background: #E6E8E9;
+            color: #0B2A4A;
+            border: 1px solid #B9BEC1;
+        }
+
+        .btn-secondary:hover {
+            background: #CFE8F7;
+            border-color: #8DB5E8;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .page {
+                margin: 25px auto;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .button-area {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="brand">
+        Flood Disaster Relief System
+    </div>
+
+    <div class="module-name">
+        Disaster Management Module
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main class="page">
+
+    <div class="card">
+
+        <h1>
+            Edit Flood Event
+        </h1>
+
+        <p class="subtitle">
+            Update the flood event information and affected areas.
+        </p>
+
+
+        <!-- ================= FORM ================= -->
+
+        <form
+                th:action="@{/disasters/update/{id}(id=${disaster.id})}"
+                th:object="${disaster}"
+                method="post">
+
+
+            <!-- ================= SECTION 1 ================= -->
+
+            <div class="section-title">
+
+                <span class="section-number">
+                    1
+                </span>
+
+                Flood Event Information
+
+            </div>
+
+
+            <!-- ================= EVENT NAME ================= -->
+
+            <div class="form-group">
+
+                <label for="eventName">
+
+                    Flood Event Name
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input
+                        type="text"
+                        id="eventName"
+                        th:field="*{eventName}"
+                        placeholder="Enter flood event name"
+                        autocomplete="off">
+
+                <div
+                        class="error"
+                        th:if="${#fields.hasErrors('eventName')}"
+                        th:errors="*{eventName}">
+                </div>
+
+            </div>
+
+
+            <!-- ================= EVENT DATE ================= -->
+
+            <div class="form-group">
+
+                <label for="eventDateDisplay">
+
+                    Event Date
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <!--
+                    Visible date field.
+                    This displays the existing date from the database.
+                    The user cannot edit it.
+                -->
+
+                <input
+                        type="text"
+                        id="eventDateDisplay"
+                        class="readonly-date"
+                        th:value="${disaster.eventDate != null ? #temporals.format(disaster.eventDate, 'dd/MM/yyyy') : ''}"
+                        readonly>
+
+
+                <!--
+                    Hidden field sends the actual LocalDate value
+                    back to the Spring Boot controller.
+                -->
+
+                <input
+                        type="hidden"
+                        th:field="*{eventDate}">
+
+
+                <div
+                        class="error"
+                        th:if="${#fields.hasErrors('eventDate')}"
+                        th:errors="*{eventDate}">
+                </div>
+
+                <div class="help-text">
+
+                    Event date cannot be changed.
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DESCRIPTION ================= -->
+
+            <div class="form-group">
+
+                <label for="description">
+
+                    Flood Event Description
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <textarea
+                        id="description"
+                        th:field="*{description}"
+                        placeholder="Enter flood event description"></textarea>
+
+                <div
+                        class="error"
+                        th:if="${#fields.hasErrors('description')}"
+                        th:errors="*{description}">
+                </div>
+
+            </div>
+
+
+            <!-- ================= SECTION 2 ================= -->
+
+            <div class="section-title">
+
+                <span class="section-number">
+                    2
+                </span>
+
+                Affected Area Information
+
+            </div>
+
+
+            <!-- ================= AFFECTED AREAS ================= -->
+
+            <div class="form-group">
+
+                <label for="affectedAreaInformation">
+
+                    Affected Area Information
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <textarea
+                        id="affectedAreaInformation"
+                        th:field="*{affectedAreaInformation}"
+                        placeholder="Example: Kundasale, Dewundara, Hokandara"></textarea>
+
+                <div
+                        class="error"
+                        th:if="${#fields.hasErrors('affectedAreaInformation')}"
+                        th:errors="*{affectedAreaInformation}">
+                </div>
+
+                <div class="help-text">
+
+                    Update the locations or areas affected by this
+                    flood event.
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="button-area">
+
+                <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                    Update Flood Event
+
+                </button>
+
+
+                <a
+                        class="btn btn-secondary"
+                        th:href="@{/disasters}">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>
