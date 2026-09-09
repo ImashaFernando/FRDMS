@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Receive Relief Requirement</title>
+</head>
+
+<body>
+
+<h1>Receive Relief Requirement</h1>
+
+<form th:action="@{/distribution/requirements/save}"
+      th:object="${reliefRequirement}"
+      method="post">
+
+    <div>
+        <label>Relief Item Name:</label>
+        <input type="text"
+               th:field="*{reliefItemName}">
+        <p th:if="${#fields.hasErrors('reliefItemName')}"
+           th:errors="*{reliefItemName}"></p>
+    </div>
+
+    <br>
+
+    <div>
+        <label>Quantity:</label>
+        <input type="number"
+               step="0.01"
+               th:field="*{quantity}">
+        <p th:if="${#fields.hasErrors('quantity')}"
+           th:errors="*{quantity}"></p>
+    </div>
+
+    <br>
+
+    <div>
+        <label>Unit:</label>
+        <input type="text"
+               placeholder="kg, bottles, packets..."
+               th:field="*{unit}">
+        <p th:if="${#fields.hasErrors('unit')}"
+           th:errors="*{unit}"></p>
+    </div>
+
+    <br>
+
+    <div>
+        <label>Recipient / Victim Name:</label>
+        <input type="text"
+               th:field="*{recipientName}">
+    </div>
+
+    <br>
+
+    <div>
+        <label>Affected Area:</label>
+        <input type="text"
+               th:field="*{affectedArea}">
+    </div>
+
+    <br>
+
+    <div>
+        <label>Shelter:</label>
+        <input type="text"
+               th:field="*{shelter}">
+    </div>
+
+    <br>
+
+    <button type="submit">Save Requirement</button>
+
+</form>
+
+<br>
+
+<a th:href="@{/distribution/requirements}">
+    View Received Requirements
+</a>
+
+</body>
+</html>

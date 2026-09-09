@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Received Relief Requirements</title>
+</head>
+
+<body>
+
+<h1>Received Relief Requirements</h1>
+
+<a th:href="@{/distribution/requirements/new}">
+    Receive New Requirement
+</a>
+
+<br><br>
+
+<table border="1">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Relief Item</th>
+        <th>Quantity</th>
+        <th>Unit</th>
+        <th>Recipient</th>
+        <th>Affected Area</th>
+        <th>Shelter</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="requirement : ${requirements}">
+
+        <td th:text="${requirement.id}"></td>
+
+        <td th:text="${requirement.reliefItemName}"></td>
+
+        <td th:text="${requirement.quantity}"></td>
+
+        <td th:text="${requirement.unit}"></td>
+
+        <td th:text="${requirement.recipientName}"></td>
+
+        <td th:text="${requirement.affectedArea}"></td>
+
+        <td th:text="${requirement.shelter}"></td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+</html>
