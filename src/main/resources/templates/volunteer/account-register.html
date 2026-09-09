@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Volunteer Registration - FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/chamya-theme.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="card">
+
+        <div class="brand-area">
+
+            <h2 class="page-title">
+                Volunteer Account Registration
+            </h2>
+
+            <p class="page-subtitle">
+                Create your account to join FRDMS disaster-relief activities
+            </p>
+
+        </div>
+
+        <!-- Success Message -->
+        <div class="alert-success"
+             th:if="${successMessage}"
+             th:text="${successMessage}">
+        </div>
+
+        <!-- General Error -->
+        <div class="alert-error"
+             th:if="${registrationError}"
+             th:text="${registrationError}">
+        </div>
+
+        <!-- Registration Form -->
+        <form th:action="@{/volunteer/register}"
+              th:object="${volunteerAccount}"
+              method="post">
+
+            <div class="form-group">
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input type="text"
+                       id="fullName"
+                       th:field="*{fullName}"
+                       placeholder="Enter your full name"
+                       autocomplete="name">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('fullName')}"
+                     th:errors="*{fullName}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input type="email"
+                       id="email"
+                       th:field="*{email}"
+                       placeholder="Enter your email address"
+                       autocomplete="email">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('email')}"
+                     th:errors="*{email}">
+                </div>
+
+                <div class="field-error"
+                     th:if="${emailError}"
+                     th:text="${emailError}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="phoneNumber">
+                    Phone Number
+                </label>
+
+                <input type="text"
+                       id="phoneNumber"
+                       th:field="*{phoneNumber}"
+                       placeholder="Example: 0771234567"
+                       autocomplete="tel">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('phoneNumber')}"
+                     th:errors="*{phoneNumber}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
+
+                <input type="password"
+                       id="password"
+                       th:field="*{password}"
+                       placeholder="Enter your password"
+                       autocomplete="new-password">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('password')}"
+                     th:errors="*{password}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input type="password"
+                       id="confirmPassword"
+                       name="confirmPassword"
+                       placeholder="Re-enter your password"
+                       autocomplete="new-password">
+
+                <div class="field-error"
+                     th:if="${passwordError}"
+                     th:text="${passwordError}">
+                </div>
+            </div>
+
+
+            <button type="submit"
+                    class="btn">
+                Create Volunteer Account
+            </button>
+
+        </form>
+
+
+        <div class="link-text">
+            Already have a volunteer account?
+
+            <a th:href="@{/volunteer/login}">
+                Login here
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
