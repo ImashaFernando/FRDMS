@@ -325,6 +325,34 @@ textarea {
     line-height: 1.5;
 }
 
+/* Checkbox alignment fix */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-weight: 600;
+    color: var(--navy);
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    accent-color: var(--primary-blue);
+}
+
 @media (max-width: 600px) {
 
     .card {

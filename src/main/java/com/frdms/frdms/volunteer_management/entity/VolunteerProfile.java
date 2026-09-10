@@ -11,7 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -30,6 +33,12 @@ public class VolunteerProfile {
     )
     private VolunteerAccount volunteerAccount;
 
+    @NotNull(message = "Age is required")
+    @Min(value = 18, message = "Volunteer must be at least 18 years old")
+    @Max(value = 80, message = "Please enter a valid age")
+    @Column(nullable = false)
+    private Integer age;
+
     @NotBlank(message = "Work experience is required")
     @Size(
             max = 1000,
@@ -47,18 +56,10 @@ public class VolunteerProfile {
     private String skills;
 
     @NotBlank(message = "Availability is required")
-    @Size(
-            max = 250,
-            message = "Availability must not exceed 250 characters"
-    )
-    @Column(nullable = false, length = 250)
+    @Column(nullable = false, length = 100)
     private String availability;
 
     @NotBlank(message = "Preferred working area is required")
-    @Size(
-            max = 150,
-            message = "Preferred working area must not exceed 150 characters"
-    )
     @Column(nullable = false, length = 150)
     private String preferredWorkingArea;
 
@@ -71,12 +72,14 @@ public class VolunteerProfile {
 
     public VolunteerProfile(
             VolunteerAccount volunteerAccount,
+            Integer age,
             String workExperience,
             String skills,
             String availability,
             String preferredWorkingArea
     ) {
         this.volunteerAccount = volunteerAccount;
+        this.age = age;
         this.workExperience = workExperience;
         this.skills = skills;
         this.availability = availability;
@@ -98,6 +101,14 @@ public class VolunteerProfile {
 
     public void setVolunteerAccount(VolunteerAccount volunteerAccount) {
         this.volunteerAccount = volunteerAccount;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getWorkExperience() {

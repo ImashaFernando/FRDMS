@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Volunteer Profile - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="card">
+
+    <h2 class="page-title">
+      Volunteer Profile
+    </h2>
+
+    <p class="page-subtitle">
+      Your submitted volunteer registration details
+    </p>
+
+    <!-- Success Message -->
+    <div class="alert-success"
+         th:if="${successMessage}"
+         th:text="${successMessage}">
+    </div>
+
+    <!-- Age -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Age
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.age}">
+      </div>
+
+    </div>
+
+
+    <!-- Work Experience -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Work Experience
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.workExperience}">
+      </div>
+
+    </div>
+
+
+    <!-- Skills -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Skills
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.skills}">
+      </div>
+
+    </div>
+
+
+    <!-- Availability -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Availability
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.availability}">
+      </div>
+
+    </div>
+
+
+    <!-- Preferred Working Area -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Preferred Working Area
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.preferredWorkingArea}">
+      </div>
+
+    </div>
+
+
+    <!-- Registration Status -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Registration Status
+      </div>
+
+      <div class="detail-value">
+
+                <span class="status-badge"
+                      th:text="${volunteerProfile.registrationStatus}">
+                </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Logout -->
+    <form th:action="@{/volunteer/logout}"
+          method="post">
+
+      <button type="submit"
+              class="btn">
+
+        Logout
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>

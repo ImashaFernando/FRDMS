@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class VolunteerProfileController {
     }
 
     @GetMapping("/volunteer/profile")
-    public String showVolunteerProfileForm(
+    public String showVolunteerProfile(
             Authentication authentication,
             Model model
     ) {
@@ -57,7 +58,8 @@ public class VolunteerProfileController {
             @Valid VolunteerProfile volunteerProfile,
             BindingResult bindingResult,
             Authentication authentication,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
 
         if (bindingResult.hasErrors()) {
@@ -73,7 +75,12 @@ public class VolunteerProfileController {
                     volunteerProfile
             );
 
-            return "redirect:/volunteer/profile-success";
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Volunteer profile submitted successfully."
+            );
+
+            return "redirect:/volunteer/profile";
 
         } catch (IllegalArgumentException exception) {
 
@@ -84,11 +91,5 @@ public class VolunteerProfileController {
 
             return "volunteer/profile-form";
         }
-    }
-
-    @GetMapping("/volunteer/profile-success")
-    public String showProfileSuccessPage() {
-
-        return "volunteer/profile-success";
     }
 }
