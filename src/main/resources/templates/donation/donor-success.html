@@ -1,17 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registration Successful</title>
+
+  <title>Registration Successful | FRDMS</title>
+
+  <link rel="stylesheet" th:href="@{/css/donor-register.css}">
 </head>
+
 <body>
 
-<h1>Donor Registration Successful!</h1>
+<div class="success-wrapper">
 
-<p>Your donor information has been registered successfully.</p>
+  <div class="success-card">
 
-<a href="/donors/register">Register Another Donor</a>
+    <!-- Success Icon -->
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <!-- FRDMS -->
+    <div class="success-brand">
+      FRDMS
+    </div>
+
+    <div class="success-line"></div>
+
+    <!-- Heading -->
+    <h1>Registration Successful!</h1>
+
+    <p class="success-message">
+      Your donor information has been registered successfully.
+    </p>
+
+    <p class="success-subtext">
+      Thank you for supporting flood relief and disaster recovery efforts.
+    </p>
+
+    <!-- Actions -->
+    <div class="success-actions">
+
+      <a href="/donors/register" class="primary-success-button">
+        Register Another Donor
+      </a>
+
+      <a href="/" class="secondary-success-button">
+        Back to Home
+      </a>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="success-footer">
+      <span class="yellow-dot"></span>
+      <span>People • Support • Resilience</span>
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 </html>

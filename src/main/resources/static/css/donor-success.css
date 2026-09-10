@@ -1,0 +1,190 @@
+/* ========================================
+DONOR SUCCESS PAGE
+======================================== */
+
+.success-wrapper {
+width: 100%;
+min-height: 100vh;
+background: #EDF3F6;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 30px;
+}
+
+.success-card {
+width: 100%;
+max-width: 600px;
+background: #FFFFFF;
+border-radius: 24px;
+padding: 55px 50px;
+text-align: center;
+box-shadow: 0 20px 50px rgba(31, 58, 96, 0.15);
+position: relative;
+overflow: hidden;
+}
+
+.success-card::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 6px;
+background: #F7CF59;
+}
+
+/* SUCCESS ICON */
+
+.success-icon {
+width: 82px;
+height: 82px;
+margin: 5px auto 22px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+border-radius: 50%;
+
+background: #EDF3F6;
+border: 3px solid #3582B8;
+
+color: #3582B8;
+font-size: 42px;
+font-weight: 700;
+}
+
+/* BRAND */
+
+.success-brand {
+color: #1F3A60;
+font-size: 14px;
+font-weight: 800;
+letter-spacing: 3px;
+}
+
+.success-line {
+width: 42px;
+height: 4px;
+background: #F7CF59;
+border-radius: 5px;
+margin: 10px auto 25px;
+}
+
+/* HEADING */
+
+.success-card h1 {
+color: #1F3A60;
+font-size: 32px;
+margin-bottom: 15px;
+}
+
+.success-message {
+color: #3582B8;
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 10px;
+}
+
+.success-subtext {
+color: #718398;
+font-size: 14px;
+line-height: 1.7;
+max-width: 430px;
+margin: 0 auto;
+}
+
+/* BUTTONS */
+
+.success-actions {
+display: flex;
+justify-content: center;
+gap: 12px;
+margin-top: 30px;
+}
+
+.primary-success-button,
+.secondary-success-button {
+text-decoration: none;
+padding: 13px 22px;
+border-radius: 9px;
+font-size: 14px;
+font-weight: 700;
+transition: all 0.25s ease;
+}
+
+/* PRIMARY */
+
+.primary-success-button {
+background: #3582B8;
+color: #FFFFFF;
+}
+
+.primary-success-button:hover {
+background: #1F3A60;
+transform: translateY(-2px);
+box-shadow: 0 7px 16px rgba(31, 58, 96, 0.18);
+}
+
+/* SECONDARY */
+
+.secondary-success-button {
+background: #EDF3F6;
+color: #1F3A60;
+border: 1px solid #85B6D6;
+}
+
+.secondary-success-button:hover {
+background: #85B6D6;
+color: #FFFFFF;
+transform: translateY(-2px);
+}
+
+/* FOOTER */
+
+.success-footer {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 8px;
+
+margin-top: 35px;
+
+color: #8A9AAA;
+font-size: 12px;
+}
+
+.yellow-dot {
+width: 7px;
+height: 7px;
+background: #F7CF59;
+border-radius: 50%;
+}
+
+/* MOBILE */
+
+@media (max-width: 550px) {
+
+.success-wrapper {
+padding: 20px;
+}
+
+.success-card {
+padding: 45px 25px;
+}
+
+.success-card h1 {
+font-size: 27px;
+}
+
+.success-actions {
+flex-direction: column;
+}
+
+.primary-success-button,
+.secondary-success-button {
+width: 100%;
+text-align: center;
+}
+}

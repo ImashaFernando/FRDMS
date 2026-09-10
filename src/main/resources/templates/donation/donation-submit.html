@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Submit Donation | FRDMS</title>
+
+  <link rel="stylesheet" th:href="@{/css/donation-submit.css}">
+</head>
+
+<body>
+
+<div class="donation-wrapper">
+
+  <!-- HEADER -->
+  <div class="donation-header">
+
+    <div class="donation-brand">FRDMS</div>
+
+    <span class="donation-badge">
+            DONATION
+        </span>
+
+    <h1>Submit a Donation</h1>
+
+    <p>
+      Your contribution can help support flood relief
+      and disaster recovery activities.
+    </p>
+
+  </div>
+
+
+  <!-- FORM -->
+  <div class="donation-card">
+
+    <form th:action="@{/donations/submit}"
+          th:object="${donation}"
+          method="post">
+
+      <!-- DONOR ID -->
+      <div class="form-group">
+
+        <label for="donorId">
+          Donor ID <span class="required">*</span>
+        </label>
+
+        <input type="number"
+               id="donorId"
+               th:field="*{donorId}"
+               placeholder="Enter your donor ID"
+               required>
+
+        <div class="validation-error"
+             th:if="${#fields.hasErrors('donorId')}"
+             th:errors="*{donorId}">
+        </div>
+
+      </div>
+
+
+      <!-- DONATION TYPE -->
+      <div class="form-group">
+
+        <label for="donationType">
+          Donation Type <span class="required">*</span>
+        </label>
+
+        <select id="donationType"
+                th:field="*{donationType}"
+                required>
+
+          <option value="">Select donation type</option>
+          <option value="CASH">Cash Donation</option>
+          <option value="GOODS">Goods Donation</option>
+
+        </select>
+
+        <div class="validation-error"
+             th:if="${#fields.hasErrors('donationType')}"
+             th:errors="*{donationType}">
+        </div>
+
+      </div>
+
+
+      <!-- CASH SECTION -->
+      <div id="cashSection" class="donation-type-section">
+
+        <div class="form-group">
+
+          <label for="cashAmount">
+            Cash Amount <span class="required">*</span>
+          </label>
+
+          <input type="number"
+                 id="cashAmount"
+                 th:field="*{cashAmount}"
+                 step="0.01"
+                 min="0"
+                 placeholder="Enter cash amount">
+
+        </div>
+
+      </div>
+
+
+      <!-- GOODS SECTION -->
+      <div id="goodsSection" class="donation-type-section">
+
+        <div class="form-group">
+
+          <label for="goodsDescription">
+            Goods Description <span class="required">*</span>
+          </label>
+
+          <textarea id="goodsDescription"
+                    th:field="*{goodsDescription}"
+                    rows="3"
+                    placeholder="Example: Rice, Water bottles, Clothes">
+                    </textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="goodsQuantity">
+            Goods Quantity <span class="required">*</span>
+          </label>
+
+          <input type="text"
+                 id="goodsQuantity"
+                 th:field="*{goodsQuantity}"
+                 placeholder="Example: 20 packs">
+
+        </div>
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+      <div class="form-group">
+
+        <label for="description">
+          Additional Details
+        </label>
+
+        <textarea id="description"
+                  th:field="*{description}"
+                  rows="4"
+                  placeholder="Provide any additional information about your donation">
+                </textarea>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+      <button type="submit" class="submit-button">
+        Submit Donation
+      </button>
+
+    </form>
+
+
+    <!-- FOOTER -->
+    <div class="donation-footer">
+
+      <span class="yellow-dot"></span>
+
+      <span>
+                People • Support • Resilience
+            </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script th:src="@{/js/donation-submit.js}"></script>
+
+</body>
+</html>
