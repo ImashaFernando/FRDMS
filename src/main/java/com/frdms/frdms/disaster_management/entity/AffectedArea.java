@@ -2,7 +2,6 @@ package com.frdms.frdms.disaster_management.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "affected_areas")
@@ -12,20 +11,50 @@ public class AffectedArea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // =========================================================
+    // AREA NAME
+    // =========================================================
+
     @NotBlank(message = "Area name is required")
     @Column(name = "area_name", nullable = false)
     private String areaName;
 
+    // =========================================================
+    // DESCRIPTION
+    // =========================================================
+
     @NotBlank(message = "Description is required")
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    @Column(
+            name = "description",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String description;
 
-    @NotNull(message = "Disaster is required")
+    // =========================================================
+    // RELATED DISASTER
+    // =========================================================
+
+    /*
+     * The Disaster is assigned by the controller.
+     *
+     * We do not use @NotNull here because the disaster
+     * is not entered by the user in the form.
+     *
+     * The URL /affected-areas/save/{disasterId}
+     * determines which disaster this area belongs to.
+     */
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "disaster_id", nullable = false)
+    @JoinColumn(
+            name = "disaster_id",
+            nullable = false
+    )
     private Disaster disaster;
 
-    // ================= CONSTRUCTOR =================
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
 
     public AffectedArea() {
     }
@@ -40,7 +69,9 @@ public class AffectedArea {
         this.disaster = disaster;
     }
 
-    // ================= GETTERS =================
+    // =========================================================
+    // GETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -58,7 +89,9 @@ public class AffectedArea {
         return disaster;
     }
 
-    // ================= SETTERS =================
+    // =========================================================
+    // SETTERS
+    // =========================================================
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;

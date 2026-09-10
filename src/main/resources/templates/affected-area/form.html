@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
   <title>Add Affected Area | FRDMS</title>
 
@@ -21,46 +24,36 @@
       color: #0C1721;
     }
 
-    /* ================= HEADER ================= */
-
     .header {
       background: #0C1721;
       color: white;
-      padding: 20px 45px;
-      box-shadow: 0 3px 12px rgba(12, 23, 33, 0.25);
+      padding: 20px 40px;
     }
 
     .brand {
       font-size: 24px;
       font-weight: bold;
-      letter-spacing: 0.4px;
     }
 
-    .module-name {
+    .module {
       color: #8DB5E8;
-      font-size: 14px;
       margin-top: 5px;
+      font-size: 14px;
     }
-
-    /* ================= PAGE ================= */
 
     .page {
-      max-width: 900px;
+      max-width: 850px;
       margin: 45px auto;
       padding: 0 20px;
     }
 
-    /* ================= CARD ================= */
-
     .card {
       background: white;
-      border-radius: 14px;
-      padding: 38px 42px;
-      box-shadow: 0 6px 25px rgba(12, 23, 33, 0.13);
-      border-top: 5px solid #248BE0;
+      padding: 35px 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
+      border-top: 5px solid #28888F;
     }
-
-    /* ================= TITLE ================= */
 
     h1 {
       margin: 0;
@@ -69,57 +62,64 @@
     }
 
     .subtitle {
-      margin-top: 9px;
-      margin-bottom: 30px;
       color: #28888F;
+      margin: 8px 0 30px;
       font-size: 15px;
-      line-height: 1.5;
     }
 
-    /* ================= EVENT INFORMATION ================= */
-
-    .event-card {
+    .event-box {
       background: #CFE8F7;
       border-left: 5px solid #248BE0;
-      padding: 20px;
-      border-radius: 8px;
+      padding: 15px 18px;
+      border-radius: 7px;
       margin-bottom: 30px;
-    }
-
-    .event-card-title {
-      color: #0B2A4A;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-
-    .event-row {
-      display: flex;
-      margin-bottom: 9px;
     }
 
     .event-label {
-      width: 130px;
+      font-size: 13px;
+      color: #52616b;
+      margin-bottom: 5px;
+    }
+
+    .event-name {
+      font-size: 18px;
       font-weight: bold;
       color: #0B2A4A;
     }
 
-    .event-value {
-      color: #0C1721;
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #CFE8F7;
+      color: #0B2A4A;
+      font-size: 18px;
+      font-weight: bold;
     }
 
-    /* ================= FORM ================= */
+    .section-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #28888F;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
 
     .form-group {
-      margin-bottom: 24px;
+      margin-bottom: 23px;
     }
 
     label {
       display: block;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
       color: #0B2A4A;
       font-weight: bold;
-      font-size: 15px;
     }
 
     .required {
@@ -129,88 +129,59 @@
     input,
     textarea {
       width: 100%;
-      padding: 14px 15px;
+      padding: 13px 14px;
       border: 1px solid #B9BEC1;
-      border-radius: 8px;
-      background: white;
-      color: #0C1721;
+      border-radius: 7px;
       font-size: 15px;
       font-family: Arial, Helvetica, sans-serif;
-      transition: 0.2s ease;
     }
 
     input:focus,
     textarea:focus {
       outline: none;
       border-color: #248BE0;
-      box-shadow: 0 0 0 3px rgba(36, 139, 224, 0.14);
+      box-shadow: 0 0 0 3px rgba(36, 139, 224, 0.15);
     }
 
     textarea {
-      min-height: 150px;
+      min-height: 140px;
       resize: vertical;
       line-height: 1.5;
     }
 
-    .help-text {
-      margin-top: 7px;
-      color: #6b747a;
+    .help {
+      margin-top: 6px;
       font-size: 13px;
-      line-height: 1.4;
+      color: #6b747a;
     }
-
-    /* ================= VALIDATION ================= */
 
     .error {
+      margin-top: 6px;
       color: #b42318;
-      margin-top: 7px;
       font-size: 13px;
     }
-
-    /* ================= INFORMATION BOX ================= */
-
-    .info-box {
-      background: #F3F8FC;
-      border: 1px solid #CFE8F7;
-      border-radius: 8px;
-      padding: 15px 17px;
-      margin-top: 5px;
-      margin-bottom: 25px;
-      color: #0B2A4A;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .info-icon {
-      font-weight: bold;
-      color: #248BE0;
-    }
-
-    /* ================= BUTTON AREA ================= */
 
     .button-area {
       display: flex;
       gap: 12px;
-      margin-top: 32px;
+      margin-top: 30px;
       padding-top: 25px;
       border-top: 1px solid #E6E8E9;
     }
 
     .btn {
-      padding: 13px 23px;
+      padding: 12px 22px;
       border-radius: 7px;
-      font-size: 15px;
-      font-weight: bold;
       text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
       cursor: pointer;
-      transition: 0.2s ease;
-      display: inline-block;
     }
 
     .btn-primary {
+      border: none;
       background: #248BE0;
       color: white;
-      border: none;
     }
 
     .btn-primary:hover {
@@ -225,10 +196,7 @@
 
     .btn-secondary:hover {
       background: #CFE8F7;
-      border-color: #8DB5E8;
     }
-
-    /* ================= RESPONSIVE ================= */
 
     @media (max-width: 650px) {
 
@@ -236,30 +204,12 @@
         padding: 18px 20px;
       }
 
-      .brand {
-        font-size: 20px;
-      }
-
       .page {
         margin: 25px auto;
-        padding: 0 15px;
       }
 
       .card {
-        padding: 28px 22px;
-      }
-
-      h1 {
-        font-size: 25px;
-      }
-
-      .event-row {
-        flex-direction: column;
-        gap: 3px;
-      }
-
-      .event-label {
-        width: auto;
+        padding: 25px 20px;
       }
 
       .button-area {
@@ -267,20 +217,16 @@
       }
 
       .btn {
-        width: 100%;
         text-align: center;
+        width: 100%;
       }
-
     }
 
   </style>
 
 </head>
 
-
 <body>
-
-<!-- ================= HEADER ================= -->
 
 <header class="header">
 
@@ -288,94 +234,57 @@
     Flood Disaster Relief System
   </div>
 
-  <div class="module-name">
+  <div class="module">
     Disaster Management Module
   </div>
 
 </header>
 
 
-<!-- ================= MAIN CONTENT ================= -->
-
 <main class="page">
 
   <div class="card">
 
-    <!-- ================= TITLE ================= -->
-
-    <h1>
-      Add Affected Area
-    </h1>
+    <h1>Add Affected Area</h1>
 
     <p class="subtitle">
-      Provide information about the areas affected by this flood event.
+      Provide information about an area affected by the selected flood event.
     </p>
 
 
-    <!-- ================= SELECTED FLOOD EVENT ================= -->
+    <!-- ================= RELATED FLOOD EVENT ================= -->
 
-    <div class="event-card">
+    <div class="event-box">
 
-      <div class="event-card-title">
-        Flood Event
+      <div class="event-label">
+        Related Flood Event
       </div>
 
-      <div class="event-row">
-
-        <div class="event-label">
-          Event Name:
-        </div>
-
-        <div
-                class="event-value"
-                th:text="${disaster.eventName}">
-        </div>
-
+      <div class="event-name"
+           th:text="${disaster.eventName}">
       </div>
-
-      <div class="event-row">
-
-        <div class="event-label">
-          Event Date:
-        </div>
-
-        <div
-                class="event-value"
-                th:text="${disaster.eventDate}">
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ================= INFORMATION ================= -->
-
-    <div class="info-box">
-
-      <span class="info-icon">ⓘ</span>
-
-      The flood event above is automatically selected.
-      Enter only the information about the affected area.
-      The affected area will be linked to this flood event.
 
     </div>
 
 
     <!-- ================= FORM ================= -->
 
-    <form
-            th:action="@{/affected-areas}"
-            th:object="${affectedArea}"
-            method="post">
+    <form th:action="@{/affected-areas/save/{disasterId}(disasterId=${disaster.id})}"
+          th:object="${affectedArea}"
+          method="post">
 
 
-      <!-- ================= DISASTER ID ================= -->
+      <!-- ================= SECTION ================= -->
 
-      <input
-              type="hidden"
-              name="disasterId"
-              th:value="${disaster.id}">
+      <div class="section-title">
+
+                <span class="section-number">
+                    1
+                </span>
+
+        Affected Area Information
+
+      </div>
 
 
       <!-- ================= AREA NAME ================= -->
@@ -384,29 +293,21 @@
 
         <label for="areaName">
 
-          Affected Area Name
+          Area Name
 
           <span class="required">*</span>
 
         </label>
 
-        <input
-                type="text"
-                id="areaName"
-                th:field="*{areaName}"
-                placeholder="Enter the affected area name"
-                autocomplete="off">
+        <input type="text"
+               id="areaName"
+               th:field="*{areaName}"
+               placeholder="Example: Kelaniya"
+               autocomplete="off">
 
-        <div
-                class="error"
-                th:if="${#fields.hasErrors('areaName')}"
-                th:errors="*{areaName}">
-        </div>
-
-        <div class="help-text">
-
-          Example: Kundasale, Dewundara, Hokandara
-
+        <div class="error"
+             th:if="${#fields.hasErrors('areaName')}"
+             th:errors="*{areaName}">
         </div>
 
       </div>
@@ -418,51 +319,53 @@
 
         <label for="description">
 
-          Affected Area Description
+          Area Description
 
           <span class="required">*</span>
 
         </label>
 
-        <textarea
-                id="description"
-                th:field="*{description}"
-                placeholder="Describe the impact of the flood in this area...">
-                </textarea>
+        <textarea id="description"
+                  th:field="*{description}"
+                  placeholder="Describe the impact of flooding in this area..."></textarea>
 
-        <div
-                class="error"
-                th:if="${#fields.hasErrors('description')}"
-                th:errors="*{description}">
+        <div class="help">
+
+          Include information such as the affected location,
+          flood impact, infrastructure damage, or other relevant details.
+
         </div>
 
-        <div class="help-text">
-
-          Include useful information such as flooded locations,
-          severity of the impact, damaged areas, or other relevant
-          information.
-
+        <div class="error"
+             th:if="${#fields.hasErrors('description')}"
+             th:errors="*{description}">
         </div>
 
       </div>
+
+
+      <!-- =====================================================
+           HIDDEN DISASTER ID
+           ===================================================== -->
+
+      <input type="hidden"
+             name="disasterId"
+             th:value="${disaster.id}">
 
 
       <!-- ================= BUTTONS ================= -->
 
       <div class="button-area">
 
-        <button
-                type="submit"
+        <button type="submit"
                 class="btn btn-primary">
 
-          + Add Affected Area
+          Save Affected Area
 
         </button>
 
-
-        <a
-                class="btn btn-secondary"
-                th:href="@{/disasters/details/{id}(id=${disaster.id})}">
+        <a class="btn btn-secondary"
+           th:href="@{/disasters/details/{id}(id=${disaster.id})}">
 
           Cancel
 

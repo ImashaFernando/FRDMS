@@ -22,27 +22,33 @@ public class AffectedAreaService {
         this.affectedAreaRepository = affectedAreaRepository;
     }
 
+
     // =========================================================
     // CREATE AFFECTED AREA
-    // DM-03 / DM-04
     // =========================================================
 
     public AffectedArea createAffectedArea(
-            AffectedArea affectedArea) {
+            AffectedArea affectedArea,
+            Disaster disaster) {
 
+        // Connect the affected area to the selected disaster
+        affectedArea.setDisaster(disaster);
+
+        // Save affected area to MySQL
         return affectedAreaRepository.save(affectedArea);
     }
 
+
     // =========================================================
-    // GET ALL AFFECTED AREAS FOR A FLOOD EVENT
+    // GET AFFECTED AREAS BY DISASTER
     // =========================================================
 
     public List<AffectedArea> getAffectedAreasByDisaster(
             Disaster disaster) {
 
-        return affectedAreaRepository
-                .findByDisaster(disaster);
+        return affectedAreaRepository.findByDisaster(disaster);
     }
+
 
     // =========================================================
     // GET AFFECTED AREA BY ID
@@ -58,40 +64,67 @@ public class AffectedAreaService {
                 );
     }
 
+
     // =========================================================
     // UPDATE AFFECTED AREA
-    // DM-04
     // =========================================================
 
     public AffectedArea updateAffectedArea(
             Long id,
             AffectedArea updatedAffectedArea) {
 
-        // Get the existing affected area
+        // Find the existing record
         AffectedArea existingAffectedArea =
                 getAffectedAreaById(id);
 
-        // Update area name
+
+        // =====================================================
+        // UPDATE AREA NAME
+        // =====================================================
+
         existingAffectedArea.setAreaName(
                 updatedAffectedArea.getAreaName()
         );
 
-        // Update area description
+
+        // =====================================================
+        // UPDATE AREA DESCRIPTION
+        // =====================================================
+
         existingAffectedArea.setDescription(
                 updatedAffectedArea.getDescription()
         );
 
+
+        // =====================================================
+        // KEEP ORIGINAL DISASTER
+        // =====================================================
+
         /*
-         * We intentionally do NOT change the disaster here.
+         * Do NOT replace the disaster relationship here.
          *
-         * The affected area must remain connected
-         * to its original flood event.
+         * The existing affected area already belongs to the
+         * correct flood event. Keeping this relationship prevents
+         * the disaster_id from becoming null or incorrect.
          */
+
+        Disaster existingDisaster =
+                existingAffectedArea.getDisaster();
+
+        existingAffectedArea.setDisaster(
+                existingDisaster
+        );
+
+
+        // =====================================================
+        // SAVE UPDATED AFFECTED AREA
+        // =====================================================
 
         return affectedAreaRepository.save(
                 existingAffectedArea
         );
     }
+
 
     // =========================================================
     // DELETE AFFECTED AREA

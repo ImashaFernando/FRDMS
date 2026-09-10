@@ -32,7 +32,7 @@ public class AffectedAreaController {
 
     // =========================================================
     // DM-03
-    // ADD AFFECTED AREA FORM
+    // SHOW ADD AFFECTED AREA FORM
     // =========================================================
 
     @GetMapping("/new/{disasterId}")
@@ -40,7 +40,7 @@ public class AffectedAreaController {
             @PathVariable Long disasterId,
             Model model) {
 
-        // Find the flood event
+        // Find the selected disaster
         Disaster disaster =
                 disasterService.getDisasterById(disasterId);
 
@@ -48,7 +48,7 @@ public class AffectedAreaController {
         AffectedArea affectedArea =
                 new AffectedArea();
 
-        // Connect affected area to flood event
+        // Connect the area to the disaster
         affectedArea.setDisaster(disaster);
 
         // Send data to Thymeleaf
@@ -79,7 +79,7 @@ public class AffectedAreaController {
             BindingResult bindingResult,
             Model model) {
 
-        // Find the flood event
+        // Find the selected disaster
         Disaster disaster =
                 disasterService.getDisasterById(disasterId);
 
@@ -89,45 +89,47 @@ public class AffectedAreaController {
 
         if (bindingResult.hasErrors()) {
 
+            // Keep the disaster relationship
+            affectedArea.setDisaster(disaster);
+
             model.addAttribute(
                     "disaster",
                     disaster
             );
-
-            // Keep relationship during validation
-            affectedArea.setDisaster(disaster);
 
             return "affected-area/form";
         }
 
 
         // =====================================================
-        // CONNECT AREA TO FLOOD EVENT
+        // CONNECT AREA TO DISASTER
         // =====================================================
 
         affectedArea.setDisaster(disaster);
 
 
         // =====================================================
-        // SAVE
+        // SAVE TO DATABASE
         // =====================================================
 
         affectedAreaService.createAffectedArea(
-                affectedArea
+                affectedArea,
+                disaster
         );
 
 
         // =====================================================
-        // RETURN TO FLOOD EVENT DETAILS
+        // RETURN TO DISASTER DETAILS
         // =====================================================
 
-        return "redirect:/disasters/details/" + disasterId;
+        return "redirect:/disasters/details/"
+                + disasterId;
     }
 
 
     // =========================================================
     // DM-04
-    // EDIT AFFECTED AREA FORM
+    // SHOW EDIT AFFECTED AREA FORM
     // =========================================================
 
     @GetMapping("/edit/{id}")
@@ -139,20 +141,25 @@ public class AffectedAreaController {
         AffectedArea affectedArea =
                 affectedAreaService.getAffectedAreaById(id);
 
-        // Find the related flood event
+
+        // Find the disaster belonging to this area
         Disaster disaster =
                 affectedArea.getDisaster();
 
-        // Send data to Thymeleaf
+
+        // Send affected area to Thymeleaf
         model.addAttribute(
                 "affectedArea",
                 affectedArea
         );
 
+
+        // Send disaster to Thymeleaf
         model.addAttribute(
                 "disaster",
                 disaster
         );
+
 
         return "affected-area/edit";
     }
@@ -171,11 +178,18 @@ public class AffectedAreaController {
             BindingResult bindingResult,
             Model model) {
 
-        // Get existing affected area
+        // =====================================================
+        // GET EXISTING AFFECTED AREA
+        // =====================================================
+
         AffectedArea existingArea =
                 affectedAreaService.getAffectedAreaById(id);
 
-        // Get original flood event
+
+        // =====================================================
+        // GET ORIGINAL DISASTER
+        // =====================================================
+
         Disaster disaster =
                 existingArea.getDisaster();
 
@@ -186,27 +200,27 @@ public class AffectedAreaController {
 
         if (bindingResult.hasErrors()) {
 
+            // Keep original disaster relationship
+            affectedArea.setDisaster(disaster);
+
             model.addAttribute(
                     "disaster",
                     disaster
             );
-
-            // Keep original relationship
-            affectedArea.setDisaster(disaster);
 
             return "affected-area/edit";
         }
 
 
         // =====================================================
-        // KEEP RELATIONSHIP
+        // KEEP ORIGINAL DISASTER RELATIONSHIP
         // =====================================================
 
         affectedArea.setDisaster(disaster);
 
 
         // =====================================================
-        // UPDATE
+        // UPDATE DATABASE
         // =====================================================
 
         affectedAreaService.updateAffectedArea(
@@ -216,12 +230,38 @@ public class AffectedAreaController {
 
 
         // =====================================================
-        // RETURN TO FLOOD EVENT DETAILS
+        // RETURN TO DISASTER DETAILS
         // =====================================================
 
-        Long disasterId =
-                disaster.getId();
+        return "redirect:/disasters/details/"
+                + disaster.getId();
+    }
 
-        return "redirect:/disasters/details/" + disasterId;
+
+    // =========================================================
+    // DELETE AFFECTED AREA
+    // =========================================================
+
+    @PostMapping("/delete/{id}")
+    public String deleteAffectedArea(
+            @PathVariable Long id) {
+
+        // Find affected area
+        AffectedArea affectedArea =
+                affectedAreaService.getAffectedAreaById(id);
+
+
+        // Get related disaster ID
+        Long disasterId =
+                affectedArea.getDisaster().getId();
+
+
+        // Delete affected area
+        affectedAreaService.deleteAffectedArea(id);
+
+
+        // Return to disaster details
+        return "redirect:/disasters/details/"
+                + disasterId;
     }
 }

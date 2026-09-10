@@ -11,22 +11,28 @@ public class DisasterService {
 
     private final DisasterRepository disasterRepository;
 
+
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
 
-    public DisasterService(DisasterRepository disasterRepository) {
+    public DisasterService(
+            DisasterRepository disasterRepository) {
+
         this.disasterRepository = disasterRepository;
     }
+
 
     // =========================================================
     // CREATE NEW FLOOD EVENT
     // =========================================================
 
-    public Disaster createDisaster(Disaster disaster) {
+    public Disaster createDisaster(
+            Disaster disaster) {
 
         return disasterRepository.save(disaster);
     }
+
 
     // =========================================================
     // GET ALL FLOOD EVENTS
@@ -37,19 +43,23 @@ public class DisasterService {
         return disasterRepository.findAll();
     }
 
+
     // =========================================================
     // FIND FLOOD EVENT BY ID
     // =========================================================
 
-    public Disaster getDisasterById(Long id) {
+    public Disaster getDisasterById(
+            Long id) {
 
         return disasterRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException(
-                                "Flood event not found with ID: " + id
+                                "Flood event not found with ID: "
+                                        + id
                         )
                 );
     }
+
 
     // =========================================================
     // UPDATE EXISTING FLOOD EVENT
@@ -59,9 +69,10 @@ public class DisasterService {
             Long id,
             Disaster updatedDisaster) {
 
-        // Get the existing flood event from the database
+        // Find existing flood event
         Disaster existingDisaster =
                 getDisasterById(id);
+
 
         // =====================================================
         // UPDATE EVENT NAME
@@ -71,20 +82,18 @@ public class DisasterService {
                 updatedDisaster.getEventName()
         );
 
+
         // =====================================================
         // UPDATE EVENT DATE
         // =====================================================
 
-        /*
-         * Keep the original event date if no date
-         * is submitted from the edit form.
-         */
         if (updatedDisaster.getEventDate() != null) {
 
             existingDisaster.setEventDate(
                     updatedDisaster.getEventDate()
             );
         }
+
 
         // =====================================================
         // UPDATE DESCRIPTION
@@ -94,10 +103,13 @@ public class DisasterService {
                 updatedDisaster.getDescription()
         );
 
+
         // =====================================================
         // SAVE UPDATED FLOOD EVENT
         // =====================================================
 
-        return disasterRepository.save(existingDisaster);
+        return disasterRepository.save(
+                existingDisaster
+        );
     }
 }

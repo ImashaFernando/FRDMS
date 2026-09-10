@@ -55,19 +55,17 @@ public class DisasterController {
     public String createDisaster(
             @Valid @ModelAttribute("disaster")
             Disaster disaster,
-            BindingResult bindingResult,
-            Model model) {
+            BindingResult bindingResult) {
 
         // Check validation errors
         if (bindingResult.hasErrors()) {
-
             return "disaster/form";
         }
 
         // Save flood event
         disasterService.createDisaster(disaster);
 
-        // Go to flood event list
+        // Return to flood event list
         return "redirect:/disasters";
     }
 
@@ -102,7 +100,8 @@ public class DisasterController {
         Disaster disaster =
                 disasterService.getDisasterById(id);
 
-        // Find affected areas belonging to this flood event
+        // Find all affected areas belonging
+        // to this flood event
         var affectedAreas =
                 affectedAreaService
                         .getAffectedAreasByDisaster(disaster);
@@ -132,9 +131,11 @@ public class DisasterController {
             @PathVariable Long id,
             Model model) {
 
+        // Find existing flood event
         Disaster disaster =
                 disasterService.getDisasterById(id);
 
+        // Send it to edit page
         model.addAttribute(
                 "disaster",
                 disaster
@@ -155,7 +156,7 @@ public class DisasterController {
             Disaster disaster,
             BindingResult bindingResult) {
 
-        // Get original flood event
+        // Find original flood event
         Disaster existingDisaster =
                 disasterService.getDisasterById(id);
 
@@ -165,9 +166,8 @@ public class DisasterController {
         // =====================================================
 
         /*
-         * The event date is read-only in the edit form.
-         * Therefore, if no date is submitted, use the
-         * original date stored in the database.
+         * If the edit form does not submit the date,
+         * keep the original date from the database.
          */
 
         if (disaster.getEventDate() == null) {

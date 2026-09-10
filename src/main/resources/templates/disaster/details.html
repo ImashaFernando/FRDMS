@@ -24,13 +24,10 @@
             color: #0C1721;
         }
 
-        /* ================= HEADER ================= */
-
         .header {
             background: #0C1721;
             color: white;
-            padding: 20px 40px;
-            box-shadow: 0 3px 10px rgba(12, 23, 33, 0.25);
+            padding: 22px 40px;
         }
 
         .brand {
@@ -44,63 +41,27 @@
             font-size: 14px;
         }
 
-        /* ================= PAGE ================= */
-
         .page {
-            max-width: 1000px;
+            max-width: 950px;
             margin: 40px auto;
-            padding: 20px;
+            padding: 0 20px;
         }
-
-        /* ================= MAIN CARD ================= */
 
         .card {
             background: white;
-            padding: 35px 40px;
+            padding: 35px;
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
-            border-top: 5px solid #248BE0;
         }
 
         h1 {
-            margin-top: 0;
-            margin-bottom: 8px;
             color: #0B2A4A;
-            font-size: 30px;
+            margin-bottom: 8px;
         }
 
         .subtitle {
             color: #28888F;
             margin-bottom: 30px;
-            font-size: 15px;
-        }
-
-        /* ================= EVENT INFORMATION ================= */
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #CFE8F7;
-            color: #0B2A4A;
-            font-size: 19px;
-            font-weight: bold;
-        }
-
-        .section-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #28888F;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
         }
 
         .detail {
@@ -111,80 +72,64 @@
             font-weight: bold;
             color: #0B2A4A;
             margin-bottom: 7px;
-            font-size: 15px;
         }
 
         .value {
-            padding: 14px;
             background: #F4F6F8;
-            border: 1px solid #D8DDE0;
+            padding: 13px;
             border-radius: 7px;
-            line-height: 1.5;
         }
 
-        /* ================= DATE ================= */
-
-        .date-value {
-            font-weight: bold;
-            color: #0B2A4A;
-        }
-
-        /* ================= AFFECTED AREAS ================= */
-
-        .affected-section {
+        .section {
             margin-top: 35px;
         }
 
+        .section-title {
+            color: #0B2A4A;
+            border-bottom: 2px solid #CFE8F7;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
         .area-card {
-            background: #F4F8FB;
+            background: #CFE8F7;
             border-left: 5px solid #248BE0;
-            border-radius: 7px;
             padding: 18px;
+            border-radius: 7px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(12, 23, 33, 0.06);
         }
 
         .area-name {
-            color: #0B2A4A;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: bold;
+            color: #0B2A4A;
             margin-bottom: 8px;
         }
 
         .area-description {
-            color: #4E5961;
+            color: #52616B;
             line-height: 1.5;
-            margin-bottom: 12px;
         }
 
-        .no-area {
-            background: #FFF7E6;
-            border-left: 5px solid #E0A800;
-            padding: 15px;
-            border-radius: 6px;
-            color: #6B5200;
-            margin-bottom: 20px;
+        .empty {
+            background: #F4F6F8;
+            padding: 20px;
+            border-radius: 7px;
+            color: #6B747A;
         }
 
-        /* ================= BUTTONS ================= */
-
-        .button-area {
+        .buttons {
             display: flex;
             gap: 12px;
             margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #E6E8E9;
         }
 
         .btn {
             display: inline-block;
-            padding: 11px 18px;
+            padding: 12px 20px;
             border-radius: 7px;
-            font-size: 14px;
-            font-weight: bold;
             text-decoration: none;
-            cursor: pointer;
-            transition: 0.2s ease;
+            font-weight: bold;
         }
 
         .btn-primary {
@@ -196,26 +141,23 @@
             background: #0B2A4A;
         }
 
-        .btn-teal {
-            background: #28888F;
-            color: white;
-        }
-
-        .btn-teal:hover {
-            background: #0B2A4A;
-        }
-
         .btn-secondary {
             background: #E6E8E9;
             color: #0B2A4A;
             border: 1px solid #B9BEC1;
         }
 
-        .btn-secondary:hover {
-            background: #CFE8F7;
+        .edit-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 13px;
+            background: #28888F;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
         }
-
-        /* ================= RESPONSIVE ================= */
 
         @media (max-width: 650px) {
 
@@ -223,42 +165,24 @@
                 padding: 18px 20px;
             }
 
-            .brand {
-                font-size: 20px;
-            }
-
-            .page {
-                margin: 20px auto;
-                padding: 15px;
-            }
-
             .card {
                 padding: 25px 20px;
             }
 
-            h1 {
-                font-size: 25px;
-            }
-
-            .button-area {
+            .buttons {
                 flex-direction: column;
             }
 
             .btn {
-                width: 100%;
                 text-align: center;
             }
-
         }
 
     </style>
 
 </head>
 
-
 <body>
-
-<!-- ================= HEADER ================= -->
 
 <header class="header">
 
@@ -273,37 +197,17 @@
 </header>
 
 
-<!-- ================= MAIN PAGE ================= -->
-
 <main class="page">
 
     <div class="card">
-
-        <!-- ================= TITLE ================= -->
 
         <h1>
             Flood Event Details
         </h1>
 
         <p class="subtitle">
-            View complete information about this flood event and its affected areas.
+            Review the flood event and its affected areas.
         </p>
-
-
-        <!-- =====================================================
-             SECTION 1 - FLOOD EVENT INFORMATION
-             DM-01 / DM-02
-             ===================================================== -->
-
-        <div class="section-title">
-
-            <span class="section-number">
-                1
-            </span>
-
-            Flood Event Information
-
-        </div>
 
 
         <!-- EVENT NAME -->
@@ -311,7 +215,7 @@
         <div class="detail">
 
             <div class="label">
-                Flood Event Name
+                Event Name
             </div>
 
             <div class="value"
@@ -329,7 +233,7 @@
                 Event Date
             </div>
 
-            <div class="value date-value"
+            <div class="value"
                  th:text="${disaster.eventDate}">
             </div>
 
@@ -341,7 +245,7 @@
         <div class="detail">
 
             <div class="label">
-                Flood Event Description
+                Description
             </div>
 
             <div class="value"
@@ -351,104 +255,70 @@
         </div>
 
 
-        <!-- =====================================================
-             SECTION 2 - AFFECTED AREAS
-             DM-03 / DM-04
-             ===================================================== -->
+        <!-- ================= AFFECTED AREAS ================= -->
 
-        <div class="affected-section">
+        <div class="section">
 
-            <div class="section-title">
-
-                <span class="section-number">
-                    2
-                </span>
-
+            <h2 class="section-title">
                 Affected Areas
-
-            </div>
+            </h2>
 
 
             <!-- NO AREAS -->
 
-            <div class="no-area"
+            <div class="empty"
                  th:if="${#lists.isEmpty(affectedAreas)}">
 
-                <strong>
-                    No affected areas have been added yet.
-                </strong>
-
-                <br><br>
-
-                The Relief Coordinator can add the affected areas
-                for this flood event.
+                No affected areas have been added to this flood event yet.
 
             </div>
 
 
-            <!-- ================= AREA LIST ================= -->
+            <!-- AREAS -->
 
-            <div th:each="area : ${affectedAreas}"
-                 class="area-card">
+            <div class="area-card"
+                 th:each="area : ${affectedAreas}">
 
-                <div class="area-name">
-
-                    <span th:text="${area.areaName}">
-                    </span>
-
+                <div class="area-name"
+                     th:text="${area.areaName}">
                 </div>
 
-
-                <div class="area-description">
-
-                    <span th:text="${area.description}">
-                    </span>
-
+                <div class="area-description"
+                     th:text="${area.description}">
                 </div>
 
 
                 <!-- EDIT AREA -->
 
-                <a class="btn btn-primary"
+                <a class="edit-btn"
                    th:href="@{/affected-areas/edit/{id}(id=${area.id})}">
 
-                    ✏ Edit Affected Area
+                    ✏ Edit Area
 
                 </a>
 
             </div>
 
 
-            <!-- ================= ADD AREA ================= -->
+            <!-- ADD AREA -->
 
-            <a class="btn btn-teal"
-               th:href="@{/affected-areas/new/{id}(id=${disaster.id})}">
+            <div class="buttons">
 
-                + Add Affected Area
+                <a class="btn btn-primary"
+                   th:href="@{/affected-areas/new/{id}(id=${disaster.id})}">
 
-            </a>
+                    + Add Affected Area
 
-        </div>
+                </a>
 
+                <a class="btn btn-secondary"
+                   th:href="@{/disasters}">
 
-        <!-- ================= BUTTONS ================= -->
+                    Back to Flood Events
 
-        <div class="button-area">
+                </a>
 
-            <a class="btn btn-primary"
-               th:href="@{/disasters/edit/{id}(id=${disaster.id})}">
-
-                ✏ Edit Flood Event
-
-            </a>
-
-
-            <a class="btn btn-secondary"
-               th:href="@{/disasters}">
-
-                ← Back to Flood Events
-
-            </a>
+            </div>
 
         </div>
 
