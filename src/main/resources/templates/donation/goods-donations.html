@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Goods Donations | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/goods-donations.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <header class="page-header">
+
+        <div class="brand">FRDMS</div>
+
+        <span class="badge">DONATION MANAGEMENT</span>
+
+        <h1>Goods Donations</h1>
+
+        <p>
+            View goods contributions submitted by donors
+            for flood relief and disaster recovery activities.
+        </p>
+
+    </header>
+
+
+    <main class="donation-card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Recorded Goods Donations</h2>
+
+                <p>
+                    Goods donations submitted through the
+                    donor donation form.
+                </p>
+            </div>
+
+            <a href="/donations/cash" class="switch-button">
+                View Cash Donations
+            </a>
+
+        </div>
+
+
+        <div class="empty-state"
+             th:if="${#lists.isEmpty(goodsDonations)}">
+
+            <div class="empty-icon">📦</div>
+
+            <h3>No Goods Donations</h3>
+
+            <p>
+                No goods donations have been submitted yet.
+            </p>
+
+        </div>
+
+
+        <div class="table-container"
+             th:unless="${#lists.isEmpty(goodsDonations)}">
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Donor ID</th>
+                    <th>Goods</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="donation : ${goodsDonations}">
+
+                    <td th:text="${donation.id}">1</td>
+
+                    <td th:text="${donation.donorId}">4</td>
+
+                    <td th:text="${donation.goodsDescription}">
+                        Rice
+                    </td>
+
+                    <td th:text="${donation.goodsQuantity}">
+                        20 kg
+                    </td>
+
+                    <td th:text="${donation.description != null && !donation.description.isBlank()
+                                  ? donation.description
+                                  : 'No description'}">
+                        Food supplies
+                    </td>
+
+                    <td>
+                        <span class="status"
+                              th:text="${donation.status}">
+                            PENDING
+                        </span>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="footer">
+
+            <span class="yellow-dot"></span>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

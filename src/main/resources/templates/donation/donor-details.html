@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donor Details | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/donor-details.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <header class="page-header">
+
+        <div class="brand">FRDMS</div>
+
+        <span class="badge">
+            DONATION MANAGEMENT
+        </span>
+
+        <h1>Donor Details</h1>
+
+        <p>
+            View registered donor information
+            for disaster relief donations.
+        </p>
+
+    </header>
+
+
+    <main class="donor-card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Registered Donors</h2>
+
+                <p>
+                    Donor information registered in the system.
+                </p>
+            </div>
+
+            <a href="/donations/cash"
+               class="back-button">
+                Cash Donations
+            </a>
+
+        </div>
+
+
+        <!-- No donors -->
+
+        <div class="empty-state"
+             th:if="${#lists.isEmpty(donors)}">
+
+            <div class="empty-icon">
+                👤
+            </div>
+
+            <h3>No Donors Registered</h3>
+
+            <p>
+                There are currently no registered donors.
+            </p>
+
+        </div>
+
+
+        <!-- Donor table -->
+
+        <div class="table-container"
+             th:unless="${#lists.isEmpty(donors)}">
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="donor : ${donors}">
+
+                    <td th:text="${donor.id}">
+                        1
+                    </td>
+
+                    <td th:text="${donor.username}">
+                        donor01
+                    </td>
+
+                    <td th:text="${donor.fullName}">
+                        John Silva
+                    </td>
+
+                    <td th:text="${donor.contactNumber}">
+                        0712345678
+                    </td>
+
+                    <td th:text="${donor.email}">
+                        john@email.com
+                    </td>
+
+                    <td th:text="${donor.address != null && !donor.address.isBlank()
+                                  ? donor.address
+                                  : 'Not provided'}">
+                        Colombo
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="footer">
+
+            <span class="yellow-dot"></span>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

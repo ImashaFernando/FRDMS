@@ -18,12 +18,14 @@ public class DonationController {
         this.donationService = donationService;
     }
 
+    // US-D05: Show donation submission form
     @GetMapping("/submit")
     public String showDonationForm(Model model) {
         model.addAttribute("donation", new Donation());
         return "donation/donation-submit";
     }
 
+    // US-D05: Submit cash or goods donation
     @PostMapping("/submit")
     public String submitDonation(
             @Valid @ModelAttribute("donation") Donation donation,
@@ -39,6 +41,31 @@ public class DonationController {
         return "redirect:/donations/success";
     }
 
+    // US-D06: View recorded cash donations
+    @GetMapping("/cash")
+    public String viewCashDonations(Model model) {
+
+        model.addAttribute(
+                "cashDonations",
+                donationService.getCashDonations()
+        );
+
+        return "donation/cash-donations";
+    }
+
+    // US-D07: View recorded goods donations
+    @GetMapping("/goods")
+    public String viewGoodsDonations(Model model) {
+
+        model.addAttribute(
+                "goodsDonations",
+                donationService.getGoodsDonations()
+        );
+
+        return "donation/goods-donations";
+    }
+
+    // US-D05 success page
     @GetMapping("/success")
     public String donationSuccess() {
         return "donation/donation-success";

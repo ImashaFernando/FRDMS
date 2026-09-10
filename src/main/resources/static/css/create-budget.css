@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #EDF3F6;
+    color: #1F3A60;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    padding: 45px 20px;
+}
+
+.page-header {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.brand {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: #85B6D6;
+    color: #1F3A60;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #687b8c;
+    font-size: 15px;
+}
+
+.budget-card {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 32px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(31, 58, 96, 0.12);
+}
+
+.card-header {
+    margin-bottom: 25px;
+}
+
+.card-header h2 {
+    font-size: 22px;
+    margin-bottom: 7px;
+}
+
+.card-header p {
+    color: #718392;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #D5E0E7;
+    border-radius: 9px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #3582B8;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.error {
+    margin-top: 6px;
+    color: #C0392B;
+    font-size: 12px;
+}
+
+.info-box {
+    margin: 25px 0;
+    padding: 16px;
+    background: #EDF3F6;
+    border-left: 4px solid #3582B8;
+    border-radius: 8px;
+}
+
+.info-box strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.info-box p {
+    color: #687b8c;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.info-box span {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+button {
+    width: 100%;
+    border: none;
+    padding: 14px;
+    border-radius: 9px;
+    background: #3582B8;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1F3A60;
+}
+
+@media (max-width: 700px) {
+
+    .page-wrapper {
+        padding: 30px 15px;
+    }
+
+    .budget-card {
+        padding: 22px;
+    }
+
+    .page-header h1 {
+        font-size: 27px;
+    }
+}

@@ -5,6 +5,8 @@ import com.frdms.frdms.donation_management.repository.DonorRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DonorService {
 
@@ -17,6 +19,7 @@ public class DonorService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // US-D01
     public Donor registerDonor(Donor donor) {
 
         if (donorRepository.existsByUsername(donor.getUsername())) {
@@ -28,5 +31,16 @@ public class DonorService {
         );
 
         return donorRepository.save(donor);
+    }
+
+    // US-D02
+    public List<Donor> getAllDonors() {
+        return donorRepository.findAll();
+    }
+
+    public Donor getDonorById(Long id) {
+        return donorRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Donor not found"));
     }
 }

@@ -15,12 +15,24 @@ public class DonationService {
         this.donationRepository = donationRepository;
     }
 
+    // US-D05: Submit cash or goods donation
     public Donation submitDonation(Donation donation) {
+
         if (donation.getStatus() == null || donation.getStatus().isBlank()) {
             donation.setStatus("PENDING");
         }
 
         return donationRepository.save(donation);
+    }
+
+    // US-D06: Get cash donations
+    public List<Donation> getCashDonations() {
+        return donationRepository.findByDonationType("CASH");
+    }
+
+    // US-D07: Get goods donations
+    public List<Donation> getGoodsDonations() {
+        return donationRepository.findByDonationType("GOODS");
     }
 
     public List<Donation> getAllDonations() {

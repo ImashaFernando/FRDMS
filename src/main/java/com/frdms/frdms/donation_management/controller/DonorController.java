@@ -50,4 +50,15 @@ public class DonorController {
     public String registrationSuccess() {
         return "donation/donor-success";
     }
+    // US-D02: View donor details
+    @GetMapping("/details")
+    public String viewDonorDetails(Model model) {
+
+        model.addAttribute(
+                "donors",
+                donorService.getAllDonors()
+        );
+
+        return "donation/donor-details";
+    }
 }

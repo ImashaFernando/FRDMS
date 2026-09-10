@@ -15,7 +15,6 @@ public class Donation {
     @NotNull(message = "Donor is required")
     private Long donorId;
 
-    @NotBlank(message = "Donation type is required")
     private String donationType;
 
     private Double cashAmount;
