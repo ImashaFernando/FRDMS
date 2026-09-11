@@ -6,6 +6,7 @@ import com.frdms.frdms.volunteer_management.repository.VolunteerAccountRepositor
 import com.frdms.frdms.volunteer_management.repository.VolunteerProfileRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,6 +56,31 @@ public class VolunteerProfileService {
         return volunteerAccountRepository.findByEmail(email)
                 .flatMap(
                         volunteerProfileRepository::findByVolunteerAccount
+                );
+    }
+
+    // =========================
+    // VM-US5
+    // GET ALL SUBMITTED PROFILES
+    // =========================
+
+    public List<VolunteerProfile> getAllVolunteerProfiles() {
+
+        return volunteerProfileRepository.findAll();
+    }
+
+    // =========================
+    // VM-US5
+    // GET ONE PROFILE BY ID
+    // =========================
+
+    public VolunteerProfile getVolunteerProfileById(Long id) {
+
+        return volunteerProfileRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Volunteer profile not found."
+                        )
                 );
     }
 }

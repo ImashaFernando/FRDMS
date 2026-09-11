@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Submitted Volunteers - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+
+  <style>
+    .list-container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .list-card {
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 18px 45px rgba(31, 58, 96, 0.25);
+      border-top: 7px solid #F7CF59;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #3582B8;
+      font-weight: 700;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th {
+      background: #1F3A60;
+      color: white;
+      text-align: left;
+      padding: 14px;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #D5E1E8;
+      color: #1F3A60;
+    }
+
+    tbody tr:hover {
+      background: #EDF3F6;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #F7CF59;
+      color: #1F3A60;
+    }
+
+    .view-button {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 8px;
+      background: #3582B8;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .view-button:hover {
+      background: #1F3A60;
+    }
+
+    .empty-message {
+      margin-top: 25px;
+      padding: 18px;
+      border-radius: 10px;
+      background: #EDF3F6;
+      color: #1F3A60;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="list-container">
+
+    <div class="list-card">
+
+      <div class="top-actions">
+
+        <div>
+          <h2 class="page-title">
+            Submitted Volunteer Registrations
+          </h2>
+
+          <p class="page-subtitle">
+            View volunteer applications submitted for review.
+          </p>
+        </div>
+
+        <a th:href="@{/project-manager/dashboard}"
+           class="back-link">
+          Back to Dashboard
+        </a>
+
+      </div>
+
+
+      <!-- Show when registrations exist -->
+      <div class="table-wrapper"
+           th:if="${!#lists.isEmpty(volunteerProfiles)}">
+
+        <table>
+
+          <thead>
+          <tr>
+            <th>Volunteer Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Availability</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+
+          <tbody>
+
+          <tr th:each="profile : ${volunteerProfiles}">
+
+            <td th:text="${profile.volunteerAccount.fullName}">
+              Volunteer Name
+            </td>
+
+            <td th:text="${profile.volunteerAccount.email}">
+              volunteer@email.com
+            </td>
+
+            <td th:text="${profile.age}">
+              25
+            </td>
+
+            <td th:text="${profile.availability}">
+              Weekends
+            </td>
+
+            <td>
+                            <span class="status-badge"
+                                  th:text="${profile.registrationStatus}">
+                                PENDING
+                            </span>
+            </td>
+
+            <td>
+
+              <a class="view-button"
+                 th:href="@{/project-manager/volunteers/{id}(id=${profile.id})}">
+                View Details
+              </a>
+
+            </td>
+
+          </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- Show when no registrations exist -->
+      <div class="empty-message"
+           th:if="${#lists.isEmpty(volunteerProfiles)}">
+
+        No volunteer registrations have been submitted yet.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

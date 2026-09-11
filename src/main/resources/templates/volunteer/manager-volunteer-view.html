@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Volunteer Details - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+
+  <style>
+    .details-container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .details-card {
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 18px 45px rgba(31, 58, 96, 0.25);
+      border-top: 7px solid #F7CF59;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #3582B8;
+      font-weight: 700;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .detail-item {
+      background: #EDF3F6;
+      padding: 18px;
+      border-radius: 10px;
+    }
+
+    .detail-item.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .detail-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #3582B8;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      color: #1F3A60;
+      font-size: 16px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: #F7CF59;
+      color: #1F3A60;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-item.full-width {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="details-container">
+
+    <div class="details-card">
+
+      <div class="top-actions">
+
+        <div>
+          <h2 class="page-title">
+            Volunteer Registration Details
+          </h2>
+
+          <p class="page-subtitle">
+            Review the information submitted by the volunteer.
+          </p>
+        </div>
+
+        <a th:href="@{/project-manager/volunteers}"
+           class="back-link">
+          Back to Volunteer List
+        </a>
+
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+                    <span class="detail-label">
+                        Full Name
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.volunteerAccount.fullName}">
+            Volunteer Name
+          </div>
+        </div>
+
+
+        <div class="detail-item">
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.volunteerAccount.email}">
+            volunteer@email.com
+          </div>
+        </div>
+
+
+        <div class="detail-item">
+                    <span class="detail-label">
+                        Phone Number
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.volunteerAccount.phoneNumber}">
+            0712345678
+          </div>
+        </div>
+
+
+        <div class="detail-item">
+                    <span class="detail-label">
+                        Age
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.age}">
+            25
+          </div>
+        </div>
+
+
+        <div class="detail-item">
+                    <span class="detail-label">
+                        Availability
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.availability}">
+            Weekends
+          </div>
+        </div>
+
+
+        <div class="detail-item">
+                    <span class="detail-label">
+                        Preferred Working Area
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.preferredWorkingArea}">
+            Colombo
+          </div>
+        </div>
+
+
+        <div class="detail-item full-width">
+                    <span class="detail-label">
+                        Skills
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.skills}">
+            First Aid, Driving
+          </div>
+        </div>
+
+
+        <div class="detail-item full-width">
+                    <span class="detail-label">
+                        Work Experience
+                    </span>
+
+          <div class="detail-value"
+               th:text="${volunteerProfile.workExperience}">
+            Volunteer work experience
+          </div>
+        </div>
+
+
+        <div class="detail-item full-width">
+                    <span class="detail-label">
+                        Registration Status
+                    </span>
+
+          <span class="status-badge"
+                th:text="${volunteerProfile.registrationStatus}">
+                        PENDING
+                    </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
