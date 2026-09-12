@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Victim Login | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0C1721;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      width: 420px;
+      background: white;
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo h1 {
+      margin: 0;
+      color: #0B2A4A;
+      font-size: 28px;
+    }
+
+    .logo p {
+      color: #557080;
+      margin-top: 8px;
+    }
+
+    .title {
+      text-align: center;
+      color: #0B2A4A;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #0B2A4A;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccd6dc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #248BE0;
+      box-shadow: 0 0 0 2px rgba(36, 139, 224, 0.15);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #248BE0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      background: #176fb8;
+    }
+
+    .error-message {
+      background: #fdeaea;
+      color: #b42318;
+      border: 1px solid #f3b5b5;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 22px;
+      color: #557080;
+    }
+
+    .register-link a {
+      color: #248BE0;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #557080;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+  <div class="logo">
+
+    <h1>FRDMS</h1>
+
+    <p>Flood Relief & Disaster Management System</p>
+
+  </div>
+
+
+  <h2 class="title">Victim Login</h2>
+
+
+  <!-- Login Error -->
+
+  <div th:if="${loginError}"
+       class="error-message"
+       th:text="${loginError}">
+  </div>
+
+
+  <form th:action="@{/victim-login}"
+        method="post">
+
+
+    <!-- NIC Number -->
+
+    <div class="form-group">
+
+      <label for="nicNumber">
+        NIC Number
+      </label>
+
+      <input
+              type="text"
+              id="nicNumber"
+              name="nicNumber"
+              placeholder="Enter your NIC number"
+              required
+      >
+
+    </div>
+
+
+    <!-- Password -->
+
+    <div class="form-group">
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+      >
+
+    </div>
+
+
+    <!-- Login Button -->
+
+    <button
+            type="submit"
+            class="login-btn">
+      Login
+    </button>
+
+  </form>
+
+
+  <!-- Registration -->
+
+  <div class="register-link">
+
+    Don't have an account?
+
+    <a th:href="@{/victims/register}">
+      Register as a Victim
+    </a>
+
+  </div>
+
+
+  <a href="/" class="back-link">
+    ← Back to Home
+  </a>
+
+</div>
+
+</body>
+
+</html>

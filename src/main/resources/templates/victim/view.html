@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Victim Information - FRDMS</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #e6e8e9;
+            color: #1b3557;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0c1721;
+            color: white;
+
+            padding: 22px 60px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+
+            font-size: 30px;
+        }
+
+        .header span {
+            color: #9bc5ff;
+
+            font-size: 18px;
+        }
+
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .container {
+            max-width: 1100px;
+
+            margin: 55px auto;
+
+            padding: 0 25px;
+        }
+
+        .card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 40px;
+
+            box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.10);
+
+            border-top: 6px solid #558ee0;
+        }
+
+
+        /* ================= TITLE ================= */
+
+        .title-section {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 35px;
+        }
+
+        .title-section h2 {
+            margin: 0;
+
+            font-size: 32px;
+
+            color: #173457;
+        }
+
+        .title-section p {
+            margin-top: 8px;
+
+            color: #47758a;
+
+            font-size: 17px;
+        }
+
+
+        /* ================= VICTIM ID ================= */
+
+        .victim-id {
+            background: #cfe8f7;
+
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            color: #1b5574;
+        }
+
+
+        /* ================= INFORMATION GRID ================= */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+        }
+
+        .info-box {
+            background: #f7f9fa;
+
+            border: 1px solid #dce2e6;
+
+            border-radius: 12px;
+
+            padding: 20px;
+        }
+
+        .info-box.full {
+            grid-column: span 2;
+        }
+
+        .label {
+            display: block;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #557080;
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+        }
+
+        .value {
+            font-size: 18px;
+
+            color: #172f4d;
+
+            font-weight: 600;
+
+            word-break: break-word;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            border-radius: 20px;
+
+            background: #dcefed;
+
+            color: #35737a;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 15px;
+
+            margin-top: 35px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e0e4e7;
+        }
+
+        .btn {
+            text-decoration: none;
+
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: inline-block;
+        }
+
+
+        /* ================= BACK ================= */
+
+        .btn-back {
+            background: #e6e8e9;
+
+            color: #29445e;
+        }
+
+        .btn-back:hover {
+            background: #d5dadd;
+        }
+
+
+        /* ================= EDIT ================= */
+
+        .btn-edit {
+            background: #558ee0;
+
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #3977cc;
+        }
+
+
+        /* ================= GN REPORT SECTION ================= */
+
+        .gn-section {
+
+            margin-top: 40px;
+
+            padding-top: 30px;
+
+            border-top: 1px solid #e0e4e7;
+        }
+
+
+        .gn-section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+
+        .gn-section-header h2 {
+
+            margin: 0;
+
+            color: #173457;
+
+            font-size: 24px;
+        }
+
+
+        .gn-section-header p {
+
+            margin: 6px 0 0 0;
+
+            color: #557080;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= NO REPORT ================= */
+
+        .no-report {
+
+            background: #f7f9fa;
+
+            border: 1px solid #dce2e6;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            color: #557080;
+        }
+
+
+        .no-report-icon {
+
+            font-size: 35px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .no-report h3 {
+
+            margin: 0 0 7px 0;
+
+            color: #29445e;
+        }
+
+
+        .no-report p {
+
+            margin: 0;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= REPORT CARD ================= */
+
+        .report-card {
+
+            background: #f7fbff;
+
+            border: 1px solid #cfe0eb;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .report-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .report-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 10px;
+
+            background: #cfe8f7;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+
+        .report-header h3 {
+
+            margin: 0 0 5px 0;
+
+            color: #173457;
+        }
+
+
+        .report-number {
+
+            color: #557080;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= REPORT DETAILS ================= */
+
+        .report-details {
+
+            display: grid;
+
+            grid-template-columns:
+                    repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .report-detail {
+
+            background: white;
+
+            border: 1px solid #e0e6ea;
+
+            border-radius: 9px;
+
+            padding: 15px;
+        }
+
+
+        .report-detail strong {
+
+            display: block;
+
+            color: #557080;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+
+        .report-detail span {
+
+            color: #173457;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+
+        /* ================= DESCRIPTION ================= */
+
+        .report-description {
+
+            background: white;
+
+            border: 1px solid #e0e6ea;
+
+            border-radius: 9px;
+
+            padding: 18px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .report-description strong {
+
+            display: block;
+
+            color: #557080;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+
+        .report-description p {
+
+            margin: 0;
+
+            color: #29445e;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= VIEW REPORT BUTTON ================= */
+
+        .view-report-btn {
+
+            display: inline-block;
+
+            background: #28888f;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .view-report-btn:hover {
+
+            background: #206f75;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                padding: 20px;
+            }
+
+            .header h1 {
+
+                font-size: 22px;
+            }
+
+            .header span {
+
+                display: none;
+            }
+
+            .container {
+
+                margin: 30px auto;
+            }
+
+            .card {
+
+                padding: 25px;
+            }
+
+            .title-section {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .info-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .info-box.full {
+
+                grid-column: span 1;
+            }
+
+            .actions {
+
+                flex-direction: column;
+            }
+
+            .btn {
+
+                text-align: center;
+
+                width: 100%;
+            }
+
+            .report-details {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <h1>
+        Flood Disaster Relief System
+    </h1>
+
+    <span>
+        Victim Management Module
+    </span>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <div class="card">
+
+
+        <!-- ================= TITLE ================= -->
+
+        <div class="title-section">
+
+            <div>
+
+                <h2>
+                    Victim Information
+                </h2>
+
+                <p>
+                    Review registered victim information.
+                </p>
+
+            </div>
+
+
+            <div class="victim-id">
+
+                Victim ID:
+
+                <span th:text="${victim.id}">
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= VICTIM INFORMATION ================= -->
+
+        <div class="info-grid">
+
+
+            <!-- FULL NAME -->
+
+            <div class="info-box">
+
+                <span class="label">
+                    Full Name
+                </span>
+
+                <div
+                        class="value"
+                        th:text="${victim.fullName}">
+                </div>
+
+            </div>
+
+
+
+            <!-- NIC -->
+
+            <div class="info-box">
+
+                <span class="label">
+                    NIC Number
+                </span>
+
+                <div
+                        class="value"
+                        th:text="${victim.nicNumber}">
+                </div>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="info-box">
+
+                <span class="label">
+                    Phone Number
+                </span>
+
+                <div
+                        class="value"
+                        th:text="${victim.phoneNumber}">
+                </div>
+
+            </div>
+
+
+
+            <!-- REGISTRATION DATE -->
+
+            <div class="info-box">
+
+                <span class="label">
+                    Registration Date
+                </span>
+
+                <div
+                        class="value"
+                        th:text="${#temporals.format(victim.registrationDate, 'dd MMM yyyy')}">
+                </div>
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="info-box full">
+
+                <span class="label">
+                    Address
+                </span>
+
+                <div
+                        class="value"
+                        th:text="${victim.address}">
+                </div>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="info-box">
+
+                <span class="label">
+                    Status
+                </span>
+
+                <span class="status">
+                    Registered
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             GN REPORT SECTION - ADMIN / PM
+        ====================================================== -->
+
+        <div class="gn-section">
+
+
+            <div class="gn-section-header">
+
+                <div>
+
+                    <h2>
+                        GN Report
+                    </h2>
+
+                    <p>
+                        View GN reports submitted by this victim.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==============================
+                 NO GN REPORT
+            =============================== -->
+
+            <div
+                    class="no-report"
+                    th:if="${#lists.isEmpty(gnReports)}">
+
+                <div class="no-report-icon">
+                    📄
+                </div>
+
+                <h3>
+                    No GN Report Submitted
+                </h3>
+
+                <p>
+                    This victim has not submitted a GN report yet.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==============================
+                 GN REPORTS
+            =============================== -->
+
+            <div
+                    class="report-card"
+                    th:each="report : ${gnReports}">
+
+
+                <div class="report-header">
+
+                    <div class="report-icon">
+                        📄
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            GN Report
+                        </h3>
+
+                        <span
+                                class="report-number"
+                                th:text="${report.reportNumber}">
+                            Report Number
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- REPORT DETAILS -->
+
+                <div class="report-details">
+
+
+                    <div class="report-detail">
+
+                        <strong>
+                            GN Officer
+                        </strong>
+
+                        <span
+                                th:text="${report.gnOfficerName}">
+                            -
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="report-detail">
+
+                        <strong>
+                            GN Division
+                        </strong>
+
+                        <span
+                                th:text="${report.gnDivision}">
+                            -
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="report-detail">
+
+                        <strong>
+                            Submitted Date
+                        </strong>
+
+                        <span
+                                th:text="${#temporals.format(report.submittedDate, 'dd MMM yyyy HH:mm')}">
+                            -
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- REPORT DESCRIPTION -->
+
+                <div class="report-description">
+
+                    <strong>
+                        Report Description
+                    </strong>
+
+                    <p
+                            th:text="${report.reportDescription}">
+                        -
+                    </p>
+
+                </div>
+
+
+
+                <!-- VIEW REPORT -->
+
+                <a
+                        th:href="@{/gn-reports/view/{id}(id=${report.id})}"
+                        class="view-report-btn">
+
+                    📄 View Submitted GN Report
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= ACTION BUTTONS ================= -->
+
+        <div class="actions">
+
+
+            <!-- BACK -->
+
+            <a
+                    th:href="@{/victims}"
+                    class="btn btn-back">
+
+                ← Back to Victims
+
+            </a>
+
+
+
+            <!-- EDIT -->
+
+            <a
+                    th:href="@{/victims/edit/{id}(id=${victim.id})}"
+                    class="btn btn-edit">
+
+                Edit Victim Information
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+</body>
+
+</html>

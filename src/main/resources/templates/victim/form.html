@@ -1,10 +1,610 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Victim Registration - FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #e6e8e9;
+            color: #1b3557;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0c1721;
+            color: white;
+
+            padding: 22px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header span {
+            color: #9bc5ff;
+            font-size: 18px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+        .card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 40px;
+
+            box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.10);
+
+            border-top: 6px solid #558ee0;
+        }
+
+        /* ================= TITLE ================= */
+
+        .title-section {
+            margin-bottom: 30px;
+        }
+
+        .title-section h2 {
+            margin: 0;
+
+            font-size: 32px;
+
+            color: #173457;
+        }
+
+        .title-section p {
+            margin-top: 8px;
+
+            color: #47758a;
+
+            font-size: 17px;
+        }
+
+        /* ================= INFORMATION NOTE ================= */
+
+        .info-note {
+            background: #cfe8f7;
+
+            border-left: 5px solid #28888f;
+
+            border-radius: 9px;
+
+            padding: 16px 20px;
+
+            margin-bottom: 30px;
+
+            color: #28536b;
+
+            line-height: 1.6;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 15px;
+
+            font-weight: bold;
+
+            color: #29445e;
+
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #d64545;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #ccd7df;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            font-family: Arial, sans-serif;
+
+            outline: none;
+
+            color: #29445e;
+
+            background: white;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #558ee0;
+
+            box-shadow:
+                    0 0 0 3px rgba(85, 142, 224, 0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        /* ================= PASSWORD ================= */
+
+        .password-help {
+            margin-top: 7px;
+
+            font-size: 13px;
+
+            color: #6b7d88;
+        }
+
+        /* ================= ERROR ================= */
+
+        .error {
+            margin-top: 7px;
+
+            color: #c0392b;
+
+            font-size: 13px;
+        }
+
+        .duplicate-error {
+            background: #fdecea;
+
+            border: 1px solid #efb5ad;
+
+            color: #a93226;
+
+            padding: 13px 16px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 35px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e0e4e7;
+
+            gap: 15px;
+        }
+
+        .btn {
+            text-decoration: none;
+
+            border: none;
+
+            padding: 14px 25px;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: inline-block;
+        }
+
+        .btn-back {
+            background: #e6e8e9;
+
+            color: #29445e;
+        }
+
+        .btn-back:hover {
+            background: #d5dadd;
+        }
+
+        .btn-register {
+            background: #248be0;
+
+            color: white;
+        }
+
+        .btn-register:hover {
+            background: #176fba;
+        }
+
+        /* ================= LOGIN NOTE ================= */
+
+        .login-note {
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #657783;
+
+            font-size: 14px;
+        }
+
+        .login-note strong {
+            color: #28888f;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .header span {
+                display: none;
+            }
+
+            .container {
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .actions {
+                flex-direction: column-reverse;
+
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+
+                text-align: center;
+            }
+        }
+
+    </style>
+
 </head>
+
+
 <body>
 
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <h1>
+        Flood Disaster Relief System
+    </h1>
+
+    <span>
+        Victim Management Module
+    </span>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <div class="card">
+
+
+        <!-- ================= TITLE ================= -->
+
+        <div class="title-section">
+
+            <h2>
+                Victim Registration
+            </h2>
+
+            <p>
+                Register to receive assistance through the
+                Flood Disaster Relief System.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= INFORMATION ================= -->
+
+        <div class="info-note">
+
+            <strong>
+                Create your victim account:
+            </strong>
+
+            Your NIC number will be used as your login
+            username after registration.
+
+        </div>
+
+
+
+        <!-- ================= DUPLICATE NIC ERROR ================= -->
+
+        <div class="duplicate-error"
+             th:if="${nicError}"
+             th:text="${nicError}">
+        </div>
+
+
+
+        <!-- ================= REGISTRATION FORM ================= -->
+
+        <form th:action="@{/victims/register}"
+              th:object="${victim}"
+              method="post">
+
+
+            <div class="form-grid">
+
+
+                <!-- ================= FULL NAME ================= -->
+
+                <div class="form-group full">
+
+                    <label for="fullName">
+
+                        Full Name
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <input type="text"
+                           id="fullName"
+                           th:field="*{fullName}"
+                           placeholder="Enter your full name">
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('fullName')}"
+                         th:errors="*{fullName}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= NIC ================= -->
+
+                <div class="form-group">
+
+                    <label for="nicNumber">
+
+                        NIC Number
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <input type="text"
+                           id="nicNumber"
+                           th:field="*{nicNumber}"
+                           placeholder="Enter NIC number">
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('nicNumber')}"
+                         th:errors="*{nicNumber}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= PHONE ================= -->
+
+                <div class="form-group">
+
+                    <label for="phoneNumber">
+
+                        Phone Number
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <input type="text"
+                           id="phoneNumber"
+                           th:field="*{phoneNumber}"
+                           placeholder="Enter 10 digit phone number">
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('phoneNumber')}"
+                         th:errors="*{phoneNumber}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= ADDRESS ================= -->
+
+                <div class="form-group full">
+
+                    <label for="address">
+
+                        Address
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <textarea id="address"
+                              th:field="*{address}"
+                              placeholder="Enter your residential address">
+                    </textarea>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('address')}"
+                         th:errors="*{address}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= PASSWORD ================= -->
+
+                <div class="form-group full">
+
+                    <label for="password">
+
+                        Password
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <input type="password"
+                           id="password"
+                           th:field="*{password}"
+                           placeholder="Create a password">
+
+                    <div class="password-help">
+
+                        This password will be used when you
+                        log in to your victim account.
+
+                    </div>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="actions">
+
+
+                <a th:href="@{/victims}"
+                   class="btn btn-back">
+
+                    ← View Registered Victims
+
+                </a>
+
+
+                <button type="submit"
+                        class="btn btn-register">
+
+                    Create Victim Account
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- ================= LOGIN INFORMATION ================= -->
+
+        <div class="login-note">
+
+            Already registered?
+
+            <strong>
+                Victim login will be available here.
+            </strong>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
 </body>
+
 </html>
