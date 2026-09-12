@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Rejected Budgets | FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/budget-trash.css}">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="brand-icon">
+      F
+    </div>
+
+    <div>
+      <h1>FRDMS</h1>
+      <span>Finance Management</span>
+    </div>
+
+  </div>
+
+  <a href="/finance/budgets/pending"
+     class="back-btn">
+
+    ← Pending Requirements
+
+  </a>
+
+</header>
+
+
+<main class="page-container">
+
+  <div class="page-heading">
+
+        <span class="eyebrow">
+            PROJECT MANAGER
+        </span>
+
+    <h2>
+      Rejected Budget Requirements
+    </h2>
+
+    <p>
+      Previously rejected budget requirements are retained for reference.
+    </p>
+
+  </div>
+
+
+  <section class="table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+          <th>ID</th>
+          <th>Activity</th>
+          <th>Requested Amount</th>
+          <th>Reason</th>
+          <th>Status</th>
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="budget : ${budgets}">
+
+          <td th:text="${budget.id}">
+            1
+          </td>
+
+          <td th:text="${budget.activity}">
+            Food Distribution
+          </td>
+
+          <td class="amount">
+
+            LKR
+
+            <span th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
+                            100,000.00
+                        </span>
+
+          </td>
+
+          <td th:text="${budget.reason}">
+            Budget requirement
+          </td>
+
+          <td>
+
+                        <span class="rejected">
+                            REJECTED
+                        </span>
+
+          </td>
+
+        </tr>
+
+
+        <tr th:if="${#lists.isEmpty(budgets)}">
+
+          <td colspan="5"
+              class="empty-state">
+
+            No rejected budget requirements.
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>

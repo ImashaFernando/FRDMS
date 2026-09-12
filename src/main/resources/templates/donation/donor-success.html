@@ -1,64 +1,94 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Registration Successful | FRDMS</title>
 
-  <link rel="stylesheet" th:href="@{/css/donor-register.css}">
+  <link rel="stylesheet" href="/css/donor-success.css">
 </head>
 
 <body>
 
-<div class="success-wrapper">
+<div class="page-wrapper">
 
-  <div class="success-card">
-
-    <!-- Success Icon -->
-    <div class="success-icon">
-      ✓
+  <!-- Header -->
+  <header class="top-header">
+    <div class="brand">
+      <div class="brand-icon">F</div>
+      <div>
+        <h2>FRDMS</h2>
+        <span>Flood Relief & Disaster Management System</span>
+      </div>
     </div>
 
-    <!-- FRDMS -->
-    <div class="success-brand">
-      FRDMS
+    <div class="module-name">
+      Donation Management
     </div>
+  </header>
 
-    <div class="success-line"></div>
 
-    <!-- Heading -->
-    <h1>Registration Successful!</h1>
+  <!-- Success Content -->
+  <main class="success-container">
 
-    <p class="success-message">
-      Your donor information has been registered successfully.
-    </p>
+    <section class="success-card">
 
-    <p class="success-subtext">
-      Thank you for supporting flood relief and disaster recovery efforts.
-    </p>
+      <div class="success-icon">
+        <span>✓</span>
+      </div>
 
-    <!-- Actions -->
-    <div class="success-actions">
+      <div class="success-label">
+        REGISTRATION COMPLETED
+      </div>
 
-      <a href="/donors/register" class="primary-success-button">
-        Register Another Donor
-      </a>
+      <h1>Donor Registration Successful</h1>
 
-      <a href="/" class="secondary-success-button">
-        Back to Home
-      </a>
+      <p class="main-message">
+        Your donor information has been successfully registered
+        in the FRDMS system.
+      </p>
 
-    </div>
+      <div class="status-box">
+        <div class="status-icon">✓</div>
 
-    <!-- Footer -->
-    <div class="success-footer">
-      <span class="yellow-dot"></span>
-      <span>People • Support • Resilience</span>
-    </div>
+        <div>
+          <strong>Registration Confirmed</strong>
+          <p>Your donor profile is now available in the system.</p>
+        </div>
+      </div>
 
-  </div>
+      <div class="actions">
+
+        <a href="/donors/register" class="btn btn-primary">
+          Register Another Donor
+        </a>
+
+        <a href="/finance/dashboard" class="btn btn-secondary">
+          Back to Dashboard
+        </a>
+
+      </div>
+
+      <p class="support-text">
+        Thank you for supporting flood relief and disaster recovery efforts.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>FRDMS</span>
+    <span>•</span>
+    <span>People</span>
+    <span>•</span>
+    <span>Support</span>
+    <span>•</span>
+    <span>Resilience</span>
+  </footer>
 
 </div>
 

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Finance Officer Dashboard | FRDMS</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/finance-dashboard.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-name">FRDMS</div>
+            <div class="brand-subtitle">FINANCE MANAGEMENT</div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section">
+                <span>DONATIONS</span>
+
+                <a href="/donors/details" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Donor Details</span>
+                </a>
+
+                <a href="/donations/cash" class="nav-item">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <span>Cash Donations</span>
+                </a>
+
+                <a href="/donations/goods" class="nav-item">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span>Goods Donations</span>
+                </a>
+            </div>
+
+
+            <div class="nav-section">
+
+                <span>FINANCE</span>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Record Expense</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Expense Records</span>
+                </a>
+
+                <a href="/finance/budgets/create" class="nav-item">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Create Budget</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-arrow-up-right-dots"></i>
+                    <span>Allocate Budget</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Budget Status</span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span>REPORTS</span>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>Donation Report</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Expense Report</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Budget Report</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Monthly Report</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- USER -->
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                FO
+            </div>
+
+            <div class="user-details">
+                <strong>Finance Officer</strong>
+                <span>Internal User</span>
+            </div>
+
+            <i class="fa-solid fa-ellipsis-vertical user-menu"></i>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+                <div class="page-label">FINANCE MANAGEMENT</div>
+
+                <h1>Finance Officer Dashboard</h1>
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    FO
+                </div>
+
+                <div class="profile-info">
+                    <strong>Finance Officer</strong>
+                    <span>Internal User</span>
+                </div>
+
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+
+            </div>
+
+        </header>
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <div>
+                <h2>Financial Overview</h2>
+
+                <p>
+                    Manage donations, expenses, budgets and financial
+                    reports for disaster relief activities.
+                </p>
+            </div>
+
+            <div class="date-box">
+                <i class="fa-regular fa-calendar"></i>
+                <span>Finance Management</span>
+            </div>
+
+        </section>
+
+
+        <!-- ================= SUMMARY CARDS ================= -->
+
+        <section class="summary-grid">
+
+            <div class="summary-card donations-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+
+                <div class="summary-content">
+
+                    <span class="summary-label">
+                        TOTAL DONATIONS
+                    </span>
+
+                    <h3>Rs. 0.00</h3>
+
+                    <p>All recorded donations</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card expense-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+
+                <div class="summary-content">
+
+                    <span class="summary-label">
+                        TOTAL EXPENSES
+                    </span>
+
+                    <h3>Rs. 0.00</h3>
+
+                    <p>Recorded expenses</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card budget-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <div class="summary-content">
+
+                    <span class="summary-label">
+                        AVAILABLE BUDGET
+                    </span>
+
+                    <h3>Rs. 0.00</h3>
+
+                    <p>Current available amount</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card pending-card">
+
+                <div class="summary-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div class="summary-content">
+
+                    <span class="summary-label">
+                        PENDING REQUESTS
+                    </span>
+
+                    <h3>0</h3>
+
+                    <p>Awaiting review</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUICK ACCESS ================= -->
+
+        <section class="quick-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">QUICK ACCESS</span>
+
+                    <h2>Financial Management</h2>
+                </div>
+
+                <span class="section-description">
+                    Access your main finance operations
+                </span>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <!-- DONATIONS -->
+
+                <div class="quick-card">
+
+                    <div class="quick-top">
+
+                        <div class="quick-icon donation-icon">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+
+                        <span class="card-number">01</span>
+
+                    </div>
+
+                    <h3>Donations</h3>
+
+                    <p>
+                        View donor information and submitted cash
+                        and goods donations.
+                    </p>
+
+                    <a href="/donors/details" class="card-link">
+                        Manage Donations
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- EXPENSES -->
+
+                <div class="quick-card">
+
+                    <div class="quick-top">
+
+                        <div class="quick-icon expense-icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+
+                        <span class="card-number">02</span>
+
+                    </div>
+
+                    <h3>Expenses</h3>
+
+                    <p>
+                        Record, categorize and manage disaster-relief
+                        expenses.
+                    </p>
+
+                    <a href="#" class="card-link">
+                        Manage Expenses
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- BUDGETS -->
+
+                <div class="quick-card">
+
+                    <div class="quick-top">
+
+                        <div class="quick-icon budget-icon">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+
+                        <span class="card-number">03</span>
+
+                    </div>
+
+                    <h3>Budgets</h3>
+
+                    <p>
+                        Prepare budget requirements and manage
+                        approved allocations.
+                    </p>
+
+                    <a href="/finance/budgets/create" class="card-link">
+                        Manage Budgets
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- REPORTS -->
+
+                <div class="quick-card">
+
+                    <div class="quick-top">
+
+                        <div class="quick-icon report-icon">
+                            <i class="fa-solid fa-chart-column"></i>
+                        </div>
+
+                        <span class="card-number">04</span>
+
+                    </div>
+
+                    <h3>Financial Reports</h3>
+
+                    <p>
+                        Generate donation, expense, budget and
+                        monthly reports.
+                    </p>
+
+                    <a href="#" class="card-link">
+                        View Reports
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RECENT ACTIVITY ================= -->
+
+        <section class="activity-section">
+
+            <div class="activity-header">
+
+                <div>
+                    <span class="section-label">ACTIVITY</span>
+                    <h2>Recent Financial Transactions</h2>
+                </div>
+
+                <button class="view-all">
+                    View All
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+
+            <div class="activity-box">
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+
+                <h3>No Recent Transactions</h3>
+
+                <p>
+                    Financial transactions will appear here
+                    once records are added.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+            <span>FRDMS</span>
+            <p>Flood Relief & Disaster Management System</p>
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>

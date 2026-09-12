@@ -18,7 +18,11 @@ public class BudgetController {
         this.budgetService = budgetService;
     }
 
-    // Show Create Budget Requirement page
+
+    // =========================
+    // F07 - CREATE BUDGET
+    // =========================
+
     @GetMapping("/create")
     public String showCreateBudgetForm(Model model) {
 
@@ -27,14 +31,14 @@ public class BudgetController {
         return "finance/create-budget";
     }
 
-    // Submit Budget Requirement
+
     @PostMapping("/create")
     public String createBudgetRequirement(
             @Valid @ModelAttribute("budget") Budget budget,
-            BindingResult bindingResult,
-            Model model) {
+            BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+
             return "finance/create-budget";
         }
 
@@ -43,9 +47,90 @@ public class BudgetController {
         return "redirect:/finance/budgets/success";
     }
 
-    // Success page
+
+    // =========================
+    // VIEW ALL
+    // =========================
+
+    @GetMapping
+    public String viewBudgets(Model model) {
+
+        model.addAttribute(
+                "budgets",
+                budgetService.getAllBudgets()
+        );
+
+        return "finance/budget-records";
+    }
+
+
+    // =========================
+    // PM - PENDING BUDGETS
+    // =========================
+
+    @GetMapping("/pending")
+    public String viewPendingBudgets(Model model) {
+
+        model.addAttribute(
+                "budgets",
+                budgetService.getPendingBudgets()
+        );
+
+        return "finance/pm-budget-requirements";
+    }
+
+
+    // =========================
+    // PM - APPROVE
+    // =========================
+
+    @PostMapping("/approve/{id}")
+    public String approveBudget(
+            @PathVariable Long id) {
+
+        budgetService.approveBudget(id);
+
+        return "redirect:/finance/budgets/pending";
+    }
+
+
+    // =========================
+    // PM - REJECT
+    // =========================
+
+    @PostMapping("/reject/{id}")
+    public String rejectBudget(
+            @PathVariable Long id) {
+
+        budgetService.rejectBudget(id);
+
+        return "redirect:/finance/budgets/pending";
+    }
+
+
+    // =========================
+    // REJECTED / TRASH
+    // =========================
+
+    @GetMapping("/trash")
+    public String viewRejectedBudgets(Model model) {
+
+        model.addAttribute(
+                "budgets",
+                budgetService.getRejectedBudgets()
+        );
+
+        return "finance/budget-trash";
+    }
+
+
+    // =========================
+    // SUCCESS
+    // =========================
+
     @GetMapping("/success")
     public String budgetSuccess() {
+
         return "finance/budget-success";
     }
 }

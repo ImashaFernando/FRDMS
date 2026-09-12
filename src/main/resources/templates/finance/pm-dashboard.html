@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Manager Dashboard | FRDMS</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/pm-dashboard.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-name">FRDMS</div>
+            <div class="brand-subtitle">PROJECT MANAGEMENT</div>
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section">
+
+                <span>OVERVIEW</span>
+
+                <a href="/pm/dashboard" class="nav-item active">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span>FINANCIAL MONITORING</span>
+
+                <a href="/donors/details" class="nav-item">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Donor Details</span>
+                </a>
+
+                <a href="/donations/cash" class="nav-item">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <span>Cash Donations</span>
+                </a>
+
+                <a href="/donations/goods" class="nav-item">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span>Goods Donations</span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span>BUDGET MANAGEMENT</span>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Pending Requirements</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Approved Budgets</span>
+                </a>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>Rejected Budgets</span>
+                </a>
+
+            </div>
+
+
+            <div class="nav-section">
+
+                <span>REPORTS</span>
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Financial Overview</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                PM
+            </div>
+
+            <div class="user-details">
+
+                <strong>Project Manager</strong>
+
+                <span>Internal User</span>
+
+            </div>
+
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="page-label">
+                    PROJECT MANAGEMENT
+                </div>
+
+                <h1>
+                    Project Manager Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="notification">
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span>0</span>
+
+                </div>
+
+
+                <div class="profile-avatar">
+                    PM
+                </div>
+
+
+                <div class="profile-info">
+
+                    <strong>Project Manager</strong>
+
+                    <span>Internal User</span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= WELCOME ================= -->
+
+        <section class="welcome">
+
+            <div>
+
+                <span class="welcome-label">
+                    MANAGEMENT OVERVIEW
+                </span>
+
+                <h2>
+                    Financial Performance
+                </h2>
+
+                <p>
+                    Monitor donations, expenses, budgets and
+                    financial activities across disaster-relief operations.
+                </p>
+
+            </div>
+
+
+            <div class="management-badge">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Project Management
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <section class="summary-grid">
+
+
+            <!-- DONATIONS -->
+
+            <div class="summary-card donation-card">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+
+                </div>
+
+                <div class="card-content">
+
+                    <span>Total Donations</span>
+
+                    <h3>Rs. 0.00</h3>
+
+                    <p>
+                        Overall recorded donations
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPENSES -->
+
+            <div class="summary-card expense-card">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                </div>
+
+                <div class="card-content">
+
+                    <span>Total Expenses</span>
+
+                    <h3>Rs. 0.00</h3>
+
+                    <p>
+                        Overall recorded expenses
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="summary-card budget-card">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </div>
+
+                <div class="card-content">
+
+                    <span>Available Budget</span>
+
+                    <h3>Rs. 0.00</h3>
+
+                    <p>
+                        Current available budget
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="summary-card pending-card">
+
+                <div class="card-icon">
+
+                    <i class="fa-solid fa-hourglass-half"></i>
+
+                </div>
+
+                <div class="card-content">
+
+                    <span>Pending Requirements</span>
+
+                    <h3>0</h3>
+
+                    <p>
+                        Awaiting PM review
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= BUDGET REVIEW ================= -->
+
+        <section class="review-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ACTION REQUIRED
+                    </span>
+
+                    <h2>
+                        Budget Requirements
+                    </h2>
+
+                </div>
+
+                <span class="section-note">
+                    Review submitted requirements
+                </span>
+
+            </div>
+
+
+            <div class="review-card">
+
+
+                <div class="review-icon">
+
+                    <i class="fa-solid fa-clipboard-check"></i>
+
+                </div>
+
+
+                <div class="review-content">
+
+                    <h3>
+                        No Pending Budget Requirements
+                    </h3>
+
+                    <p>
+                        New budget requirements submitted by the
+                        Finance Officer will appear here for review.
+                    </p>
+
+                </div>
+
+
+                <a href="/pm/budgets/pending"
+                   class="review-button">
+
+                    Review
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUICK ACCESS ================= -->
+
+        <section class="quick-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        QUICK ACCESS
+                    </span>
+
+                    <h2>
+                        Management Overview
+                    </h2>
+
+                </div>
+
+                <span class="section-note">
+                    Monitor key financial areas
+                </span>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <!-- DONATIONS -->
+
+                <div class="quick-card">
+
+                    <div class="quick-icon donation-icon">
+
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+
+                    </div>
+
+                    <span class="quick-number">
+                        01
+                    </span>
+
+                    <h3>
+                        Donations
+                    </h3>
+
+                    <p>
+                        Monitor total donor contributions and
+                        recorded cash and goods donations.
+                    </p>
+
+                    <a href="/donors/details">
+
+                        View Donations
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <!-- EXPENSES -->
+
+                <div class="quick-card">
+
+                    <div class="quick-icon expense-icon">
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                    </div>
+
+                    <span class="quick-number">
+                        02
+                    </span>
+
+                    <h3>
+                        Expenses
+                    </h3>
+
+                    <p>
+                        Monitor financial expenses recorded for
+                        disaster-relief activities.
+                    </p>
+
+                    <a href="#">
+
+                        View Expenses
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <!-- BUDGET -->
+
+                <div class="quick-card">
+
+                    <div class="quick-icon budget-icon">
+
+                        <i class="fa-solid fa-chart-pie"></i>
+
+                    </div>
+
+                    <span class="quick-number">
+                        03
+                    </span>
+
+                    <h3>
+                        Budget Review
+                    </h3>
+
+                    <p>
+                        Review submitted budget requirements and
+                        make approval decisions.
+                    </p>
+
+                    <a href="#">
+
+                        Review Budgets
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <!-- TRANSACTIONS -->
+
+                <div class="quick-card">
+
+                    <div class="quick-icon transaction-icon">
+
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+
+                    </div>
+
+                    <span class="quick-number">
+                        04
+                    </span>
+
+                    <h3>
+                        Transactions
+                    </h3>
+
+                    <p>
+                        Monitor recent financial transactions and
+                        overall financial activity.
+                    </p>
+
+                    <a href="#">
+
+                        View Activity
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RECENT TRANSACTIONS ================= -->
+
+        <section class="transactions-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        FINANCIAL ACTIVITY
+                    </span>
+
+                    <h2>
+                        Recent Transactions
+                    </h2>
+
+                </div>
+
+                <button class="view-button">
+
+                    View All
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="transactions-box">
+
+                <div class="transaction-empty-icon">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+                <h3>
+                    No Recent Transactions
+                </h3>
+
+                <p>
+                    Recent financial activities will appear here
+                    once transactions are recorded.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <strong>FRDMS</strong>
+
+            <span>
+                Flood Relief & Disaster Management System
+            </span>
+
+            <span class="footer-right">
+                Project Manager Portal
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>
