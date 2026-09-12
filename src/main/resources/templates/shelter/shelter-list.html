@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Shelter List - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+
+  <style>
+    .list-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .list-card {
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 18px 45px rgba(31, 58, 96, 0.25);
+      border-top: 7px solid #F7CF59;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .register-link {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #3582B8;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .register-link:hover {
+      background: #1F3A60;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th {
+      background: #1F3A60;
+      color: white;
+      text-align: left;
+      padding: 14px;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #D5E1E8;
+      color: #1F3A60;
+    }
+
+    th,
+    td {
+      vertical-align: middle;
+    }
+
+    th:nth-child(3),
+    th:nth-child(4),
+    th:nth-child(5),
+    th:nth-child(6),
+    th:nth-child(7),
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(6),
+    td:nth-child(7) {
+      text-align: center;
+    }
+
+    tbody tr:hover {
+      background: #EDF3F6;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #F7CF59;
+      color: #1F3A60;
+    }
+
+    .empty-message {
+      margin-top: 25px;
+      padding: 18px;
+      border-radius: 10px;
+      background: #EDF3F6;
+      color: #1F3A60;
+      text-align: center;
+    }
+
+    .capacity-full {
+      color: #B42318;
+      font-weight: 700;
+    }
+
+    .capacity-available {
+      color: #217A4B;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="list-container">
+
+    <div class="list-card">
+
+      <div class="top-actions">
+
+        <div>
+          <h2 class="page-title">
+            Shelter Management
+          </h2>
+
+          <p class="page-subtitle">
+            View shelter capacity and current occupancy details.
+          </p>
+        </div>
+
+        <a th:href="@{/staff/shelters/register}"
+           class="register-link">
+          Register Shelter
+        </a>
+
+      </div>
+
+
+      <div class="table-wrapper"
+           th:if="${!#lists.isEmpty(shelters)}">
+
+        <table>
+
+          <thead>
+          <tr>
+            <th>Shelter Name</th>
+            <th>Location</th>
+            <th>Maximum Capacity</th>
+            <th>Current Occupancy</th>
+            <th>Available Capacity</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+
+          <tbody>
+
+          <tr th:each="shelter : ${shelters}">
+
+            <td th:text="${shelter.shelterName}">
+              Shelter Name
+            </td>
+
+            <td th:text="${shelter.location}">
+              Location
+            </td>
+
+            <td th:text="${shelter.maximumCapacity}">
+              100
+            </td>
+
+            <td th:text="${shelter.currentOccupancy}">
+              25
+            </td>
+
+            <td>
+
+              <span th:if="${shelter.availableCapacity > 0}"
+                    class="capacity-available"
+                    th:text="${shelter.availableCapacity}">
+                75
+              </span>
+
+              <span th:if="${shelter.availableCapacity <= 0}"
+                    class="capacity-full">
+                0
+              </span>
+
+            </td>
+
+            <td>
+              <span class="status-badge"
+                    th:text="${shelter.status}">
+                AVAILABLE
+              </span>
+            </td>
+
+            <td>
+              <a class="view-button"
+                 th:href="@{/staff/shelters/{id}(id=${shelter.id})}">
+                View Details
+              </a>
+            </td>
+
+          </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="empty-message"
+           th:if="${#lists.isEmpty(shelters)}">
+
+        No shelters have been registered yet.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

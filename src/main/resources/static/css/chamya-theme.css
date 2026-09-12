@@ -325,6 +325,24 @@ textarea {
     line-height: 1.5;
 }
 
+/* Smaller button for View Details */
+.view-button {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: var(--primary-blue);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.view-button:hover {
+    background: var(--navy);
+}
+
 /* Checkbox alignment fix */
 .checkbox-group {
     display: flex;

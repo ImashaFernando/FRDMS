@@ -1,6 +1,7 @@
 package com.frdms.frdms.config;
 
 import com.frdms.frdms.common.service.ProjectManagerUserDetailsService;
+import com.frdms.frdms.shelter_management.service.StaffUserDetailsService;
 import com.frdms.frdms.volunteer_management.service.VolunteerUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +18,16 @@ public class SecurityConfig {
 
     private final VolunteerUserDetailsService volunteerUserDetailsService;
     private final ProjectManagerUserDetailsService projectManagerUserDetailsService;
+    private final StaffUserDetailsService staffUserDetailsService;
 
     public SecurityConfig(
             VolunteerUserDetailsService volunteerUserDetailsService,
-            ProjectManagerUserDetailsService projectManagerUserDetailsService
+            ProjectManagerUserDetailsService projectManagerUserDetailsService,
+            StaffUserDetailsService staffUserDetailsService
     ) {
         this.volunteerUserDetailsService = volunteerUserDetailsService;
         this.projectManagerUserDetailsService = projectManagerUserDetailsService;
+        this.staffUserDetailsService = staffUserDetailsService;
     }
 
     // =========================================================
@@ -61,6 +65,22 @@ public class SecurityConfig {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(projectManagerUserDetailsService);
+
+        provider.setPasswordEncoder(passwordEncoder());
+
+        return provider;
+    }
+
+
+    // =========================================================
+    // STAFF AUTHENTICATION PROVIDER
+    // =========================================================
+
+    @Bean
+    public DaoAuthenticationProvider staffAuthenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(staffUserDetailsService);
 
         provider.setPasswordEncoder(passwordEncoder());
 
@@ -208,11 +228,81 @@ public class SecurityConfig {
 
 
     // =========================================================
-    // OTHER FRDMS URLS
+    // STAFF SECURITY
     // =========================================================
 
     @Bean
     @Order(3)
+    public SecurityFilterChain staffSecurityFilterChain(
+            HttpSecurity http
+    ) throws Exception {
+
+        http
+                .securityMatcher("/staff/**")
+
+                .authenticationProvider(
+                        staffAuthenticationProvider()
+                )
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/staff/login"
+                        ).permitAll()
+
+                        .anyRequest()
+                        .hasRole("STAFF")
+                )
+
+                .formLogin(form -> form
+
+                        .loginPage(
+                                "/staff/login"
+                        )
+
+                        .loginProcessingUrl(
+                                "/staff/login"
+                        )
+
+                        .usernameParameter("email")
+
+                        .passwordParameter("password")
+
+                        .defaultSuccessUrl(
+                                "/staff/shelters",
+                                true
+                        )
+
+                        .failureUrl(
+                                "/staff/login?error=true"
+                        )
+
+                        .permitAll()
+                )
+
+                .logout(logout -> logout
+
+                        .logoutUrl(
+                                "/staff/logout"
+                        )
+
+                        .logoutSuccessUrl(
+                                "/staff/login?logout=true"
+                        )
+
+                        .permitAll()
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // OTHER FRDMS URLS
+    // =========================================================
+
+    @Bean
+    @Order(4)
     public SecurityFilterChain defaultSecurityFilterChain(
             HttpSecurity http
     ) throws Exception {

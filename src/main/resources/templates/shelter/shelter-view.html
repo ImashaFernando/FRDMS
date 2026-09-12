@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Shelter Details - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+
+  <style>
+    .details-container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .details-card {
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 18px 45px rgba(31, 58, 96, 0.25);
+      border-top: 7px solid #F7CF59;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .detail-item {
+      background: #EDF3F6;
+      padding: 18px;
+      border-radius: 10px;
+    }
+
+    .detail-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #3582B8;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      color: #1F3A60;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      color: #3582B8;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    @media (max-width: 700px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="details-container">
+
+    <div class="details-card">
+
+      <h2 class="page-title">
+        Shelter Details
+      </h2>
+
+      <p class="page-subtitle">
+        View complete shelter information.
+      </p>
+
+      <div class="alert-success"
+           th:if="${successMessage}"
+           th:text="${successMessage}">
+      </div>
+
+      <div class="alert-error"
+           th:if="${errorMessage}"
+           th:text="${errorMessage}">
+      </div>
+
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Shelter Name
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.shelterName}">
+            Shelter Name
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Location
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.location}">
+            Location
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Contact Person
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.contactPerson}">
+            Contact Person
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Contact Number
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.contactNumber}">
+            Contact Number
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Maximum Capacity
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.maximumCapacity}">
+            100
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Current Occupancy
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.currentOccupancy}">
+            25
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Available Capacity
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.availableCapacity}">
+            75
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">
+            Status
+          </span>
+
+          <div class="detail-value"
+               th:text="${shelter.status}">
+            AVAILABLE
+          </div>
+        </div>
+
+      </div>
+
+      <form th:action="@{/staff/shelters/{id}/status(id=${shelter.id})}"
+            method="post"
+            style="margin-top: 25px;">
+
+        <div class="form-group">
+
+          <label for="status">
+            Update Shelter Status
+          </label>
+
+          <select id="status"
+                  name="status"
+                  required>
+
+            <option value="AVAILABLE"
+                    th:selected="${shelter.status.name() == 'AVAILABLE'}">
+              AVAILABLE
+            </option>
+
+            <option value="FULL"
+                    th:selected="${shelter.status.name() == 'FULL'}">
+              FULL
+            </option>
+
+            <option value="CLOSED"
+                    th:selected="${shelter.status.name() == 'CLOSED'}">
+              CLOSED
+            </option>
+
+          </select>
+
+        </div>
+
+        <button type="submit"
+                class="btn">
+          Update Status
+        </button>
+
+      </form>
+
+      <a th:href="@{/staff/shelters}"
+         class="back-link">
+        ← Back
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
