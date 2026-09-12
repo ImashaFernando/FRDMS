@@ -67,6 +67,10 @@ public class VolunteerProfile {
     @Column(nullable = false, length = 20)
     private RegistrationStatus registrationStatus = RegistrationStatus.PENDING;
 
+    // VM-US6 - Project Manager review notes
+    @Column(length = 1000)
+    private String reviewNotes;
+
     public VolunteerProfile() {
     }
 
@@ -149,6 +153,14 @@ public class VolunteerProfile {
 
     public void setRegistrationStatus(RegistrationStatus registrationStatus) {
         this.registrationStatus = registrationStatus;
+    }
+
+    public String getReviewNotes() {
+        return reviewNotes;
+    }
+
+    public void setReviewNotes(String reviewNotes) {
+        this.reviewNotes = reviewNotes;
     }
 
     public enum RegistrationStatus {

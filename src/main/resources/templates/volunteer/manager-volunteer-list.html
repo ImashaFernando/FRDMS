@@ -80,6 +80,26 @@
       color: #1F3A60;
     }
 
+    .reviewed-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #E8F6EE;
+      color: #217A4B;
+    }
+
+    .not-reviewed-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #EDF3F6;
+      color: #6C7A89;
+    }
+
     .view-button {
       display: inline-block;
       padding: 8px 15px;
@@ -146,6 +166,7 @@
             <th>Age</th>
             <th>Availability</th>
             <th>Status</th>
+            <th>Review Status</th>
             <th>Action</th>
           </tr>
           </thead>
@@ -171,10 +192,24 @@
             </td>
 
             <td>
-                            <span class="status-badge"
-                                  th:text="${profile.registrationStatus}">
-                                PENDING
-                            </span>
+              <span class="status-badge"
+                    th:text="${profile.registrationStatus}">
+                PENDING
+              </span>
+            </td>
+
+            <td>
+
+              <span class="not-reviewed-badge"
+                    th:if="${profile.reviewNotes == null or #strings.isEmpty(profile.reviewNotes)}">
+                NOT REVIEWED
+              </span>
+
+              <span class="reviewed-badge"
+                    th:unless="${profile.reviewNotes == null or #strings.isEmpty(profile.reviewNotes)}">
+                REVIEWED
+              </span>
+
             </td>
 
             <td>

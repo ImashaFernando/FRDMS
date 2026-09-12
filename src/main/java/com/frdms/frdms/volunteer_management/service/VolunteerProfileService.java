@@ -83,4 +83,69 @@ public class VolunteerProfileService {
                         )
                 );
     }
+
+    // =========================
+    // VM-US6
+    // SAVE PROJECT MANAGER REVIEW NOTES
+    // =========================
+
+    public VolunteerProfile saveReviewNotes(
+            Long profileId,
+            String reviewNotes
+    ) {
+
+        VolunteerProfile volunteerProfile =
+                volunteerProfileRepository.findById(profileId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer profile not found."
+                                )
+                        );
+
+        volunteerProfile.setReviewNotes(reviewNotes);
+
+        return volunteerProfileRepository.save(volunteerProfile);
+    }
+    // =========================
+// VM-US7
+// APPROVE VOLUNTEER
+// =========================
+
+    public VolunteerProfile approveVolunteer(Long profileId) {
+
+        VolunteerProfile volunteerProfile =
+                volunteerProfileRepository.findById(profileId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer profile not found."
+                                )
+                        );
+
+        volunteerProfile.setRegistrationStatus(
+                VolunteerProfile.RegistrationStatus.APPROVED
+        );
+
+        return volunteerProfileRepository.save(volunteerProfile);
+    }
+    // =========================
+// VM-US8
+// REJECT VOLUNTEER
+// =========================
+
+    public VolunteerProfile rejectVolunteer(Long profileId) {
+
+        VolunteerProfile volunteerProfile =
+                volunteerProfileRepository.findById(profileId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer profile not found."
+                                )
+                        );
+
+        volunteerProfile.setRegistrationStatus(
+                VolunteerProfile.RegistrationStatus.REJECTED
+        );
+
+        return volunteerProfileRepository.save(volunteerProfile);
+    }
 }
