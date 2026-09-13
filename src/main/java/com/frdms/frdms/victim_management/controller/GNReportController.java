@@ -4,12 +4,19 @@ import com.frdms.frdms.victim_management.entity.GNReport;
 import com.frdms.frdms.victim_management.entity.Victim;
 import com.frdms.frdms.victim_management.service.GNReportService;
 import com.frdms.frdms.victim_management.service.VictimService;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 
 @Controller
 @RequestMapping("/gn-reports")
@@ -42,24 +49,13 @@ public class GNReportController {
             @PathVariable Long victimId,
             Model model) {
 
-        // Find victim
-
         Victim victim =
                 victimService.getVictimById(victimId);
-
-
-        // Create empty GN report
 
         GNReport gnReport =
                 new GNReport();
 
-
-        // Connect report to victim
-
         gnReport.setVictim(victim);
-
-
-        // Send information to form
 
         model.addAttribute(
                 "gnReport",
@@ -70,7 +66,6 @@ public class GNReportController {
                 "victim",
                 victim
         );
-
 
         return "gn-report/form";
     }
@@ -110,7 +105,6 @@ public class GNReportController {
 
         Victim victim =
                 victimService.getVictimById(victimId);
-
 
         model.addAttribute(
                 "victim",
@@ -346,9 +340,11 @@ public class GNReportController {
 
         return "gn-report/success";
     }
+
+
     // =========================================================
-// VICTIM - GN REPORT STATUS
-// =========================================================
+    // VICTIM - GN REPORT STATUS
+    // =========================================================
 
     @GetMapping("/status/{victimId}")
     public String showGNReportStatus(
@@ -372,6 +368,115 @@ public class GNReportController {
         );
 
         return "gn-report/status";
+    }
+
+
+    // =========================================================
+    // PM - VIEW ALL GN REPORTS
+    // =========================================================
+
+    @GetMapping
+    public String listGNReports(Model model) {
+
+        model.addAttribute(
+                "gnReports",
+                gnReportService.getAllGNReports()
+        );
+
+        return "gn-report/list";
+    }
+
+
+    // =========================================================
+    // PM - REVIEW GN REPORT
+    // =========================================================
+
+    @GetMapping("/verify/{id}")
+    public String showVerificationPage(
+            @PathVariable Long id,
+            Model model) {
+
+        GNReport gnReport =
+                gnReportService.getGNReportById(id);
+
+        model.addAttribute(
+                "gnReport",
+                gnReport
+        );
+
+        return "gn-report/verify";
+    }
+
+
+    // =========================================================
+    // PM - VIEW / DOWNLOAD GN REPORT FILE
+    // =========================================================
+
+    @GetMapping("/file/{id}")
+    public ResponseEntity<byte[]> viewGNReportFile(
+            @PathVariable Long id) {
+
+        GNReport gnReport =
+                gnReportService.getGNReportById(id);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=\"" +
+                                gnReport.getFileName() +
+                                "\""
+                )
+                .contentType(
+                        MediaType.parseMediaType(
+                                gnReport.getFileType()
+                        )
+                )
+                .body(
+                        gnReport.getReportFile()
+                );
+    }
+    // =========================================================
+// PM - APPROVE GN REPORT
+// =========================================================
+
+    @PostMapping("/approve/{id}")
+    public String approveGNReport(@PathVariable Long id) {
+
+        GNReport gnReport =
+                gnReportService.getGNReportById(id);
+
+        gnReport.setVerificationStatus("APPROVED");
+
+        gnReportService.submitGNReport(gnReport);
+
+        return "redirect:/gn-reports/verify/" + id;
+    }
+
+
+// =========================================================
+// PM - REJECT GN REPORT
+// =========================================================
+
+    @PostMapping("/reject/{id}")
+    public String rejectGNReport(@PathVariable Long id) {
+
+        GNReport gnReport =
+                gnReportService.getGNReportById(id);
+
+        gnReport.setVerificationStatus("REJECTED");
+
+        gnReportService.submitGNReport(gnReport);
+
+        return "redirect:/gn-reports/verify/" + id;
+    }
+    // =========================================================
+// ADMIN / PM - VIEW GN REPORT FROM VICTIM INFORMATION
+// =========================================================
+
+    @GetMapping("/view/{id}")
+    public String viewGNReportFromVictim(@PathVariable Long id) {
+
+        return "redirect:/gn-reports/verify/" + id;
     }
 
 }

@@ -2,7 +2,9 @@ package com.frdms.frdms.victim_management.controller;
 
 import com.frdms.frdms.victim_management.entity.Victim;
 import com.frdms.frdms.victim_management.service.VictimService;
+
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,54 +18,25 @@ public class VictimLoginController {
         this.victimService = victimService;
     }
 
-
-    // =========================================================
-    // SHOW VICTIM LOGIN PAGE
-    // =========================================================
-
+    // Show victim login page
     @GetMapping("/victim-login")
     public String showLoginPage() {
-
         return "victim/login";
     }
 
-
-    // =========================================================
-    // PROCESS VICTIM LOGIN
-    // =========================================================
-
+    // Process victim login
     @PostMapping("/victim-login")
     public String loginVictim(
-
-            @RequestParam("nicNumber")
-            String nicNumber,
-
-            @RequestParam("password")
-            String password,
-
+            @RequestParam("nicNumber") String nicNumber,
+            @RequestParam("password") String password,
             HttpSession session,
-
             Model model) {
 
-
-        // -----------------------------------------------------
         // Find victim using NIC
-        // -----------------------------------------------------
+        Victim victim = victimService.getVictimByNic(nicNumber.trim());
 
-        Victim victim =
-                victimService.getVictimByNic(nicNumber);
-
-
-        // -----------------------------------------------------
-        // Check victim and password
-        // -----------------------------------------------------
-
-        if (victim == null ||
-                !victimService.checkPassword(
-                        password,
-                        victim.getPassword()
-                )) {
-
+        // Victim does not exist
+        if (victim == null) {
             model.addAttribute(
                     "loginError",
                     "Invalid NIC number or password."
@@ -72,29 +45,34 @@ public class VictimLoginController {
             return "victim/login";
         }
 
+        // Check password
+        boolean passwordCorrect =
+                victimService.checkPassword(
+                        password,
+                        victim.getPassword()
+                );
 
-        // -----------------------------------------------------
-        // Store logged-in victim in session
-        // -----------------------------------------------------
+        // Wrong password
+        if (!passwordCorrect) {
+            model.addAttribute(
+                    "loginError",
+                    "Invalid NIC number or password."
+            );
 
+            return "victim/login";
+        }
+
+        // Login successful
         session.setAttribute(
-                "loggedInVictimId",
+                "victimId",
                 victim.getId()
         );
 
-
-        // -----------------------------------------------------
-        // Redirect to victim dashboard
-        // -----------------------------------------------------
-
+        // Go to victim dashboard
         return "redirect:/victim/dashboard";
     }
 
-
-    // =========================================================
-    // VICTIM LOGOUT
-    // =========================================================
-
+    // Logout
     @GetMapping("/victim-logout")
     public String logoutVictim(HttpSession session) {
 

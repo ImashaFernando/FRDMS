@@ -86,25 +86,6 @@
             font-size: 15px;
         }
 
-        /* ================= REGISTER BUTTON ================= */
-
-        .register-button {
-            display: inline-block;
-            padding: 13px 20px;
-            background: #248BE0;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-            font-weight: bold;
-            white-space: nowrap;
-            transition: 0.2s ease;
-        }
-
-        .register-button:hover {
-            background: #0B2A4A;
-            transform: translateY(-1px);
-        }
-
         /* ================= SUMMARY ================= */
 
         .summary {
@@ -296,11 +277,6 @@
                 align-items: flex-start;
             }
 
-            .register-button {
-                width: 100%;
-                text-align: center;
-            }
-
         }
 
     </style>
@@ -346,15 +322,6 @@
 
             </div>
 
-
-            <a
-                    class="register-button"
-                    th:href="@{/victims/register}">
-
-                + Register New Victim
-
-            </a>
-
         </div>
 
 
@@ -390,14 +357,6 @@
             <p>
                 No victim records have been added yet.
             </p>
-
-            <a
-                    class="register-button"
-                    th:href="@{/victims/register}">
-
-                Register First Victim
-
-            </a>
 
         </div>
 

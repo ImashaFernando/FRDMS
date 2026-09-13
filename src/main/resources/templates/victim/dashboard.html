@@ -24,6 +24,7 @@
             color: #0B2A4A;
         }
 
+
         /* ================================
            HEADER
            ================================ */
@@ -31,7 +32,9 @@
         .header {
             background: #0C1721;
             color: white;
+
             padding: 18px 40px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -50,9 +53,13 @@
         .logout-btn {
             background: #28888F;
             color: white;
+
             text-decoration: none;
+
             padding: 10px 18px;
+
             border-radius: 7px;
+
             font-weight: bold;
         }
 
@@ -67,7 +74,9 @@
 
         .container {
             max-width: 1100px;
+
             margin: 35px auto;
+
             padding: 0 20px;
         }
 
@@ -98,11 +107,13 @@
 
         .welcome h2 {
             font-size: 28px;
+
             margin-bottom: 8px;
         }
 
         .welcome p {
             color: #E8F5FC;
+
             font-size: 15px;
         }
 
@@ -127,7 +138,9 @@
 
         .profile-title {
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             margin-bottom: 25px;
@@ -135,11 +148,13 @@
 
         .profile-title h3 {
             font-size: 21px;
+
             color: #0B2A4A;
         }
 
         .profile-badge {
             background: #CFE8F7;
+
             color: #0B2A4A;
 
             padding: 7px 13px;
@@ -147,6 +162,7 @@
             border-radius: 20px;
 
             font-size: 13px;
+
             font-weight: bold;
         }
 
@@ -343,16 +359,21 @@
     <section class="welcome">
 
         <h2>
+
             Welcome,
+
             <span th:text="${victim.fullName}">
                 Victim
             </span>
+
         </h2>
 
         <p>
+
             Welcome to your personal FRDMS dashboard.
             You can manage your information and submit
             disaster-related documents from here.
+
         </p>
 
     </section>
@@ -392,10 +413,13 @@
                 <span
                         class="info-value"
                         th:text="${victim.fullName}">
+
                     -
+
                 </span>
 
             </div>
+
 
 
             <!-- NIC -->
@@ -409,10 +433,13 @@
                 <span
                         class="info-value"
                         th:text="${victim.nicNumber}">
+
                     -
+
                 </span>
 
             </div>
+
 
 
             <!-- Phone -->
@@ -426,10 +453,13 @@
                 <span
                         class="info-value"
                         th:text="${victim.phoneNumber}">
+
                     -
+
                 </span>
 
             </div>
+
 
 
             <!-- Address -->
@@ -443,10 +473,13 @@
                 <span
                         class="info-value"
                         th:text="${victim.address}">
+
                     -
+
                 </span>
 
             </div>
+
 
 
             <!-- Registration Date -->
@@ -460,7 +493,9 @@
                 <span
                         class="info-value"
                         th:text="${#temporals.format(victim.registrationDate, 'dd MMM yyyy')}">
+
                     -
+
                 </span>
 
             </div>
@@ -476,41 +511,54 @@
          ================================= -->
 
     <h3 class="section-title">
+
         What would you like to do?
+
     </h3>
 
 
     <section class="actions">
 
 
-        <!-- Additional Information -->
+        <!-- =================================
+             FAMILY & AFFECTED INFORMATION
+             ================================= -->
 
         <a
-                href="#"
+                th:href="@{/victim/family-information}"
                 class="action-card">
 
             <div class="action-icon">
-                📝
+                👨‍👩‍👧
             </div>
 
             <h4>
-                Affected Information
+                Family & Affected Information
             </h4>
 
             <p>
-                Provide additional information about
-                the disaster impact and severity of
-                your situation.
+                Provide a summary of your affected family,
+                including family size, children below 12,
+                male and female members, and shelter
+                requirements.
             </p>
 
         </a>
 
 
 
-        <!-- GN Report -->
+        <!-- =================================
+             GN REPORT
+             ================================= -->
+
+        <!--
+             If the victim has NOT submitted
+             a GN report, show Submit GN Report.
+        -->
 
         <a
-                th:href="@{/gn-reports/status/{id}(id=${victim.id})}"
+                th:if="${gnReport == null}"
+                th:href="@{/gn-reports/submit/{id}(id=${victim.id})}"
                 class="action-card">
 
             <div class="action-icon">
@@ -530,31 +578,36 @@
         </a>
 
 
-
-        <!-- Family Members -->
+        <!--
+             If the victim HAS already submitted
+             a GN report, show View GN Report Status.
+        -->
 
         <a
-                href="#"
+                th:if="${gnReport != null}"
+                th:href="@{/gn-reports/status/{id}(id=${victim.id})}"
                 class="action-card">
 
             <div class="action-icon">
-                👨‍👩‍👧
+                📄
             </div>
 
             <h4>
-                Family Members
+                View GN Report Status
             </h4>
 
             <p>
-                Add and manage information about
-                family members affected by the disaster.
+                View the verification status of your
+                submitted GN report.
             </p>
 
         </a>
 
 
 
-        <!-- Needs Assessment -->
+        <!-- =================================
+             NEEDS ASSESSMENT
+             ================================= -->
 
         <a
                 href="#"
@@ -577,7 +630,9 @@
 
 
 
-        <!-- Profile -->
+        <!-- =================================
+             MY INFORMATION
+             ================================= -->
 
         <a
                 href="#"
@@ -600,7 +655,9 @@
 
 
 
-        <!-- Logout -->
+        <!-- =================================
+             LOGOUT
+             ================================= -->
 
         <a
                 th:href="@{/victim-logout}"
@@ -621,7 +678,9 @@
 
         </a>
 
+
     </section>
+
 
 </main>
 

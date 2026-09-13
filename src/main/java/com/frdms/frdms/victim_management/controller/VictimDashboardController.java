@@ -1,8 +1,12 @@
 package com.frdms.frdms.victim_management.controller;
 
+import com.frdms.frdms.victim_management.entity.GNReport;
 import com.frdms.frdms.victim_management.entity.Victim;
+import com.frdms.frdms.victim_management.service.GNReportService;
 import com.frdms.frdms.victim_management.service.VictimService;
+
 import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +15,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class VictimDashboardController {
 
     private final VictimService victimService;
+    private final GNReportService gnReportService;
 
-    public VictimDashboardController(VictimService victimService) {
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
+    public VictimDashboardController(
+            VictimService victimService,
+            GNReportService gnReportService) {
+
         this.victimService = victimService;
+        this.gnReportService = gnReportService;
     }
 
 
@@ -26,17 +40,14 @@ public class VictimDashboardController {
             HttpSession session,
             Model model) {
 
-        // -----------------------------------------------------
-        // Get logged-in victim ID from session
-        // -----------------------------------------------------
+
+        // =====================================================
+        // CHECK VICTIM LOGIN
+        // =====================================================
 
         Long victimId =
-                (Long) session.getAttribute("loggedInVictimId");
+                (Long) session.getAttribute("victimId");
 
-
-        // -----------------------------------------------------
-        // If no victim is logged in, go back to login
-        // -----------------------------------------------------
 
         if (victimId == null) {
 
@@ -44,23 +55,45 @@ public class VictimDashboardController {
         }
 
 
-        // -----------------------------------------------------
-        // Get victim information from database
-        // -----------------------------------------------------
+        // =====================================================
+        // GET LOGGED-IN VICTIM
+        // =====================================================
 
         Victim victim =
                 victimService.getVictimById(victimId);
 
 
-        // -----------------------------------------------------
-        // Send victim information to Thymeleaf
-        // -----------------------------------------------------
+        // =====================================================
+        // GET LATEST GN REPORT
+        // =====================================================
+
+        GNReport gnReport =
+                gnReportService.getLatestGNReportByVictim(victim);
+
+
+        // =====================================================
+        // SEND VICTIM INFORMATION TO DASHBOARD
+        // =====================================================
 
         model.addAttribute(
                 "victim",
                 victim
         );
 
+
+        // =====================================================
+        // SEND GN REPORT INFORMATION TO DASHBOARD
+        // =====================================================
+
+        model.addAttribute(
+                "gnReport",
+                gnReport
+        );
+
+
+        // =====================================================
+        // OPEN VICTIM DASHBOARD
+        // =====================================================
 
         return "victim/dashboard";
     }

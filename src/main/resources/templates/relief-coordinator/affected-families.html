@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Affected Families | Relief Coordinator | FRDMS</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+
+            background: #f2f5f7;
+
+            color: #0b2a4a;
+        }
+
+
+        /* =================================
+           HEADER
+        ================================= */
+
+        .header {
+
+            background: #0c1721;
+
+            color: white;
+
+            padding: 20px 45px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .logo h1 {
+
+            font-size: 25px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .logo p {
+
+            font-size: 13px;
+
+            color: #cfe8f7;
+        }
+
+
+        .role {
+
+            background: #28888f;
+
+            padding: 9px 16px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        /* =================================
+           MAIN CONTAINER
+        ================================= */
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: 35px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* =================================
+           PAGE HEADER
+        ================================= */
+
+        .page-header {
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h2 {
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+            color: #0b2a4a;
+        }
+
+
+        .page-header p {
+
+            color: #557080;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+            max-width: 850px;
+        }
+
+
+        /* =================================
+           SUMMARY CARDS
+        ================================= */
+
+        .summary-cards {
+
+            display: grid;
+
+            grid-template-columns:
+                    repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .summary-card {
+
+            background: white;
+
+            border-radius: 13px;
+
+            padding: 22px;
+
+            box-shadow:
+                    0 4px 14px
+                    rgba(0, 0, 0, 0.06);
+
+            border: 1px solid #e6e8e9;
+        }
+
+
+        .summary-label {
+
+            color: #657784;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        .summary-value {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #0b2a4a;
+        }
+
+
+        .summary-description {
+
+            margin-top: 5px;
+
+            color: #71808c;
+
+            font-size: 12px;
+        }
+
+
+        /* =================================
+           TABLE CARD
+        ================================= */
+
+        .table-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            box-shadow:
+                    0 5px 18px
+                    rgba(0, 0, 0, 0.07);
+
+            overflow: hidden;
+        }
+
+
+        .table-header {
+
+            padding: 22px 25px;
+
+            border-bottom: 1px solid #e6e8e9;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .table-header h3 {
+
+            font-size: 19px;
+
+            color: #0b2a4a;
+        }
+
+
+        .table-header span {
+
+            font-size: 13px;
+
+            color: #71808c;
+        }
+
+
+        /* =================================
+           TABLE
+        ================================= */
+
+        .table-wrapper {
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 950px;
+        }
+
+
+        th {
+
+            background: #f4f8fb;
+
+            color: #405a6e;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            text-align: left;
+
+            padding: 15px 18px;
+
+            border-bottom: 1px solid #dfe5e9;
+        }
+
+
+        td {
+
+            padding: 17px 18px;
+
+            border-bottom: 1px solid #edf0f2;
+
+            color: #263f53;
+
+            font-size: 14px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr:hover {
+
+            background: #f9fbfc;
+        }
+
+
+        /* =================================
+           VICTIM INFORMATION
+        ================================= */
+
+        .victim-name {
+
+            font-weight: bold;
+
+            color: #0b2a4a;
+
+            font-size: 15px;
+        }
+
+
+        .nic {
+
+            font-size: 12px;
+
+            color: #71808c;
+
+            margin-top: 5px;
+        }
+
+
+        /* =================================
+           FAMILY NUMBER
+        ================================= */
+
+        .family-number {
+
+            font-weight: bold;
+
+            font-size: 18px;
+
+            color: #248be0;
+        }
+
+
+        /* =================================
+           CHILDREN
+        ================================= */
+
+        .children-number {
+
+            font-weight: bold;
+
+            color: #7a4fa3;
+        }
+
+
+        /* =================================
+           GENDER NUMBERS
+        ================================= */
+
+        .gender-number {
+
+            font-weight: bold;
+
+            color: #405a6e;
+        }
+
+
+        /* =================================
+           SHELTER STATUS
+        ================================= */
+
+        .shelter-yes {
+
+            display: inline-block;
+
+            background: #fde8e8;
+
+            color: #b42318;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .shelter-no {
+
+            display: inline-block;
+
+            background: #e8f7ee;
+
+            color: #176b3a;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        /* =================================
+           VIEW BUTTON
+        ================================= */
+
+        .view-btn {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #248be0;
+
+            color: white;
+
+            padding: 9px 15px;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .view-btn:hover {
+
+            background: #1b75c1;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =================================
+           EMPTY STATE
+        ================================= */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 70px 25px;
+
+            color: #71808c;
+        }
+
+
+        .empty-icon {
+
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .empty-state h3 {
+
+            color: #0b2a4a;
+
+            margin-bottom: 8px;
+
+            font-size: 20px;
+        }
+
+
+        .empty-state p {
+
+            font-size: 14px;
+        }
+
+
+        /* =================================
+           INFORMATION NOTE
+        ================================= */
+
+        .info-note {
+
+            margin-top: 20px;
+
+            background: #eef7fc;
+
+            border-left: 5px solid #248be0;
+
+            padding: 15px 18px;
+
+            border-radius: 8px;
+
+            color: #405a6e;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 850px) {
+
+            .header {
+
+                padding: 18px 20px;
+            }
+
+
+            .summary-cards {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .page-header h2 {
+
+                font-size: 23px;
+            }
+
+
+            .table-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 6px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header class="header">
+
+
+    <div class="logo">
+
+        <h1>
+            FRDMS
+        </h1>
+
+        <p>
+            Flood Relief & Disaster Management System
+        </p>
+
+    </div>
+
+
+    <div class="role">
+
+        Relief Coordinator
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =================================
+     MAIN CONTAINER
+================================= -->
+
+<main class="container">
+
+
+    <!-- =================================
+         PAGE HEADER
+    ================================= -->
+
+    <section class="page-header">
+
+        <h2>
+            Affected Families
+        </h2>
+
+
+        <p>
+
+            Review family and disaster impact information
+            submitted by registered victims. Use these
+            summaries to identify families requiring
+            appropriate relief and shelter support.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================
+         SUMMARY CARDS
+    ================================= -->
+
+    <section class="summary-cards">
+
+
+        <!-- TOTAL FAMILIES -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+
+                Submitted Families
+
+            </div>
+
+
+            <div
+                    id="totalFamilies"
+                    class="summary-value">
+
+                0
+
+            </div>
+
+
+            <div class="summary-description">
+
+                Family summaries received from victims
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SHELTER REQUIRED -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+
+                Shelter Required
+
+            </div>
+
+
+            <div
+                    id="shelterRequiredCount"
+                    class="summary-value">
+
+                0
+
+            </div>
+
+
+            <div class="summary-description">
+
+                Families requesting temporary shelter
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FAMILIES WITH CHILDREN -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+
+                Families with Children
+
+            </div>
+
+
+            <div
+                    id="familiesWithChildren"
+                    class="summary-value">
+
+                0
+
+            </div>
+
+
+            <div class="summary-description">
+
+                Families with children below 12 years
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================
+         FAMILY INFORMATION TABLE
+    ================================= -->
+
+    <section class="table-card">
+
+
+        <div class="table-header">
+
+            <h3>
+
+                Submitted Family Summaries
+
+            </h3>
+
+
+            <span>
+
+                Information provided by victims
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================
+             TABLE WHEN DATA EXISTS
+        ================================= -->
+
+        <div
+                class="table-wrapper"
+                th:if="${informationList != null and !#lists.isEmpty(informationList)}">
+
+
+            <table>
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Victim
+                    </th>
+
+                    <th>
+                        Family Members
+                    </th>
+
+                    <th>
+                        Children Below 12
+                    </th>
+
+                    <th>
+                        Male
+                    </th>
+
+                    <th>
+                        Female
+                    </th>
+
+                    <th>
+                        Shelter
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                <tr
+                        th:each="information : ${informationList}"
+                        th:attr="
+                        data-shelter=${information.shelterRequired},
+                        data-children=${information.childrenBelow12}">
+
+
+                    <!-- =================================
+                         VICTIM
+                    ================================= -->
+
+                    <td>
+
+                        <div
+                                class="victim-name"
+                                th:text="${information.victim.fullName}">
+
+                            Victim Name
+
+                        </div>
+
+
+                        <div
+                                class="nic"
+                                th:text="'NIC: ' + ${information.victim.nicNumber}">
+
+                            NIC: -
+
+                        </div>
+
+                    </td>
+
+
+
+                    <!-- =================================
+                         TOTAL FAMILY MEMBERS
+                    ================================= -->
+
+                    <td>
+
+                        <span
+                                class="family-number"
+                                th:text="${information.totalFamilyMembers}">
+
+                            0
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- =================================
+                         CHILDREN
+                    ================================= -->
+
+                    <td>
+
+                        <span
+                                class="children-number"
+                                th:text="${information.childrenBelow12}">
+
+                            0
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- =================================
+                         MALE
+                    ================================= -->
+
+                    <td>
+
+                        <span
+                                class="gender-number"
+                                th:text="${information.maleMembers}">
+
+                            0
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- =================================
+                         FEMALE
+                    ================================= -->
+
+                    <td>
+
+                        <span
+                                class="gender-number"
+                                th:text="${information.femaleMembers}">
+
+                            0
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- =================================
+                         SHELTER
+                    ================================= -->
+
+                    <td>
+
+
+                        <span
+                                th:if="${information.shelterRequired}"
+                                class="shelter-yes">
+
+                            ⚠ Shelter Required
+
+                        </span>
+
+
+                        <span
+                                th:unless="${information.shelterRequired}"
+                                class="shelter-no">
+
+                            ✓ Not Required
+
+                        </span>
+
+
+                    </td>
+
+
+
+                    <!-- =================================
+                         VIEW DETAILS
+                    ================================= -->
+
+                    <td>
+
+                        <a
+                                th:href="@{/relief-coordinator/affected-families/{id}(id=${information.id})}"
+                                class="view-btn">
+
+                            View Details
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+        </div>
+
+
+
+        <!-- =================================
+             EMPTY STATE
+        ================================= -->
+
+        <div
+                class="empty-state"
+                th:if="${informationList == null or #lists.isEmpty(informationList)}">
+
+
+            <div class="empty-icon">
+
+                👨‍👩‍👧
+
+            </div>
+
+
+            <h3>
+
+                No Affected Family Information
+
+            </h3>
+
+
+            <p>
+
+                No victims have submitted their
+                family and affected information yet.
+
+            </p>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================
+         INFORMATION NOTE
+    ================================= -->
+
+    <div class="info-note">
+
+        <strong>Relief Coordinator:</strong>
+
+        Review the submitted family summaries above
+        to identify families requiring shelter and
+        other relief assistance. Select
+        <strong>View Details</strong> to see the
+        complete affected situation of a family.
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =================================
+     SUMMARY COUNT SCRIPT
+================================= -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const rows =
+                document.querySelectorAll(
+                    "tbody tr"
+                );
+
+
+            let shelterCount = 0;
+
+            let childrenCount = 0;
+
+
+            rows.forEach(function (row) {
+
+                /*
+                 * Get values stored in the
+                 * row's data attributes.
+                 */
+
+                const shelter =
+                    row.getAttribute(
+                        "data-shelter"
+                    );
+
+
+                const children =
+                    parseInt(
+                        row.getAttribute(
+                            "data-children"
+                        )
+                    ) || 0;
+
+
+                /*
+                 * Count families requiring shelter.
+                 */
+
+                if (
+                    shelter === "true"
+                    ||
+                    shelter === "True"
+                ) {
+
+                    shelterCount++;
+
+                }
+
+
+                /*
+                 * Count families having
+                 * children below 12.
+                 */
+
+                if (children > 0) {
+
+                    childrenCount++;
+
+                }
+
+            });
+
+
+            /*
+             * Display total submitted families.
+             */
+
+            document.getElementById(
+                "totalFamilies"
+            ).textContent = rows.length;
+
+
+            /*
+             * Display shelter count.
+             */
+
+            document.getElementById(
+                "shelterRequiredCount"
+            ).textContent = shelterCount;
+
+
+            /*
+             * Display families with children.
+             */
+
+            document.getElementById(
+                "familiesWithChildren"
+            ).textContent = childrenCount;
+
+        }
+
+    );
+
+</script>
+
+
+</body>
+
+</html>

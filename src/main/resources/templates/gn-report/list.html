@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GN Report Verification</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      color: #1d2b36;
+    }
+
+    .header {
+      background: #0C1721;
+      color: white;
+      padding: 22px 40px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: #cfe8f7;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 35px auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #0B2A4A;
+      color: white;
+      padding: 14px;
+      text-align: left;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #e2e6e9;
+    }
+
+    tr:hover {
+      background: #f7fafc;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .approved {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .rejected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .view-btn {
+      display: inline-block;
+      padding: 9px 15px;
+      background: #248BE0;
+      color: white;
+      text-decoration: none;
+      border-radius: 7px;
+      font-size: 14px;
+    }
+
+    .view-btn:hover {
+      background: #176db5;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>GN Report Verification</h1>
+  <p>Review and verify submitted GN reports</p>
+</div>
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+        <tr>
+          <th>Report Number</th>
+          <th>Victim</th>
+          <th>GN Officer</th>
+          <th>GN Division</th>
+          <th>Submitted Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="report : ${gnReports}">
+
+          <td th:text="${report.reportNumber}"></td>
+
+          <td th:text="${report.victim.fullName}"></td>
+
+          <td th:text="${report.gnOfficerName}"></td>
+
+          <td th:text="${report.gnDivision}"></td>
+
+          <td th:text="${#temporals.format(report.submittedDate, 'yyyy-MM-dd HH:mm')}"></td>
+
+          <td>
+
+                        <span class="status pending"
+                              th:if="${report.verificationStatus == 'PENDING'}">
+                            PENDING
+                        </span>
+
+            <span class="status approved"
+                  th:if="${report.verificationStatus == 'APPROVED'}">
+                            APPROVED
+                        </span>
+
+            <span class="status rejected"
+                  th:if="${report.verificationStatus == 'REJECTED'}">
+                            REJECTED
+                        </span>
+
+          </td>
+
+          <td>
+            <a class="view-btn"
+               th:href="@{/gn-reports/verify/{id}(id=${report.id})}">
+              Review
+            </a>
+          </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(gnReports)}">
+          <td colspan="7" class="empty">
+            No GN reports have been submitted yet.
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
