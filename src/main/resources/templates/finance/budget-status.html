@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Budget Status | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/budget-status.css}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                FR
+            </div>
+
+            <div>
+                <h1>FRDMS</h1>
+                <p>Finance Management</p>
+            </div>
+
+        </div>
+
+        <a href="/finance/dashboard"
+           class="dashboard-btn">
+            Dashboard
+        </a>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <section class="page-heading">
+
+            <span class="label">
+                FINANCE OFFICER
+            </span>
+
+            <h2>Budget Status</h2>
+
+            <p>
+                View the current status of disaster-relief
+                budget requirements and allocations.
+            </p>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    TOTAL REQUIREMENTS
+                </span>
+
+                <strong th:text="${#lists.size(budgets)}">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    APPROVED
+                </span>
+
+                <strong
+                        th:text="${#lists.size(budgets.?[status == 'APPROVED'])}">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    ALLOCATED
+                </span>
+
+                <strong
+                        th:text="${#lists.size(budgets.?[status == 'ALLOCATED'])}">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    PENDING
+                </span>
+
+                <strong
+                        th:text="${#lists.size(budgets.?[status == 'PENDING'])}">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS TABLE -->
+
+        <section class="table-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Budget Records</h3>
+
+                    <p>
+                        Track requested, allocated and current
+                        budget status.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Relief Activity</th>
+                        <th>Requested Amount</th>
+                        <th>Allocated Amount</th>
+                        <th>Allocation Date</th>
+                        <th>Status</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="budget : ${budgets}">
+
+                        <td>
+                            <span class="budget-id"
+                                  th:text="${budget.id}">
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <strong th:text="${budget.activity}">
+                            </strong>
+                        </td>
+
+
+                        <td>
+                            <span class="money">
+                                Rs.
+                                <span th:text="${budget.requestedAmount}">
+                                </span>
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:if="${budget.allocatedAmount != null}"
+                                    class="money allocated-money">
+
+                                Rs.
+                                <span th:text="${budget.allocatedAmount}">
+                                </span>
+
+                            </span>
+
+                            <span
+                                    th:unless="${budget.allocatedAmount != null}"
+                                    class="not-allocated">
+
+                                Not allocated
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    th:if="${budget.allocatedDate != null}"
+                                    th:text="${budget.allocatedDate}">
+                            </span>
+
+                            <span
+                                    th:unless="${budget.allocatedDate != null}"
+                                    class="not-allocated">
+
+                                —
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="status"
+                                    th:classappend="${budget.status == 'ALLOCATED'} ? ' allocated' :
+                                                (${budget.status == 'APPROVED'} ? ' approved' :
+                                                (${budget.status == 'PENDING'} ? ' pending' : ' rejected'))"
+                                    th:text="${budget.status}">
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPTY STATE -->
+
+                    <tr th:if="${#lists.isEmpty(budgets)}">
+
+                        <td colspan="6">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    $
+                                </div>
+
+                                <h3>No Budget Records</h3>
+
+                                <p>
+                                    There are currently no budget
+                                    requirements available.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            FRDMS · Finance Management
+        </p>
+
+    </footer>
+
+</div>
+
+</body>
+</html>

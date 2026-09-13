@@ -19,7 +19,7 @@ public class DonorService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // US-D01
+    // US-D01: Register donor
     public Donor registerDonor(Donor donor) {
 
         if (donorRepository.existsByUsername(donor.getUsername())) {
@@ -33,7 +33,7 @@ public class DonorService {
         return donorRepository.save(donor);
     }
 
-    // US-D02
+    // US-D02: View donor details
     public List<Donor> getAllDonors() {
         return donorRepository.findAll();
     }
@@ -42,5 +42,39 @@ public class DonorService {
         return donorRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Donor not found"));
+    }
+
+    // US-D03: Update donor information
+    public Donor updateDonor(Long id, Donor updatedDonor) {
+
+        Donor existingDonor = getDonorById(id);
+
+        existingDonor.setUsername(updatedDonor.getUsername());
+        existingDonor.setFullName(updatedDonor.getFullName());
+        existingDonor.setContactNumber(updatedDonor.getContactNumber());
+        existingDonor.setEmail(updatedDonor.getEmail());
+        existingDonor.setAddress(updatedDonor.getAddress());
+
+        // Update password only if a new password is provided
+        if (updatedDonor.getPassword() != null
+                && !updatedDonor.getPassword().isBlank()) {
+
+            existingDonor.setPassword(
+                    passwordEncoder.encode(updatedDonor.getPassword())
+            );
+        }
+
+        return donorRepository.save(existingDonor);
+    }
+    // US-D04: Search donor records
+    public List<Donor> searchDonors(String keyword) {
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return getAllDonors();
+        }
+
+        return donorRepository.findByFullNameContainingIgnoreCase(
+                keyword.trim()
+        );
     }
 }

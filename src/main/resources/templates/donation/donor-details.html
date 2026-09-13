@@ -53,6 +53,32 @@
         </div>
 
 
+        <!-- Search Donors -->
+        <div class="search-section">
+
+            <form th:action="@{/donors/details}"
+                  method="get"
+                  class="search-form">
+
+                <input type="text"
+                       name="keyword"
+                       th:value="${keyword}"
+                       placeholder="Search donor by full name...">
+
+                <button type="submit">
+                    🔍 Search
+                </button>
+
+                <a th:href="@{/donors/details}"
+                   class="clear-button">
+                    Clear
+                </a>
+
+            </form>
+
+        </div>
+
+
         <!-- No donors -->
 
         <div class="empty-state"

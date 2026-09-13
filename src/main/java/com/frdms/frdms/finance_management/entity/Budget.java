@@ -5,6 +5,8 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "budgets")
 public class Budget {
@@ -28,6 +30,10 @@ public class Budget {
 
     @Column(nullable = false)
     private String status;
+
+    private Double allocatedAmount;
+
+    private LocalDate allocatedDate;
 
     public Budget() {
     }
@@ -70,5 +76,21 @@ public class Budget {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Double getAllocatedAmount() {
+        return allocatedAmount;
+    }
+
+    public void setAllocatedAmount(Double allocatedAmount) {
+        this.allocatedAmount = allocatedAmount;
+    }
+
+    public LocalDate getAllocatedDate() {
+        return allocatedDate;
+    }
+
+    public void setAllocatedDate(LocalDate allocatedDate) {
+        this.allocatedDate = allocatedDate;
     }
 }

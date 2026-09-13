@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Update Donation | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/edit-donation.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <header class="page-header">
+
+        <div class="brand">FRDMS</div>
+
+        <span class="badge">
+            DONATION MANAGEMENT
+        </span>
+
+        <h1>Update Donation</h1>
+
+        <p>
+            Update the details of an existing donation record.
+        </p>
+
+    </header>
+
+
+    <main class="donation-card">
+
+        <div class="card-title">
+            <h2>Donation Information</h2>
+
+            <p>
+                Update the required donation details and save the changes.
+            </p>
+        </div>
+
+
+        <form th:action="@{/donations/update/{id}(id=${donation.id})}"
+              th:object="${donation}"
+              method="post">
+
+            <!-- Donor ID -->
+            <div class="form-group">
+
+                <label for="donorId">
+                    Donor ID
+                </label>
+
+                <input type="number"
+                       id="donorId"
+                       th:field="*{donorId}"
+                       required>
+
+                <small class="error"
+                       th:if="${#fields.hasErrors('donorId')}"
+                       th:errors="*{donorId}">
+                </small>
+
+            </div>
+
+
+            <!-- Donation Type -->
+            <div class="form-group">
+
+                <label for="donationType">
+                    Donation Type
+                </label>
+
+                <select id="donationType"
+                        th:field="*{donationType}"
+                        required>
+
+                    <option value="">Select donation type</option>
+                    <option value="CASH">Cash</option>
+                    <option value="GOODS">Goods</option>
+
+                </select>
+
+                <small class="error"
+                       th:if="${#fields.hasErrors('donationType')}"
+                       th:errors="*{donationType}">
+                </small>
+
+            </div>
+
+
+            <!-- Cash Amount -->
+            <div class="form-group"
+                 id="cashGroup">
+
+                <label for="cashAmount">
+                    Cash Amount
+                </label>
+
+                <input type="number"
+                       id="cashAmount"
+                       th:field="*{cashAmount}"
+                       step="0.01"
+                       min="0"
+                       placeholder="Enter cash amount">
+
+            </div>
+
+
+            <!-- Goods Description -->
+            <div class="form-group"
+                 id="goodsDescriptionGroup">
+
+                <label for="goodsDescription">
+                    Goods Description
+                </label>
+
+                <input type="text"
+                       id="goodsDescription"
+                       th:field="*{goodsDescription}"
+                       placeholder="Example: Rice">
+
+            </div>
+
+
+            <!-- Goods Quantity -->
+            <div class="form-group"
+                 id="goodsQuantityGroup">
+
+                <label for="goodsQuantity">
+                    Goods Quantity
+                </label>
+
+                <input type="text"
+                       id="goodsQuantity"
+                       th:field="*{goodsQuantity}"
+                       placeholder="Example: 20 kg">
+
+            </div>
+
+
+            <!-- Additional Description -->
+            <div class="form-group">
+
+                <label for="description">
+                    Additional Details
+                    <span>(Optional)</span>
+                </label>
+
+                <textarea id="description"
+                          th:field="*{description}"
+                          rows="4"
+                          placeholder="Enter additional donation details">
+                </textarea>
+
+            </div>
+
+
+            <!-- Status - Read Only -->
+            <div class="form-group">
+
+                <label for="status">
+                    Current Status
+                </label>
+
+                <input type="text"
+                       id="status"
+                       th:field="*{status}"
+                       readonly>
+
+                <p class="helper-text">
+                    Donation status cannot be changed from this page.
+                </p>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="form-actions">
+
+                <a th:href="@{/donations/cash}"
+                   class="cancel-button">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="update-button">
+                    Update Donation
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+</div>
+
+
+<script>
+    const donationType = document.getElementById("donationType");
+
+    const cashGroup = document.getElementById("cashGroup");
+    const goodsDescriptionGroup =
+        document.getElementById("goodsDescriptionGroup");
+    const goodsQuantityGroup =
+        document.getElementById("goodsQuantityGroup");
+
+    const cashAmount = document.getElementById("cashAmount");
+    const goodsDescription =
+        document.getElementById("goodsDescription");
+    const goodsQuantity =
+        document.getElementById("goodsQuantity");
+
+    function updateDonationFields() {
+
+        if (donationType.value === "CASH") {
+
+            cashGroup.style.display = "block";
+
+            goodsDescriptionGroup.style.display = "none";
+            goodsQuantityGroup.style.display = "none";
+
+            cashAmount.required = true;
+            goodsDescription.required = false;
+            goodsQuantity.required = false;
+
+        } else if (donationType.value === "GOODS") {
+
+            cashGroup.style.display = "none";
+
+            goodsDescriptionGroup.style.display = "block";
+            goodsQuantityGroup.style.display = "block";
+
+            cashAmount.required = false;
+            goodsDescription.required = true;
+            goodsQuantity.required = true;
+
+        } else {
+
+            cashGroup.style.display = "none";
+            goodsDescriptionGroup.style.display = "none";
+            goodsQuantityGroup.style.display = "none";
+
+            cashAmount.required = false;
+            goodsDescription.required = false;
+            goodsQuantity.required = false;
+        }
+    }
+
+    donationType.addEventListener("change", updateDonationFields);
+
+    updateDonationFields();
+</script>
+
+</body>
+</html>

@@ -70,4 +70,63 @@ public class DonationController {
     public String donationSuccess() {
         return "donation/donation-success";
     }
+    // US-D09: Show update donation form
+    @GetMapping("/edit/{id}")
+    public String showEditDonationForm(
+            @PathVariable("id") Long id,
+            Model model) {
+
+        Donation donation = donationService.getDonationById(id);
+
+        model.addAttribute("donation", donation);
+
+        return "donation/edit-donation";
+    }
+
+    // US-D09: Update donation record
+    @PostMapping("/update/{id}")
+    public String updateDonation(
+            @PathVariable("id") Long id,
+            @Valid @ModelAttribute("donation") Donation donation,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "donation/edit-donation";
+        }
+
+        donationService.updateDonation(id, donation);
+
+        return "redirect:/donations/cash";
+    }
+    // US-D10: Generate donation receipt
+    @GetMapping("/receipt/{id}")
+    public String generateDonationReceipt(
+            @PathVariable("id") Long id,
+            Model model) {
+
+        Donation donation = donationService.getDonationById(id);
+
+        model.addAttribute("donation", donation);
+
+        return "donation/donation-receipt";
+    }
+    // US-D11: View donation history
+    @GetMapping("/history")
+    public String viewDonationHistory(
+            @RequestParam(value = "donorId", required = false) Long donorId,
+            Model model) {
+
+        if (donorId != null) {
+            model.addAttribute(
+                    "donations",
+                    donationService.getDonationsByDonor(donorId)
+            );
+        } else {
+            model.addAttribute("donations", null);
+        }
+
+        model.addAttribute("donorId", donorId);
+
+        return "donation/donation-history";
+    }
 }

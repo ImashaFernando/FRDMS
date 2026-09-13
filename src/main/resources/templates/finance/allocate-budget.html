@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Allocate Budget | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/allocate-budget.css}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-icon">FR</div>
+
+            <div>
+                <h1>FRDMS</h1>
+                <p>Finance Management</p>
+            </div>
+        </div>
+
+        <a href="/finance/dashboard" class="dashboard-btn">
+            Dashboard
+        </a>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <section class="page-heading">
+
+            <span class="label">FINANCE OFFICER</span>
+
+            <h2>Allocate Budget</h2>
+
+            <p>
+                Allocate approved funds to disaster relief activities.
+            </p>
+
+        </section>
+
+
+        <!-- TABLE CARD -->
+        <section class="table-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Approved Budget Requirements</h3>
+
+                    <p>
+                        These budget requirements have been approved
+                        by the Project Manager and are ready for allocation.
+                    </p>
+                </div>
+
+                <div class="approved-count">
+                    APPROVED
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Relief Activity</th>
+                        <th>Requested Amount</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="budget : ${budgets}">
+
+                        <td>
+                            <span class="budget-id"
+                                  th:text="${budget.id}">
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <div class="activity">
+
+                                <strong th:text="${budget.activity}">
+                                </strong>
+
+                            </div>
+                        </td>
+
+
+                        <td>
+
+                            <span class="amount">
+                                Rs.
+                                <span th:text="${budget.requestedAmount}">
+                                </span>
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason"
+                                 th:text="${budget.reason}">
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="status approved">
+                                APPROVED
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a class="allocate-btn"
+                               th:href="@{/finance/budgets/allocate/{id}(id=${budget.id})}">
+
+                                Allocate
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPTY STATE -->
+
+                    <tr th:if="${#lists.isEmpty(budgets)}">
+
+                        <td colspan="6">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    ✓
+                                </div>
+
+                                <h3>No Approved Budgets</h3>
+
+                                <p>
+                                    There are currently no approved
+                                    budget requirements waiting for allocation.
+                                </p>
+
+                                <a href="/finance/budgets/pending"
+                                   class="secondary-btn">
+
+                                    View Pending Requirements
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            FRDMS · Finance Management
+        </p>
+
+    </footer>
+
+</div>
+
+</body>
+</html>

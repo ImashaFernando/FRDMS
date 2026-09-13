@@ -47,4 +47,43 @@ public class DonationService {
         return donationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Donation not found"));
     }
+    // US-F11: Donation Report - Total donation records
+    public long getTotalDonationCount() {
+        return donationRepository.count();
+    }
+
+    // US-F11: Donation Report - Total cash donation amount
+    public double getTotalCashDonationAmount() {
+        return getCashDonations()
+                .stream()
+                .mapToDouble(donation ->
+                        donation.getCashAmount() != null
+                                ? donation.getCashAmount()
+                                : 0.0)
+                .sum();
+    }
+
+    // US-F11: Donation Report - Total goods donations
+    public long getTotalGoodsDonationCount() {
+        return getGoodsDonations().size();
+    }
+
+    // US-F11: Donation Report - Pending donations
+    public long getPendingDonationCount() {
+        return donationRepository.findByStatus("PENDING").size();
+    }
+    // US-D09: Update donation records
+    public Donation updateDonation(Long id, Donation updatedDonation) {
+
+        Donation existingDonation = getDonationById(id);
+
+        existingDonation.setDonorId(updatedDonation.getDonorId());
+        existingDonation.setDonationType(updatedDonation.getDonationType());
+        existingDonation.setCashAmount(updatedDonation.getCashAmount());
+        existingDonation.setGoodsDescription(updatedDonation.getGoodsDescription());
+        existingDonation.setGoodsQuantity(updatedDonation.getGoodsQuantity());
+        existingDonation.setDescription(updatedDonation.getDescription());
+
+        return donationRepository.save(existingDonation);
+    }
 }

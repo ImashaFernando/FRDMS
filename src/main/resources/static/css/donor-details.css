@@ -94,6 +94,84 @@ body {
     background: #1F3A60;
 }
 
+
+/* =========================
+   SEARCH SECTION
+   ========================= */
+
+.search-section {
+    margin: 10px 0 25px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-form input {
+    flex: 1;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #243b53;
+    background: #ffffff;
+}
+
+.search-form input::placeholder {
+    color: #8a9aaa;
+}
+
+.search-form input:focus {
+    border-color: #3582B8;
+    box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
+}
+
+.search-form button {
+    height: 44px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 8px;
+    background: #3582B8;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.search-form button:hover {
+    background: #1F3A60;
+}
+
+.clear-button {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border-radius: 8px;
+    background: #EDF3F6;
+    color: #1F3A60;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid #d5e0e7;
+}
+
+.clear-button:hover {
+    background: #dce8ef;
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
 .table-container {
     width: 100%;
     overflow-x: auto;
@@ -126,6 +204,11 @@ tbody tr:hover {
     background: #f5f9fb;
 }
 
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -152,6 +235,11 @@ tbody tr:hover {
     font-size: 14px;
 }
 
+
+/* =========================
+   FOOTER
+   ========================= */
+
 .footer {
     margin-top: 25px;
     display: flex;
@@ -168,6 +256,11 @@ tbody tr:hover {
     border-radius: 50%;
     background: #F7CF59;
 }
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
 
 @media (max-width: 700px) {
 
@@ -191,5 +284,20 @@ tbody tr:hover {
 
     .page-header h1 {
         font-size: 28px;
+    }
+
+    .search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form input,
+    .search-form button,
+    .clear-button {
+        width: 100%;
+    }
+
+    .clear-button {
+        justify-content: center;
     }
 }

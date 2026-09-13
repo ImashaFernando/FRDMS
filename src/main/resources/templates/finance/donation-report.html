@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donation Report | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/donation-report.css}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                FR
+            </div>
+
+            <div>
+                <h1>FRDMS</h1>
+                <p>Finance Management</p>
+            </div>
+
+        </div>
+
+        <a href="/finance/dashboard"
+           class="dashboard-btn">
+            Dashboard
+        </a>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+        <section class="page-heading">
+
+            <span class="label">
+                FINANCE OFFICER
+            </span>
+
+            <h2>Donation Report</h2>
+
+            <p>
+                View a summary of cash and goods donations
+                recorded in the system.
+            </p>
+
+        </section>
+
+
+        <!-- SUMMARY CARDS -->
+
+        <section class="summary-grid">
+
+            <div class="summary-card">
+
+                <span class="card-label">
+                    TOTAL DONATIONS
+                </span>
+
+                <strong th:text="${totalDonations}">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="card-label">
+                    CASH DONATION VALUE
+                </span>
+
+                <strong>
+                    Rs.
+                    <span th:text="${cashDonationAmount}">
+                        0
+                    </span>
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="card-label">
+                    GOODS DONATIONS
+                </span>
+
+                <strong th:text="${goodsDonations}">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="card-label">
+                    PENDING DONATIONS
+                </span>
+
+                <strong th:text="${pendingDonations}">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- DONATION RECORDS -->
+
+        <section class="report-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Donation Records</h3>
+
+                    <p>
+                        Detailed donation information
+                        recorded in FRDMS.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Donor ID</th>
+                        <th>Type</th>
+                        <th>Cash Amount</th>
+                        <th>Goods Description</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="donation : ${donations}">
+
+                        <td th:text="${donation.id}">
+                        </td>
+
+                        <td th:text="${donation.donorId}">
+                        </td>
+
+                        <td>
+
+                            <span class="type"
+                                  th:classappend="${donation.donationType == 'CASH'} ? ' cash' : ' goods'"
+                                  th:text="${donation.donationType}">
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span th:if="${donation.cashAmount != null}">
+                                Rs.
+                                <span th:text="${donation.cashAmount}">
+                                </span>
+                            </span>
+
+                            <span th:unless="${donation.cashAmount != null}">
+                                —
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span th:if="${donation.goodsDescription != null}"
+                                  th:text="${donation.goodsDescription}">
+                            </span>
+
+                            <span th:unless="${donation.goodsDescription != null}">
+                                —
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span th:if="${donation.goodsQuantity != null}"
+                                  th:text="${donation.goodsQuantity}">
+                            </span>
+
+                            <span th:unless="${donation.goodsQuantity != null}">
+                                —
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <span class="status"
+                                  th:text="${donation.status}">
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPTY -->
+
+                    <tr th:if="${#lists.isEmpty(donations)}">
+
+                        <td colspan="7">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    $
+                                </div>
+
+                                <h3>No Donation Records</h3>
+
+                                <p>
+                                    There are currently no donations
+                                    recorded in the system.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        FRDMS · Finance Management
+    </footer>
+
+</div>
+
+</body>
+</html>
