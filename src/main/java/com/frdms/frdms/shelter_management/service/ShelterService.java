@@ -24,6 +24,15 @@ public class ShelterService {
 
     public Shelter registerShelter(Shelter shelter) {
 
+        if (shelterRepository.existsByLocationIgnoreCase(
+                shelter.getLocation()
+        )) {
+
+            throw new IllegalArgumentException(
+                    "A shelter already exists at this location."
+            );
+        }
+
         if (shelter.getCurrentOccupancy() == null) {
             shelter.setCurrentOccupancy(0);
         }
@@ -42,6 +51,12 @@ public class ShelterService {
             );
 
         } else {
+
+            if (shelter.getStatus() == Shelter.ShelterStatus.FULL) {
+                throw new IllegalArgumentException(
+                        "Shelter status cannot be FULL while available capacity remains."
+                );
+            }
 
             if (shelter.getStatus() == null) {
                 shelter.setStatus(
@@ -81,13 +96,20 @@ public class ShelterService {
 
 
     // =========================
-    // SM-US10
-    // UPDATE SHELTER STATUS
+    // SM-US5 / SM-US10
+    // UPDATE SHELTER DETAILS
+    // Contact Person
+    // Contact Number
+    // Current Occupancy
+    // Status
     // =========================
 
-    public Shelter updateShelterStatus(
+    public Shelter updateShelterDetails(
             Long shelterId,
-            Shelter.ShelterStatus newStatus
+            String contactPerson,
+            String contactNumber,
+            Integer currentOccupancy,
+            Shelter.ShelterStatus status
     ) {
 
         Shelter shelter =
@@ -98,8 +120,47 @@ public class ShelterService {
                                 )
                         );
 
-        if (shelter.getCurrentOccupancy()
-                .equals(shelter.getMaximumCapacity())) {
+        if (contactPerson == null || contactPerson.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Contact person cannot be empty."
+            );
+        }
+
+        if (contactNumber == null || contactNumber.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Contact number cannot be empty."
+            );
+        }
+
+        if (!contactNumber.matches("^0\\d{9}$")) {
+            throw new IllegalArgumentException(
+                    "Contact number must be a valid 10-digit number starting with 0."
+            );
+        }
+
+        if (currentOccupancy == null) {
+            throw new IllegalArgumentException(
+                    "Current occupancy is required."
+            );
+        }
+
+        if (currentOccupancy < 0) {
+            throw new IllegalArgumentException(
+                    "Current occupancy cannot be negative."
+            );
+        }
+
+        if (currentOccupancy > shelter.getMaximumCapacity()) {
+            throw new IllegalArgumentException(
+                    "Current occupancy cannot be greater than maximum capacity."
+            );
+        }
+
+        shelter.setContactPerson(contactPerson);
+        shelter.setContactNumber(contactNumber);
+        shelter.setCurrentOccupancy(currentOccupancy);
+
+        if (currentOccupancy.equals(shelter.getMaximumCapacity())) {
 
             shelter.setStatus(
                     Shelter.ShelterStatus.FULL
@@ -107,9 +168,37 @@ public class ShelterService {
 
         } else {
 
-            shelter.setStatus(newStatus);
+            if (status == Shelter.ShelterStatus.FULL) {
+                throw new IllegalArgumentException(
+                        "Shelter status cannot be FULL while available capacity remains."
+                );
+            }
+
+            shelter.setStatus(status);
         }
 
         return shelterRepository.save(shelter);
+    }
+    // =========================
+// DELETE SHELTER
+// =========================
+
+    public void deleteShelter(Long shelterId) {
+
+        Shelter shelter =
+                shelterRepository.findById(shelterId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Shelter not found."
+                                )
+                        );
+
+        if (shelter.getCurrentOccupancy() > 0) {
+            throw new IllegalArgumentException(
+                    "Shelter cannot be deleted while people are currently staying there."
+            );
+        }
+
+        shelterRepository.delete(shelter);
     }
 }

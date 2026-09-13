@@ -154,6 +154,16 @@
 
       </div>
 
+      <div class="alert-success"
+           th:if="${successMessage}"
+           th:text="${successMessage}">
+      </div>
+
+      <div class="alert-error"
+           th:if="${errorMessage}"
+           th:text="${errorMessage}">
+      </div>
+
 
       <div class="table-wrapper"
            th:if="${!#lists.isEmpty(shelters)}">
@@ -215,10 +225,12 @@
             </td>
 
             <td>
+
               <a class="view-button"
                  th:href="@{/staff/shelters/{id}(id=${shelter.id})}">
                 View Details
               </a>
+
             </td>
 
           </tr>

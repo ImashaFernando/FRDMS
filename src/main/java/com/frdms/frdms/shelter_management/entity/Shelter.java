@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "shelters")
@@ -33,6 +34,10 @@ public class Shelter {
     private String contactPerson;
 
     @NotBlank(message = "Contact number is required")
+    @Pattern(
+            regexp = "^0\\d{9}$",
+            message = "Contact number must be a valid 10-digit number starting with 0"
+    )
     @Column(nullable = false, length = 20)
     private String contactNumber;
 

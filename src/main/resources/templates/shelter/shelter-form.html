@@ -35,7 +35,8 @@
 
         <form th:action="@{/staff/shelters/register}"
               th:object="${shelter}"
-              method="post">
+              method="post"
+              novalidate>
 
             <div class="alert-error"
                  th:if="${#fields.hasGlobalErrors()}">
