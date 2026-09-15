@@ -11,320 +11,421 @@
 
     <title>Flood Event Details | FRDMS</title>
 
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #E6E8E9;
-            color: #0C1721;
-        }
-
-        .header {
-            background: #0C1721;
-            color: white;
-            padding: 22px 40px;
-        }
-
-        .brand {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .module {
-            color: #8DB5E8;
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .page {
-            max-width: 950px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
-        }
-
-        h1 {
-            color: #0B2A4A;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #28888F;
-            margin-bottom: 30px;
-        }
-
-        .detail {
-            margin-bottom: 20px;
-        }
-
-        .label {
-            font-weight: bold;
-            color: #0B2A4A;
-            margin-bottom: 7px;
-        }
-
-        .value {
-            background: #F4F6F8;
-            padding: 13px;
-            border-radius: 7px;
-        }
-
-        .section {
-            margin-top: 35px;
-        }
-
-        .section-title {
-            color: #0B2A4A;
-            border-bottom: 2px solid #CFE8F7;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .area-card {
-            background: #CFE8F7;
-            border-left: 5px solid #248BE0;
-            padding: 18px;
-            border-radius: 7px;
-            margin-bottom: 15px;
-        }
-
-        .area-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0B2A4A;
-            margin-bottom: 8px;
-        }
-
-        .area-description {
-            color: #52616B;
-            line-height: 1.5;
-        }
-
-        .empty {
-            background: #F4F6F8;
-            padding: 20px;
-            border-radius: 7px;
-            color: #6B747A;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 20px;
-            border-radius: 7px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background: #248BE0;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #0B2A4A;
-        }
-
-        .btn-secondary {
-            background: #E6E8E9;
-            color: #0B2A4A;
-            border: 1px solid #B9BEC1;
-        }
-
-        .edit-btn {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 8px 13px;
-            background: #28888F;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        @media (max-width: 650px) {
-
-            .header {
-                padding: 18px 20px;
-            }
-
-            .card {
-                padding: 25px 20px;
-            }
-
-            .buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                text-align: center;
-            }
-        }
-
-    </style>
+    <!-- External Details Page CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/details.css}">
 
 </head>
 
+
 <body>
 
-<header class="header">
 
-    <div class="brand">
-        Flood Disaster Relief System
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="details-header">
+
+    <div class="details-brand-area">
+
+        <div class="details-logo">
+            🌊
+        </div>
+
+        <div>
+
+            <div class="details-brand">
+                FRDMS
+            </div>
+
+            <div class="details-system-name">
+                Flood Disaster Relief Management System
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="module">
-        Disaster Management Module
-    </div>
+
+    <!-- Navigation -->
+
+    <nav class="details-navigation">
+
+        <a th:href="@{/disasters}"
+           class="details-nav-link active">
+
+            Flood Events
+
+        </a>
+
+        <a th:href="@{/victims}"
+           class="details-nav-link">
+
+            Victims
+
+        </a>
+
+    </nav>
 
 </header>
 
 
-<main class="page">
 
-    <div class="card">
+<!-- =====================================================
+     MAIN PAGE
+     ===================================================== -->
 
-        <h1>
-            Flood Event Details
-        </h1>
-
-        <p class="subtitle">
-            Review the flood event and its affected areas.
-        </p>
+<main class="details-page">
 
 
-        <!-- EVENT NAME -->
+    <!-- =================================================
+         PAGE TITLE
+         ================================================= -->
 
-        <div class="detail">
+    <div class="details-title-area">
 
-            <div class="label">
-                Event Name
+
+        <div class="details-title-left">
+
+
+            <div class="details-title-icon">
+                🌊
             </div>
 
-            <div class="value"
-                 th:text="${disaster.eventName}">
+
+            <div>
+
+                <h1>
+                    Flood Event Details
+                </h1>
+
+                <p>
+                    Review the flood event and its affected areas.
+                </p>
+
             </div>
+
 
         </div>
 
 
-        <!-- EVENT DATE -->
+        <!-- Record ID -->
 
-        <div class="detail">
+        <div class="details-record-id">
 
-            <div class="label">
-                Event Date
-            </div>
+            Record ID:
 
-            <div class="value"
-                 th:text="${disaster.eventDate}">
-            </div>
+            <strong th:text="${disaster.id}">
+                1
+            </strong>
 
         </div>
 
-
-        <!-- DESCRIPTION -->
-
-        <div class="detail">
-
-            <div class="label">
-                Description
-            </div>
-
-            <div class="value"
-                 th:text="${disaster.description}">
-            </div>
-
-        </div>
-
-
-        <!-- ================= AFFECTED AREAS ================= -->
-
-        <div class="section">
-
-            <h2 class="section-title">
-                Affected Areas
-            </h2>
-
-
-            <!-- NO AREAS -->
-
-            <div class="empty"
-                 th:if="${#lists.isEmpty(affectedAreas)}">
-
-                No affected areas have been added to this flood event yet.
-
-            </div>
-
-
-            <!-- AREAS -->
-
-            <div class="area-card"
-                 th:each="area : ${affectedAreas}">
-
-                <div class="area-name"
-                     th:text="${area.areaName}">
-                </div>
-
-                <div class="area-description"
-                     th:text="${area.description}">
-                </div>
-
-
-                <!-- EDIT AREA -->
-
-                <a class="edit-btn"
-                   th:href="@{/affected-areas/edit/{id}(id=${area.id})}">
-
-                    ✏ Edit Area
-
-                </a>
-
-            </div>
-
-
-            <!-- ADD AREA -->
-
-            <div class="buttons">
-
-                <a class="btn btn-primary"
-                   th:href="@{/affected-areas/new/{id}(id=${disaster.id})}">
-
-                    + Add Affected Area
-
-                </a>
-
-                <a class="btn btn-secondary"
-                   th:href="@{/disasters}">
-
-                    Back to Flood Events
-
-                </a>
-
-            </div>
-
-        </div>
 
     </div>
 
+
+
+    <!-- =================================================
+         MAIN CARD
+         ================================================= -->
+
+    <section class="details-card">
+
+
+        <!-- =================================================
+             CARD HEADER
+             ================================================= -->
+
+        <div class="details-card-header">
+
+            <div class="details-card-title">
+
+                Flood Event Information
+
+            </div>
+
+
+            <div class="details-status">
+
+                Recorded Event
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             EVENT INFORMATION
+             ================================================= -->
+
+        <section class="event-information">
+
+
+            <div class="event-information-heading">
+
+                <span class="heading-number">
+                    1
+                </span>
+
+                <span>
+                    Event Information
+                </span>
+
+            </div>
+
+
+
+            <div class="event-grid">
+
+
+                <!-- =========================================
+                     EVENT NAME
+                     ========================================= -->
+
+                <div class="event-detail">
+
+                    <div class="event-label">
+                        Event Name
+                    </div>
+
+                    <div class="event-value"
+                         th:text="${disaster.eventName}">
+
+                        Flood Event
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     EVENT DATE
+                     ========================================= -->
+
+                <div class="event-detail">
+
+                    <div class="event-label">
+                        Event Date
+                    </div>
+
+                    <div class="event-value"
+                         th:text="${#temporals.format(disaster.eventDate, 'dd/MM/yyyy')}">
+
+                        08/09/2026
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     DESCRIPTION
+                     ========================================= -->
+
+                <div class="event-detail full-width">
+
+                    <div class="event-label">
+                        Description
+                    </div>
+
+                    <div class="event-description"
+                         th:text="${disaster.description}">
+
+                        Flood event description.
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             AFFECTED AREAS
+             ================================================= -->
+
+        <section class="affected-section">
+
+
+            <div class="affected-header">
+
+
+                <div class="affected-title">
+
+                    <span class="affected-number">
+                        2
+                    </span>
+
+                    <span>
+                        Affected Areas
+                    </span>
+
+                </div>
+
+
+                <!-- Area count -->
+
+                <div class="area-count"
+                     th:text="${#lists.size(affectedAreas) + ' area(s) recorded'}">
+
+                    0 area(s) recorded
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NO AFFECTED AREAS
+                 ================================================= -->
+
+            <div class="no-areas"
+                 th:if="${#lists.isEmpty(affectedAreas)}">
+
+
+                <div class="no-areas-icon">
+                    📍
+                </div>
+
+
+                <div class="no-areas-title">
+
+                    No Affected Areas Recorded
+
+                </div>
+
+
+                <div class="no-areas-text">
+
+                    No affected areas have been added to
+                    this flood event yet.
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 AFFECTED AREA LIST
+                 ================================================= -->
+
+            <div class="area-list"
+                 th:if="${not #lists.isEmpty(affectedAreas)}">
+
+
+                <div class="area-card"
+                     th:each="area, stat : ${affectedAreas}">
+
+
+                    <!-- Area header -->
+
+                    <div class="area-card-top">
+
+
+                        <div class="area-name"
+                             th:text="${area.areaName}">
+
+                            Area Name
+
+                        </div>
+
+
+                        <div class="area-number"
+                             th:text="'Area ' + ${stat.count}">
+
+                            Area 1
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- Area description -->
+
+                    <div class="area-description"
+                         th:text="${area.description}">
+
+                        Area description.
+
+                    </div>
+
+
+
+                    <!-- Edit area -->
+
+                    <a class="area-edit-button"
+                       th:href="@{/affected-areas/edit/{id}(id=${area.id})}">
+
+                        ✏ Edit Area
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 AREA ACTIONS
+                 ================================================= -->
+
+            <div class="details-actions">
+
+
+                <!-- Back -->
+
+                <a class="details-button details-back"
+                   th:href="@{/disasters}">
+
+                    ← Back to Flood Events
+
+                </a>
+
+
+                <!-- Add -->
+
+                <div class="details-actions-left">
+
+                    <a class="details-button details-add"
+                       th:href="@{/affected-areas/new/{id}(id=${disaster.id})}">
+
+                        + Add Affected Area
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </section>
+
+
 </main>
+
 
 </body>
 

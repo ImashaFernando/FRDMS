@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -10,68 +11,112 @@
 
     <title>Victim Registration - FRDMS</title>
 
+
     <style>
+
+        /* =====================================================
+           GLOBAL
+           ===================================================== */
 
         * {
             box-sizing: border-box;
         }
 
+
         body {
             margin: 0;
+
             font-family: Arial, sans-serif;
-            background: #e6e8e9;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #e6e8e9 0%,
+                            #dcecf5 100%
+                    );
+
             color: #1b3557;
+
+            min-height: 100vh;
         }
 
-        /* ================= HEADER ================= */
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
 
         .header {
             background: #0c1721;
+
             color: white;
 
             padding: 22px 60px;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            box-shadow:
+                    0 4px 15px rgba(0, 0, 0, 0.18);
         }
+
 
         .header h1 {
             margin: 0;
+
             font-size: 30px;
+
+            letter-spacing: 0.5px;
         }
+
 
         .header span {
             color: #9bc5ff;
+
             font-size: 18px;
         }
 
-        /* ================= CONTAINER ================= */
+
+
+        /* =====================================================
+           CONTAINER
+           ===================================================== */
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
+
             margin: 45px auto;
+
             padding: 0 25px;
         }
+
 
         .card {
             background: white;
 
-            border-radius: 18px;
+            border-radius: 20px;
 
-            padding: 40px;
+            padding: 42px;
 
             box-shadow:
-                    0 10px 30px rgba(0, 0, 0, 0.10);
+                    0 15px 40px rgba(0, 0, 0, 0.12);
 
-            border-top: 6px solid #558ee0;
+            border-top: 6px solid #248be0;
         }
 
-        /* ================= TITLE ================= */
+
+
+        /* =====================================================
+           TITLE
+           ===================================================== */
 
         .title-section {
             margin-bottom: 30px;
         }
+
 
         .title-section h2 {
             margin: 0;
@@ -81,33 +126,56 @@
             color: #173457;
         }
 
+
         .title-section p {
-            margin-top: 8px;
+            margin-top: 10px;
 
             color: #47758a;
 
-            font-size: 17px;
+            font-size: 16px;
+
+            line-height: 1.6;
         }
 
-        /* ================= INFORMATION NOTE ================= */
+
+
+        /* =====================================================
+           INFORMATION NOTE
+           ===================================================== */
 
         .info-note {
-            background: #cfe8f7;
+            background:
+                    linear-gradient(
+                            135deg,
+                            #cfe8f7,
+                            #e8f6fb
+                    );
 
             border-left: 5px solid #28888f;
 
-            border-radius: 9px;
+            border-radius: 10px;
 
-            padding: 16px 20px;
+            padding: 17px 20px;
 
             margin-bottom: 30px;
 
             color: #28536b;
 
             line-height: 1.6;
+
+            font-size: 14px;
         }
 
-        /* ================= FORM ================= */
+
+        .info-note strong {
+            color: #174f66;
+        }
+
+
+
+        /* =====================================================
+           FORM
+           ===================================================== */
 
         .form-grid {
             display: grid;
@@ -117,15 +185,18 @@
             gap: 24px;
         }
 
+
         .form-group {
             display: flex;
 
             flex-direction: column;
         }
 
+
         .form-group.full {
             grid-column: span 2;
         }
+
 
         label {
             font-size: 15px;
@@ -137,9 +208,16 @@
             margin-bottom: 8px;
         }
 
+
         .required {
             color: #d64545;
         }
+
+
+
+        /* =====================================================
+           INPUTS
+           ===================================================== */
 
         input,
         textarea {
@@ -151,7 +229,7 @@
 
             border-radius: 9px;
 
-            font-size: 16px;
+            font-size: 15px;
 
             font-family: Arial, sans-serif;
 
@@ -160,15 +238,38 @@
             color: #29445e;
 
             background: white;
+
+            transition:
+                    border-color 0.2s ease,
+                    box-shadow 0.2s ease;
         }
+
+
+        input {
+            height: 48px;
+        }
+
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #9aaab4;
+        }
+
+
+        input:hover,
+        textarea:hover {
+            border-color: #aebfc9;
+        }
+
 
         input:focus,
         textarea:focus {
-            border-color: #558ee0;
+            border-color: #248be0;
 
             box-shadow:
-                    0 0 0 3px rgba(85, 142, 224, 0.12);
+                    0 0 0 3px rgba(36, 139, 224, 0.12);
         }
+
 
         textarea {
             min-height: 120px;
@@ -176,7 +277,32 @@
             resize: vertical;
         }
 
-        /* ================= PASSWORD ================= */
+
+
+        /* =====================================================
+           USERNAME
+           ===================================================== */
+
+        .username-help {
+            margin-top: 7px;
+
+            font-size: 13px;
+
+            color: #6b7d88;
+
+            line-height: 1.5;
+        }
+
+
+        .username-help strong {
+            color: #28888f;
+        }
+
+
+
+        /* =====================================================
+           PASSWORD
+           ===================================================== */
 
         .password-help {
             margin-top: 7px;
@@ -184,9 +310,15 @@
             font-size: 13px;
 
             color: #6b7d88;
+
+            line-height: 1.5;
         }
 
-        /* ================= ERROR ================= */
+
+
+        /* =====================================================
+           ERROR
+           ===================================================== */
 
         .error {
             margin-top: 7px;
@@ -194,7 +326,10 @@
             color: #c0392b;
 
             font-size: 13px;
+
+            line-height: 1.4;
         }
+
 
         .duplicate-error {
             background: #fdecea;
@@ -208,14 +343,20 @@
             border-radius: 8px;
 
             margin-bottom: 20px;
+
+            font-size: 14px;
         }
 
-        /* ================= BUTTONS ================= */
+
+
+        /* =====================================================
+           BUTTONS
+           ===================================================== */
 
         .actions {
             display: flex;
 
-            justify-content: space-between;
+            justify-content: flex-end;
 
             align-items: center;
 
@@ -228,6 +369,7 @@
             gap: 15px;
         }
 
+
         .btn {
             text-decoration: none;
 
@@ -237,36 +379,55 @@
 
             border-radius: 9px;
 
-            font-size: 16px;
+            font-size: 15px;
 
             font-weight: bold;
 
             cursor: pointer;
 
             display: inline-block;
+
+            transition:
+                    transform 0.2s ease,
+                    background 0.2s ease,
+                    box-shadow 0.2s ease;
         }
 
-        .btn-back {
-            background: #e6e8e9;
-
-            color: #29445e;
-        }
-
-        .btn-back:hover {
-            background: #d5dadd;
-        }
 
         .btn-register {
-            background: #248be0;
+            background:
+                    linear-gradient(
+                            135deg,
+                            #248be0,
+                            #176fb8
+                    );
 
             color: white;
+
+            box-shadow:
+                    0 7px 18px rgba(36, 139, 224, 0.22);
         }
+
 
         .btn-register:hover {
             background: #176fba;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 10px 22px rgba(36, 139, 224, 0.28);
         }
 
-        /* ================= LOGIN NOTE ================= */
+
+        .btn-register:active {
+            transform: translateY(0);
+        }
+
+
+
+        /* =====================================================
+           LOGIN NOTE
+           ===================================================== */
 
         .login-note {
             margin-top: 25px;
@@ -278,11 +439,40 @@
             font-size: 14px;
         }
 
+
         .login-note strong {
             color: #28888f;
         }
 
-        /* ================= RESPONSIVE ================= */
+
+
+        /* =====================================================
+           SECURITY / PRIVACY NOTE
+           ===================================================== */
+
+        .privacy-note {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 18px;
+
+            color: #87959d;
+
+            font-size: 12px;
+
+            text-align: center;
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
 
         @media (max-width: 700px) {
 
@@ -290,40 +480,53 @@
                 padding: 20px;
             }
 
+
             .header h1 {
                 font-size: 22px;
             }
+
 
             .header span {
                 display: none;
             }
 
+
             .container {
                 margin: 30px auto;
             }
+
 
             .card {
                 padding: 25px;
             }
 
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
+
 
             .form-group.full {
                 grid-column: span 1;
             }
 
+
             .actions {
-                flex-direction: column-reverse;
+                flex-direction: column;
 
                 align-items: stretch;
             }
+
 
             .btn {
                 width: 100%;
 
                 text-align: center;
+            }
+
+
+            .title-section h2 {
+                font-size: 27px;
             }
         }
 
@@ -335,13 +538,16 @@
 <body>
 
 
-<!-- ================= HEADER ================= -->
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
 <header class="header">
 
     <h1>
         Flood Disaster Relief System
     </h1>
+
 
     <span>
         Victim Management Module
@@ -351,46 +557,61 @@
 
 
 
-<!-- ================= MAIN ================= -->
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
 
 <main class="container">
 
     <div class="card">
 
 
-        <!-- ================= TITLE ================= -->
+        <!-- =================================================
+             TITLE
+             ================================================= -->
 
         <div class="title-section">
 
             <h2>
-                Victim Registration
+                Create Your Victim Account
             </h2>
 
+
             <p>
-                Register to receive assistance through the
-                Flood Disaster Relief System.
+                Register your information to access relief
+                services and manage your disaster assistance
+                requests through the Flood Disaster Relief System.
             </p>
 
         </div>
 
 
 
-        <!-- ================= INFORMATION ================= -->
+        <!-- =================================================
+             INFORMATION
+             ================================================= -->
 
         <div class="info-note">
 
             <strong>
-                Create your victim account:
+                Account Information
             </strong>
 
-            Your NIC number will be used as your login
-            username after registration.
+            <br>
+
+            Your NIC number is collected for
+            <strong>victim identification and verification</strong>.
+            You will use your unique
+            <strong>username and password</strong>
+            to log in to your account.
 
         </div>
 
 
 
-        <!-- ================= DUPLICATE NIC ERROR ================= -->
+        <!-- =================================================
+             DUPLICATE NIC ERROR
+             ================================================= -->
 
         <div class="duplicate-error"
              th:if="${nicError}"
@@ -399,7 +620,20 @@
 
 
 
-        <!-- ================= REGISTRATION FORM ================= -->
+        <!-- =================================================
+             DUPLICATE USERNAME ERROR
+             ================================================= -->
+
+        <div class="duplicate-error"
+             th:if="${usernameError}"
+             th:text="${usernameError}">
+        </div>
+
+
+
+        <!-- =================================================
+             REGISTRATION FORM
+             ================================================= -->
 
         <form th:action="@{/victims/register}"
               th:object="${victim}"
@@ -409,7 +643,9 @@
             <div class="form-grid">
 
 
-                <!-- ================= FULL NAME ================= -->
+                <!-- =================================================
+                     FULL NAME
+                     ================================================= -->
 
                 <div class="form-group full">
 
@@ -423,21 +659,29 @@
 
                     </label>
 
-                    <input type="text"
-                           id="fullName"
-                           th:field="*{fullName}"
-                           placeholder="Enter your full name">
 
-                    <div class="error"
-                         th:if="${#fields.hasErrors('fullName')}"
-                         th:errors="*{fullName}">
+                    <input
+                            type="text"
+                            id="fullName"
+                            th:field="*{fullName}"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                    >
+
+
+                    <div
+                            class="error"
+                            th:if="${#fields.hasErrors('fullName')}"
+                            th:errors="*{fullName}">
                     </div>
 
                 </div>
 
 
 
-                <!-- ================= NIC ================= -->
+                <!-- =================================================
+                     NIC
+                     ================================================= -->
 
                 <div class="form-group">
 
@@ -451,21 +695,29 @@
 
                     </label>
 
-                    <input type="text"
-                           id="nicNumber"
-                           th:field="*{nicNumber}"
-                           placeholder="Enter NIC number">
 
-                    <div class="error"
-                         th:if="${#fields.hasErrors('nicNumber')}"
-                         th:errors="*{nicNumber}">
+                    <input
+                            type="text"
+                            id="nicNumber"
+                            th:field="*{nicNumber}"
+                            placeholder="Enter NIC number"
+                            autocomplete="off"
+                    >
+
+
+                    <div
+                            class="error"
+                            th:if="${#fields.hasErrors('nicNumber')}"
+                            th:errors="*{nicNumber}">
                     </div>
 
                 </div>
 
 
 
-                <!-- ================= PHONE ================= -->
+                <!-- =================================================
+                     PHONE
+                     ================================================= -->
 
                 <div class="form-group">
 
@@ -479,23 +731,75 @@
 
                     </label>
 
-                    <input type="text"
-                           id="phoneNumber"
-                           th:field="*{phoneNumber}"
-                           placeholder="Enter 10 digit phone number">
 
-                    <div class="error"
-                         th:if="${#fields.hasErrors('phoneNumber')}"
-                         th:errors="*{phoneNumber}">
+                    <input
+                            type="text"
+                            id="phoneNumber"
+                            th:field="*{phoneNumber}"
+                            placeholder="Enter 10 digit phone number"
+                            autocomplete="tel"
+                    >
+
+
+                    <div
+                            class="error"
+                            th:if="${#fields.hasErrors('phoneNumber')}"
+                            th:errors="*{phoneNumber}">
                     </div>
 
                 </div>
 
 
 
-                <!-- ================= ADDRESS ================= -->
+                <!-- =================================================
+                     USERNAME
+                     ================================================= -->
 
-                <div class="form-group full">
+                <div class="form-group">
+
+                    <label for="username">
+
+                        Username
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <input
+                            type="text"
+                            id="username"
+                            th:field="*{username}"
+                            placeholder="Create a unique username"
+                            autocomplete="username"
+                    >
+
+
+                    <div class="username-help">
+
+                        Choose a unique username.
+                        <strong>Do not use your NIC as your username.</strong>
+
+                    </div>
+
+
+                    <div
+                            class="error"
+                            th:if="${#fields.hasErrors('username')}"
+                            th:errors="*{username}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ADDRESS
+                     ================================================= -->
+
+                <div class="form-group">
 
                     <label for="address">
 
@@ -507,21 +811,27 @@
 
                     </label>
 
-                    <textarea id="address"
-                              th:field="*{address}"
-                              placeholder="Enter your residential address">
-                    </textarea>
 
-                    <div class="error"
-                         th:if="${#fields.hasErrors('address')}"
-                         th:errors="*{address}">
+                    <textarea
+                            id="address"
+                            th:field="*{address}"
+                            placeholder="Enter your residential address"
+                    ></textarea>
+
+
+                    <div
+                            class="error"
+                            th:if="${#fields.hasErrors('address')}"
+                            th:errors="*{address}">
                     </div>
 
                 </div>
 
 
 
-                <!-- ================= PASSWORD ================= -->
+                <!-- =================================================
+                     PASSWORD
+                     ================================================= -->
 
                 <div class="form-group full">
 
@@ -535,21 +845,28 @@
 
                     </label>
 
-                    <input type="password"
-                           id="password"
-                           th:field="*{password}"
-                           placeholder="Create a password">
+
+                    <input
+                            type="password"
+                            id="password"
+                            th:field="*{password}"
+                            placeholder="Create a secure password"
+                            autocomplete="new-password"
+                    >
+
 
                     <div class="password-help">
 
-                        This password will be used when you
-                        log in to your victim account.
+                        This password will be used to securely
+                        access your victim account.
 
                     </div>
 
-                    <div class="error"
-                         th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}">
+
+                    <div
+                            class="error"
+                            th:if="${#fields.hasErrors('password')}"
+                            th:errors="*{password}">
                     </div>
 
                 </div>
@@ -559,26 +876,19 @@
 
 
 
-            <!-- ================= BUTTONS ================= -->
+            <!-- =================================================
+                 BUTTON
+                 ================================================= -->
 
             <div class="actions">
 
-
-                <a th:href="@{/victims}"
-                   class="btn btn-back">
-
-                    ← View Registered Victims
-
-                </a>
-
-
-                <button type="submit"
+                <button
+                        type="submit"
                         class="btn btn-register">
 
                     Create Victim Account
 
                 </button>
-
 
             </div>
 
@@ -587,15 +897,29 @@
 
 
 
-        <!-- ================= LOGIN INFORMATION ================= -->
+        <!-- =================================================
+             LOGIN INFORMATION
+             ================================================= -->
 
         <div class="login-note">
 
             Already registered?
 
             <strong>
-                Victim login will be available here.
+                Use your username and password to log in.
             </strong>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PRIVACY NOTE
+             ================================================= -->
+
+        <div class="privacy-note">
+
+            🔒 Your password is securely protected.
 
         </div>
 

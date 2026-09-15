@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/victim/family-information")
 public class AffectedFamilyInformationController {
 
     private final AffectedFamilyInformationService informationService;
@@ -33,15 +32,16 @@ public class AffectedFamilyInformationController {
 
 
     // =========================================================
-    // SHOW FAMILY & AFFECTED INFORMATION FORM
+    // VICTIM SIDE
+    // VIEW FAMILY & AFFECTED INFORMATION FORM
     // =========================================================
 
-    @GetMapping
-    public String showForm(
+    @GetMapping("/victim/family-information")
+    public String showVictimFamilyInformationForm(
             HttpSession session,
             Model model) {
 
-        // Get logged-in victim ID from session
+        // Get logged-in victim ID
         Long victimId =
                 (Long) session.getAttribute("victimId");
 
@@ -50,25 +50,18 @@ public class AffectedFamilyInformationController {
             return "redirect:/victim-login";
         }
 
-        // Get the logged-in victim
+        // Get logged-in victim
         Victim victim =
                 victimService.getVictimById(victimId);
 
-        /*
-         * Check whether this victim has already
-         * submitted Family & Affected Information.
-         */
+        // Check whether information already exists
         Optional<AffectedFamilyInformation> existingInformation =
                 informationService.getByVictim(victim);
 
 
         if (existingInformation.isPresent()) {
 
-            /*
-             * Existing information is loaded into
-             * the form so the victim can view
-             * and edit the saved information.
-             */
+            // Load existing information for viewing/editing
             model.addAttribute(
                     "information",
                     existingInformation.get()
@@ -76,12 +69,11 @@ public class AffectedFamilyInformationController {
 
         } else {
 
-            /*
-             * First visit:
-             * Create an empty form.
-             */
+            // Create empty form for first submission
             AffectedFamilyInformation information =
                     new AffectedFamilyInformation();
+
+            information.setVictim(victim);
 
             model.addAttribute(
                     "information",
@@ -90,7 +82,6 @@ public class AffectedFamilyInformationController {
         }
 
 
-        // Send victim information to the page
         model.addAttribute(
                 "victim",
                 victim
@@ -102,11 +93,12 @@ public class AffectedFamilyInformationController {
 
 
     // =========================================================
+    // VICTIM SIDE
     // SAVE / UPDATE FAMILY & AFFECTED INFORMATION
     // =========================================================
 
-    @PostMapping
-    public String saveInformation(
+    @PostMapping("/victim/family-information")
+    public String saveVictimFamilyInformation(
             @Valid @ModelAttribute("information")
             AffectedFamilyInformation information,
 
@@ -118,22 +110,18 @@ public class AffectedFamilyInformationController {
 
             RedirectAttributes redirectAttributes) {
 
-
         // Get logged-in victim ID
         Long victimId =
                 (Long) session.getAttribute("victimId");
-
 
         // Victim must be logged in
         if (victimId == null) {
             return "redirect:/victim-login";
         }
 
-
         // Get logged-in victim
         Victim victim =
                 victimService.getVictimById(victimId);
-
 
         model.addAttribute(
                 "victim",
@@ -142,15 +130,13 @@ public class AffectedFamilyInformationController {
 
 
         // =====================================================
-        // VALIDATION ERRORS
+        // VALIDATION
         // =====================================================
 
         if (bindingResult.hasErrors()) {
 
-            /*
-             * Stay on the same page when validation
-             * errors occur.
-             */
+            information.setVictim(victim);
+
             return "victim/family-information";
         }
 
@@ -172,21 +158,15 @@ public class AffectedFamilyInformationController {
             AffectedFamilyInformation existing =
                     existingInformation.get();
 
-
             informationService.updateInformation(
                     existing.getId(),
                     information
             );
 
-
-            /*
-             * Success notification for UPDATE
-             */
             redirectAttributes.addFlashAttribute(
                     "successMessage",
                     "Your Family & Affected Information has been updated successfully."
             );
-
         }
 
 
@@ -196,32 +176,152 @@ public class AffectedFamilyInformationController {
 
         else {
 
-            /*
-             * Connect the submitted information
-             * with the logged-in victim.
-             */
             information.setVictim(victim);
-
 
             informationService.saveInformation(
                     information
             );
 
-
-            /*
-             * Success notification for FIRST SAVE
-             */
             redirectAttributes.addFlashAttribute(
                     "successMessage",
-                    "Your Family & Affected Information has been saved successfully."
+                    "Your Family & Affected Information has been submitted successfully."
+            );
+        }
+
+
+        return "redirect:/victim/family-information";
+    }
+
+
+    // =========================================================
+    // PROJECT MANAGER SIDE
+    // VIEW FAMILY & AFFECTED INFORMATION
+    // FOR A SELECTED VICTIM
+    // =========================================================
+
+    @GetMapping("/project-manager/victims/{victimId}/family-information")
+    public String showPMFamilyInformation(
+            @PathVariable Long victimId,
+            Model model) {
+
+        // Get selected victim
+        Victim victim =
+                victimService.getVictimById(victimId);
+
+        // Get family information
+        Optional<AffectedFamilyInformation> existingInformation =
+                informationService.getByVictim(victim);
+
+
+        /*
+         * The PM can see whether the victim has
+         * submitted Family & Affected Information.
+         */
+
+        model.addAttribute(
+                "victim",
+                victim
+        );
+
+        model.addAttribute(
+                "information",
+                existingInformation.orElse(null)
+        );
+
+
+        return "project-manager/family-information";
+    }
+
+
+    // =========================================================
+    // PROJECT MANAGER SIDE
+    // RECORD / UPDATE FAMILY & AFFECTED INFORMATION
+    // =========================================================
+
+    @PostMapping("/project-manager/victims/{victimId}/family-information")
+    public String savePMFamilyInformation(
+            @PathVariable Long victimId,
+
+            @Valid @ModelAttribute("information")
+            AffectedFamilyInformation information,
+
+            BindingResult bindingResult,
+
+            Model model,
+
+            RedirectAttributes redirectAttributes) {
+
+        // Get selected victim
+        Victim victim =
+                victimService.getVictimById(victimId);
+
+        model.addAttribute(
+                "victim",
+                victim
+        );
+
+
+        // =====================================================
+        // VALIDATION
+        // =====================================================
+
+        if (bindingResult.hasErrors()) {
+
+            information.setVictim(victim);
+
+            return "project-manager/family-information";
+        }
+
+
+        // =====================================================
+        // CHECK EXISTING INFORMATION
+        // =====================================================
+
+        Optional<AffectedFamilyInformation> existingInformation =
+                informationService.getByVictim(victim);
+
+
+        // =====================================================
+        // UPDATE EXISTING INFORMATION
+        // =====================================================
+
+        if (existingInformation.isPresent()) {
+
+            AffectedFamilyInformation existing =
+                    existingInformation.get();
+
+            informationService.updateInformation(
+                    existing.getId(),
+                    information
+            );
+
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Family & Affected Information has been updated successfully."
             );
         }
 
 
         // =====================================================
-        // RETURN TO THE SAME FORM PAGE
+        // CREATE INFORMATION IF NOT YET SUBMITTED
         // =====================================================
 
-        return "redirect:/victim/family-information";
+        else {
+
+            information.setVictim(victim);
+
+            informationService.saveInformation(
+                    information
+            );
+
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Family & Affected Information has been recorded successfully."
+            );
+        }
+
+
+        // Return to selected victim details
+        return "redirect:/victims/" + victimId;
     }
 }

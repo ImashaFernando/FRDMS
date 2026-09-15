@@ -45,6 +45,26 @@ public class DisasterService {
 
 
     // =========================================================
+    // SEARCH FLOOD EVENTS
+    // =========================================================
+
+    public List<Disaster> searchDisasters(
+            String keyword) {
+
+        if (keyword == null ||
+                keyword.trim().isEmpty()) {
+
+            return disasterRepository.findAll();
+        }
+
+        return disasterRepository
+                .findByEventNameContainingIgnoreCase(
+                        keyword.trim()
+                );
+    }
+
+
+    // =========================================================
     // FIND FLOOD EVENT BY ID
     // =========================================================
 
@@ -69,23 +89,18 @@ public class DisasterService {
             Long id,
             Disaster updatedDisaster) {
 
-        // Find existing flood event
         Disaster existingDisaster =
                 getDisasterById(id);
 
 
-        // =====================================================
         // UPDATE EVENT NAME
-        // =====================================================
 
         existingDisaster.setEventName(
                 updatedDisaster.getEventName()
         );
 
 
-        // =====================================================
         // UPDATE EVENT DATE
-        // =====================================================
 
         if (updatedDisaster.getEventDate() != null) {
 
@@ -95,21 +110,44 @@ public class DisasterService {
         }
 
 
-        // =====================================================
         // UPDATE DESCRIPTION
-        // =====================================================
 
         existingDisaster.setDescription(
                 updatedDisaster.getDescription()
         );
 
 
-        // =====================================================
-        // SAVE UPDATED FLOOD EVENT
-        // =====================================================
+        // SAVE UPDATED EVENT
 
         return disasterRepository.save(
                 existingDisaster
         );
+    }
+
+
+    // =========================================================
+    // DELETE FLOOD EVENT
+    // =========================================================
+
+    public void deleteDisaster(
+            Long id) {
+
+        // Check whether the flood event exists
+
+        Disaster disaster =
+                getDisasterById(id);
+
+
+        /*
+         * Delete the selected flood event.
+         *
+         * The Disaster entity uses CascadeType.ALL and
+         * orphanRemoval for affected areas.
+         *
+         * Therefore, affected areas belonging to this
+         * disaster will also be removed.
+         */
+
+        disasterRepository.delete(disaster);
     }
 }

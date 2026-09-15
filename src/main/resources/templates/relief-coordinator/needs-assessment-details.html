@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Needs Assessment Details | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fa;
+      color: #1f2933;
+    }
+
+    .header {
+      background: #0c1721;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #cfe8f7;
+      margin-top: 4px;
+    }
+
+    .logout {
+      background: #248be0;
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 7px;
+      font-weight: bold;
+    }
+
+    .logout:hover {
+      background: #176fb8;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #248be0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .page-title {
+      font-size: 30px;
+      color: #0c1721;
+      margin-bottom: 8px;
+    }
+
+    .page-description {
+      color: #68737d;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-title {
+      font-size: 20px;
+      color: #0b2a4a;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e6e8e9;
+      padding-bottom: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .field {
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid #248be0;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #68737d;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .field-value {
+      font-size: 16px;
+      color: #1f2933;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .status-submitted {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-updated {
+      background: #cfe8f7;
+      color: #0b4f71;
+    }
+
+    .status-assessed {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .review-section {
+      background: #f8fafc;
+      border: 1px solid #dce3e8;
+      border-radius: 10px;
+      padding: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #263746;
+    }
+
+    select,
+    textarea,
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5dc;
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+    }
+
+    select:focus,
+    textarea:focus,
+    input:focus {
+      outline: none;
+      border-color: #248be0;
+      box-shadow: 0 0 0 3px rgba(36, 139, 224, 0.12);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      border: none;
+      padding: 12px 22px;
+      border-radius: 7px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #248be0;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #176fb8;
+    }
+
+    .btn-secondary {
+      background: #e6e8e9;
+      color: #263746;
+    }
+
+    .btn-secondary:hover {
+      background: #d2d6d8;
+    }
+
+    .btn-edit {
+      background: #28888f;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #216f75;
+    }
+
+    .assessment-result {
+      margin-top: 10px;
+    }
+
+    .empty-value {
+      color: #89939c;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+
+      .header {
+        padding: 18px 20px;
+      }
+
+      .container {
+        margin: 25px auto;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+  <div>
+    <div class="logo">
+      FRDMS
+    </div>
+
+    <div class="subtitle">
+      Flood Relief and Disaster Management System
+    </div>
+  </div>
+
+  <a th:href="@{/relief-coordinator/logout}"
+     class="logout">
+    Logout
+  </a>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="container">
+
+  <a th:href="@{/relief-coordinator/needs-assessments}"
+     class="back-link">
+    ← Back to Needs Assessments
+  </a>
+
+
+  <h1 class="page-title">
+    Needs Assessment Details
+  </h1>
+
+  <p class="page-description">
+    Review the victim's submitted needs and provide the required
+    assessment information.
+  </p>
+
+
+  <!-- =====================================================
+       VICTIM INFORMATION
+  ====================================================== -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      Victim Information
+    </h2>
+
+    <div class="grid">
+
+      <div class="field">
+
+                <span class="field-label">
+                    Full Name
+                </span>
+
+        <span class="field-value"
+              th:text="${victim.fullName}">
+                    Victim Name
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    NIC Number
+                </span>
+
+        <span class="field-value"
+              th:text="${victim.nicNumber}">
+                    NIC
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Phone Number
+                </span>
+
+        <span class="field-value"
+              th:text="${victim.phoneNumber}">
+                    Phone
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Address
+                </span>
+
+        <span class="field-value"
+              th:text="${victim.address}">
+                    Address
+                </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       NEEDS ASSESSMENT INFORMATION
+  ====================================================== -->
+
+  <section class="card">
+
+    <h2 class="card-title">
+      Submitted Needs
+    </h2>
+
+    <div class="grid">
+
+      <div class="field">
+
+                <span class="field-label">
+                    Assessment ID
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.id}">
+                    0
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Status
+                </span>
+
+        <span class="assessment-result">
+
+                    <span class="status status-submitted"
+                          th:if="${assessment.status == 'SUBMITTED'}"
+                          th:text="${assessment.status}">
+                        SUBMITTED
+                    </span>
+
+                    <span class="status status-updated"
+                          th:if="${assessment.status == 'UPDATED'}"
+                          th:text="${assessment.status}">
+                        UPDATED
+                    </span>
+
+                    <span class="status status-assessed"
+                          th:if="${assessment.status == 'ASSESSED'}"
+                          th:text="${assessment.status}">
+                        ASSESSED
+                    </span>
+
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Current Situation
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.currentSituation}">
+                    Current situation
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Food Required
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.foodRequired}">
+                    No
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Water Required
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.waterRequired}">
+                    No
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Medical Assistance Required
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.medicalAssistanceRequired}">
+                    No
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Clothing Required
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.clothingRequired}">
+                    No
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Hygiene Items Required
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.hygieneItemsRequired}">
+                    No
+                </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="field"
+         style="margin-top: 20px;">
+
+            <span class="field-label">
+                Other Needs
+            </span>
+
+      <span class="field-value"
+            th:if="${assessment.otherNeeds != null and !#strings.isEmpty(assessment.otherNeeds)}"
+            th:text="${assessment.otherNeeds}">
+                Other needs
+            </span>
+
+      <span class="field-value empty-value"
+            th:if="${assessment.otherNeeds == null or #strings.isEmpty(assessment.otherNeeds)}">
+                No other needs specified.
+            </span>
+
+    </div>
+
+
+    <div class="field"
+         style="margin-top: 20px;">
+
+            <span class="field-label">
+                Additional Information
+            </span>
+
+      <span class="field-value"
+            th:if="${assessment.additionalInformation != null and !#strings.isEmpty(assessment.additionalInformation)}"
+            th:text="${assessment.additionalInformation}">
+                Additional information
+            </span>
+
+      <span class="field-value empty-value"
+            th:if="${assessment.additionalInformation == null or #strings.isEmpty(assessment.additionalInformation)}">
+                No additional information provided.
+            </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       EXISTING RC ASSESSMENT
+  ====================================================== -->
+
+  <section class="card"
+           th:if="${assessment.status == 'ASSESSED'}">
+
+    <h2 class="card-title">
+      Relief Coordinator Assessment
+    </h2>
+
+    <div class="grid">
+
+      <div class="field">
+
+                <span class="field-label">
+                    Priority
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.priority}">
+                    Priority
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Assessed By
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.assessedBy}">
+                    Relief Coordinator
+                </span>
+
+      </div>
+
+
+      <div class="field">
+
+                <span class="field-label">
+                    Assessment Date
+                </span>
+
+        <span class="field-value"
+              th:text="${assessment.assessmentDate != null ? #temporals.format(assessment.assessmentDate, 'dd/MM/yyyy HH:mm') : 'Not available'}">
+                    Date
+                </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="field"
+         style="margin-top: 20px;">
+
+            <span class="field-label">
+                Assessment Remarks
+            </span>
+
+      <span class="field-value"
+            th:text="${assessment.assessmentRemarks}">
+                Assessment remarks
+            </span>
+
+    </div>
+
+
+    <div class="button-row">
+
+      <a th:href="@{/relief-coordinator/needs-assessments/{id}/edit(id=${assessment.id})}"
+         class="btn btn-edit">
+        Update Assessment
+      </a>
+
+      <a th:href="@{/relief-coordinator/needs-assessments}"
+         class="btn btn-secondary">
+        Back
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FIRST ASSESSMENT FORM
+  ====================================================== -->
+
+  <section class="card"
+           th:if="${assessment.status != 'ASSESSED'}">
+
+    <h2 class="card-title">
+      Relief Coordinator Assessment
+    </h2>
+
+    <div class="review-section">
+
+      <form th:action="@{/relief-coordinator/needs-assessments/{id}/review(id=${assessment.id})}"
+            method="post">
+
+
+        <!-- PRIORITY -->
+
+        <div class="form-group">
+
+          <label for="priority">
+            Priority
+          </label>
+
+          <select id="priority"
+                  name="priority"
+                  required>
+
+            <option value="">
+              Select Priority
+            </option>
+
+            <option value="LOW">
+              Low
+            </option>
+
+            <option value="MEDIUM">
+              Medium
+            </option>
+
+            <option value="HIGH">
+              High
+            </option>
+
+            <option value="URGENT">
+              Urgent
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- ASSESSMENT REMARKS -->
+
+        <div class="form-group">
+
+          <label for="assessmentRemarks">
+            Assessment Remarks
+          </label>
+
+          <textarea id="assessmentRemarks"
+                    name="assessmentRemarks"
+                    placeholder="Enter your assessment remarks..."
+                    required></textarea>
+
+        </div>
+
+
+        <!-- ASSESSED BY -->
+
+        <div class="form-group">
+
+          <label for="assessedBy">
+            Assessed By
+          </label>
+
+          <input type="text"
+                 id="assessedBy"
+                 name="assessedBy"
+                 placeholder="Enter Relief Coordinator name"
+                 required>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="button-row">
+
+          <button type="submit"
+                  class="btn btn-primary">
+            Complete Assessment
+          </button>
+
+          <a th:href="@{/relief-coordinator/needs-assessments}"
+             class="btn btn-secondary">
+            Cancel
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relief Coordinator Dashboard | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0C1721;
+            color: white;
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #cfe8f7;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: #d9534f;
+            color: white;
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #c9302c;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            color: #0B2A4A;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+
+        /* ================= STAT CARDS ================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                    0 3px 12px rgba(0,0,0,0.08);
+
+            border-left: 5px solid #248BE0;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0B2A4A;
+        }
+
+
+        /* ================= ASSESSMENTS ================= */
+
+        .section {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                    0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .section h2 {
+            color: #0B2A4A;
+            margin-bottom: 20px;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0B2A4A;
+            color: white;
+
+            padding: 13px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 13px;
+
+            border-bottom: 1px solid #e6e8e9;
+
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f7fbfd;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .submitted {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .updated {
+            background: #cfe8f7;
+            color: #155b8a;
+        }
+
+        .assessed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .other-status {
+            background: #e6e8e9;
+            color: #444;
+        }
+
+
+        /* ================= VIEW BUTTON ================= */
+
+        .view-btn {
+            display: inline-block;
+
+            background: #248BE0;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 8px 14px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            background: #1c72b9;
+        }
+
+
+        /* ================= EMPTY MESSAGE ================= */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #777;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div>
+        <h1>Flood Relief & Disaster Management System</h1>
+
+        <p>
+            Relief Coordinator Dashboard
+        </p>
+    </div>
+
+    <a
+            th:href="@{/relief-coordinator/logout}"
+            class="logout-btn">
+
+        Logout
+
+    </a>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- Welcome -->
+
+    <div class="welcome">
+
+        <h2>
+            Welcome, Relief Coordinator
+        </h2>
+
+        <p>
+            Review and assess victim needs assessments submitted through the system.
+        </p>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <h3>
+                Submitted Assessments
+            </h3>
+
+            <div
+                    class="stat-number"
+                    th:text="${submittedCount}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                Updated Assessments
+            </h3>
+
+            <div
+                    class="stat-number"
+                    th:text="${updatedCount}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>
+                Assessed Assessments
+            </h3>
+
+            <div
+                    class="stat-number"
+                    th:text="${assessedCount}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= NEEDS ASSESSMENTS ================= -->
+
+    <section class="section">
+
+        <h2>
+            Victim Needs Assessments
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Victim</th>
+
+                    <th>Current Situation</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <!-- Assessments -->
+
+                <tr th:each="assessment : ${assessments}">
+
+                    <td
+                            th:text="${assessment.id}">
+                        1
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                th:if="${assessment.victim != null}"
+                                th:text="${assessment.victim.fullName}">
+                            Victim Name
+                        </span>
+
+                        <span
+                                th:if="${assessment.victim == null}">
+                            Unknown
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                th:if="${assessment.currentSituation != null and !#strings.isEmpty(assessment.currentSituation)}"
+                                th:text="${assessment.currentSituation}">
+                            Current situation
+                        </span>
+
+                        <span
+                                th:if="${assessment.currentSituation == null or #strings.isEmpty(assessment.currentSituation)}">
+                            Not provided
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                                class="status submitted"
+                                th:if="${assessment.status == 'SUBMITTED'}">
+
+                            SUBMITTED
+
+                        </span>
+
+
+                        <span
+                                class="status updated"
+                                th:if="${assessment.status == 'UPDATED'}">
+
+                            UPDATED
+
+                        </span>
+
+
+                        <span
+                                class="status assessed"
+                                th:if="${assessment.status == 'ASSESSED'}">
+
+                            ASSESSED
+
+                        </span>
+
+
+                        <span
+                                class="status other-status"
+                                th:if="${assessment.status != 'SUBMITTED'
+                                        and assessment.status != 'UPDATED'
+                                        and assessment.status != 'ASSESSED'}"
+                                th:text="${assessment.status}">
+
+                            STATUS
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <a
+                                th:href="@{/relief-coordinator/needs-assessments/{id}(id=${assessment.id})}"
+                                class="view-btn">
+
+                            Review / View
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- No assessments -->
+
+                <tr th:if="${#lists.isEmpty(assessments)}">
+
+                    <td
+                            colspan="5"
+                            class="empty-message">
+
+                        No victim needs assessments have been submitted yet.
+
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+</body>
+
+</html>

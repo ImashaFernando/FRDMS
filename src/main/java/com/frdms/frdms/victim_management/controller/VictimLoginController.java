@@ -18,61 +18,101 @@ public class VictimLoginController {
         this.victimService = victimService;
     }
 
-    // Show victim login page
+
+    // =========================================================
+    // SHOW VICTIM LOGIN PAGE
+    // =========================================================
+
     @GetMapping("/victim-login")
     public String showLoginPage() {
         return "victim/login";
     }
 
-    // Process victim login
+
+    // =========================================================
+    // PROCESS VICTIM LOGIN
+    // =========================================================
+
     @PostMapping("/victim-login")
     public String loginVictim(
-            @RequestParam("nicNumber") String nicNumber,
+            @RequestParam("username") String username,
             @RequestParam("password") String password,
             HttpSession session,
             Model model) {
 
-        // Find victim using NIC
-        Victim victim = victimService.getVictimByNic(nicNumber.trim());
+        // -----------------------------------------------------
+        // Find victim using username
+        // -----------------------------------------------------
 
+        Victim victim =
+                victimService.getVictimByUsername(
+                        username.trim()
+                );
+
+
+        // -----------------------------------------------------
         // Victim does not exist
+        // -----------------------------------------------------
+
         if (victim == null) {
+
             model.addAttribute(
                     "loginError",
-                    "Invalid NIC number or password."
+                    "Invalid username or password."
             );
 
             return "victim/login";
         }
 
+
+        // -----------------------------------------------------
         // Check password
+        // -----------------------------------------------------
+
         boolean passwordCorrect =
                 victimService.checkPassword(
                         password,
                         victim.getPassword()
                 );
 
+
+        // -----------------------------------------------------
         // Wrong password
+        // -----------------------------------------------------
+
         if (!passwordCorrect) {
+
             model.addAttribute(
                     "loginError",
-                    "Invalid NIC number or password."
+                    "Invalid username or password."
             );
 
             return "victim/login";
         }
 
+
+        // -----------------------------------------------------
         // Login successful
+        // -----------------------------------------------------
+
         session.setAttribute(
                 "victimId",
                 victim.getId()
         );
 
+
+        // -----------------------------------------------------
         // Go to victim dashboard
+        // -----------------------------------------------------
+
         return "redirect:/victim/dashboard";
     }
 
-    // Logout
+
+    // =========================================================
+    // LOGOUT
+    // =========================================================
+
     @GetMapping("/victim-logout")
     public String logoutVictim(HttpSession session) {
 

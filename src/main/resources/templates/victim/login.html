@@ -10,227 +10,1038 @@
 
   <title>Victim Login | FRDMS</title>
 
+
   <style>
 
+    /* =========================================================
+       RESET
+       ========================================================= */
+
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
+
+    /* =========================================================
+       BODY
+       ========================================================= */
+
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0C1721;
+      font-family: "Segoe UI", Arial, sans-serif;
       min-height: 100vh;
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #07131d 0%,
+                      #0b2a4a 50%,
+                      #124d70 100%
+              );
+
       display: flex;
       align-items: center;
       justify-content: center;
+
+      padding: 30px;
+
+      color: #0b2a4a;
     }
 
-    .login-container {
-      width: 420px;
-      background: white;
-      border-radius: 18px;
-      padding: 40px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+
+    /* =========================================================
+       MAIN LOGIN WRAPPER
+       ========================================================= */
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 1050px;
+      min-height: 620px;
+
+      background: #ffffff;
+
+      border-radius: 26px;
+
+      overflow: hidden;
+
+      display: grid;
+      grid-template-columns: 48% 52%;
+
+      box-shadow:
+              0 25px 70px rgba(0, 0, 0, 0.35);
     }
 
-    .logo {
-      text-align: center;
-      margin-bottom: 25px;
+
+    /* =========================================================
+       LEFT INFORMATION PANEL
+       ========================================================= */
+
+    .info-panel {
+      position: relative;
+
+      padding: 55px 45px;
+
+      background:
+              linear-gradient(
+                      145deg,
+                      #0b2a4a,
+                      #124f70
+              );
+
+      color: white;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      overflow: hidden;
     }
 
-    .logo h1 {
-      margin: 0;
-      color: #0B2A4A;
+
+    /* Decorative circles */
+
+    .info-panel::before {
+      content: "";
+      position: absolute;
+
+      width: 300px;
+      height: 300px;
+
+      border-radius: 50%;
+
+      border: 45px solid rgba(255,255,255,0.06);
+
+      right: -120px;
+      top: -100px;
+    }
+
+
+    .info-panel::after {
+      content: "";
+      position: absolute;
+
+      width: 220px;
+      height: 220px;
+
+      border-radius: 50%;
+
+      border: 35px solid rgba(255,255,255,0.05);
+
+      left: -100px;
+      bottom: -80px;
+    }
+
+
+    /* =========================================================
+       BRAND
+       ========================================================= */
+
+    .brand {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    .brand-badge {
+      width: 62px;
+      height: 62px;
+
+      border-radius: 16px;
+
+      background: rgba(255,255,255,0.13);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       font-size: 28px;
+
+      margin-bottom: 20px;
+
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
-    .logo p {
-      color: #557080;
-      margin-top: 8px;
+
+    .brand h1 {
+      font-size: 38px;
+      letter-spacing: 2px;
+
+      margin-bottom: 10px;
     }
 
-    .title {
-      text-align: center;
-      color: #0B2A4A;
-      margin-bottom: 25px;
+
+    .brand .system-name {
+      font-size: 15px;
+
+      line-height: 1.6;
+
+      color: rgba(255,255,255,0.78);
+
+      max-width: 360px;
     }
+
+
+    /* =========================================================
+       INFORMATION CONTENT
+       ========================================================= */
+
+    .info-content {
+      position: relative;
+      z-index: 2;
+
+      margin-top: 30px;
+    }
+
+
+    .info-content h2 {
+      font-size: 27px;
+
+      line-height: 1.3;
+
+      margin-bottom: 18px;
+    }
+
+
+    .info-content p {
+      color: rgba(255,255,255,0.78);
+
+      line-height: 1.7;
+
+      font-size: 15px;
+
+      max-width: 390px;
+    }
+
+
+    /* =========================================================
+       FEATURE BOXES
+       ========================================================= */
+
+    .features {
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 12px;
+
+      margin-top: 30px;
+    }
+
+
+    .feature {
+      padding: 14px;
+
+      border-radius: 12px;
+
+      background: rgba(255,255,255,0.08);
+
+      border: 1px solid rgba(255,255,255,0.08);
+
+      font-size: 13px;
+
+      color: rgba(255,255,255,0.85);
+    }
+
+
+    .feature strong {
+      display: block;
+
+      color: white;
+
+      margin-bottom: 4px;
+    }
+
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .info-footer {
+      position: relative;
+      z-index: 2;
+
+      color: rgba(255,255,255,0.55);
+
+      font-size: 12px;
+    }
+
+
+    /* =========================================================
+       RIGHT LOGIN PANEL
+       ========================================================= */
+
+    .login-panel {
+      padding: 55px 65px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+    }
+
+
+    /* =========================================================
+       LOGIN HEADER
+       ========================================================= */
+
+    .login-header {
+      margin-bottom: 32px;
+    }
+
+
+    .login-header .small-title {
+      color: #248be0;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.5px;
+
+      margin-bottom: 8px;
+    }
+
+
+    .login-header h2 {
+      font-size: 32px;
+
+      color: #0b2a4a;
+
+      margin-bottom: 8px;
+    }
+
+
+    .login-header p {
+      color: #6d7d88;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       ERROR MESSAGE
+       ========================================================= */
+
+    .error-message {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      background: #fff1f1;
+
+      color: #b42318;
+
+      border: 1px solid #f4c2c2;
+
+      padding: 13px 15px;
+
+      border-radius: 11px;
+
+      margin-bottom: 22px;
+
+      font-size: 13px;
+
+      line-height: 1.4;
+    }
+
+
+    .error-icon {
+      width: 24px;
+      height: 24px;
+
+      border-radius: 50%;
+
+      background: #b42318;
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: bold;
+
+      flex-shrink: 0;
+    }
+
+
+    /* =========================================================
+       FORM
+       ========================================================= */
 
     .form-group {
       margin-bottom: 20px;
     }
 
+
     .form-group label {
       display: block;
+
+      color: #173b56;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
       margin-bottom: 8px;
-      font-weight: bold;
-      color: #0B2A4A;
     }
+
+
+    /* =========================================================
+       INPUT WRAPPER
+       ========================================================= */
+
+    .input-wrapper {
+      position: relative;
+    }
+
+
+    .input-icon {
+      position: absolute;
+
+      left: 15px;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-size: 17px;
+
+      color: #7c919f;
+
+      pointer-events: none;
+    }
+
 
     .form-group input {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #ccd6dc;
-      border-radius: 8px;
-      font-size: 15px;
+
+      height: 52px;
+
+      padding: 0 15px 0 45px;
+
+      border: 1.5px solid #d8e0e5;
+
+      border-radius: 11px;
+
+      font-size: 14px;
+
+      color: #18384e;
+
+      background: #fbfcfd;
+
+      transition: all 0.2s ease;
     }
+
+
+    .form-group input::placeholder {
+      color: #9aaab4;
+    }
+
+
+    .form-group input:hover {
+      border-color: #b8c8d2;
+    }
+
 
     .form-group input:focus {
       outline: none;
-      border-color: #248BE0;
-      box-shadow: 0 0 0 2px rgba(36, 139, 224, 0.15);
+
+      border-color: #248be0;
+
+      background: white;
+
+      box-shadow:
+              0 0 0 4px rgba(36,139,224,0.10);
     }
+
+
+    /* =========================================================
+       PASSWORD TOGGLE
+       ========================================================= */
+
+    .password-input {
+      padding-right: 48px !important;
+    }
+
+
+    .password-toggle {
+      position: absolute;
+
+      right: 13px;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      border: none;
+
+      background: transparent;
+
+      color: #708590;
+
+      cursor: pointer;
+
+      font-size: 16px;
+
+      padding: 5px;
+    }
+
+
+    .password-toggle:hover {
+      color: #248be0;
+    }
+
+
+    /* =========================================================
+       LOGIN BUTTON
+       ========================================================= */
 
     .login-btn {
       width: 100%;
-      padding: 14px;
+
+      height: 52px;
+
       border: none;
-      border-radius: 8px;
-      background: #248BE0;
+
+      border-radius: 11px;
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #248be0,
+                      #176fb8
+              );
+
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      letter-spacing: 0.3px;
+
       cursor: pointer;
+
+      box-shadow:
+              0 8px 20px rgba(36,139,224,0.25);
+
+      transition:
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
     }
+
 
     .login-btn:hover {
-      background: #176fb8;
+      transform: translateY(-2px);
+
+      box-shadow:
+              0 12px 25px rgba(36,139,224,0.32);
     }
 
-    .error-message {
-      background: #fdeaea;
-      color: #b42318;
-      border: 1px solid #f3b5b5;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+
+    /* =========================================================
+       REGISTER SECTION
+       ========================================================= */
+
+    .register-section {
       text-align: center;
+
+      margin-top: 25px;
+
+      padding-top: 22px;
+
+      border-top: 1px solid #edf0f2;
     }
 
-    .register-link {
-      text-align: center;
-      margin-top: 22px;
-      color: #557080;
+
+    .register-section p {
+      color: #71818b;
+
+      font-size: 13px;
+
+      margin-bottom: 10px;
     }
 
-    .register-link a {
-      color: #248BE0;
-      font-weight: bold;
+
+    .register-btn {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-width: 190px;
+
+      height: 42px;
+
+      padding: 0 18px;
+
+      border-radius: 9px;
+
+      border: 1.5px solid #248be0;
+
+      color: #248be0;
+
+      background: white;
+
       text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      transition: all 0.2s ease;
     }
 
-    .register-link a:hover {
-      text-decoration: underline;
+
+    .register-btn:hover {
+      background: #248be0;
+
+      color: white;
+
+      transform: translateY(-1px);
     }
 
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 15px;
-      color: #557080;
+
+    /* =========================================================
+       BACK TO HOME
+       ========================================================= */
+
+    .back-home {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 6px;
+
+      margin-top: 18px;
+
+      color: #72828d;
+
       text-decoration: none;
-      font-size: 14px;
+
+      font-size: 13px;
+
+      transition: color 0.2s ease;
+    }
+
+
+    .back-home:hover {
+      color: #248be0;
+    }
+
+
+    /* =========================================================
+       SECURITY NOTE
+       ========================================================= */
+
+    .security-note {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      margin-top: 20px;
+
+      color: #94a2aa;
+
+      font-size: 11px;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE DESIGN
+       ========================================================= */
+
+    @media (max-width: 850px) {
+
+      body {
+        padding: 20px;
+      }
+
+
+      .login-wrapper {
+        max-width: 520px;
+
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+      }
+
+
+      .info-panel {
+        display: none;
+      }
+
+
+      .login-panel {
+        padding: 45px 40px;
+      }
+    }
+
+
+    @media (max-width: 480px) {
+
+      body {
+        padding: 12px;
+      }
+
+
+      .login-wrapper {
+        border-radius: 18px;
+      }
+
+
+      .login-panel {
+        padding: 35px 25px;
+      }
+
+
+      .login-header h2 {
+        font-size: 27px;
+      }
     }
 
   </style>
 
 </head>
 
+
 <body>
 
-<div class="login-container">
 
-  <div class="logo">
-
-    <h1>FRDMS</h1>
-
-    <p>Flood Relief & Disaster Management System</p>
-
-  </div>
+<div class="login-wrapper">
 
 
-  <h2 class="title">Victim Login</h2>
+  <!-- =====================================================
+       LEFT INFORMATION PANEL
+       ===================================================== -->
+
+  <section class="info-panel">
 
 
-  <!-- Login Error -->
-
-  <div th:if="${loginError}"
-       class="error-message"
-       th:text="${loginError}">
-  </div>
+    <div>
 
 
-  <form th:action="@{/victim-login}"
-        method="post">
+      <!-- BRAND -->
+
+      <div class="brand">
+
+        <div class="brand-badge">
+          🌊
+        </div>
+
+        <h1>FRDMS</h1>
+
+        <p class="system-name">
+          Flood Relief &amp; Disaster Management System
+        </p>
+
+      </div>
 
 
-    <!-- NIC Number -->
+      <!-- INFORMATION -->
 
-    <div class="form-group">
+      <div class="info-content">
 
-      <label for="nicNumber">
-        NIC Number
-      </label>
+        <h2>
+          Welcome back.
+          <br>
+          We're here to help.
+        </h2>
 
-      <input
-              type="text"
-              id="nicNumber"
-              name="nicNumber"
-              placeholder="Enter your NIC number"
-              required
-      >
+        <p>
+          Access your victim account to view your
+          relief information, submit your needs,
+          and stay connected with the disaster
+          relief process.
+        </p>
+
+
+        <!-- FEATURES -->
+
+        <div class="features">
+
+          <div class="feature">
+            <strong>✓ Relief Support</strong>
+            Access your relief-related information.
+          </div>
+
+          <div class="feature">
+            <strong>✓ Needs Assessment</strong>
+            Submit and manage your current needs.
+          </div>
+
+          <div class="feature">
+            <strong>✓ GN Reports</strong>
+            Track your submitted GN report.
+          </div>
+
+          <div class="feature">
+            <strong>✓ Secure Access</strong>
+            Your account is protected.
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
 
-    <!-- Password -->
+    <!-- FOOTER -->
 
-    <div class="form-group">
+    <div class="info-footer">
+      Flood Relief &amp; Disaster Management System
+    </div>
 
-      <label for="password">
-        Password
-      </label>
 
-      <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              required
-      >
+  </section>
+
+
+
+  <!-- =====================================================
+       RIGHT LOGIN PANEL
+       ===================================================== -->
+
+  <section class="login-panel">
+
+
+    <!-- LOGIN HEADER -->
+
+    <div class="login-header">
+
+      <div class="small-title">
+        Victim Portal
+      </div>
+
+      <h2>
+        Victim Login
+      </h2>
+
+      <p>
+        Sign in to access your FRDMS account.
+      </p>
 
     </div>
 
 
-    <!-- Login Button -->
 
-    <button
-            type="submit"
-            class="login-btn">
-      Login
-    </button>
+    <!-- =================================================
+         LOGIN ERROR
+         ================================================= -->
 
-  </form>
+    <div th:if="${loginError}"
+         class="error-message">
 
+      <span class="error-icon">!</span>
 
-  <!-- Registration -->
+      <span th:text="${loginError}">
+                Invalid username or password.
+            </span>
 
-  <div class="register-link">
-
-    Don't have an account?
-
-    <a th:href="@{/victims/register}">
-      Register as a Victim
-    </a>
-
-  </div>
+    </div>
 
 
-  <a href="/" class="back-link">
-    ← Back to Home
-  </a>
+
+    <!-- =================================================
+         LOGIN FORM
+         ================================================= -->
+
+    <form th:action="@{/victim-login}"
+          method="post">
+
+
+      <!-- USERNAME -->
+
+      <div class="form-group">
+
+        <label for="username">
+          Username
+        </label>
+
+        <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+          <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter your username"
+                  autocomplete="username"
+                  required
+          >
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PASSWORD -->
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+          <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="password-input"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+          >
+
+          <button
+                  type="button"
+                  class="password-toggle"
+                  onclick="togglePassword()"
+                  aria-label="Show or hide password">
+
+            👁
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- LOGIN BUTTON -->
+
+      <button
+              type="submit"
+              class="login-btn">
+
+        Sign In to FRDMS
+
+      </button>
+
+    </form>
+
+
+
+    <!-- =================================================
+         REGISTER
+         ================================================= -->
+
+    <div class="register-section">
+
+      <p>
+        Don't have a victim account?
+      </p>
+
+      <a
+              th:href="@{/victims/register}"
+              class="register-btn">
+
+        Create Victim Account
+
+      </a>
+
+
+      <br>
+
+
+      <a
+              href="/"
+              class="back-home">
+
+        ← Back to Home
+
+      </a>
+
+    </div>
+
+
+
+    <!-- SECURITY NOTE -->
+
+    <div class="security-note">
+
+      🔒 Secure victim account access
+
+    </div>
+
+
+  </section>
+
 
 </div>
+
+
+
+<!-- =========================================================
+     PASSWORD SHOW / HIDE
+     ========================================================= -->
+
+<script>
+
+  function togglePassword() {
+
+    const passwordInput =
+            document.getElementById("password");
+
+    const toggleButton =
+            document.querySelector(".password-toggle");
+
+
+    if (passwordInput.type === "password") {
+
+      passwordInput.type = "text";
+
+      toggleButton.textContent = "🙈";
+
+    } else {
+
+      passwordInput.type = "password";
+
+      toggleButton.textContent = "👁";
+
+    }
+
+  }
+
+</script>
+
 
 </body>
 

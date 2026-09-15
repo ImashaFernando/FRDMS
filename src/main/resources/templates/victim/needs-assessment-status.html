@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Needs Assessment Status | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      color: #0C1721;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header {
+      background: #0C1721;
+      color: white;
+
+      padding: 22px 45px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+    }
+
+    .header p {
+      margin-top: 5px;
+      color: #CFE8F7;
+      font-size: 14px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: white;
+      background: #248BE0;
+
+      padding: 10px 18px;
+
+      border-radius: 7px;
+
+      font-size: 14px;
+    }
+
+    .back-btn:hover {
+      background: #1c72b9;
+    }
+
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+      width: 90%;
+      max-width: 1000px;
+
+      margin: 35px auto;
+    }
+
+    .page-title {
+      margin-bottom: 25px;
+    }
+
+    .page-title h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .page-title p {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+
+    /* ================= CARD ================= */
+
+    .card {
+      background: white;
+
+      padding: 28px;
+
+      border-radius: 12px;
+
+      margin-bottom: 25px;
+
+      box-shadow:
+              0 3px 12px
+              rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+      color: #0B2A4A;
+      margin-bottom: 20px;
+    }
+
+
+    /* ================= STATUS ================= */
+
+    .status-container {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      background: #f4f7fa;
+
+      padding: 20px;
+
+      border-radius: 10px;
+
+      margin-bottom: 20px;
+    }
+
+    .status-label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .status {
+      padding: 9px 18px;
+
+      border-radius: 20px;
+
+      font-weight: bold;
+
+      font-size: 13px;
+    }
+
+    .status-submitted {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-review {
+      background: #cfe8f7;
+      color: #155b86;
+    }
+
+    .status-updated {
+      background: #ffe5b4;
+      color: #8a4b00;
+    }
+
+    .status-assessed {
+      background: #d4edda;
+      color: #155724;
+    }
+
+
+    /* ================= INFORMATION BOX ================= */
+
+    .info-box {
+      margin-top: 20px;
+
+      background: #CFE8F7;
+
+      border-left: 5px solid #248BE0;
+
+      padding: 15px;
+
+      border-radius: 6px;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+    .updated-info {
+      background: #fff3cd;
+
+      border-left: 5px solid #f0ad4e;
+
+      padding: 15px;
+
+      border-radius: 6px;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+    .updated-info strong {
+      color: #8a5a00;
+    }
+
+
+    /* ================= GRID ================= */
+
+    .info-grid {
+      display: grid;
+
+      grid-template-columns:
+                    repeat(2, 1fr);
+
+      gap: 18px;
+    }
+
+    .info-item {
+      background: #f4f7fa;
+
+      padding: 15px;
+
+      border-radius: 8px;
+    }
+
+    .info-item strong {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #555;
+
+      font-size: 13px;
+    }
+
+    .info-item span {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+
+    /* ================= NEEDS ================= */
+
+    .needs-list {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 20px;
+    }
+
+    .need {
+      background: #CFE8F7;
+
+      color: #0B2A4A;
+
+      padding: 9px 15px;
+
+      border-radius: 20px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+
+    /* ================= ASSESSMENT ================= */
+
+    .assessment-box {
+      background: #f4f7fa;
+
+      padding: 20px;
+
+      border-radius: 10px;
+    }
+
+    .assessment-box p {
+      margin-bottom: 12px;
+
+      line-height: 1.5;
+    }
+
+    .assessment-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .assessment-box strong {
+      color: #333;
+    }
+
+
+    /* ================= NO DATA ================= */
+
+    .empty {
+      text-align: center;
+
+      padding: 40px 20px;
+
+      color: #666;
+    }
+
+    .empty h3 {
+      margin-bottom: 10px;
+
+      color: #0B2A4A;
+    }
+
+
+    /* ================= ACTION BUTTONS ================= */
+
+    .actions {
+      margin-top: 30px;
+
+      display: flex;
+
+      gap: 15px;
+
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+
+      padding: 13px 24px;
+
+      border-radius: 7px;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      display: inline-block;
+
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #248BE0;
+
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1c72b9;
+    }
+
+    .btn-secondary {
+      background: #e6e8e9;
+
+      color: #222;
+
+      border: 1px solid #d1d5d7;
+    }
+
+    .btn-secondary:hover {
+      background: #d4d7d9;
+    }
+
+
+    /* ================= UPDATE BUTTON ================= */
+
+    .update-btn {
+      background: #28888F;
+
+      color: white;
+
+      border: none;
+    }
+
+    .update-btn:hover {
+      background: #206f75;
+    }
+
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 700px) {
+
+      .header {
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        align-items: flex-start;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: auto;
+      }
+
+      .status-container {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        text-align: center;
+
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="header">
+
+  <div>
+
+    <h1>
+      Flood Relief & Disaster Management System
+    </h1>
+
+    <p>
+      Victim Management
+    </p>
+
+  </div>
+
+
+  <a
+          th:href="@{/victim/dashboard}"
+          class="back-btn">
+
+    ← Dashboard
+
+  </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<main class="container">
+
+
+  <!-- =================================================
+       PAGE TITLE
+       ================================================= -->
+
+  <div class="page-title">
+
+    <h2>
+      Needs Assessment Status
+    </h2>
+
+    <p>
+      View the current status of your submitted
+      needs assessment.
+    </p>
+
+  </div>
+
+
+
+  <!-- =================================================
+       ASSESSMENT EXISTS
+       ================================================= -->
+
+  <div th:if="${needsAssessment != null}">
+
+
+    <!-- =================================================
+         STATUS CARD
+         ================================================= -->
+
+    <div class="card">
+
+      <h3>
+        Assessment Status
+      </h3>
+
+
+      <div class="status-container">
+
+                <span class="status-label">
+
+                    Current Status
+
+                </span>
+
+
+        <span
+                class="status"
+
+                th:classappend="${needsAssessment.status == 'SUBMITTED'}
+                                        ? ' status-submitted'
+                                        : (${needsAssessment.status == 'UNDER_REVIEW'}
+                                        ? ' status-review'
+                                        : (${needsAssessment.status == 'UPDATED'}
+                                        ? ' status-updated'
+                                        : ' status-assessed'))"
+
+                th:text="${needsAssessment.status}">
+
+                    SUBMITTED
+
+                </span>
+
+      </div>
+
+
+
+      <!-- =================================================
+           SUBMITTED MESSAGE
+           ================================================= -->
+
+      <div
+              class="info-box"
+
+              th:if="${needsAssessment.status == 'SUBMITTED'}">
+
+        <strong>
+          Assessment Submitted
+        </strong>
+
+        <br>
+
+        Your needs assessment has been submitted
+        successfully.
+
+        The Relief Coordinator will review your
+        submitted information.
+
+      </div>
+
+
+
+      <!-- =================================================
+           UNDER REVIEW MESSAGE
+           ================================================= -->
+
+      <div
+              class="info-box"
+
+              th:if="${needsAssessment.status == 'UNDER_REVIEW'}">
+
+        <strong>
+          Assessment Under Review
+        </strong>
+
+        <br>
+
+        Your needs assessment is currently being
+        reviewed by the Relief Coordinator.
+
+      </div>
+
+
+
+      <!-- =================================================
+           UPDATED MESSAGE
+           ================================================= -->
+
+      <div
+              class="updated-info"
+
+              th:if="${needsAssessment.status == 'UPDATED'}">
+
+        <strong>
+          Information Updated
+        </strong>
+
+        <br>
+
+        Your needs assessment has been updated
+        successfully.
+
+        The Relief Coordinator will be notified
+        that your information has changed and
+        will review the updated assessment again.
+
+      </div>
+
+
+
+      <!-- =================================================
+           ASSESSED MESSAGE
+           ================================================= -->
+
+      <div
+              class="info-box"
+
+              th:if="${needsAssessment.status == 'ASSESSED'}">
+
+        <strong>
+          Assessment Reviewed
+        </strong>
+
+        <br>
+
+        Your needs assessment has been reviewed
+        by the Relief Coordinator.
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SUBMITTED NEEDS
+         ================================================= -->
+
+    <div class="card">
+
+      <h3>
+        Submitted Needs
+      </h3>
+
+
+      <!-- Current Situation -->
+
+      <div class="info-grid">
+
+        <div class="info-item full-width">
+
+          <strong>
+            Current Situation
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.currentSituation}">
+
+                        Current situation
+
+                    </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           SELECTED NEEDS
+           ================================================= -->
+
+      <div class="needs-list">
+
+
+        <!-- Food -->
+
+        <span
+                class="need"
+
+                th:if="${needsAssessment.foodRequired}">
+
+                    Food
+
+                </span>
+
+
+
+        <!-- Drinking Water -->
+
+        <span
+                class="need"
+
+                th:if="${needsAssessment.waterRequired}">
+
+                    Drinking Water
+
+                </span>
+
+
+
+        <!-- Medical Assistance -->
+
+        <span
+                class="need"
+
+                th:if="${needsAssessment.medicalAssistanceRequired}">
+
+                    Medical Assistance
+
+                </span>
+
+
+
+        <!-- Clothing -->
+
+        <span
+                class="need"
+
+                th:if="${needsAssessment.clothingRequired}">
+
+                    Clothing
+
+                </span>
+
+
+
+        <!-- Hygiene Items -->
+
+        <span
+                class="need"
+
+                th:if="${needsAssessment.hygieneItemsRequired}">
+
+                    Hygiene Items
+
+                </span>
+
+      </div>
+
+
+
+      <!-- =================================================
+           OTHER / ADDITIONAL INFORMATION
+           ================================================= -->
+
+      <div
+              class="info-grid"
+              style="margin-top: 20px;">
+
+
+        <!-- Other Needs -->
+
+        <div
+                class="info-item full-width"
+
+                th:if="${needsAssessment.otherNeeds != null
+                                and !needsAssessment.otherNeeds.isEmpty()}">
+
+          <strong>
+            Other Needs
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.otherNeeds}">
+
+                        Other needs
+
+                    </span>
+
+        </div>
+
+
+
+        <!-- Additional Information -->
+
+        <div
+                class="info-item full-width"
+
+                th:if="${needsAssessment.additionalInformation != null
+                                and !needsAssessment.additionalInformation.isEmpty()}">
+
+          <strong>
+            Additional Information
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.additionalInformation}">
+
+                        Additional information
+
+                    </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         RELIEF COORDINATOR ASSESSMENT
+         ================================================= -->
+
+    <div
+            class="card"
+
+            th:if="${needsAssessment.status == 'ASSESSED'}">
+
+      <h3>
+        Relief Coordinator Assessment
+      </h3>
+
+
+      <div class="assessment-box">
+
+
+        <!-- Priority -->
+
+        <p>
+
+          <strong>
+            Priority:
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.priority != null
+                                      ? needsAssessment.priority
+                                      : '-'}">
+
+                        -
+
+                    </span>
+
+        </p>
+
+
+
+        <!-- Assessment Remarks -->
+
+        <p>
+
+          <strong>
+            Assessment Remarks:
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.assessmentRemarks != null
+                                      ? needsAssessment.assessmentRemarks
+                                      : '-'}">
+
+                        -
+
+                    </span>
+
+        </p>
+
+
+
+        <!-- Assessed By -->
+
+        <p>
+
+          <strong>
+            Assessed By:
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.assessedBy != null
+                                      ? needsAssessment.assessedBy
+                                      : '-'}">
+
+                        -
+
+                    </span>
+
+        </p>
+
+
+
+        <!-- Assessment Date -->
+
+        <p>
+
+          <strong>
+            Assessment Date:
+          </strong>
+
+          <span
+                  th:text="${needsAssessment.assessmentDate != null
+                                      ? #temporals.format(
+                                            needsAssessment.assessmentDate,
+                                            'dd MMM yyyy HH:mm'
+                                        )
+                                      : '-'}">
+
+                        -
+
+                    </span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ACTION BUTTONS
+         ================================================= -->
+
+    <div class="actions">
+
+
+      <!-- BACK TO DASHBOARD -->
+
+      <a
+              th:href="@{/victim/dashboard}"
+              class="btn btn-primary">
+
+        ← Back to Dashboard
+
+      </a>
+
+
+
+      <!-- UPDATE EXISTING ASSESSMENT -->
+
+      <a
+              th:href="@{/needs-assessment/form}"
+              class="btn update-btn">
+
+        ✎ Update Needs Assessment
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =================================================
+       NO ASSESSMENT FOUND
+       ================================================= -->
+
+  <div
+          class="card"
+
+          th:if="${needsAssessment == null}">
+
+    <div class="empty">
+
+      <h3>
+        No Needs Assessment Found
+      </h3>
+
+
+      <p>
+        You have not submitted a needs assessment yet.
+      </p>
+
+
+      <div
+              class="actions"
+              style="justify-content: center;">
+
+        <a
+                th:href="@{/needs-assessment/form}"
+                class="btn btn-primary">
+
+          Submit Needs Assessment
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+</body>
+
+</html>

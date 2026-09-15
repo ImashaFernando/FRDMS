@@ -1,0 +1,771 @@
+/* =========================================================
+   FRDMS - EDIT FLOOD EVENT PAGE
+   Dedicated stylesheet
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background: #eef2f5;
+    color: #172b4d;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.edit-header {
+    width: 100%;
+    min-height: 105px;
+
+    background: #0c1721;
+
+    color: white;
+
+    padding: 18px 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20);
+}
+
+.edit-brand-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.edit-logo {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #568bd9;
+
+    border-radius: 14px;
+
+    font-size: 29px;
+}
+
+.edit-brand {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.edit-system-name {
+    margin-top: 3px;
+
+    color: #9fc5ff;
+
+    font-size: 16px;
+}
+
+.edit-navigation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.edit-nav-link {
+    padding: 13px 21px;
+
+    color: white;
+
+    border-radius: 9px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.edit-nav-link:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.edit-nav-link.active {
+    background: #568bd9;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.edit-page {
+    width: calc(100% - 120px);
+
+    max-width: 1250px;
+
+    margin: 45px auto 70px;
+}
+
+
+/* =========================================================
+   TOP TITLE AREA
+   ========================================================= */
+
+.edit-title-area {
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.edit-title-left {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+.edit-title-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #568bd9;
+
+    border-radius: 14px;
+
+    color: white;
+
+    font-size: 28px;
+
+    box-shadow: 0 6px 15px rgba(86, 139, 217, 0.25);
+}
+
+.edit-title-area h1 {
+    margin: 0;
+
+    color: #132b50;
+
+    font-size: 38px;
+}
+
+.edit-title-area p {
+    margin: 6px 0 0;
+
+    color: #64808f;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   RECORD ID
+   ========================================================= */
+
+.record-id {
+    padding: 10px 16px;
+
+    background: white;
+
+    border: 1px solid #d8e0e6;
+
+    border-radius: 9px;
+
+    color: #587184;
+
+    font-size: 14px;
+}
+
+.record-id strong {
+    color: #315f91;
+}
+
+
+/* =========================================================
+   MAIN EDIT CARD
+   ========================================================= */
+
+.edit-card {
+    background: white;
+
+    border-radius: 16px;
+
+    box-shadow: 0 10px 30px rgba(30, 52, 70, 0.12);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CARD TOP BAR
+   ========================================================= */
+
+.edit-card-top {
+    padding: 22px 38px;
+
+    background: #f5f8fb;
+
+    border-bottom: 1px solid #dfe6eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.edit-card-top-title {
+    color: #1c3d60;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+.edit-status {
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    background: #eaf3ff;
+
+    color: #3d6fa8;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INFORMATION NOTICE
+   ========================================================= */
+
+.edit-notice {
+    margin: 30px 38px 0;
+
+    padding: 18px 20px;
+
+    background: #edf7fa;
+
+    border: 1px solid #d3e8ed;
+
+    border-left: 5px solid #5d929d;
+
+    border-radius: 9px;
+}
+
+.edit-notice-title {
+    margin-bottom: 5px;
+
+    color: #285968;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+.edit-notice-text {
+    color: #607681;
+
+    font-size: 14px;
+
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.edit-form {
+    padding: 35px 38px 40px;
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.edit-section-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 14px;
+
+    border-bottom: 2px solid #dceaf3;
+
+    color: #17375e;
+
+    font-size: 21px;
+
+    font-weight: 700;
+}
+
+.edit-section-number {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #568bd9;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.edit-form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.edit-field {
+    margin-bottom: 25px;
+}
+
+.edit-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.edit-field label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #193a5c;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+.edit-required {
+    color: #d45757;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.edit-input,
+.edit-textarea,
+.edit-date {
+    width: 100%;
+
+    border: 1px solid #c7d0d7;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #172b4d;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.edit-input,
+.edit-date {
+    height: 55px;
+
+    padding: 0 16px;
+}
+
+.edit-textarea {
+    min-height: 180px;
+
+    padding: 15px 16px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.edit-input:focus,
+.edit-textarea:focus {
+    border-color: #568bd9;
+
+    box-shadow: 0 0 0 4px rgba(86, 139, 217, 0.11);
+}
+
+
+/* =========================================================
+   READ ONLY DATE
+   ========================================================= */
+
+.edit-date {
+    background: #f1f3f5;
+
+    color: #455d70;
+
+    font-weight: 700;
+
+    cursor: not-allowed;
+}
+
+.date-lock {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 8px;
+
+    color: #72818b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   HELP
+   ========================================================= */
+
+.edit-help {
+    margin-top: 7px;
+
+    color: #74828c;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
+.edit-error {
+    margin-top: 8px;
+
+    padding: 8px 10px;
+
+    background: #fff1f1;
+
+    border-left: 3px solid #d45757;
+
+    border-radius: 5px;
+
+    color: #b42318;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION AREA
+   ========================================================= */
+
+.edit-actions {
+    margin-top: 15px;
+
+    padding-top: 28px;
+
+    border-top: 1px solid #e1e6ea;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.edit-actions-left {
+    display: flex;
+    gap: 12px;
+}
+
+.edit-button {
+    min-height: 52px;
+
+    padding: 13px 24px;
+
+    border-radius: 9px;
+
+    border: none;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s ease;
+}
+
+.edit-update {
+    background: #568bd9;
+
+    color: white;
+
+    box-shadow: 0 5px 12px rgba(86, 139, 217, 0.22);
+}
+
+.edit-update:hover {
+    background: #4678c2;
+
+    transform: translateY(-1px);
+}
+
+.edit-cancel {
+    background: #edf0f2;
+
+    color: #263f59;
+
+    border: 1px solid #cbd2d7;
+}
+
+.edit-cancel:hover {
+    background: #e0e5e8;
+}
+
+
+/* =========================================================
+   WORKFLOW
+   ========================================================= */
+
+.edit-workflow {
+    margin: 0 38px 38px;
+
+    padding: 22px;
+
+    background: #f8fafc;
+
+    border: 1px solid #dce4ea;
+
+    border-radius: 10px;
+}
+
+.edit-workflow-title {
+    margin-bottom: 18px;
+
+    color: #24425f;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+.edit-workflow-steps {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.edit-workflow-step {
+    padding: 14px;
+
+    background: white;
+
+    border: 1px solid #e0e6eb;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #657680;
+
+    font-size: 13px;
+}
+
+.edit-workflow-step.current {
+    border-color: #8fb4e5;
+
+    background: #f1f6fd;
+
+    color: #315f91;
+
+    font-weight: 600;
+}
+
+.edit-workflow-number {
+    width: 29px;
+    height: 29px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e1eaf5;
+
+    color: #416fae;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.current .edit-workflow-number {
+    background: #568bd9;
+
+    color: white;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .edit-header {
+        padding: 18px 25px;
+    }
+
+    .edit-page {
+        width: calc(100% - 35px);
+
+        margin-top: 30px;
+    }
+
+    .edit-title-area {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .edit-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-field.full-width {
+        grid-column: auto;
+    }
+
+    .edit-workflow-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .edit-actions-left {
+        flex-direction: column;
+    }
+
+    .edit-button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .edit-header {
+        min-height: auto;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .edit-navigation {
+        width: 100%;
+    }
+
+    .edit-nav-link {
+        flex: 1;
+
+        text-align: center;
+    }
+
+    .edit-brand {
+        font-size: 25px;
+    }
+
+    .edit-system-name {
+        font-size: 13px;
+    }
+
+    .edit-page {
+        width: calc(100% - 20px);
+
+        margin-top: 20px;
+    }
+
+    .edit-title-area h1 {
+        font-size: 30px;
+    }
+
+    .edit-card-top {
+        padding: 18px 22px;
+    }
+
+    .edit-notice {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+
+    .edit-form {
+        padding: 28px 22px;
+    }
+
+    .edit-workflow {
+        margin-left: 22px;
+        margin-right: 22px;
+    }
+
+}

@@ -1,207 +1,808 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>GN Report Verification</title>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>GN Report Verification | FRDMS</title>
+
 
   <style>
+
+    /* =====================================================
+       GLOBAL
+       ===================================================== */
+
     * {
       box-sizing: border-box;
     }
 
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+
+      font-family: Arial, Helvetica, sans-serif;
+
       background: #f4f7fa;
-      color: #1d2b36;
+
+      color: #172b4d;
     }
+
+
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
 
     .header {
-      background: #0C1721;
+
+      position: relative;
+
+      background: #0c1721;
+
       color: white;
-      padding: 22px 40px;
+
+      padding: 30px 60px;
+
+      min-height: 175px;
+
+      display: flex;
+
+      align-items: flex-start;
     }
+
+
+    .header-content {
+
+      width: 100%;
+
+      max-width: 1400px;
+
+      margin: 0 auto;
+    }
+
 
     .header h1 {
+
       margin: 0;
-      font-size: 26px;
+
+      font-size: 36px;
+
+      font-weight: 700;
+
+      color: white;
     }
+
 
     .header p {
-      margin: 6px 0 0;
-      color: #cfe8f7;
+
+      margin: 8px 0 0;
+
+      font-size: 20px;
+
+      color: #d9e8f5;
     }
+
+
+
+    /* =====================================================
+       PM VICTIM MANAGEMENT BUTTON
+       ===================================================== */
+
+    .dashboard-button-container {
+
+      position: absolute;
+
+      top: 35px;
+
+      right: 50px;
+    }
+
+
+    .dashboard-button {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      min-width: 245px;
+
+      padding: 14px 22px;
+
+      background: #558ee0;
+
+      color: white;
+
+      text-decoration: none;
+
+      border: 1px solid #7eacec;
+
+      border-radius: 9px;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      box-shadow:
+              0 4px 10px rgba(0, 0, 0, 0.25);
+
+      transition:
+              background 0.2s ease,
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
+    }
+
+
+    .dashboard-button:hover {
+
+      background: #3976cc;
+
+      color: white;
+
+      transform: translateY(-2px);
+
+      box-shadow:
+              0 7px 15px rgba(0, 0, 0, 0.30);
+    }
+
+
+    .dashboard-icon {
+
+      font-size: 20px;
+
+      line-height: 1;
+    }
+
+
+
+    /* =====================================================
+       MAIN CONTAINER
+       ===================================================== */
 
     .container {
-      width: 92%;
-      max-width: 1200px;
-      margin: 35px auto;
+
+      max-width: 1450px;
+
+      margin: 45px auto;
+
+      padding: 0 25px;
     }
 
-    .card {
+
+
+    /* =====================================================
+       TABLE CARD
+       ===================================================== */
+
+    .table-card {
+
       background: white;
-      border-radius: 14px;
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
 
-    .table-container {
+      border-radius: 16px;
+
+      padding: 32px;
+
+      box-shadow:
+              0 8px 25px rgba(0, 0, 0, 0.08);
+
       overflow-x: auto;
     }
 
+
+
+    /* =====================================================
+       TABLE
+       ===================================================== */
+
     table {
+
       width: 100%;
+
       border-collapse: collapse;
+
+      min-width: 1100px;
     }
+
+
+    thead {
+
+      background: #192f50;
+
+      color: white;
+    }
+
 
     th {
-      background: #0B2A4A;
-      color: white;
-      padding: 14px;
+
+      padding: 18px 20px;
+
       text-align: left;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      white-space: nowrap;
     }
+
 
     td {
-      padding: 14px;
-      border-bottom: 1px solid #e2e6e9;
+
+      padding: 19px 20px;
+
+      border-bottom: 1px solid #e1e6ea;
+
+      font-size: 16px;
+
+      color: #172b4d;
+
+      vertical-align: middle;
     }
 
-    tr:hover {
+
+    tbody tr:hover {
+
       background: #f7fafc;
     }
 
+
+
+    /* =====================================================
+       REPORT NUMBER
+       ===================================================== */
+
+    .report-number {
+
+      font-weight: 700;
+
+      color: #1f426b;
+    }
+
+
+
+    /* =====================================================
+       STATUS
+       ===================================================== */
+
     .status {
+
       display: inline-block;
-      padding: 7px 12px;
+
+      padding: 8px 15px;
+
       border-radius: 20px;
+
       font-size: 13px;
-      font-weight: bold;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
     }
 
-    .pending {
-      background: #fff3cd;
-      color: #856404;
+
+    .status-approved {
+
+      background: #d9f0dd;
+
+      color: #236b31;
     }
 
-    .approved {
-      background: #d4edda;
-      color: #155724;
+
+    .status-rejected {
+
+      background: #f4d8d8;
+
+      color: #8a2d2d;
     }
 
-    .rejected {
-      background: #f8d7da;
-      color: #721c24;
+
+    .status-pending {
+
+      background: #fff0c9;
+
+      color: #7a5a00;
     }
 
-    .view-btn {
+
+
+    /* =====================================================
+       REVIEW BUTTON
+       ===================================================== */
+
+    .review-button {
+
       display: inline-block;
-      padding: 9px 15px;
-      background: #248BE0;
+
+      padding: 10px 21px;
+
+      background: #558ee0;
+
       color: white;
+
       text-decoration: none;
-      border-radius: 7px;
+
+      border-radius: 8px;
+
       font-size: 14px;
+
+      font-weight: 700;
+
+      transition: 0.2s ease;
     }
 
-    .view-btn:hover {
-      background: #176db5;
+
+    .review-button:hover {
+
+      background: #3976cc;
+
+      color: white;
+
+      transform: translateY(-1px);
     }
 
-    .empty {
+
+
+    /* =====================================================
+       EMPTY STATE
+       ===================================================== */
+
+    .empty-message {
+
       text-align: center;
-      padding: 40px;
-      color: #777;
+
+      padding: 55px 20px;
+
+      color: #6b7d88;
+
+      font-size: 17px;
     }
+
+
+    .empty-icon {
+
+      font-size: 40px;
+
+      margin-bottom: 10px;
+    }
+
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 950px) {
+
+      .header {
+
+        padding: 25px;
+
+        min-height: auto;
+
+        display: block;
+      }
+
+
+      .header h1 {
+
+        font-size: 30px;
+      }
+
+
+      .header p {
+
+        font-size: 17px;
+      }
+
+
+      .dashboard-button-container {
+
+        position: static;
+
+        margin-top: 22px;
+      }
+
+
+      .dashboard-button {
+
+        width: fit-content;
+
+        min-width: 0;
+      }
+
+
+      .container {
+
+        margin-top: 30px;
+
+        padding: 0 15px;
+      }
+
+
+      .table-card {
+
+        padding: 18px;
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .header h1 {
+
+        font-size: 25px;
+      }
+
+
+      .dashboard-button {
+
+        width: 100%;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
-<div class="header">
-  <h1>GN Report Verification</h1>
-  <p>Review and verify submitted GN reports</p>
-</div>
 
-<div class="container">
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
-  <div class="card">
+<header class="header">
 
-    <div class="table-container">
 
-      <table>
+  <div class="header-content">
 
-        <thead>
-        <tr>
-          <th>Report Number</th>
-          <th>Victim</th>
-          <th>GN Officer</th>
-          <th>GN Division</th>
-          <th>Submitted Date</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-        </thead>
 
-        <tbody>
+    <h1>
+      GN Report Verification
+    </h1>
 
-        <tr th:each="report : ${gnReports}">
 
-          <td th:text="${report.reportNumber}"></td>
+    <p>
+      Review and verify submitted GN reports
+    </p>
 
-          <td th:text="${report.victim.fullName}"></td>
-
-          <td th:text="${report.gnOfficerName}"></td>
-
-          <td th:text="${report.gnDivision}"></td>
-
-          <td th:text="${#temporals.format(report.submittedDate, 'yyyy-MM-dd HH:mm')}"></td>
-
-          <td>
-
-                        <span class="status pending"
-                              th:if="${report.verificationStatus == 'PENDING'}">
-                            PENDING
-                        </span>
-
-            <span class="status approved"
-                  th:if="${report.verificationStatus == 'APPROVED'}">
-                            APPROVED
-                        </span>
-
-            <span class="status rejected"
-                  th:if="${report.verificationStatus == 'REJECTED'}">
-                            REJECTED
-                        </span>
-
-          </td>
-
-          <td>
-            <a class="view-btn"
-               th:href="@{/gn-reports/verify/{id}(id=${report.id})}">
-              Review
-            </a>
-          </td>
-
-        </tr>
-
-        <tr th:if="${#lists.isEmpty(gnReports)}">
-          <td colspan="7" class="empty">
-            No GN reports have been submitted yet.
-          </td>
-        </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
 
   </div>
 
-</div>
+
+
+  <!-- =================================================
+       PM VICTIM MANAGEMENT BUTTON
+       ================================================= -->
+
+  <div class="dashboard-button-container">
+
+
+    <a
+            th:href="@{/victims}"
+            class="dashboard-button">
+
+
+            <span class="dashboard-icon">
+                ←
+            </span>
+
+
+      <span>
+                Victim Management Dashboard
+            </span>
+
+
+    </a>
+
+
+  </div>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<main class="container">
+
+
+  <section class="table-card">
+
+
+    <table>
+
+
+      <!-- =================================================
+           TABLE HEADER
+           ================================================= -->
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Report Number
+        </th>
+
+        <th>
+          Victim
+        </th>
+
+        <th>
+          GN Officer
+        </th>
+
+        <th>
+          GN Division
+        </th>
+
+        <th>
+          Submitted Date
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Action
+        </th>
+
+      </tr>
+
+      </thead>
+
+
+
+      <!-- =================================================
+           TABLE BODY
+           ================================================= -->
+
+      <tbody>
+
+
+      <!-- =================================================
+           IMPORTANT:
+           Use gnReports because the controller sends
+           the list using the name "gnReports".
+           ================================================= -->
+
+      <tr
+              th:each="report : ${gnReports}">
+
+
+        <!-- =============================================
+             REPORT NUMBER
+             ============================================== -->
+
+        <td>
+
+                    <span
+                            class="report-number"
+                            th:text="${report.reportNumber}">
+
+                        001
+
+                    </span>
+
+        </td>
+
+
+
+        <!-- =============================================
+             VICTIM
+             ============================================== -->
+
+        <td
+                th:text="${report.victim != null
+                            ? report.victim.fullName
+                            : 'Unknown Victim'}">
+
+          Victim Name
+
+        </td>
+
+
+
+        <!-- =============================================
+             GN OFFICER
+             ============================================== -->
+
+        <td
+                th:text="${report.gnOfficerName}">
+
+          GN Officer
+
+        </td>
+
+
+
+        <!-- =============================================
+             GN DIVISION
+             ============================================== -->
+
+        <td
+                th:text="${report.gnDivision}">
+
+          GN Division
+
+        </td>
+
+
+
+        <!-- =============================================
+             SUBMITTED DATE
+             ============================================== -->
+
+        <td>
+
+                    <span
+                            th:if="${report.submittedDate != null}"
+                            th:text="${#temporals.format(
+                                report.submittedDate,
+                                'yyyy-MM-dd HH:mm'
+                            )}">
+
+                        2026-09-15 10:00
+
+                    </span>
+
+
+          <span
+                  th:if="${report.submittedDate == null}">
+
+                        -
+
+                    </span>
+
+        </td>
+
+
+
+        <!-- =============================================
+             STATUS
+             ============================================== -->
+
+        <td>
+
+
+          <!-- APPROVED -->
+
+          <span
+                  th:if="${report.verificationStatus == 'APPROVED'}"
+                  class="status status-approved"
+                  th:text="${report.verificationStatus}">
+
+                        APPROVED
+
+                    </span>
+
+
+
+          <!-- REJECTED -->
+
+          <span
+                  th:if="${report.verificationStatus == 'REJECTED'}"
+                  class="status status-rejected"
+                  th:text="${report.verificationStatus}">
+
+                        REJECTED
+
+                    </span>
+
+
+
+          <!-- PENDING -->
+
+          <span
+                  th:if="${report.verificationStatus == 'PENDING'}"
+                  class="status status-pending"
+                  th:text="${report.verificationStatus}">
+
+                        PENDING
+
+                    </span>
+
+
+
+          <!-- OTHER STATUS -->
+
+          <span
+                  th:if="${report.verificationStatus != 'APPROVED'
+                                and report.verificationStatus != 'REJECTED'
+                                and report.verificationStatus != 'PENDING'}"
+                  class="status status-pending"
+                  th:text="${report.verificationStatus}">
+
+                        STATUS
+
+                    </span>
+
+
+        </td>
+
+
+
+        <!-- =============================================
+             REVIEW
+             ============================================== -->
+
+        <td>
+
+
+          <a
+                  th:href="@{/gn-reports/verify/{id}(id=${report.id})}"
+                  class="review-button">
+
+            Review
+
+          </a>
+
+
+        </td>
+
+
+      </tr>
+
+
+
+      <!-- =================================================
+           EMPTY STATE
+           ================================================= -->
+
+      <tr
+              th:if="${#lists.isEmpty(gnReports)}">
+
+
+        <td
+                colspan="7"
+                class="empty-message">
+
+
+          <div class="empty-icon">
+            📄
+          </div>
+
+
+          <div>
+            No GN reports have been submitted yet.
+          </div>
+
+
+        </td>
+
+
+      </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+
+  </section>
+
+
+</main>
+
 
 </body>
+
 </html>

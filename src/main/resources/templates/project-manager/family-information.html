@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Family & Affected Information - FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #e6e8e9;
+            color: #1b3557;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0c1721;
+            color: white;
+            padding: 22px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header span {
+            color: #9bc5ff;
+            font-size: 16px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+
+            box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.10);
+
+            border-top: 6px solid #558ee0;
+        }
+
+        /* ================= TITLE ================= */
+
+        .title-section {
+            margin-bottom: 30px;
+        }
+
+        .title-section h2 {
+            margin: 0;
+            color: #173457;
+            font-size: 30px;
+        }
+
+        .title-section p {
+            margin-top: 8px;
+            color: #557080;
+            line-height: 1.5;
+        }
+
+        /* ================= VICTIM INFO ================= */
+
+        .victim-box {
+            background: #cfe8f7;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 30px;
+        }
+
+        .victim-box strong {
+            color: #173457;
+        }
+
+        .victim-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .victim-id {
+            margin-top: 5px;
+            color: #557080;
+            font-size: 14px;
+        }
+
+        /* ================= SUCCESS ================= */
+
+        .success-message {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            background: #dcefed;
+            border: 1px solid #b8dcd8;
+            color: #35737a;
+
+            padding: 15px 18px;
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .success-icon {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .success-content strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .success-content p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+
+            color: #29445e;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .required {
+            color: #b54848;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #cfd8de;
+            border-radius: 8px;
+
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #558ee0;
+
+            box-shadow:
+                    0 0 0 3px rgba(85, 142, 224, 0.12);
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        /* ================= RADIO ================= */
+
+        .radio-group {
+            display: flex;
+            gap: 25px;
+            margin-top: 5px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #29445e;
+
+            font-size: 15px;
+        }
+
+        .radio-option input {
+            width: auto;
+        }
+
+        /* ================= VALIDATION ================= */
+
+        .field-error {
+            margin-top: 6px;
+
+            color: #b54848;
+
+            font-size: 13px;
+        }
+
+        /* ================= INFORMATION NOTE ================= */
+
+        .information-note {
+            margin-top: 25px;
+
+            padding: 15px 18px;
+
+            background: #f7f9fa;
+
+            border-left: 4px solid #558ee0;
+
+            border-radius: 8px;
+
+            color: #557080;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+
+            margin-top: 35px;
+            padding-top: 25px;
+
+            border-top: 1px solid #e0e4e7;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 24px;
+
+            border: none;
+            border-radius: 9px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .btn-back {
+            background: #e6e8e9;
+            color: #29445e;
+        }
+
+        .btn-back:hover {
+            background: #d5dadd;
+        }
+
+        .btn-save {
+            background: #558ee0;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #3977cc;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 20px;
+            }
+
+            .header span {
+                display: none;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 0 15px;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .title-section h2 {
+                font-size: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <h1>
+        Flood Disaster Relief System
+    </h1>
+
+    <span>
+        Project Manager - Victim Management
+    </span>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <div class="card">
+
+
+        <!-- ================= TITLE ================= -->
+
+        <div class="title-section">
+
+            <h2>
+                Family &amp; Affected Information
+            </h2>
+
+            <p>
+                Record and manage the complete affected family
+                information for the selected victim.
+            </p>
+
+        </div>
+
+
+        <!-- ================= SUCCESS MESSAGE ================= -->
+
+        <div class="success-message"
+             th:if="${successMessage}">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <div class="success-content">
+
+                <strong>
+                    Information Saved Successfully!
+                </strong>
+
+                <p th:text="${successMessage}">
+                    Family information has been saved successfully.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= VICTIM INFORMATION ================= -->
+
+        <div class="victim-box">
+
+            <div class="victim-name">
+
+                Victim:
+                <strong th:text="${victim.fullName}">
+                    Victim Name
+                </strong>
+
+            </div>
+
+            <div class="victim-id">
+
+                Victim ID:
+                <strong th:text="${victim.id}">
+                    0
+                </strong>
+
+                &nbsp; | &nbsp;
+
+                NIC:
+                <strong th:text="${victim.nicNumber}">
+                    NIC
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FORM ================= -->
+
+        <form
+                th:action="@{/project-manager/victims/{id}/family-information(id=${victim.id})}"
+                th:object="${information}"
+                method="post">
+
+
+            <div class="form-grid">
+
+
+                <!-- TOTAL FAMILY MEMBERS -->
+
+                <div class="form-group">
+
+                    <label for="totalFamilyMembers">
+
+                        Total Family Members
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input
+                            type="number"
+                            id="totalFamilyMembers"
+                            th:field="*{totalFamilyMembers}"
+                            min="1"
+                            required>
+
+                    <div
+                            class="field-error"
+                            th:if="${#fields.hasErrors('totalFamilyMembers')}"
+                            th:errors="*{totalFamilyMembers}">
+                    </div>
+
+                </div>
+
+
+                <!-- CHILDREN BELOW 12 -->
+
+                <div class="form-group">
+
+                    <label for="childrenBelow12">
+
+                        Children Below 12
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input
+                            type="number"
+                            id="childrenBelow12"
+                            th:field="*{childrenBelow12}"
+                            min="0"
+                            required>
+
+                    <div
+                            class="field-error"
+                            th:if="${#fields.hasErrors('childrenBelow12')}"
+                            th:errors="*{childrenBelow12}">
+                    </div>
+
+                </div>
+
+
+                <!-- MALE MEMBERS -->
+
+                <div class="form-group">
+
+                    <label for="maleMembers">
+
+                        Male Members
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input
+                            type="number"
+                            id="maleMembers"
+                            th:field="*{maleMembers}"
+                            min="0"
+                            required>
+
+                    <div
+                            class="field-error"
+                            th:if="${#fields.hasErrors('maleMembers')}"
+                            th:errors="*{maleMembers}">
+                    </div>
+
+                </div>
+
+
+                <!-- FEMALE MEMBERS -->
+
+                <div class="form-group">
+
+                    <label for="femaleMembers">
+
+                        Female Members
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <input
+                            type="number"
+                            id="femaleMembers"
+                            th:field="*{femaleMembers}"
+                            min="0"
+                            required>
+
+                    <div
+                            class="field-error"
+                            th:if="${#fields.hasErrors('femaleMembers')}"
+                            th:errors="*{femaleMembers}">
+                    </div>
+
+                </div>
+
+
+                <!-- SHELTER REQUIRED -->
+
+                <div class="form-group full">
+
+                    <label>
+
+                        Is Shelter Required?
+                        <span class="required">*</span>
+
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+
+                            <input
+                                    type="radio"
+                                    th:field="*{shelterRequired}"
+                                    value="true"
+                                    required>
+
+                            Yes - Shelter Required
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input
+                                    type="radio"
+                                    th:field="*{shelterRequired}"
+                                    value="false"
+                                    required>
+
+                            No - Shelter Not Required
+
+                        </label>
+
+                    </div>
+
+                    <div
+                            class="field-error"
+                            th:if="${#fields.hasErrors('shelterRequired')}"
+                            th:errors="*{shelterRequired}">
+                    </div>
+
+                </div>
+
+
+                <!-- AFFECTED SITUATION -->
+
+                <div class="form-group full">
+
+                    <label for="affectedSituation">
+
+                        Affected Situation
+
+                    </label>
+
+                    <textarea
+                            id="affectedSituation"
+                            th:field="*{affectedSituation}"
+                            maxlength="1000"
+                            placeholder="Describe the current affected situation of the family...">
+                    </textarea>
+
+                    <div
+                            class="field-error"
+                            th:if="${#fields.hasErrors('affectedSituation')}"
+                            th:errors="*{affectedSituation}">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= INFORMATION NOTE ================= -->
+
+            <div class="information-note">
+
+                <strong>Project Manager Responsibility:</strong>
+
+                Review the information submitted by the victim and
+                maintain the family details for relief planning.
+                If shelter is required, the victim can be referred
+                to the appropriate Shelter Management process.
+
+            </div>
+
+
+            <!-- ================= ACTIONS ================= -->
+
+            <div class="actions">
+
+                <a
+                        th:href="@{/victims/{id}(id=${victim.id})}"
+                        class="btn btn-back">
+
+                    ← Back to Victim Details
+
+                </a>
+
+
+                <button
+                        type="submit"
+                        class="btn btn-save">
+
+                    Save Family Information
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

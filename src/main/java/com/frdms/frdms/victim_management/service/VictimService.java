@@ -26,7 +26,6 @@ public class VictimService {
     // =========================================================
 
     public VictimService(VictimRepository victimRepository) {
-
         this.victimRepository = victimRepository;
     }
 
@@ -56,7 +55,7 @@ public class VictimService {
 
     // =========================================================
     // CHECK PASSWORD
-    // Used later during victim login
+    // Used during victim login
     // =========================================================
 
     public boolean checkPassword(
@@ -97,12 +96,26 @@ public class VictimService {
 
     // =========================================================
     // FIND VICTIM BY NIC
+    // Used for victim identification and verification
     // =========================================================
 
     public Victim getVictimByNic(String nicNumber) {
 
         return victimRepository
                 .findByNicNumber(nicNumber)
+                .orElse(null);
+    }
+
+
+    // =========================================================
+    // FIND VICTIM BY USERNAME
+    // Used for victim login
+    // =========================================================
+
+    public Victim getVictimByUsername(String username) {
+
+        return victimRepository
+                .findByUsername(username)
                 .orElse(null);
     }
 
@@ -140,11 +153,19 @@ public class VictimService {
 
 
         /*
+         * Username is used for login.
+         *
+         * We keep the existing username unchanged
+         * when normal victim information is updated.
+         */
+
+        /*
          * We do NOT change the password here.
          *
          * The victim's existing password should remain
          * unchanged when updating normal information.
          */
+
 
         return victimRepository.save(
                 existingVictim

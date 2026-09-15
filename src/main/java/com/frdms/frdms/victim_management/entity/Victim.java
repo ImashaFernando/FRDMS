@@ -30,7 +30,7 @@ public class Victim {
 
     // =========================================================
     // NIC NUMBER
-    // Used as the victim login username
+    // Used for victim identification and verification
     // =========================================================
 
     @NotBlank(message = "NIC number is required")
@@ -65,6 +65,16 @@ public class Victim {
 
 
     // =========================================================
+    // USERNAME
+    // Used for victim login
+    // =========================================================
+
+    @NotBlank(message = "Username is required")
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+
+    // =========================================================
     // PASSWORD
     // Used for victim login
     // =========================================================
@@ -95,12 +105,14 @@ public class Victim {
             String nicNumber,
             String phoneNumber,
             String address,
+            String username,
             String password) {
 
         this.fullName = fullName;
         this.nicNumber = nicNumber;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.username = username;
         this.password = password;
     }
 
@@ -147,6 +159,11 @@ public class Victim {
     }
 
 
+    public String getUsername() {
+        return username;
+    }
+
+
     public String getPassword() {
         return password;
     }
@@ -178,6 +195,11 @@ public class Victim {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 
