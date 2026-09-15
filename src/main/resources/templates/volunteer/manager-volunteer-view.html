@@ -80,9 +80,23 @@
             display: inline-block;
             padding: 7px 14px;
             border-radius: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-pending {
             background: #F7CF59;
             color: #1F3A60;
-            font-weight: 700;
+        }
+
+        .status-approved {
+            background: #2E7D32;
+            color: #FFFFFF;
+        }
+
+        .status-rejected {
+            background: #C62828;
+            color: #FFFFFF;
         }
 
         @media (max-width: 700px) {
@@ -227,9 +241,19 @@
                         Registration Status
                     </span>
 
-                    <span class="status-badge"
-                          th:text="${volunteerProfile.registrationStatus}">
+                    <span class="status-badge status-pending"
+                          th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
                         PENDING
+                    </span>
+
+                    <span class="status-badge status-approved"
+                          th:if="${volunteerProfile.registrationStatus.name() == 'APPROVED'}">
+                        APPROVED
+                    </span>
+
+                    <span class="status-badge status-rejected"
+                          th:if="${volunteerProfile.registrationStatus.name() == 'REJECTED'}">
+                        REJECTED
                     </span>
                 </div>
 
@@ -256,8 +280,8 @@
 
                 <!-- NOT REVIEWED + PENDING -->
                 <form th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'
-                  and (volunteerProfile.reviewNotes == null
-                  or #strings.isEmpty(volunteerProfile.reviewNotes))}"
+                   and (volunteerProfile.reviewNotes == null
+                   or #strings.isEmpty(volunteerProfile.reviewNotes))}"
                       th:action="@{/project-manager/volunteers/{id}/review(id=${volunteerProfile.id})}"
                       method="post">
 
@@ -366,4 +390,5 @@
 </div>
 
 </body>
+
 </html>

@@ -37,7 +37,8 @@
         <form th:action="@{/volunteer/profile}"
               th:object="${volunteerProfile}"
               method="post"
-              id="volunteerProfileForm">
+              id="volunteerProfileForm"
+              novalidate>
 
             <!-- Age -->
             <div class="form-group">
@@ -190,12 +191,22 @@
             <!-- Preferred Working Area -->
             <div class="form-group">
 
-                <label for="preferredWorkingArea">
+                <label for="preferredWorkingAreaSelect">
                     Preferred Working Area
                 </label>
 
-                <select id="preferredWorkingArea"
-                        th:field="*{preferredWorkingArea}">
+                <!--
+                    Actual value sent to VolunteerProfile.preferredWorkingArea
+                -->
+                <input type="hidden"
+                       id="preferredWorkingArea"
+                       th:field="*{preferredWorkingArea}">
+
+                <!--
+                    User selects from existing areas or chooses Other
+                -->
+                <select id="preferredWorkingAreaSelect"
+                        onchange="toggleOtherWorkingArea()">
 
                     <option value="">
                         Select preferred area
@@ -229,7 +240,20 @@
                         Any Area
                     </option>
 
+                    <option value="Other">
+                        Other
+                    </option>
+
                 </select>
+
+
+                <!-- Shown only when Other is selected -->
+                <input type="text"
+                       id="otherWorkingArea"
+                       placeholder="Enter your city or preferred working area"
+                       maxlength="150"
+                       style="display: none; margin-top: 10px;">
+
 
                 <div class="field-error"
                      th:if="${#fields.hasErrors('preferredWorkingArea')}"
@@ -272,9 +296,77 @@
     const volunteerProfileForm =
         document.getElementById("volunteerProfileForm");
 
+
+    const preferredWorkingAreaSelect =
+        document.getElementById("preferredWorkingAreaSelect");
+
+    const preferredWorkingArea =
+        document.getElementById("preferredWorkingArea");
+
+    const otherWorkingArea =
+        document.getElementById("otherWorkingArea");
+
+
+    /*
+     * Show the additional text field only when
+     * the volunteer selects "Other".
+     */
+    function toggleOtherWorkingArea() {
+
+        if (preferredWorkingAreaSelect.value === "Other") {
+
+            otherWorkingArea.style.display = "block";
+
+        } else {
+
+            otherWorkingArea.style.display = "none";
+            otherWorkingArea.value = "";
+
+        }
+    }
+
+
+    /*
+     * Restore the preferred working area if the form
+     * is returned because of a validation error.
+     */
+    window.addEventListener("DOMContentLoaded", function () {
+
+        const currentArea =
+            preferredWorkingArea.value.trim();
+
+        const predefinedAreas = [
+            "Colombo",
+            "Gampaha",
+            "Kalutara",
+            "Kandy",
+            "Galle",
+            "Matara",
+            "Any Area"
+        ];
+
+        if (currentArea === "") {
+
+            preferredWorkingAreaSelect.value = "";
+
+        } else if (predefinedAreas.includes(currentArea)) {
+
+            preferredWorkingAreaSelect.value = currentArea;
+
+        } else {
+
+            preferredWorkingAreaSelect.value = "Other";
+            otherWorkingArea.style.display = "block";
+            otherWorkingArea.value = currentArea;
+
+        }
+
+    });
+
+
     volunteerProfileForm.addEventListener(
         "submit",
-        function (event) {
+        function () {
 
             const selectedSkills = [];
 
@@ -300,21 +392,28 @@
 
             }
 
-
-            // Prevent submission if no skill is selected
-            if (selectedSkills.length === 0) {
-
-                event.preventDefault();
-
-                alert("Please select at least one skill or enter another skill.");
-
-                return;
-            }
-
-
-            // Combine skills into one string
+            // Combine skills into one string.
+            // If none are selected, an empty value is submitted
+            // and Spring validation displays the red error below Skills.
             document.getElementById("skills").value =
                 selectedSkills.join(", ");
+
+
+            /*
+             * Set the final preferred working area.
+             * If Other is selected, save the typed city/area.
+             */
+            if (preferredWorkingAreaSelect.value === "Other") {
+
+                preferredWorkingArea.value =
+                    otherWorkingArea.value.trim();
+
+            } else {
+
+                preferredWorkingArea.value =
+                    preferredWorkingAreaSelect.value;
+
+            }
 
         }
     );

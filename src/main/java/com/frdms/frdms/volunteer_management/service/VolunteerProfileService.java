@@ -23,6 +23,11 @@ public class VolunteerProfileService {
         this.volunteerAccountRepository = volunteerAccountRepository;
     }
 
+
+    // =========================
+    // CREATE VOLUNTEER PROFILE
+    // =========================
+
     public VolunteerProfile createProfile(
             String email,
             VolunteerProfile volunteerProfile
@@ -51,6 +56,11 @@ public class VolunteerProfileService {
         return volunteerProfileRepository.save(volunteerProfile);
     }
 
+
+    // =========================
+    // GET PROFILE BY EMAIL
+    // =========================
+
     public Optional<VolunteerProfile> getProfileByVolunteerEmail(String email) {
 
         return volunteerAccountRepository.findByEmail(email)
@@ -58,6 +68,100 @@ public class VolunteerProfileService {
                         volunteerProfileRepository::findByVolunteerAccount
                 );
     }
+
+
+    // =========================
+    // UPDATE PENDING PROFILE
+    // =========================
+
+    public VolunteerProfile updatePendingProfile(
+            String email,
+            VolunteerProfile updatedProfile
+    ) {
+
+        VolunteerAccount volunteerAccount =
+                volunteerAccountRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer account not found."
+                                )
+                        );
+
+        VolunteerProfile existingProfile =
+                volunteerProfileRepository
+                        .findByVolunteerAccount(volunteerAccount)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer profile not found."
+                                )
+                        );
+
+        if (existingProfile.getRegistrationStatus()
+                != VolunteerProfile.RegistrationStatus.PENDING) {
+
+            throw new IllegalArgumentException(
+                    "Volunteer registration can only be edited while it is pending."
+            );
+        }
+
+        existingProfile.setAge(
+                updatedProfile.getAge()
+        );
+
+        existingProfile.setWorkExperience(
+                updatedProfile.getWorkExperience()
+        );
+
+        existingProfile.setSkills(
+                updatedProfile.getSkills()
+        );
+
+        existingProfile.setAvailability(
+                updatedProfile.getAvailability()
+        );
+
+        existingProfile.setPreferredWorkingArea(
+                updatedProfile.getPreferredWorkingArea()
+        );
+
+        return volunteerProfileRepository.save(existingProfile);
+    }
+
+
+    // =========================
+    // WITHDRAW PENDING PROFILE
+    // =========================
+
+    public void withdrawPendingProfile(String email) {
+
+        VolunteerAccount volunteerAccount =
+                volunteerAccountRepository.findByEmail(email)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer account not found."
+                                )
+                        );
+
+        VolunteerProfile existingProfile =
+                volunteerProfileRepository
+                        .findByVolunteerAccount(volunteerAccount)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Volunteer profile not found."
+                                )
+                        );
+
+        if (existingProfile.getRegistrationStatus()
+                != VolunteerProfile.RegistrationStatus.PENDING) {
+
+            throw new IllegalArgumentException(
+                    "Volunteer registration can only be withdrawn while it is pending."
+            );
+        }
+
+        volunteerProfileRepository.delete(existingProfile);
+    }
+
 
     // =========================
     // VM-US5
@@ -68,6 +172,7 @@ public class VolunteerProfileService {
 
         return volunteerProfileRepository.findAll();
     }
+
 
     // =========================
     // VM-US5
@@ -83,6 +188,7 @@ public class VolunteerProfileService {
                         )
                 );
     }
+
 
     // =========================
     // VM-US6
@@ -106,10 +212,12 @@ public class VolunteerProfileService {
 
         return volunteerProfileRepository.save(volunteerProfile);
     }
+
+
     // =========================
-// VM-US7
-// APPROVE VOLUNTEER
-// =========================
+    // VM-US7
+    // APPROVE VOLUNTEER
+    // =========================
 
     public VolunteerProfile approveVolunteer(Long profileId) {
 
@@ -127,10 +235,12 @@ public class VolunteerProfileService {
 
         return volunteerProfileRepository.save(volunteerProfile);
     }
+
+
     // =========================
-// VM-US8
-// REJECT VOLUNTEER
-// =========================
+    // VM-US8
+    // REJECT VOLUNTEER
+    // =========================
 
     public VolunteerProfile rejectVolunteer(Long profileId) {
 
@@ -148,4 +258,5 @@ public class VolunteerProfileService {
 
         return volunteerProfileRepository.save(volunteerProfile);
     }
+
 }

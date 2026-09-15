@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 
 @Controller
@@ -28,7 +29,10 @@ public class VolunteerManagementController {
         List<VolunteerProfile> volunteerProfiles =
                 volunteerProfileService.getAllVolunteerProfiles();
 
-        model.addAttribute("volunteerProfiles", volunteerProfiles);
+        model.addAttribute(
+                "volunteerProfiles",
+                volunteerProfiles
+        );
 
         return "volunteer/manager-volunteer-list";
     }
@@ -36,16 +40,33 @@ public class VolunteerManagementController {
     @GetMapping("/project-manager/volunteers/{id}")
     public String viewVolunteerDetails(
             @PathVariable("id") Long id,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ) {
 
-        VolunteerProfile volunteerProfile =
-                volunteerProfileService.getVolunteerProfileById(id);
+        try {
 
-        model.addAttribute("volunteerProfile", volunteerProfile);
+            VolunteerProfile volunteerProfile =
+                    volunteerProfileService.getVolunteerProfileById(id);
 
-        return "volunteer/manager-volunteer-view";
+            model.addAttribute(
+                    "volunteerProfile",
+                    volunteerProfile
+            );
+
+            return "volunteer/manager-volunteer-view";
+
+        } catch (IllegalArgumentException exception) {
+
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage",
+                    "Volunteer registration no longer exists."
+            );
+
+            return "redirect:/project-manager/volunteers";
+        }
     }
+
     @PostMapping("/project-manager/volunteers/{id}/review")
     public String saveReviewNotes(
             @PathVariable("id") Long id,
@@ -75,6 +96,7 @@ public class VolunteerManagementController {
 
         return "redirect:/project-manager/volunteers/" + id;
     }
+
     @PostMapping("/project-manager/volunteers/{id}/approve")
     public String approveVolunteer(
             @PathVariable("id") Long id,
@@ -90,6 +112,7 @@ public class VolunteerManagementController {
 
         return "redirect:/project-manager/volunteers/" + id;
     }
+
     @PostMapping("/project-manager/volunteers/{id}/reject")
     public String rejectVolunteer(
             @PathVariable("id") Long id,
@@ -105,4 +128,5 @@ public class VolunteerManagementController {
 
         return "redirect:/project-manager/volunteers/" + id;
     }
+
 }
