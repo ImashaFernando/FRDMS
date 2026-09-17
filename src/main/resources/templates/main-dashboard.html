@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FRDMS | Main Dashboard</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/main-dashboard.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- ========================================= -->
+    <!-- HEADER                                    -->
+    <!-- ========================================= -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                FRDMS
+            </div>
+
+            <div class="brand-subtitle">
+                FLOOD RELIEF & DISASTER
+                MANAGEMENT SYSTEM
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ========================================= -->
+    <!-- HERO                                      -->
+    <!-- ========================================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                <i class="fa-solid fa-shield-heart"></i>
+                DISASTER MANAGEMENT PLATFORM
+            </div>
+
+            <h1>
+                Flood Relief & Disaster
+                <span>Management System</span>
+            </h1>
+
+            <p>
+                A centralized platform for managing disaster
+                relief, donations, finance and community support.
+            </p>
+
+        </section>
+
+
+
+        <!-- ===================================== -->
+        <!-- ROLE SELECTION                        -->
+        <!-- ===================================== -->
+
+        <section class="role-section">
+
+            <div class="section-heading">
+
+                <h2>
+                    Welcome to FRDMS
+                </h2>
+
+                <p>
+                    Select your account type to continue
+                </p>
+
+            </div>
+
+
+            <div class="role-grid">
+
+
+                <!-- ================================= -->
+                <!-- DONOR                              -->
+                <!-- ================================= -->
+
+                <div class="role-card donor-card">
+
+                    <div class="role-icon">
+
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+
+                    </div>
+
+
+                    <div class="role-content">
+
+                        <span class="role-label">
+                            COMMUNITY
+                        </span>
+
+                        <h3>
+                            Donor
+                        </h3>
+
+                        <p>
+                            Make cash or goods donations,
+                            view your donation history and
+                            manage your eligible donations.
+                        </p>
+
+                    </div>
+
+
+                    <a th:href="@{/donor/login}"
+                       class="role-button">
+
+                        Donor Login
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- FINANCE OFFICER                   -->
+                <!-- ================================= -->
+
+                <div class="role-card finance-card">
+
+                    <div class="role-icon">
+
+                        <i class="fa-solid fa-coins"></i>
+
+                    </div>
+
+
+                    <div class="role-content">
+
+                        <span class="role-label">
+                            INTERNAL STAFF
+                        </span>
+
+                        <h3>
+                            Finance Officer
+                        </h3>
+
+                        <p>
+                            Manage donations, expenses,
+                            budgets and financial reports
+                            for relief operations.
+                        </p>
+
+                    </div>
+
+
+                    <a th:href="@{/finance-officer/login}"
+                       class="role-button">
+
+                        Finance Officer Login
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- ================================= -->
+                <!-- PROJECT MANAGER                   -->
+                <!-- ================================= -->
+
+                <div class="role-card manager-card">
+
+                    <div class="role-icon">
+
+                        <i class="fa-solid fa-user-tie"></i>
+
+                    </div>
+
+
+                    <div class="role-content">
+
+                        <span class="role-label">
+                            MANAGEMENT
+                        </span>
+
+                        <h3>
+                            Project Manager
+                        </h3>
+
+                        <p>
+                            Monitor relief activities,
+                            financial information and
+                            overall project operations.
+                        </p>
+
+                    </div>
+
+
+                    <a th:href="@{/project-manager/login}"
+                       class="role-button">
+
+                        Project Manager Login
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================== -->
+        <!-- SYSTEM FEATURES                       -->
+        <!-- ===================================== -->
+
+        <section class="features">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+
+                <div>
+
+                    <h4>
+                        Donation Management
+                    </h4>
+
+                    <p>
+                        Manage cash and goods contributions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div>
+
+                    <h4>
+                        Financial Management
+                    </h4>
+
+                    <p>
+                        Track expenses, budgets and reports.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <div>
+
+                    <h4>
+                        Disaster Relief
+                    </h4>
+
+                    <p>
+                        Support coordinated relief operations.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ========================================= -->
+    <!-- FOOTER                                    -->
+    <!-- ========================================= -->
+
+    <footer>
+
+        <div>
+            © 2026 FRDMS
+        </div>
+
+        <div>
+            People • Support • Resilience
+        </div>
+
+    </footer>
+
+
+</div>
+
+</body>
+
+</html>

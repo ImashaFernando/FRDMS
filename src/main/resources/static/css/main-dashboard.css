@@ -1,0 +1,520 @@
+/* =========================================================
+   FRDMS MAIN DASHBOARD
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background: #edf4f7;
+
+    color: #1f3a60;
+
+    min-height: 100vh;
+}
+
+
+.page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    height: 78px;
+
+    background: #12355b;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 7%;
+
+    box-shadow:
+            0 3px 15px rgba(18, 53, 91, 0.15);
+}
+
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+.brand-logo {
+    font-size: 27px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: white;
+}
+
+
+.brand-subtitle {
+    border-left:
+            1px solid rgba(255,255,255,0.3);
+
+    padding-left: 14px;
+
+    color: #b9d8e8;
+
+    font-size: 10px;
+
+    letter-spacing: 1.2px;
+
+    line-height: 1.5;
+
+    max-width: 190px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    text-align: center;
+
+    max-width: 850px;
+
+    margin: 65px auto 45px;
+
+    padding: 0 25px;
+}
+
+
+.hero-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    border-radius: 30px;
+
+    background: #dcecf4;
+
+    color: #2d7198;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 18px;
+}
+
+
+.hero h1 {
+    font-size: 42px;
+
+    line-height: 1.18;
+
+    color: #12355b;
+
+    font-weight: 800;
+}
+
+
+.hero h1 span {
+    display: block;
+
+    color: #2d82b7;
+}
+
+
+.hero p {
+    max-width: 650px;
+
+    margin: 18px auto 0;
+
+    color: #718096;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ROLE SECTION
+   ========================================================= */
+
+.role-section {
+    width: 86%;
+
+    max-width: 1180px;
+
+    margin: 0 auto;
+}
+
+
+.section-heading {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+
+.section-heading h2 {
+    color: #12355b;
+
+    font-size: 23px;
+
+    margin-bottom: 5px;
+}
+
+
+.section-heading p {
+    color: #718096;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ROLE CARDS
+   ========================================================= */
+
+.role-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 22px;
+}
+
+
+.role-card {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    min-height: 330px;
+
+    border: 1px solid #e0ebf0;
+
+    box-shadow:
+            0 8px 25px rgba(18,53,91,0.07);
+
+    display: flex;
+
+    flex-direction: column;
+
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+
+
+.role-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+            0 16px 35px rgba(18,53,91,0.13);
+}
+
+
+/* =========================================================
+   ROLE ICON
+   ========================================================= */
+
+.role-icon {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+
+    margin-bottom: 20px;
+}
+
+
+.donor-card .role-icon {
+    background: #e2f1f7;
+
+    color: #277aa4;
+}
+
+
+.finance-card .role-icon {
+    background: #e7eff6;
+
+    color: #315f88;
+}
+
+
+.manager-card .role-icon {
+    background: #e8f2f4;
+
+    color: #327585;
+}
+
+
+/* =========================================================
+   ROLE CONTENT
+   ========================================================= */
+
+.role-label {
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+
+    font-weight: 700;
+
+    color: #7794a5;
+}
+
+
+.role-content h3 {
+    margin-top: 5px;
+
+    color: #12355b;
+
+    font-size: 21px;
+}
+
+
+.role-content p {
+    margin-top: 10px;
+
+    color: #718096;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ROLE BUTTON
+   ========================================================= */
+
+.role-button {
+    margin-top: auto;
+
+    padding: 12px 15px;
+
+    border-radius: 9px;
+
+    background: #12355b;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    transition: 0.2s ease;
+}
+
+
+.role-button:hover {
+    background: #1d628e;
+}
+
+
+.role-button i {
+    transition: 0.2s ease;
+}
+
+
+.role-button:hover i {
+    transform: translateX(4px);
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.features {
+    width: 86%;
+
+    max-width: 1180px;
+
+    margin: 38px auto 55px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 20px 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    border: 1px solid #e0ebf0;
+
+    box-shadow:
+            0 6px 20px rgba(18,53,91,0.05);
+}
+
+
+.feature {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.feature-icon {
+    min-width: 42px;
+
+    height: 42px;
+
+    border-radius: 10px;
+
+    background: #e5f1f6;
+
+    color: #2d82b7;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.feature h4 {
+    font-size: 13px;
+
+    color: #12355b;
+
+    margin-bottom: 3px;
+}
+
+
+.feature p {
+    font-size: 11px;
+
+    color: #7a8994;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    margin-top: auto;
+
+    background: #12355b;
+
+    color: #a9c7d7;
+
+    padding: 18px 7%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .role-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .role-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .header {
+        padding: 0 25px;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+
+    .hero {
+        margin-top: 45px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .role-section,
+    .features {
+        width: 92%;
+    }
+
+    .role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .role-card:last-child {
+        grid-column: auto;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 7px;
+
+        text-align: center;
+    }
+
+}

@@ -136,4 +136,29 @@ public class BudgetService {
 
         return budgetRepository.save(budget);
     }
+    public double getAvailableBudget() {
+
+        return budgetRepository.findByStatus("APPROVED")
+                .stream()
+                .mapToDouble(budget -> {
+
+                    double requested = budget.getRequestedAmount() != null
+                            ? budget.getRequestedAmount()
+                            : 0.0;
+
+                    double allocated = budget.getAllocatedAmount() != null
+                            ? budget.getAllocatedAmount()
+                            : 0.0;
+
+                    return requested - allocated;
+                })
+                .sum();
+    }
+    // =========================
+// F13 - Budget Report
+// =========================
+
+    public List<Budget> getBudgetReport() {
+        return budgetRepository.findAll();
+    }
 }

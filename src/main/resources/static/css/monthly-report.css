@@ -1,0 +1,692 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #F4F7FB;
+    color: #172033;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   TOP BAR
+   ========================= */
+
+.topbar {
+    min-height: 76px;
+
+    background: #0B1F3A;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 42px;
+
+    gap: 20px;
+}
+
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    background: #2F80ED;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 18px;
+}
+
+
+.brand h1 {
+    font-size: 20px;
+}
+
+
+.brand p {
+    color: #B8C5D8;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+
+/* =========================
+   DASHBOARD BUTTON
+   ========================= */
+
+.dashboard-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    background: #3582B8;
+
+    color: white !important;
+
+    text-decoration: none !important;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: all 0.2s ease;
+}
+
+
+.dashboard-btn:hover {
+    background: #85B6D6;
+
+    color: #12355B !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.content {
+    max-width: 1250px;
+
+    margin: 42px auto;
+
+    padding: 0 25px;
+}
+
+
+/* =========================
+   HEADING
+   ========================= */
+
+.report-heading {
+    margin-bottom: 28px;
+}
+
+
+.label {
+    display: inline-block;
+
+    color: #7657D9;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+
+    margin-bottom: 7px;
+}
+
+
+.report-heading h2 {
+    font-size: 30px;
+
+    margin-bottom: 8px;
+}
+
+
+.report-heading p {
+    color: #68758A;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   MONTH SELECTOR
+   ========================= */
+
+.month-selector {
+    background: white;
+
+    border: 1px solid #E4EAF2;
+
+    border-radius: 12px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 14px;
+
+    box-shadow: 0 6px 20px rgba(20, 45, 80, 0.05);
+}
+
+
+.month-selector form {
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 12px;
+}
+
+
+.month-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.month-field label {
+    color: #53627A;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.month-field input {
+    height: 40px;
+
+    padding: 0 12px;
+
+    border: 1px solid #CBD5E1;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    color: #172033;
+
+    outline: none;
+}
+
+
+.month-field input:focus {
+    border-color: #3582B8;
+
+    box-shadow:
+            0 0 0 3px rgba(53, 130, 184, 0.12);
+}
+
+
+.month-selector button {
+    height: 40px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #3582B8;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.month-selector button:hover {
+    background: #1F3A60;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   SELECTED MONTH
+   ========================= */
+
+.selected-month {
+    margin-bottom: 22px;
+
+    color: #68758A;
+
+    font-size: 13px;
+}
+
+
+.selected-month strong {
+    color: #12355B;
+
+    margin-left: 5px;
+}
+
+
+/* =========================
+   SUMMARY
+   ========================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 25px;
+}
+
+
+.summary-card {
+    background: white;
+
+    border: 1px solid #E4EAF2;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    box-shadow: 0 6px 20px rgba(20, 45, 80, 0.05);
+}
+
+
+.summary-icon {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #EDF3F6;
+
+    color: #3582B8;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+.summary-label {
+    display: block;
+
+    color: #718096;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: .6px;
+
+    margin-bottom: 6px;
+}
+
+
+.summary-card strong {
+    display: block;
+
+    color: #12355B;
+
+    font-size: 19px;
+}
+
+
+.balance-card {
+    border-left: 4px solid #3582B8;
+}
+
+
+/* =========================
+   REPORT CARD
+   ========================= */
+
+.report-card {
+    background: white;
+
+    border: 1px solid #E4EAF2;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 8px 28px rgba(20, 45, 80, 0.06);
+}
+
+
+.report-card-header {
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #EDF0F5;
+}
+
+
+.section-label {
+    display: block;
+
+    color: #7657D9;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+
+.report-card-header h3 {
+    font-size: 17px;
+
+    margin-bottom: 5px;
+}
+
+
+.report-card-header p {
+    color: #7A8698;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+
+    min-width: 850px;
+
+    border-collapse: collapse;
+}
+
+
+thead {
+    background: #F7F8FC;
+}
+
+
+th {
+    padding: 14px 18px;
+
+    text-align: left;
+
+    color: #69778C;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    white-space: nowrap;
+}
+
+
+td {
+    padding: 15px 18px;
+
+    border-top: 1px solid #EDF0F5;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+
+tbody tr:hover {
+    background: #F9FBFD;
+}
+
+
+/* =========================
+   DONATION TYPE
+   ========================= */
+
+.type {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #E8F1FF;
+
+    color: #2F64B3;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   CATEGORY
+   ========================= */
+
+.category {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #EDF3F6;
+
+    color: #3582B8;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   STATUS
+   ========================= */
+
+.status {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #FFF5D8;
+
+    color: #A06C00;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   EXPENSE MONEY
+   ========================= */
+
+.expense-money {
+    color: #12355B;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   EMPTY
+   ========================= */
+
+.empty-state {
+    text-align: center;
+
+    padding: 45px 20px;
+
+    color: #718096;
+}
+
+
+.empty-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 12px;
+
+    border-radius: 50%;
+
+    background: #EDF3F6;
+
+    color: #3582B8;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.empty-state h3 {
+    color: #293449;
+
+    font-size: 16px;
+
+    margin-bottom: 6px;
+}
+
+
+.empty-state p {
+    font-size: 13px;
+}
+
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 20px;
+
+    color: #718392;
+
+    font-size: 13px;
+}
+
+
+.yellow-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #F7CF59;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .topbar {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .dashboard-btn {
+        width: 100%;
+    }
+
+
+    .content {
+        margin-top: 28px;
+
+        padding: 0 15px;
+    }
+
+
+    .month-selector form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .month-selector button {
+        width: 100%;
+    }
+
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

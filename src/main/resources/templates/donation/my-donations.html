@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Donations | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/my-donations.css}">
+
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+            <h1>My Donations</h1>
+
+            <p>
+                View and manage your donations
+            </p>
+        </div>
+
+        <div class="header-actions">
+
+            <a th:href="@{/donor/dashboard}"
+               class="dashboard-btn">
+                ← Dashboard
+            </a>
+
+            <a th:href="@{/donations/submit}"
+               class="add-btn">
+                + Add Donation
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- 2 DAY INFORMATION -->
+
+    <div class="info-box">
+
+        <strong>Important:</strong>
+
+        You can edit or delete a donation only
+        within 2 days from the donation date.
+
+    </div>
+
+
+    <!-- DONATIONS TABLE -->
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Date</th>
+
+                <th>Type</th>
+
+                <th>Amount / Goods</th>
+
+                <th>Description</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="donation : ${donations}">
+
+                <!-- ID -->
+
+                <td th:text="${donation.id}">
+                    1
+                </td>
+
+
+                <!-- DATE -->
+
+                <td th:text="${donation.donationDate}">
+                    2026-09-16
+                </td>
+
+
+                <!-- TYPE -->
+
+                <td th:text="${donation.donationType}">
+                    CASH
+                </td>
+
+
+                <!-- AMOUNT / GOODS -->
+
+                <td>
+
+                    <span th:if="${donation.donationType == 'CASH'}"
+                          th:text="'LKR ' + ${donation.cashAmount}">
+                        LKR 5000
+                    </span>
+
+                    <span th:if="${donation.donationType == 'GOODS'}"
+                          th:text="${donation.goodsDescription}
+                          + ' (' +
+                          ${donation.goodsQuantity}
+                          + ')'">
+                        Rice (10kg)
+                    </span>
+
+                </td>
+
+
+                <!-- DESCRIPTION -->
+
+                <td th:text="${donation.description}">
+                    Donation
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+                    <span class="status"
+                          th:text="${donation.status}">
+                        PENDING
+                    </span>
+
+                </td>
+
+
+                <!-- ACTIONS -->
+
+                <td class="actions">
+
+
+                    <!-- EDIT -->
+
+                    <a th:if="${donation.donationDate != null
+                            and T(java.time.temporal.ChronoUnit).DAYS.between(
+                                donation.donationDate,
+                                today
+                            ) < 2}"
+
+                       th:href="@{'/donations/edit/' + ${donation.id}}"
+
+                       class="edit-btn">
+
+                        Edit
+
+                    </a>
+
+
+                    <!-- DELETE -->
+
+                    <form th:if="${donation.donationDate != null
+                            and T(java.time.temporal.ChronoUnit).DAYS.between(
+                                donation.donationDate,
+                                today
+                            ) < 2}"
+
+                          th:action="@{'/donations/delete/' + ${donation.id}}"
+
+                          method="post"
+
+                          style="display:inline;">
+
+                        <button type="submit"
+                                class="delete-btn"
+                                onclick="return confirm(
+                                    'Are you sure you want to delete this donation?'
+                                );">
+
+                            Delete
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- RECEIPT -->
+
+                    <a th:href="@{'/donations/receipt/' + ${donation.id}}"
+                       class="view-btn">
+
+                        Receipt
+
+                    </a>
+
+
+                    <!-- EXPIRED -->
+
+                    <span th:if="${donation.donationDate != null
+                            and T(java.time.temporal.ChronoUnit).DAYS.between(
+                                donation.donationDate,
+                                today
+                            ) >= 2}"
+
+                          class="expired">
+
+                        Editing period expired
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+
+            <!-- NO DONATIONS -->
+
+            <tr th:if="${#lists.isEmpty(donations)}">
+
+                <td colspan="7"
+                    class="empty">
+
+                    You have not submitted any donations yet.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

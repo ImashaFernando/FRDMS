@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "donations")
 public class Donation {
@@ -28,8 +30,18 @@ public class Donation {
 
     private String status;
 
+    // =========================
+    // Donation Date
+    // =========================
+
+    @NotNull(message = "Donation date is required")
+    @Column(nullable = false)
+    private LocalDate donationDate;
+
+
     public Donation() {
     }
+
 
     public Long getId() {
         return id;
@@ -39,6 +51,7 @@ public class Donation {
         this.id = id;
     }
 
+
     public Long getDonorId() {
         return donorId;
     }
@@ -46,6 +59,7 @@ public class Donation {
     public void setDonorId(Long donorId) {
         this.donorId = donorId;
     }
+
 
     public String getDonationType() {
         return donationType;
@@ -55,6 +69,7 @@ public class Donation {
         this.donationType = donationType;
     }
 
+
     public Double getCashAmount() {
         return cashAmount;
     }
@@ -62,6 +77,7 @@ public class Donation {
     public void setCashAmount(Double cashAmount) {
         this.cashAmount = cashAmount;
     }
+
 
     public String getGoodsDescription() {
         return goodsDescription;
@@ -71,6 +87,7 @@ public class Donation {
         this.goodsDescription = goodsDescription;
     }
 
+
     public String getGoodsQuantity() {
         return goodsQuantity;
     }
@@ -78,6 +95,7 @@ public class Donation {
     public void setGoodsQuantity(String goodsQuantity) {
         this.goodsQuantity = goodsQuantity;
     }
+
 
     public String getDescription() {
         return description;
@@ -87,11 +105,25 @@ public class Donation {
         this.description = description;
     }
 
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    // =========================
+    // Donation Date Getter/Setter
+    // =========================
+
+    public LocalDate getDonationDate() {
+        return donationDate;
+    }
+
+    public void setDonationDate(LocalDate donationDate) {
+        this.donationDate = donationDate;
     }
 }

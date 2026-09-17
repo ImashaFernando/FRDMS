@@ -44,12 +44,28 @@
                 </p>
             </div>
 
-            <a href="/donations/cash" class="switch-button">
-                View Cash Donations
-            </a>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+
+                <a th:href="@{/finance/dashboard}"
+                   class="dashboard-button">
+                    ← Back to Dashboard
+                </a>
+
+                <a th:href="@{/donations/cash}"
+                   class="switch-button">
+                    View Cash Donations
+                </a>
+
+            </div>
 
         </div>
 
+
+        <!-- =========================
+             EMPTY STATE
+        ========================== -->
 
         <div class="empty-state"
              th:if="${#lists.isEmpty(goodsDonations)}">
@@ -65,12 +81,17 @@
         </div>
 
 
+        <!-- =========================
+             GOODS DONATIONS TABLE
+        ========================== -->
+
         <div class="table-container"
              th:unless="${#lists.isEmpty(goodsDonations)}">
 
             <table>
 
                 <thead>
+
                 <tr>
                     <th>ID</th>
                     <th>Donor ID</th>
@@ -78,36 +99,127 @@
                     <th>Quantity</th>
                     <th>Description</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
+
                 </thead>
+
 
                 <tbody>
 
                 <tr th:each="donation : ${goodsDonations}">
 
-                    <td th:text="${donation.id}">1</td>
+                    <!-- ID -->
+                    <td th:text="${donation.id}">
+                        1
+                    </td>
 
-                    <td th:text="${donation.donorId}">4</td>
 
+                    <!-- DONOR ID -->
+                    <td th:text="${donation.donorId}">
+                        4
+                    </td>
+
+
+                    <!-- GOODS -->
                     <td th:text="${donation.goodsDescription}">
                         Rice
                     </td>
 
+
+                    <!-- QUANTITY -->
                     <td th:text="${donation.goodsQuantity}">
                         20 kg
                     </td>
 
+
+                    <!-- DESCRIPTION -->
                     <td th:text="${donation.description != null && !donation.description.isBlank()
                                   ? donation.description
                                   : 'No description'}">
                         Food supplies
                     </td>
 
+
+                    <!-- STATUS -->
                     <td>
+
                         <span class="status"
-                              th:text="${donation.status}">
+                              th:text="${donation.status != null
+                                        ? donation.status
+                                        : 'PENDING'}">
                             PENDING
                         </span>
+
+                    </td>
+
+
+                    <!-- ACTIONS -->
+                    <td>
+
+                        <!-- Show buttons only for PENDING -->
+
+                        <div th:if="${donation.status == 'PENDING'}"
+                             class="action-buttons">
+
+
+                            <!-- =========================
+                                 ACCEPT GOODS DONATION
+                            ========================== -->
+
+                            <form th:action="@{/donations/accept/{id}(id=${donation.id})}"
+                                  method="post">
+
+                                <!-- IMPORTANT: identifies this as GOODS -->
+
+                                <input type="hidden"
+                                       name="type"
+                                       value="GOODS">
+
+                                <button type="submit"
+                                        class="accept-button">
+
+                                    Accept
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- =========================
+                                 REJECT GOODS DONATION
+                            ========================== -->
+
+                            <form th:action="@{/donations/reject/{id}(id=${donation.id})}"
+                                  method="post">
+
+                                <!-- IMPORTANT: identifies this as GOODS -->
+
+                                <input type="hidden"
+                                       name="type"
+                                       value="GOODS">
+
+                                <button type="submit"
+                                        class="reject-button">
+
+                                    Reject
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <!-- Already processed -->
+
+                        <span th:if="${donation.status != 'PENDING'}"
+                              class="processed-text">
+
+                            Processed
+
+                        </span>
+
                     </td>
 
                 </tr>
@@ -118,6 +230,8 @@
 
         </div>
 
+
+        <!-- FOOTER -->
 
         <div class="footer">
 

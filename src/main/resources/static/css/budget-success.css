@@ -393,3 +393,40 @@ h1 {
         max-width: 210px;
     }
 }
+/* =========================
+   BACK TO DASHBOARD BUTTON
+   ========================= */
+
+.dashboard-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    padding: 13px 20px;
+
+    margin-top: 15px;
+    margin-bottom: 10px;
+
+    background: #12355B;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.dashboard-button:hover {
+    background: #0D2947;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    transform: translateY(-1px);
+}

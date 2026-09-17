@@ -305,3 +305,39 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+/* =========================
+   DASHBOARD BUTTON
+   ========================= */
+
+.dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    background: #3582B8;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.dashboard-btn:hover {
+    background: #85B6D6;
+    color: #12355B !important;
+
+    text-decoration: none !important;
+
+    transform: translateY(-1px);
+}

@@ -45,10 +45,22 @@
                 </p>
             </div>
 
-            <a href="/donations/cash"
-               class="back-button">
-                Cash Donations
-            </a>
+            <!-- Header Actions -->
+            <div class="header-actions">
+
+                <!-- Back to Finance Dashboard -->
+                <a th:href="@{/finance/dashboard}"
+                   class="back-dashboard">
+                    ← Back to Dashboard
+                </a>
+
+                <!-- Cash Donations -->
+                <a th:href="@{/donations/cash}"
+                   class="back-button">
+                    Cash Donations
+                </a>
+
+            </div>
 
         </div>
 
@@ -80,7 +92,6 @@
 
 
         <!-- No donors -->
-
         <div class="empty-state"
              th:if="${#lists.isEmpty(donors)}">
 
@@ -98,7 +109,6 @@
 
 
         <!-- Donor table -->
-
         <div class="table-container"
              th:unless="${#lists.isEmpty(donors)}">
 

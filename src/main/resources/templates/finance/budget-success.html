@@ -11,7 +11,7 @@
     <title>Budget Submitted | FRDMS</title>
 
     <link rel="stylesheet"
-          href="/css/budget-success.css">
+          th:href="@{/css/budget-success.css}">
 
 </head>
 
@@ -74,9 +74,19 @@
         </div>
 
 
-        <!-- Button -->
+        <!-- Back to Dashboard -->
 
-        <a href="/finance/budgets/create"
+        <a th:href="@{/finance/dashboard}"
+           class="dashboard-button">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <!-- Create Another Requirement -->
+
+        <a th:href="@{/finance/budgets/create}"
            class="primary-button">
 
             Create Another Requirement

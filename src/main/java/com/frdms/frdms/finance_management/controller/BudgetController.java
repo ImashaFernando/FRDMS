@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 @Controller
 @RequestMapping("/finance/budgets")
 public class BudgetController {
@@ -175,10 +175,30 @@ public class BudgetController {
     @GetMapping("/status")
     public String viewBudgetStatus(Model model) {
 
-        model.addAttribute(
-                "budgets",
-                budgetService.getAllBudgets()
-        );
+        List<Budget> budgets = budgetService.getAllBudgets();
+
+        long pendingCount = budgets.stream()
+                .filter(b -> "PENDING".equals(b.getStatus()))
+                .count();
+
+        long approvedCount = budgets.stream()
+                .filter(b -> "APPROVED".equals(b.getStatus()))
+                .count();
+
+        long allocatedCount = budgets.stream()
+                .filter(b -> "ALLOCATED".equals(b.getStatus()))
+                .count();
+
+        long rejectedCount = budgets.stream()
+                .filter(b -> "REJECTED".equals(b.getStatus()))
+                .count();
+
+        model.addAttribute("budgets", budgets);
+
+        model.addAttribute("pendingCount", pendingCount);
+        model.addAttribute("approvedCount", approvedCount);
+        model.addAttribute("allocatedCount", allocatedCount);
+        model.addAttribute("rejectedCount", rejectedCount);
 
         return "finance/budget-status";
     }

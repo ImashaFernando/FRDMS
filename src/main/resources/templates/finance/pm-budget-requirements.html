@@ -22,21 +22,19 @@
   <div class="brand">
 
     <div class="brand-icon">
-      F
+      FR
     </div>
 
     <div>
       <h1>FRDMS</h1>
-      <span>Finance Management</span>
+      <p>Finance Management</p>
     </div>
 
   </div>
 
-  <a href="/pm/dashboard"
-     class="back-btn">
-
-    ← PM Dashboard
-
+  <a th:href="@{/finance/dashboard}"
+     class="dashboard-btn">
+    ← Back to Dashboard
   </a>
 
 </header>
@@ -67,9 +65,7 @@
 
       <div>
 
-        <h3>
-          Pending Requirements
-        </h3>
+        <h3>Pending Requirements</h3>
 
         <p>
           Review and make a decision on each budget request.
@@ -77,11 +73,9 @@
 
       </div>
 
-      <a href="/finance/budgets/trash"
-         class="trash-link">
-
+      <a th:href="@{/finance/budgets/trash}"
+         class="rejected-btn">
         View Rejected
-
       </a>
 
     </div>

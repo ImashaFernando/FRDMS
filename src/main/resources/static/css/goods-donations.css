@@ -203,3 +203,159 @@ tbody tr:hover {
         font-size: 28px;
     }
 }
+/* =========================
+   HEADER ACTIONS
+   ========================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   BACK TO DASHBOARD
+   ========================= */
+
+.dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background: #12355B;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.dashboard-button:hover {
+    background: #0D2947;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   VIEW CASH DONATIONS
+   ========================= */
+
+.switch-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background: #3582B8;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.switch-button:hover {
+    background: #1F3A60;
+    color: #FFFFFF !important;
+
+    transform: translateY(-1px);
+}
+/* =========================================================
+   ACCEPT / REJECT ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Common button style */
+.action-buttons form {
+    margin: 0;
+}
+
+.accept-button,
+.reject-button {
+    border: none;
+    border-radius: 7px;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 75px;
+}
+
+/* Accept */
+.accept-button {
+    background: #dff3df;
+    color: #216e39;
+    border: 1px solid #a8d5a8;
+}
+
+.accept-button:hover {
+    background: #c8e8c8;
+    transform: translateY(-1px);
+}
+
+/* Reject */
+.reject-button {
+    background: #fde2e2;
+    color: #a83232;
+    border: 1px solid #efb0b0;
+}
+
+.reject-button:hover {
+    background: #f8caca;
+    transform: translateY(-1px);
+}
+
+/* Click effect */
+.accept-button:active,
+.reject-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   PROCESSED TEXT
+   ========================================================= */
+
+.processed-text {
+    color: #6b7f95;
+    font-size: 14px;
+    font-weight: 600;
+}

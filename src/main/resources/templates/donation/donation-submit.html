@@ -84,7 +84,24 @@
         </div>
 
       </div>
+      <!-- DONATION DATE -->
+      <div class="form-group">
 
+        <label for="donationDate">
+          Donation Date <span class="required">*</span>
+        </label>
+
+        <input type="date"
+               id="donationDate"
+               th:field="*{donationDate}"
+               required>
+
+        <div class="validation-error"
+             th:if="${#fields.hasErrors('donationDate')}"
+             th:errors="*{donationDate}">
+        </div>
+
+      </div>
 
       <!-- CASH SECTION -->
       <div id="cashSection" class="donation-type-section">
