@@ -44,7 +44,8 @@
         <!-- Registration Form -->
         <form th:action="@{/volunteer/register}"
               th:object="${volunteerAccount}"
-              method="post">
+              method="post"
+              novalidate>
 
             <div class="form-group">
                 <label for="fullName">
@@ -55,7 +56,10 @@
                        id="fullName"
                        th:field="*{fullName}"
                        placeholder="Enter your full name"
-                       autocomplete="name">
+                       autocomplete="name"
+                       minlength="2"
+                       maxlength="100"
+                       required>
 
                 <div class="field-error"
                      th:if="${#fields.hasErrors('fullName')}"

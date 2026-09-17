@@ -278,6 +278,7 @@
 
     </div>
 
+
     <!-- Registration Status -->
     <div class="detail-row">
 
@@ -287,21 +288,41 @@
 
       <div class="detail-value">
 
-    <span class="status-badge status-pending"
-          th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
-      PENDING
-    </span>
+        <span class="status-badge status-pending"
+              th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
+          PENDING
+        </span>
 
         <span class="status-badge status-approved"
               th:if="${volunteerProfile.registrationStatus.name() == 'APPROVED'}">
-      APPROVED
-    </span>
+          APPROVED
+        </span>
 
         <span class="status-badge status-rejected"
               th:if="${volunteerProfile.registrationStatus.name() == 'REJECTED'}">
-      REJECTED
-    </span>
+          REJECTED
+        </span>
 
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         VM-US9 - REJECTION REASON
+         ========================= -->
+
+    <div class="detail-row"
+         th:if="${volunteerProfile.registrationStatus.name() == 'REJECTED'
+         and volunteerProfile.rejectionReason != null
+         and !#strings.isEmpty(volunteerProfile.rejectionReason)}">
+
+      <div class="detail-label">
+        Rejection Reason
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.rejectionReason}">
       </div>
 
     </div>

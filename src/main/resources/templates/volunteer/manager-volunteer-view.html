@@ -138,6 +138,7 @@
 
             </div>
 
+
             <div class="details-grid">
 
                 <div class="detail-item">
@@ -301,9 +302,7 @@
 
                     <button type="submit"
                             class="btn">
-
                         Save Review
-
                     </button>
 
                 </form>
@@ -344,6 +343,12 @@
                  th:text="${rejectionSuccess}">
             </div>
 
+            <div class="alert-error"
+                 style="margin-top: 25px;"
+                 th:if="${rejectionError}"
+                 th:text="${rejectionError}">
+            </div>
+
 
             <!-- VM-US7 & VM-US8 - APPROVE / REJECT VOLUNTEER -->
             <div style="margin-top: 25px;"
@@ -351,10 +356,14 @@
                  and volunteerProfile.reviewNotes != null
                  and !#strings.isEmpty(volunteerProfile.reviewNotes)}">
 
-                <div style="display: flex;
+
+                <!-- NORMAL DECISION BUTTONS -->
+                <div id="decisionButtons"
+                     style="display: flex;
                             gap: 15px;
                             flex-wrap: wrap;">
 
+                    <!-- APPROVE -->
                     <form th:action="@{/project-manager/volunteers/{id}/approve(id=${volunteerProfile.id})}"
                           method="post"
                           style="flex: 1;">
@@ -367,15 +376,72 @@
                     </form>
 
 
-                    <form th:action="@{/project-manager/volunteers/{id}/reject(id=${volunteerProfile.id})}"
-                          method="post"
-                          style="flex: 1;">
+                    <!-- REJECT -->
+                    <div style="flex: 1;">
 
-                        <button type="submit"
+                        <button type="button"
                                 class="btn"
-                                style="background: #B42318;">
+                                style="background: #B42318;"
+                                onclick="showRejectionBox()">
                             Reject Volunteer
                         </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VM-US9 - REJECTION REASON BOX -->
+                <div id="rejectionBox"
+                     style="display: none;
+                            margin-top: 20px;">
+
+                    <form th:action="@{/project-manager/volunteers/{id}/reject(id=${volunteerProfile.id})}"
+                          method="post">
+
+                        <div class="form-group">
+
+                            <label for="rejectionReason">
+                                Rejection Reason
+                            </label>
+
+                            <textarea id="rejectionReason"
+                                      name="rejectionReason"
+                                      maxlength="1000"
+                                      placeholder="Enter the reason for rejecting this volunteer..."
+                                      required>
+                            </textarea>
+
+                        </div>
+
+
+                        <div style="display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    gap: 12px;
+                                    margin-top: 12px;
+                                    flex-wrap: wrap;">
+
+                            <button type="button"
+                                    class="btn"
+                                    style="background: #6C7A89;
+                                           width: auto;
+                                           min-width: 160px;"
+                                    onclick="hideRejectionBox()">
+                                Cancel
+                            </button>
+
+
+                            <button type="submit"
+                                    class="btn"
+                                    style="background: #F7CF59;
+                                           color: #1F3A60;
+                                           width: auto;
+                                           min-width: 180px;">
+                                Confirm Reject
+                            </button>
+
+                        </div>
 
                     </form>
 
@@ -388,6 +454,30 @@
     </div>
 
 </div>
+
+
+<script>
+
+    function showRejectionBox() {
+
+        document.getElementById("decisionButtons").style.display = "none";
+
+        document.getElementById("rejectionBox").style.display = "block";
+
+        document.getElementById("rejectionReason").focus();
+    }
+
+
+    function hideRejectionBox() {
+
+        document.getElementById("rejectionBox").style.display = "none";
+
+        document.getElementById("decisionButtons").style.display = "flex";
+
+        document.getElementById("rejectionReason").value = "";
+    }
+
+</script>
 
 </body>
 

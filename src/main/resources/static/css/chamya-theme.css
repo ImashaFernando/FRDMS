@@ -558,6 +558,8 @@ tbody tr:hover {
 /* Shared action link styling */
 
 .back-link {
+    display: inline-block;
+    margin-top: 16px;
     color: var(--primary-blue);
     font-weight: 700;
     text-decoration: none;

@@ -71,6 +71,10 @@ public class VolunteerProfile {
     @Column(length = 1000)
     private String reviewNotes;
 
+    // VM-US9 - Reason for rejecting volunteer registration
+    @Column(length = 1000)
+    private String rejectionReason;
+
     public VolunteerProfile() {
     }
 
@@ -162,6 +166,15 @@ public class VolunteerProfile {
     public void setReviewNotes(String reviewNotes) {
         this.reviewNotes = reviewNotes;
     }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
+    }
+
 
     public enum RegistrationStatus {
         PENDING,

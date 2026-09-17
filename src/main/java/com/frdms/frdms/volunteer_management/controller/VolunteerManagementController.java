@@ -116,15 +116,29 @@ public class VolunteerManagementController {
     @PostMapping("/project-manager/volunteers/{id}/reject")
     public String rejectVolunteer(
             @PathVariable("id") Long id,
+            @RequestParam("rejectionReason") String rejectionReason,
             RedirectAttributes redirectAttributes
     ) {
 
-        volunteerProfileService.rejectVolunteer(id);
+        try {
 
-        redirectAttributes.addFlashAttribute(
-                "rejectionSuccess",
-                "Volunteer registration rejected successfully."
-        );
+            volunteerProfileService.rejectVolunteer(
+                    id,
+                    rejectionReason
+            );
+
+            redirectAttributes.addFlashAttribute(
+                    "rejectionSuccess",
+                    "Volunteer registration rejected successfully."
+            );
+
+        } catch (IllegalArgumentException exception) {
+
+            redirectAttributes.addFlashAttribute(
+                    "rejectionError",
+                    exception.getMessage()
+            );
+        }
 
         return "redirect:/project-manager/volunteers/" + id;
     }

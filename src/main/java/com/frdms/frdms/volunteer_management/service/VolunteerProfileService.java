@@ -24,9 +24,8 @@ public class VolunteerProfileService {
     }
 
 
-    // =========================
     // CREATE VOLUNTEER PROFILE
-    // =========================
+
 
     public VolunteerProfile createProfile(
             String email,
@@ -57,9 +56,8 @@ public class VolunteerProfileService {
     }
 
 
-    // =========================
     // GET PROFILE BY EMAIL
-    // =========================
+
 
     public Optional<VolunteerProfile> getProfileByVolunteerEmail(String email) {
 
@@ -242,7 +240,10 @@ public class VolunteerProfileService {
     // REJECT VOLUNTEER
     // =========================
 
-    public VolunteerProfile rejectVolunteer(Long profileId) {
+    public VolunteerProfile rejectVolunteer(
+            Long profileId,
+            String rejectionReason
+    ) {
 
         VolunteerProfile volunteerProfile =
                 volunteerProfileRepository.findById(profileId)
@@ -252,11 +253,20 @@ public class VolunteerProfileService {
                                 )
                         );
 
+        if (rejectionReason == null || rejectionReason.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Rejection reason is required."
+            );
+        }
+
+        volunteerProfile.setRejectionReason(
+                rejectionReason.trim()
+        );
+
         volunteerProfile.setRegistrationStatus(
                 VolunteerProfile.RegistrationStatus.REJECTED
         );
 
         return volunteerProfileRepository.save(volunteerProfile);
     }
-
 }
