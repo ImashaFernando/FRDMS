@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Package Details</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/distribution.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="package-details-section">
+
+        <!-- Page Header -->
+
+        <div class="package-details-header">
+
+            <div>
+
+                <h1>Package Details</h1>
+
+                <p>
+                    Complete information about this relief package.
+                </p>
+
+            </div>
+
+            <a class="back-button"
+               th:href="@{/distribution/packages}">
+                ← Back to Packages
+            </a>
+
+        </div>
+
+
+        <!-- Package Information -->
+
+        <div class="package-details-card">
+
+            <div class="package-details-title">
+
+                <div class="package-large-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <h2 th:text="${reliefPackage.packageCode}">
+                        PKG-001
+                    </h2>
+
+                    <span class="details-status"
+                          th:text="${reliefPackage.status}">
+                        REQUESTING_ITEMS
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Recipient Information -->
+
+            <div class="details-grid">
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Recipient Name
+                    </span>
+
+                    <strong th:text="${reliefPackage.recipientName}">
+                        Kamal Perera
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Affected Area
+                    </span>
+
+                    <strong th:text="${reliefPackage.affectedArea}">
+                        Kelaniya
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Shelter
+                    </span>
+
+                    <strong th:text="${reliefPackage.shelter ?: '-'}">
+                        ABC Relief Shelter
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Contact Number
+                    </span>
+
+                    <strong th:text="${reliefPackage.contactNumber ?: '-'}">
+                        0771234567
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item full-width">
+
+                    <span class="detail-label">
+                        Delivery Address
+                    </span>
+
+                    <strong th:text="${reliefPackage.deliveryAddress}">
+                        123 Main Street, Kelaniya
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Vehicle Number
+                    </span>
+
+                    <strong th:text="${reliefPackage.vehicleNumber ?: '-'}">
+                        WP-ABC-1234
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Driver Name
+                    </span>
+
+                    <strong th:text="${reliefPackage.driverName ?: '-'}">
+                        Nimal Perera
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Relief Items -->
+
+        <div class="package-details-card">
+
+            <div class="details-section-header">
+
+                <div>
+
+                    <h2>Relief Items</h2>
+
+                    <p>
+                        Items included in this package.
+                    </p>
+
+                </div>
+
+                <span class="item-count"
+                      th:text="${reliefPackage.items.size()} + ' Items'">
+                    3 Items
+                </span>
+
+            </div>
+
+
+            <table class="package-items-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Relief Item</th>
+
+                    <th>Quantity</th>
+
+                    <th>Unit</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="item, stat : ${reliefPackage.items}">
+
+                    <td th:text="${stat.count}">
+                        1
+                    </td>
+
+                    <td th:text="${item.reliefItemName}">
+                        Rice
+                    </td>
+
+                    <td th:text="${item.quantity}">
+                        20
+                    </td>
+
+                    <td th:text="${item.unit}">
+                        kg
+                    </td>
+
+                </tr>
+
+
+                <tr th:if="${#lists.isEmpty(reliefPackage.items)}">
+
+                    <td colspan="4"
+                        class="no-items">
+
+                        No relief items found.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

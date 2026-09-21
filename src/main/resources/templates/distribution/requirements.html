@@ -1,58 +1,144 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Received Relief Requirements</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relief Requirements</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/distribution.css}">
 </head>
 
 <body>
 
-<h1>Received Relief Requirements</h1>
+<div class="page-container">
 
-<a th:href="@{/distribution/requirements/new}">
-    Receive New Requirement
-</a>
+    <div class="requirements-section">
 
-<br><br>
+        <div class="requirements-title-row">
 
-<table border="1">
+            <h1>Relief Requirements</h1>
 
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Relief Item</th>
-        <th>Quantity</th>
-        <th>Unit</th>
-        <th>Recipient</th>
-        <th>Affected Area</th>
-        <th>Shelter</th>
-    </tr>
-    </thead>
+            <div class="requirements-header-actions">
 
-    <tbody>
+                <!-- Back to Dashboard -->
 
-    <tr th:each="requirement : ${requirements}">
+                <a class="dashboard-icon-button"
+                   th:href="@{/distribution/dashboard}"
+                   title="Back to Dashboard"
+                   aria-label="Back to Dashboard">
 
-        <td th:text="${requirement.id}"></td>
+                    <svg viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
 
-        <td th:text="${requirement.reliefItemName}"></td>
+                        <path d="M3 10.5L12 3l9 7.5"></path>
 
-        <td th:text="${requirement.quantity}"></td>
+                        <path d="M5.5 9.5V21h13V9.5"></path>
 
-        <td th:text="${requirement.unit}"></td>
+                        <path d="M9.5 21v-6h5v6"></path>
 
-        <td th:text="${requirement.recipientName}"></td>
+                    </svg>
 
-        <td th:text="${requirement.affectedArea}"></td>
+                </a>
 
-        <td th:text="${requirement.shelter}"></td>
 
-    </tr>
+                <!-- Receive New Requirement -->
 
-    </tbody>
+                <a class="receive-arrow"
+                   th:href="@{/distribution/requirements/new}"
+                   title="Receive New Requirement">
+                    →
+                </a>
 
-</table>
+            </div>
+
+        </div>
+
+        <div class="requirements-count">
+            Total Requirements:
+            <span th:text="${requirements.size()}">0</span>
+        </div>
+
+        <table class="requirements-table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Recipient</th>
+                <th>Affected Area</th>
+                <th>Shelter</th>
+                <th>Delivery Address</th>
+                <th>Contact Number</th>
+                <th>Required Relief Items</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="requirement : ${requirements}">
+
+                <td th:text="${requirement.id}">1</td>
+
+                <td th:text="${requirement.recipientName ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.affectedArea ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.shelter ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.deliveryAddress ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.contactNumber ?: '-'}">
+                    -
+                </td>
+
+                <td>
+                    <div class="relief-items-list"
+                         th:each="item : ${requirement.items}">
+
+                        <strong th:text="${item.reliefItemName}">
+                            Rice
+                        </strong>
+
+                        -
+                        <span th:text="${item.quantity}">
+                            10
+                        </span>
+
+                        <span th:text="${item.unit}">
+                            kg
+                        </span>
+
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(requirements)}">
+
+                <td colspan="5" class="no-requirements">
+                    No relief requirements received yet.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
 </body>
 </html>
