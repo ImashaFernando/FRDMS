@@ -4,20 +4,41 @@ import com.frdms.frdms.disaster_management.entity.Disaster;
 import com.frdms.frdms.disaster_management.service.AffectedAreaService;
 import com.frdms.frdms.disaster_management.service.DisasterService;
 
+import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
+import com.frdms.frdms.victim_management.repository.VictimRepository;
+import com.frdms.frdms.victim_management.service.AffectedFamilyInformationService;
+
 import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Controller
 @RequestMapping("/disasters")
 public class DisasterController {
 
+
     private final DisasterService disasterService;
 
     private final AffectedAreaService affectedAreaService;
+
+    private final AffectedFamilyInformationService
+            familyInformationService;
+
+    /*
+     * VictimRepository is used to count how many
+     * victims/families are registered for each
+     * particular flood event.
+     */
+    private final VictimRepository victimRepository;
 
 
     // =========================================================
@@ -26,11 +47,21 @@ public class DisasterController {
 
     public DisasterController(
             DisasterService disasterService,
-            AffectedAreaService affectedAreaService) {
+            AffectedAreaService affectedAreaService,
+            AffectedFamilyInformationService familyInformationService,
+            VictimRepository victimRepository) {
 
-        this.disasterService = disasterService;
+        this.disasterService =
+                disasterService;
 
-        this.affectedAreaService = affectedAreaService;
+        this.affectedAreaService =
+                affectedAreaService;
+
+        this.familyInformationService =
+                familyInformationService;
+
+        this.victimRepository =
+                victimRepository;
     }
 
 
@@ -54,47 +85,59 @@ public class DisasterController {
 
     // =========================================================
     // DM-01 / DM-02
-    // SAVE FLOOD EVENT
+    // CREATE FLOOD EVENT
     // =========================================================
 
     @PostMapping
     public String createDisaster(
 
-            @Valid @ModelAttribute("disaster")
+            @Valid
+            @ModelAttribute("disaster")
             Disaster disaster,
 
             BindingResult bindingResult) {
 
 
         // Check validation errors
-
         if (bindingResult.hasErrors()) {
-
             return "disaster/form";
         }
 
 
         // Save flood event
-
         disasterService.createDisaster(
                 disaster
         );
 
 
         // Return to flood event list
-
         return "redirect:/disasters";
     }
 
 
     // =========================================================
-    // VIEW / SEARCH FLOOD EVENTS
+    // VIEW ALL FLOOD EVENTS
+    // =========================================================
+    //
+    // DM-06
+    //
+    // Display the number of victims/families
+    // registered for EACH flood event.
+    //
+    // The count is obtained directly from:
+    //
+    // victims.disaster_id
+    //
+    // This means the number shown on the PM
+    // disaster dashboard always matches the
+    // disaster selected during victim registration.
     // =========================================================
 
     @GetMapping
     public String listDisasters(
 
             @RequestParam(
+                    value = "keyword",
                     required = false
             )
             String keyword,
@@ -102,28 +145,86 @@ public class DisasterController {
             Model model) {
 
 
-        /*
-         * If a keyword is entered, matching flood events
-         * are displayed.
-         *
-         * If the keyword is empty, all flood events
-         * are displayed.
-         */
+        // -----------------------------------------------------
+        // GET FLOOD EVENTS
+        // -----------------------------------------------------
+
+        List<Disaster> disasters =
+                disasterService.searchDisasters(
+                        keyword
+                );
+
+
+        // -----------------------------------------------------
+        // FAMILY COUNT MAP
+        // -----------------------------------------------------
+        //
+        // Key:
+        //     Disaster ID
+        //
+        // Value:
+        //     Number of registered victims/families
+        //
+        // Example:
+        //
+        // Disaster 4 -> 2 families
+        // Disaster 5 -> 0 families
+        // Disaster 6 -> 0 families
+        // Disaster 7 -> 0 families
+        // -----------------------------------------------------
+
+        Map<Long, Long> affectedFamilyCounts =
+                new HashMap<>();
+
+
+        for (Disaster disaster : disasters) {
+
+
+            Long disasterId =
+                    disaster.getId();
+
+
+            /*
+             * Count victims registered for this
+             * particular disaster.
+             *
+             * This reads:
+             *
+             * victims.disaster_id = disasterId
+             */
+            long familyCount =
+                    victimRepository
+                            .countByDisaster_Id(
+                                    disasterId
+                            );
+
+
+            affectedFamilyCounts.put(
+                    disasterId,
+                    familyCount
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // SEND DATA TO THYMELEAF
+        // -----------------------------------------------------
 
         model.addAttribute(
                 "disasters",
-                disasterService.searchDisasters(keyword)
+                disasters
         );
 
-
-        /*
-         * Keep the keyword in the model so that the
-         * search box can display what the user searched.
-         */
 
         model.addAttribute(
                 "keyword",
                 keyword
+        );
+
+
+        model.addAttribute(
+                "affectedFamilyCounts",
+                affectedFamilyCounts
         );
 
 
@@ -132,8 +233,16 @@ public class DisasterController {
 
 
     // =========================================================
-    // DM-02 / DM-03 / DM-04
     // VIEW FLOOD EVENT DETAILS
+    // =========================================================
+    //
+    // DM-02 / DM-03 / DM-04 / DM-06
+    //
+    // Shows:
+    // - Disaster information
+    // - Affected areas
+    // - Number of registered families
+    // - Family information where available
     // =========================================================
 
     @GetMapping("/details/{id}")
@@ -144,14 +253,19 @@ public class DisasterController {
             Model model) {
 
 
-        // Find the selected flood event
+        // -----------------------------------------------------
+        // GET DISASTER
+        // -----------------------------------------------------
 
         Disaster disaster =
-                disasterService.getDisasterById(id);
+                disasterService.getDisasterById(
+                        id
+                );
 
 
-        // Find all affected areas belonging
-        // to this flood event
+        // -----------------------------------------------------
+        // GET AFFECTED AREAS
+        // -----------------------------------------------------
 
         var affectedAreas =
                 affectedAreaService
@@ -160,7 +274,70 @@ public class DisasterController {
                         );
 
 
-        // Send flood event to Thymeleaf
+        // -----------------------------------------------------
+        // GET REGISTERED FAMILY INFORMATION
+        // -----------------------------------------------------
+        //
+        // We keep this part for the existing
+        // affected-family information functionality.
+        //
+        // If family information records exist,
+        // they can still be displayed.
+        // -----------------------------------------------------
+
+        List<AffectedFamilyInformation>
+                affectedFamilies =
+                familyInformationService
+                        .getByDisaster(id);
+
+
+        // -----------------------------------------------------
+        // COUNT REGISTERED FAMILIES
+        // -----------------------------------------------------
+        //
+        // IMPORTANT:
+        //
+        // The official registration count comes
+        // directly from the victims table.
+        //
+        // This guarantees that the number matches
+        // the disaster selected during registration.
+        // -----------------------------------------------------
+
+        long affectedFamilyCount =
+                victimRepository
+                        .countByDisaster_Id(id);
+
+
+        // -----------------------------------------------------
+        // COUNT FAMILIES REQUIRING SHELTER
+        // -----------------------------------------------------
+
+        long familiesRequiringShelter =
+                familyInformationService
+                        .countShelterRequiredFamilies(
+                                id
+                        );
+
+
+        // -----------------------------------------------------
+        // TOTAL FAMILY MEMBERS
+        // -----------------------------------------------------
+
+        long totalFamilyMembers =
+                affectedFamilies
+                        .stream()
+                        .mapToLong(
+                                family ->
+                                        family
+                                                .getTotalFamilyMembers()
+                        )
+                        .sum();
+
+
+        // -----------------------------------------------------
+        // SEND DATA TO THYMELEAF
+        // -----------------------------------------------------
 
         model.addAttribute(
                 "disaster",
@@ -168,11 +345,37 @@ public class DisasterController {
         );
 
 
-        // Send affected areas to Thymeleaf
-
         model.addAttribute(
                 "affectedAreas",
                 affectedAreas
+        );
+
+
+        model.addAttribute(
+                "affectedFamilies",
+                affectedFamilies
+        );
+
+
+        /*
+         * This value is used by the
+         * disaster details page.
+         */
+        model.addAttribute(
+                "affectedFamilyCount",
+                affectedFamilyCount
+        );
+
+
+        model.addAttribute(
+                "familiesRequiringShelter",
+                familiesRequiringShelter
+        );
+
+
+        model.addAttribute(
+                "totalFamilyMembers",
+                totalFamilyMembers
         );
 
 
@@ -181,7 +384,7 @@ public class DisasterController {
 
 
     // =========================================================
-    // EDIT FLOOD EVENT FORM
+    // EDIT FLOOD EVENT
     // =========================================================
 
     @GetMapping("/edit/{id}")
@@ -193,12 +396,11 @@ public class DisasterController {
 
 
         // Find existing flood event
-
         Disaster disaster =
-                disasterService.getDisasterById(id);
+                disasterService.getDisasterById(
+                        id
+                );
 
-
-        // Send it to edit page
 
         model.addAttribute(
                 "disaster",
@@ -219,27 +421,31 @@ public class DisasterController {
 
             @PathVariable Long id,
 
-            @Valid @ModelAttribute("disaster")
+            @Valid
+            @ModelAttribute("disaster")
             Disaster disaster,
 
             BindingResult bindingResult) {
 
 
-        // Find original flood event
+        // -----------------------------------------------------
+        // GET EXISTING DISASTER
+        // -----------------------------------------------------
 
         Disaster existingDisaster =
-                disasterService.getDisasterById(id);
+                disasterService.getDisasterById(
+                        id
+                );
 
 
-        // =====================================================
+        // -----------------------------------------------------
         // PRESERVE ORIGINAL EVENT DATE
-        // =====================================================
+        // -----------------------------------------------------
 
         /*
-         * If the edit form does not submit the date,
-         * keep the original date from the database.
+         * If the edit form does not submit a date,
+         * keep the original date.
          */
-
         if (disaster.getEventDate() == null) {
 
             disaster.setEventDate(
@@ -248,9 +454,9 @@ public class DisasterController {
         }
 
 
-        // =====================================================
+        // -----------------------------------------------------
         // VALIDATION
-        // =====================================================
+        // -----------------------------------------------------
 
         if (bindingResult.hasErrors()) {
 
@@ -258,9 +464,9 @@ public class DisasterController {
         }
 
 
-        // =====================================================
-        // UPDATE FLOOD EVENT
-        // =====================================================
+        // -----------------------------------------------------
+        // UPDATE DISASTER
+        // -----------------------------------------------------
 
         disasterService.updateDisaster(
                 id,
@@ -268,7 +474,9 @@ public class DisasterController {
         );
 
 
-        // Return to flood event list
+        // -----------------------------------------------------
+        // RETURN TO DISASTER LIST
+        // -----------------------------------------------------
 
         return "redirect:/disasters";
     }
@@ -284,21 +492,12 @@ public class DisasterController {
             @PathVariable Long id) {
 
 
-        /*
-         * Delete the selected flood event.
-         *
-         * The service first checks that the disaster exists.
-         * The same disaster ID is then deleted.
-         */
+        disasterService.deleteDisaster(
+                id
+        );
 
-        disasterService.deleteDisaster(id);
-
-
-        /*
-         * Redirect back to the disaster list with a success
-         * message.
-         */
 
         return "redirect:/disasters?deleted=true";
     }
+
 }

@@ -11,7 +11,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -38,7 +37,7 @@ public class NeedsAssessmentController {
      * Show the Needs Assessment form.
      *
      * If the victim already has an assessment,
-     * the SAME existing assessment is loaded.
+     * the same existing assessment is loaded.
      *
      * If the victim does not have an assessment,
      * a new blank assessment is created.
@@ -68,6 +67,11 @@ public class NeedsAssessmentController {
         Victim victim =
                 victimService.getVictimById(victimId);
 
+        if (victim == null) {
+            session.invalidate();
+            return "redirect:/victim-login";
+        }
+
 
         // -----------------------------------------------------
         // FIND EXISTING ASSESSMENT
@@ -85,8 +89,7 @@ public class NeedsAssessmentController {
 
         if (assessment == null) {
 
-            assessment =
-                    new NeedsAssessment();
+            assessment = new NeedsAssessment();
 
             assessment.setVictim(victim);
         }
@@ -148,6 +151,11 @@ public class NeedsAssessmentController {
         Victim victim =
                 victimService.getVictimById(victimId);
 
+        if (victim == null) {
+            session.invalidate();
+            return "redirect:/victim-login";
+        }
+
 
         // -----------------------------------------------------
         // VALIDATION ERRORS
@@ -165,7 +173,6 @@ public class NeedsAssessmentController {
 
 
         // =====================================================
-        // VERY IMPORTANT:
         // FIND EXISTING ASSESSMENT FOR THIS VICTIM
         // =====================================================
 
@@ -180,7 +187,6 @@ public class NeedsAssessmentController {
         // =====================================================
 
         if (existingAssessment != null) {
-
 
             // -------------------------------------------------
             // UPDATE CURRENT SITUATION
@@ -268,11 +274,6 @@ public class NeedsAssessmentController {
             // MARK AS UPDATED
             // -------------------------------------------------
 
-            /*
-             * The Relief Coordinator can see that
-             * the victim has changed the assessment.
-             */
-
             existingAssessment.setStatus(
                     "UPDATED"
             );
@@ -281,13 +282,6 @@ public class NeedsAssessmentController {
             // -------------------------------------------------
             // CLEAR OLD COORDINATOR ASSESSMENT
             // -------------------------------------------------
-
-            /*
-             * If the Relief Coordinator had already assessed
-             * the previous information, that assessment is
-             * no longer valid because the victim changed
-             * their needs.
-             */
 
             existingAssessment.setPriority(null);
 
@@ -301,17 +295,6 @@ public class NeedsAssessmentController {
             // -------------------------------------------------
             // SAVE SAME DATABASE RECORD
             // -------------------------------------------------
-
-            /*
-             * IMPORTANT:
-             *
-             * We are saving existingAssessment.
-             *
-             * Therefore Hibernate performs UPDATE,
-             * not INSERT.
-             *
-             * The assessment ID remains unchanged.
-             */
 
             needsAssessmentService.saveAssessment(
                     existingAssessment
@@ -327,20 +310,27 @@ public class NeedsAssessmentController {
 
         else {
 
-            /*
-             * This happens only when this victim
-             * has never submitted a Needs Assessment.
-             */
+            // -------------------------------------------------
+            // CONNECT ASSESSMENT TO VICTIM
+            // -------------------------------------------------
 
             submittedAssessment.setVictim(
                     victim
             );
 
 
+            // -------------------------------------------------
+            // SET INITIAL STATUS
+            // -------------------------------------------------
+
             submittedAssessment.setStatus(
                     "SUBMITTED"
             );
 
+
+            // -------------------------------------------------
+            // CLEAR COORDINATOR FIELDS
+            // -------------------------------------------------
 
             submittedAssessment.setPriority(null);
 
@@ -397,6 +387,11 @@ public class NeedsAssessmentController {
 
         Victim victim =
                 victimService.getVictimById(victimId);
+
+        if (victim == null) {
+            session.invalidate();
+            return "redirect:/victim-login";
+        }
 
 
         // -----------------------------------------------------

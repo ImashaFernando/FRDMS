@@ -5,94 +5,144 @@ import com.frdms.frdms.victim_management.service.VictimService;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class VictimLoginController {
 
     private final VictimService victimService;
+    private final PasswordEncoder passwordEncoder;
 
-    public VictimLoginController(VictimService victimService) {
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
+    public VictimLoginController(
+            VictimService victimService,
+            PasswordEncoder passwordEncoder) {
+
         this.victimService = victimService;
+        this.passwordEncoder = passwordEncoder;
     }
-
 
     // =========================================================
     // SHOW VICTIM LOGIN PAGE
     // =========================================================
 
-    @GetMapping("/victim-login")
+    @GetMapping("/victims/login")
     public String showLoginPage() {
+
         return "victim/login";
     }
-
 
     // =========================================================
     // PROCESS VICTIM LOGIN
     // =========================================================
 
-    @PostMapping("/victim-login")
+    @PostMapping("/victims/login")
     public String loginVictim(
-            @RequestParam("username") String username,
+            @RequestParam("nicNumber") String nicNumber,
             @RequestParam("password") String password,
             HttpSession session,
             Model model) {
 
         // -----------------------------------------------------
-        // Find victim using username
+        // CHECK NIC
         // -----------------------------------------------------
 
-        Victim victim =
-                victimService.getVictimByUsername(
-                        username.trim()
-                );
+        if (nicNumber == null || nicNumber.trim().isEmpty()) {
 
+            model.addAttribute(
+                    "loginError",
+                    "Please enter your NIC number."
+            );
+
+            return "victim/login";
+        }
 
         // -----------------------------------------------------
-        // Victim does not exist
+        // CHECK PASSWORD
+        // -----------------------------------------------------
+
+        if (password == null || password.isEmpty()) {
+
+            model.addAttribute(
+                    "loginError",
+                    "Please enter your password."
+            );
+
+            return "victim/login";
+        }
+
+        // -----------------------------------------------------
+        // CLEAN NIC
+        // -----------------------------------------------------
+
+        String cleanNic = nicNumber.trim();
+
+        // -----------------------------------------------------
+        // FIND VICTIM USING NIC
+        // -----------------------------------------------------
+
+        Victim victim = victimService.getVictimByNic(cleanNic);
+
+        // -----------------------------------------------------
+        // VICTIM NOT FOUND
         // -----------------------------------------------------
 
         if (victim == null) {
 
             model.addAttribute(
                     "loginError",
-                    "Invalid username or password."
+                    "Invalid NIC number or password."
             );
 
             return "victim/login";
         }
 
-
         // -----------------------------------------------------
-        // Check password
+        // CHECK PASSWORD USING BCRYPT
+        // -----------------------------------------------------
+        //
+        // IMPORTANT:
+        // The password stored in the database is encrypted
+        // using BCrypt.
+        //
+        // Therefore, DO NOT use:
+        //
+        // storedPassword.equals(password)
+        //
+        // Instead use:
+        //
+        // passwordEncoder.matches(rawPassword, encodedPassword)
+        //
         // -----------------------------------------------------
 
-        boolean passwordCorrect =
-                victimService.checkPassword(
-                        password,
-                        victim.getPassword()
-                );
+        String storedPassword = victim.getPassword();
 
-
-        // -----------------------------------------------------
-        // Wrong password
-        // -----------------------------------------------------
-
-        if (!passwordCorrect) {
+        if (storedPassword == null
+                || storedPassword.trim().isEmpty()
+                || !passwordEncoder.matches(password, storedPassword)) {
 
             model.addAttribute(
                     "loginError",
-                    "Invalid username or password."
+                    "Invalid NIC number or password."
             );
 
             return "victim/login";
         }
 
+        // =====================================================
+        // LOGIN SUCCESSFUL
+        // =====================================================
 
         // -----------------------------------------------------
-        // Login successful
+        // STORE VICTIM ID IN SESSION
         // -----------------------------------------------------
 
         session.setAttribute(
@@ -100,24 +150,60 @@ public class VictimLoginController {
                 victim.getId()
         );
 
+        // -----------------------------------------------------
+        // STORE VICTIM NIC IN SESSION
+        // -----------------------------------------------------
+
+        session.setAttribute(
+                "victimNic",
+                victim.getNicNumber()
+        );
 
         // -----------------------------------------------------
-        // Go to victim dashboard
+        // STORE VICTIM NAME IN SESSION
+        // -----------------------------------------------------
+
+        session.setAttribute(
+                "victimName",
+                victim.getFullName()
+        );
+
+        // -----------------------------------------------------
+        // STORE DISASTER ID
+        // DM-06
+        // -----------------------------------------------------
+
+        if (victim.getDisaster() != null) {
+
+            session.setAttribute(
+                    "victimDisasterId",
+                    victim.getDisaster().getId()
+            );
+
+        } else {
+
+            // Remove old disaster ID if the victim has
+            // no disaster assigned.
+
+            session.removeAttribute("victimDisasterId");
+        }
+
+        // -----------------------------------------------------
+        // GO TO VICTIM DASHBOARD
         // -----------------------------------------------------
 
         return "redirect:/victim/dashboard";
     }
 
-
     // =========================================================
-    // LOGOUT
+    // VICTIM LOGOUT
     // =========================================================
 
-    @GetMapping("/victim-logout")
+    @GetMapping("/victims/logout")
     public String logoutVictim(HttpSession session) {
 
         session.invalidate();
 
-        return "redirect:/victim-login";
+        return "redirect:/victims/login";
     }
 }

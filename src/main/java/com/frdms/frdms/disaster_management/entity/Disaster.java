@@ -53,8 +53,21 @@ public class Disaster {
 
 
     // =========================================================
+    // SEVERITY LEVEL - DM-05
+    // =========================================================
+
+    @NotBlank(message = "Severity level is required")
+    @Column(
+            name = "severity_level",
+            nullable = false
+    )
+    private String severityLevel;
+
+
+    // =========================================================
     // AFFECTED AREAS
     // =========================================================
+
     /*
      * One flood event can have many affected areas.
      *
@@ -91,11 +104,13 @@ public class Disaster {
     public Disaster(
             String eventName,
             LocalDate eventDate,
-            String description) {
+            String description,
+            String severityLevel) {
 
         this.eventName = eventName;
         this.eventDate = eventDate;
         this.description = description;
+        this.severityLevel = severityLevel;
     }
 
 
@@ -123,6 +138,11 @@ public class Disaster {
     }
 
 
+    public String getSeverityLevel() {
+        return severityLevel;
+    }
+
+
     public List<AffectedArea> getAffectedAreas() {
         return affectedAreas;
     }
@@ -147,6 +167,11 @@ public class Disaster {
     }
 
 
+    public void setSeverityLevel(String severityLevel) {
+        this.severityLevel = severityLevel;
+    }
+
+
     public void setAffectedAreas(
             List<AffectedArea> affectedAreas) {
 
@@ -158,7 +183,8 @@ public class Disaster {
     // ADD AFFECTED AREA
     // =========================================================
 
-    public void addAffectedArea(AffectedArea affectedArea) {
+    public void addAffectedArea(
+            AffectedArea affectedArea) {
 
         affectedAreas.add(affectedArea);
 
@@ -170,7 +196,8 @@ public class Disaster {
     // REMOVE AFFECTED AREA
     // =========================================================
 
-    public void removeAffectedArea(AffectedArea affectedArea) {
+    public void removeAffectedArea(
+            AffectedArea affectedArea) {
 
         affectedAreas.remove(affectedArea);
 

@@ -9,9 +9,10 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <title>Create Flood Event | FRDMS</title>
+  <title>
+    Create Flood Event | FRDMS
+  </title>
 
-  <!-- Disaster Management CSS -->
   <link rel="stylesheet"
         th:href="@{/css/disaster.css}">
 
@@ -21,98 +22,85 @@
 <body>
 
 
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
+<header class="page-header">
 
-<header class="header">
+  <div class="brand">
 
-  <div class="header-content">
+    <div class="brand-icon">
+      🌊
+    </div>
 
-    <!-- BRAND -->
+    <div>
 
-    <div class="brand-area">
-
-      <div class="logo">
-        🌊
+      <div class="brand-title">
+        FRDMS
       </div>
 
-      <div>
-
-        <div class="brand">
-          FRDMS
-        </div>
-
-        <div class="module-name">
-          Flood Disaster Relief Management System
-        </div>
-
+      <div class="brand-subtitle">
+        Flood Disaster Relief Management System
       </div>
 
     </div>
 
-
-    <!-- NAVIGATION -->
-
-    <nav class="navigation">
-
-      <a th:href="@{/disasters}"
-         class="nav-link active">
-
-        Flood Events
-
-      </a>
-
-
-      <a th:href="@{/victims}"
-         class="nav-link">
-
-        Victims
-
-      </a>
-
-    </nav>
-
   </div>
+
+
+  <a th:href="@{/disasters}"
+     class="header-back-button">
+
+    ← Flood Events
+
+  </a>
 
 </header>
 
 
-
-<!-- =====================================================
-     MAIN CONTENT
-     ===================================================== -->
-
-<main class="main-container">
+<main class="form-page">
 
 
-  <!-- =================================================
-       CREATE FORM CARD
-       ================================================= -->
+  <section class="form-hero">
+
+    <div class="form-hero-icon">
+      🌊
+    </div>
+
+    <div>
+
+            <span>
+                DISASTER MANAGEMENT
+            </span>
+
+      <h1>
+        Create Flood Event
+      </h1>
+
+      <p>
+        Record a new flood event and provide the
+        information required for disaster response.
+      </p>
+
+    </div>
+
+  </section>
+
 
   <section class="form-card">
 
 
-    <!-- =================================================
-         PAGE HEADER
-         ================================================= -->
+    <div class="form-card-header">
 
-    <div class="form-page-header">
-
-      <div class="form-icon">
-        🌊
+      <div class="form-section-icon">
+        01
       </div>
-
 
       <div>
 
-        <h1>
-          Create Flood Event
-        </h1>
+        <h2>
+          Flood Event Information
+        </h2>
 
         <p>
-          Record a new flood event and its basic
-          information in the disaster management system.
+          Enter the basic information about the flood.
         </p>
 
       </div>
@@ -120,226 +108,248 @@
     </div>
 
 
-
-    <!-- =================================================
-         INFORMATION BOX
-         ================================================= -->
-
-    <div class="role-box">
-
-      <div class="role-title">
-        Creating a New Flood Event
-      </div>
-
-      <div class="role-text">
-
-        Enter the basic information about the flood
-        event. The event name, event date and description
-        are required before the record can be created.
-
-      </div>
-
-    </div>
+    <form th:action="@{/disasters}"
+          th:object="${disaster}"
+          method="post">
 
 
-
-    <!-- =================================================
-         CREATE FORM
-         ================================================= -->
-
-    <form
-            th:action="@{/disasters}"
-            th:object="${disaster}"
-            method="post">
+      <div class="form-grid">
 
 
-      <!-- =================================================
-           SECTION 1
-           ================================================= -->
+        <!-- EVENT NAME -->
 
-      <div class="section-heading">
+        <div class="form-group">
 
-                <span class="section-number">
-                    1
-                </span>
+          <label for="eventName">
 
-        <span>
-                    Flood Event Information
-                </span>
+            Flood Event Name
 
-      </div>
+            <span class="required">
+                            *
+                        </span>
 
+          </label>
 
+          <div class="input-wrapper">
 
-      <!-- =================================================
-           EVENT NAME
-           ================================================= -->
+                        <span>
+                            🌊
+                        </span>
 
-      <div class="form-group">
+            <input type="text"
+                   id="eventName"
+                   th:field="*{eventName}"
+                   placeholder="Example: Kelani River Flood 2026"
+                   required>
 
+          </div>
 
-        <label for="eventName">
-
-          Flood Event Name
-
-          <span class="required">
-                        *
-                    </span>
-
-        </label>
-
-
-        <input
-                type="text"
-                id="eventName"
-                th:field="*{eventName}"
-                placeholder="Example: 2026 Kelani River Flood"
-                autocomplete="off"
-        >
-
-
-        <!-- VALIDATION ERROR -->
-
-        <div
-                class="error"
-                th:if="${#fields.hasErrors('eventName')}"
-                th:errors="*{eventName}">
-        </div>
-
-
-        <div class="help-text">
-
-          Enter a clear name that identifies the
-          flood event.
+          <div class="error"
+               th:if="${#fields.hasErrors('eventName')}"
+               th:errors="*{eventName}">
+          </div>
 
         </div>
 
 
+        <!-- DATE -->
+
+        <div class="form-group">
+
+          <label for="eventDate">
+
+            Event Date
+
+            <span class="required">
+                            *
+                        </span>
+
+          </label>
+
+          <div class="input-wrapper">
+
+                        <span>
+                            📅
+                        </span>
+
+            <input type="date"
+                   id="eventDate"
+                   th:field="*{eventDate}"
+                   required>
+
+          </div>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('eventDate')}"
+               th:errors="*{eventDate}">
+          </div>
+
+        </div>
+
+
+        <!-- SEVERITY -->
+
+        <div class="form-group full-width">
+
+          <label for="severityLevel">
+
+            Severity Level
+
+            <span class="required">
+                            *
+                        </span>
+
+          </label>
+
+
+          <div class="severity-select-wrapper">
+
+                        <span>
+                            ⚠️
+                        </span>
+
+            <select id="severityLevel"
+                    th:field="*{severityLevel}"
+                    required>
+
+              <option value="">
+                -- Select Severity Level --
+              </option>
+
+              <option value="LOW">
+                ● LOW
+              </option>
+
+              <option value="MEDIUM">
+                ⚠ MEDIUM
+              </option>
+
+              <option value="HIGH">
+                ⚠ HIGH
+              </option>
+
+              <option value="CRITICAL">
+                ⛔ CRITICAL
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="severity-guide">
+
+            <div class="guide-title">
+              ⚠ Severity Level Guide
+            </div>
+
+
+            <div class="guide-grid">
+
+              <div class="guide-item low">
+                <strong>
+                  LOW
+                </strong>
+
+                <span>
+                                    Limited impact
+                                </span>
+              </div>
+
+
+              <div class="guide-item medium">
+                <strong>
+                  MEDIUM
+                </strong>
+
+                <span>
+                                    Moderate impact
+                                </span>
+              </div>
+
+
+              <div class="guide-item high">
+                <strong>
+                  HIGH
+                </strong>
+
+                <span>
+                                    Serious impact
+                                </span>
+              </div>
+
+
+              <div class="guide-item critical">
+                <strong>
+                  CRITICAL
+                </strong>
+
+                <span>
+                                    Extreme impact
+                                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="error"
+               th:if="${#fields.hasErrors('severityLevel')}"
+               th:errors="*{severityLevel}">
+          </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group full-width">
+
+          <label for="description">
+
+            Flood Event Description
+
+            <span class="required">
+                            *
+                        </span>
+
+          </label>
+
+          <textarea id="description"
+                    th:field="*{description}"
+                    placeholder="Describe the flood event, affected situation and important information..."
+                    required>
+                    </textarea>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('description')}"
+               th:errors="*{description}">
+          </div>
+
+        </div>
+
+
       </div>
 
 
+      <!-- ACTIONS -->
 
-      <!-- =================================================
-           EVENT DATE
-           ================================================= -->
+      <div class="form-actions">
 
-      <div class="form-group">
+        <a th:href="@{/disasters}"
+           class="cancel-button">
 
-
-        <label for="eventDate">
-
-          Event Date
-
-          <span class="required">
-                        *
-                    </span>
-
-        </label>
-
-
-        <input
-                type="date"
-                id="eventDate"
-                th:field="*{eventDate}"
-        >
-
-
-        <!-- VALIDATION ERROR -->
-
-        <div
-                class="error"
-                th:if="${#fields.hasErrors('eventDate')}"
-                th:errors="*{eventDate}">
-        </div>
-
-
-        <div class="help-text">
-
-          Select the date on which the flood event
-          occurred.
-
-        </div>
-
-
-      </div>
-
-
-
-      <!-- =================================================
-           DESCRIPTION
-           ================================================= -->
-
-      <div class="form-group">
-
-
-        <label for="description">
-
-          Flood Event Description
-
-          <span class="required">
-                        *
-                    </span>
-
-        </label>
-
-
-        <textarea
-                id="description"
-                th:field="*{description}"
-                placeholder="Enter important information about the flood event..."
-        ></textarea>
-
-
-        <!-- VALIDATION ERROR -->
-
-        <div
-                class="error"
-                th:if="${#fields.hasErrors('description')}"
-                th:errors="*{description}">
-        </div>
-
-
-        <div class="help-text">
-
-          Include important information about the
-          flood event, such as the affected situation,
-          impact and available information.
-
-        </div>
-
-
-      </div>
-
-
-
-      <!-- =================================================
-           FORM ACTIONS
-           ================================================= -->
-
-      <div class="button-area">
-
-
-        <!-- CREATE -->
-
-        <button
-                type="submit"
-                class="btn btn-primary">
-
-          ✓ Create Flood Event
-
-        </button>
-
-
-        <!-- CANCEL -->
-
-        <a
-                class="btn btn-secondary"
-                th:href="@{/disasters}">
-
-          ← Cancel
+          Cancel
 
         </a>
 
+        <button type="submit"
+                class="submit-button">
+
+          🌊 Create Flood Event
+
+        </button>
 
       </div>
 
@@ -347,12 +357,45 @@
     </form>
 
 
-  </section>
+    <!-- WORKFLOW -->
 
+    <div class="workflow-box">
+
+      <strong>
+        Disaster Management Workflow
+      </strong>
+
+      <div class="workflow-steps">
+
+        <div class="workflow-step current">
+          <span>1</span>
+          Create Flood Event
+        </div>
+
+        <div class="workflow-step">
+          <span>2</span>
+          Record Affected Areas
+        </div>
+
+        <div class="workflow-step">
+          <span>3</span>
+          Review Affected Families
+        </div>
+
+        <div class="workflow-step">
+          <span>4</span>
+          Coordinate Assistance
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
 
 </main>
 
 
 </body>
-
 </html>

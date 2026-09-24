@@ -1,5 +1,7 @@
 package com.frdms.frdms.victim_management.controller;
 
+import com.frdms.frdms.disaster_management.entity.Disaster;
+import com.frdms.frdms.disaster_management.service.DisasterService;
 import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
 import com.frdms.frdms.victim_management.entity.GNReport;
 import com.frdms.frdms.victim_management.entity.Victim;
@@ -14,40 +16,34 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 @Controller
 @RequestMapping("/victims")
 public class VictimController {
 
-
     private final VictimService victimService;
-
     private final GNReportService gnReportService;
-
     private final AffectedFamilyInformationService informationService;
-
+    private final DisasterService disasterService;
 
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
 
     public VictimController(
-
             VictimService victimService,
-
             GNReportService gnReportService,
-
-            AffectedFamilyInformationService informationService) {
+            AffectedFamilyInformationService informationService,
+            DisasterService disasterService) {
 
         this.victimService = victimService;
-
         this.gnReportService = gnReportService;
-
         this.informationService = informationService;
+        this.disasterService = disasterService;
     }
 
 
@@ -64,6 +60,12 @@ public class VictimController {
                 new Victim()
         );
 
+        // Load available flood events
+        model.addAttribute(
+                "disasters",
+                disasterService.getAllDisasters()
+        );
+
         return "victim/form";
     }
 
@@ -76,33 +78,86 @@ public class VictimController {
     @PostMapping("/register")
     public String registerVictim(
 
-            @Valid @ModelAttribute("victim")
+            @Valid
+            @ModelAttribute("victim")
             Victim victim,
 
             BindingResult bindingResult,
 
+            @RequestParam(
+                    value = "disasterId",
+                    required = false
+            )
+            Long disasterId,
+
             Model model) {
 
+        // -----------------------------------------------------
+        // ALWAYS RELOAD DISASTER LIST
+        // -----------------------------------------------------
+
+        model.addAttribute(
+                "disasters",
+                disasterService.getAllDisasters()
+        );
+
 
         // -----------------------------------------------------
-        // Check validation errors
+        // CHECK DISASTER SELECTION
         // -----------------------------------------------------
 
-        if (bindingResult.hasErrors()) {
+        if (disasterId == null) {
+
+            model.addAttribute(
+                    "disasterError",
+                    "Please select the flood event affected your family."
+            );
 
             return "victim/form";
         }
 
 
         // -----------------------------------------------------
-        // Check duplicate NIC
+        // FIND SELECTED DISASTER
+        // -----------------------------------------------------
+
+        Disaster selectedDisaster;
+
+        try {
+
+            selectedDisaster =
+                    disasterService.getDisasterById(
+                            disasterId
+                    );
+
+        } catch (IllegalArgumentException e) {
+
+            model.addAttribute(
+                    "disasterError",
+                    "The selected flood event could not be found."
+            );
+
+            return "victim/form";
+        }
+
+
+        // -----------------------------------------------------
+        // CHECK VALIDATION ERRORS
+        // -----------------------------------------------------
+
+        if (bindingResult.hasErrors()) {
+            return "victim/form";
+        }
+
+
+        // -----------------------------------------------------
+        // CHECK DUPLICATE NIC
         // -----------------------------------------------------
 
         Victim existingVictim =
                 victimService.getVictimByNic(
                         victim.getNicNumber()
                 );
-
 
         if (existingVictim != null) {
 
@@ -116,197 +171,250 @@ public class VictimController {
 
 
         // -----------------------------------------------------
-        // Check duplicate username
+        // CONNECT VICTIM WITH DISASTER
         // -----------------------------------------------------
 
-        Victim existingUsername =
-                victimService.getVictimByUsername(
-                        victim.getUsername()
-                );
-
-
-        if (existingUsername != null) {
-
-            model.addAttribute(
-                    "usernameError",
-                    "This username is already taken. Please choose another username."
-            );
-
-            return "victim/form";
-        }
+        victim.setDisaster(
+                selectedDisaster
+        );
 
 
         // -----------------------------------------------------
-        // Register victim
-        //
-        // VictimService hashes the password before
-        // saving it to MySQL.
+        // SAVE VICTIM
         // -----------------------------------------------------
 
-        victimService.registerVictim(victim);
+        victimService.registerVictim(
+                victim
+        );
 
 
         // -----------------------------------------------------
-        // Send victim to login page
+        // REDIRECT TO LOGIN
         // -----------------------------------------------------
 
-        return "redirect:/victim-login";
+        return "redirect:/victims/login";
     }
 
 
     // =========================================================
-    // DISPLAY ALL VICTIMS
-    // ADMIN / PM SIDE
+    // DISPLAY VICTIMS
+    // ADMIN / PROJECT MANAGER SIDE
     //
-    // Supports:
-    // 1. Search by NIC number
-    // 2. Filter by shelter requirement
-    // 3. Combination of both filters
-    //
-    // Also loads Family & Affected Information
-    // for each victim.
+    // FILTERS:
+    // 1. NIC Number
+    // 2. Shelter Requirement
     // =========================================================
 
     @GetMapping
     public String listVictims(
 
-            @RequestParam(required = false)
+            @RequestParam(
+                    value = "nic",
+                    required = false
+            )
             String nic,
 
-            @RequestParam(required = false)
+            @RequestParam(
+                    value = "shelter",
+                    required = false
+            )
             String shelter,
 
             Model model) {
 
 
-        // -----------------------------------------------------
-        // Get all registered victims
-        // -----------------------------------------------------
+        // =====================================================
+        // STEP 1
+        // GET ALL VICTIMS
+        // =====================================================
 
-        List<Victim> victims =
+        List<Victim> allVictims =
                 victimService.getAllVictims();
 
 
-        // -----------------------------------------------------
-        // Create a map containing Family & Affected
-        // Information for each victim.
+        // =====================================================
+        // STEP 2
+        // CREATE FAMILY INFORMATION MAP
         //
         // Key   = Victim ID
         // Value = AffectedFamilyInformation
-        // -----------------------------------------------------
+        // =====================================================
 
         Map<Long, AffectedFamilyInformation>
                 familyInformationMap =
                 new HashMap<>();
 
 
-        // -----------------------------------------------------
-        // Find Family & Affected Information
-        // for each victim.
-        // -----------------------------------------------------
-
-        for (Victim victim : victims) {
+        for (Victim victim : allVictims) {
 
             informationService
                     .getByVictim(victim)
-                    .ifPresent(information ->
-
-                            familyInformationMap.put(
-                                    victim.getId(),
-                                    information
-                            )
+                    .ifPresent(
+                            information ->
+                                    familyInformationMap.put(
+                                            victim.getId(),
+                                            information
+                                    )
                     );
         }
 
 
         // =====================================================
-        // FILTER 1
-        // SEARCH BY NIC NUMBER
+        // STEP 3
+        // NORMALIZE FILTER VALUES
         // =====================================================
 
-        if (nic != null && !nic.trim().isEmpty()) {
+        String cleanNic = "";
 
-            String searchNic =
-                    nic.trim();
+        if (nic != null) {
+            cleanNic = nic.trim();
+        }
 
-            victims = victims.stream()
-                    .filter(victim ->
-                            victim.getNicNumber() != null
-                                    && victim.getNicNumber()
-                                    .equalsIgnoreCase(searchNic)
-                    )
-                    .toList();
+
+        String cleanShelter = "";
+
+        if (shelter != null) {
+            cleanShelter =
+                    shelter.trim().toLowerCase();
         }
 
 
         // =====================================================
-        // FILTER 2
-        // SHELTER REQUIREMENT
+        // STEP 4
+        // FILTER VICTIMS
         // =====================================================
 
-        if (shelter != null
-                && !shelter.trim().isEmpty()) {
+        List<Victim> filteredVictims =
+                new ArrayList<>();
+
+
+        for (Victim victim : allVictims) {
 
 
             // -------------------------------------------------
-            // Show only victims who require shelter
+            // NIC FILTER
             // -------------------------------------------------
 
-            if (shelter.equalsIgnoreCase("required")) {
+            boolean nicMatches = true;
 
-                victims = victims.stream()
-                        .filter(victim -> {
+            if (!cleanNic.isEmpty()) {
 
-                            AffectedFamilyInformation information =
-                                    familyInformationMap
-                                            .get(victim.getId());
-
-                            return information != null
-                                    && Boolean.TRUE.equals(
-                                    information.getShelterRequired()
-                            );
-                        })
-                        .toList();
+                nicMatches =
+                        victim.getNicNumber() != null
+                                &&
+                                victim.getNicNumber()
+                                        .toLowerCase()
+                                        .contains(
+                                                cleanNic.toLowerCase()
+                                        );
             }
 
 
             // -------------------------------------------------
-            // Show only victims who do NOT require shelter
+            // SHELTER FILTER
             // -------------------------------------------------
 
-            else if (shelter.equalsIgnoreCase("not-required")) {
+            boolean shelterMatches = true;
 
-                victims = victims.stream()
-                        .filter(victim -> {
+            AffectedFamilyInformation information =
+                    familyInformationMap.get(
+                            victim.getId()
+                    );
 
-                            AffectedFamilyInformation information =
-                                    familyInformationMap
-                                            .get(victim.getId());
 
-                            return information != null
-                                    && Boolean.FALSE.equals(
-                                    information.getShelterRequired()
-                            );
-                        })
-                        .toList();
+            if (!cleanShelter.isEmpty()
+                    && !cleanShelter.equals("all")
+                    && !cleanShelter.equals("all-victims")) {
+
+
+                // =============================================
+                // SHELTER REQUIRED
+                // =============================================
+
+                if (
+                        cleanShelter.equals("required")
+                                ||
+                                cleanShelter.equals("shelter-required")
+                                ||
+                                cleanShelter.equals("true")
+                ) {
+
+                    shelterMatches =
+                            information != null
+                                    &&
+                                    Boolean.TRUE.equals(
+                                            information.getShelterRequired()
+                                    );
+                }
+
+
+                // =============================================
+                // SHELTER NOT REQUIRED
+                // =============================================
+
+                else if (
+                        cleanShelter.equals("not-required")
+                                ||
+                                cleanShelter.equals("not_required")
+                                ||
+                                cleanShelter.equals("shelter-not-required")
+                                ||
+                                cleanShelter.equals("false")
+                ) {
+
+                    shelterMatches =
+                            information != null
+                                    &&
+                                    Boolean.FALSE.equals(
+                                            information.getShelterRequired()
+                                    );
+                }
+
+
+                // =============================================
+                // FAMILY INFORMATION NOT SUBMITTED
+                // =============================================
+
+                else if (
+                        cleanShelter.equals("not-submitted")
+                                ||
+                                cleanShelter.equals("not_submitted")
+                ) {
+
+                    shelterMatches =
+                            information == null;
+                }
+            }
+
+
+            // -------------------------------------------------
+            // ADD ONLY IF BOTH FILTERS MATCH
+            // -------------------------------------------------
+
+            if (nicMatches && shelterMatches) {
+
+                filteredVictims.add(
+                        victim
+                );
             }
         }
 
 
-        // -----------------------------------------------------
-        // Send filtered victims to Thymeleaf page
-        // -----------------------------------------------------
+        // =====================================================
+        // STEP 5
+        // SEND FILTERED VICTIMS TO THYMELEAF
+        // =====================================================
 
         model.addAttribute(
                 "victims",
-                victims
+                filteredVictims
         );
 
 
-        // -----------------------------------------------------
-        // Send Family & Affected Information map
-        // to Thymeleaf page.
-        // -----------------------------------------------------
+        // =====================================================
+        // STEP 6
+        // SEND FAMILY INFORMATION MAP
+        // =====================================================
 
         model.addAttribute(
                 "familyInformationMap",
@@ -314,23 +422,30 @@ public class VictimController {
         );
 
 
-        // -----------------------------------------------------
-        // Keep NIC filter value in the page
-        // -----------------------------------------------------
+        // =====================================================
+        // STEP 7
+        // KEEP FILTER VALUES IN THE PAGE
+        // =====================================================
 
         model.addAttribute(
-                "nic",
-                nic
+                "filterNic",
+                cleanNic
+        );
+
+        model.addAttribute(
+                "filterShelter",
+                cleanShelter
         );
 
 
-        // -----------------------------------------------------
-        // Keep shelter filter value in the page
-        // -----------------------------------------------------
+        // =====================================================
+        // STEP 8
+        // TOTAL RESULT COUNT
+        // =====================================================
 
         model.addAttribute(
-                "shelter",
-                shelter
+                "filteredCount",
+                filteredVictims.size()
         );
 
 
@@ -341,11 +456,6 @@ public class VictimController {
     // =========================================================
     // VM-02
     // VIEW COMPLETE VICTIM INFORMATION
-    // ADMIN / PM SIDE
-    //
-    // Also loads:
-    // 1. GN Reports
-    // 2. Family & Affected Information
     // =========================================================
 
     @GetMapping("/{id}")
@@ -357,16 +467,17 @@ public class VictimController {
 
 
         // -----------------------------------------------------
-        // Get victim
+        // GET VICTIM
         // -----------------------------------------------------
 
         Victim victim =
                 victimService.getVictimById(id);
 
 
-        // -----------------------------------------------------
-        // Add victim information
-        // -----------------------------------------------------
+        if (victim == null) {
+            return "redirect:/victims";
+        }
+
 
         model.addAttribute(
                 "victim",
@@ -375,17 +486,43 @@ public class VictimController {
 
 
         // -----------------------------------------------------
-        // Get GN reports submitted by this victim
+        // GET GN REPORTS
         // -----------------------------------------------------
+
+        List<GNReport> victimGNReports =
+                new ArrayList<>();
+
+
+        for (
+                GNReport report :
+                gnReportService.getAllGNReports()
+        ) {
+
+            if (
+                    report.getVictim() != null
+                            &&
+                            report.getVictim().getId() != null
+                            &&
+                            report.getVictim()
+                                    .getId()
+                                    .equals(victim.getId())
+            ) {
+
+                victimGNReports.add(
+                        report
+                );
+            }
+        }
+
 
         model.addAttribute(
                 "gnReports",
-                gnReportService.getGNReportsByVictim(victim)
+                victimGNReports
         );
 
 
         // -----------------------------------------------------
-        // Get Family & Affected Information
+        // GET FAMILY & AFFECTED INFORMATION
         // -----------------------------------------------------
 
         AffectedFamilyInformation familyInformation =
@@ -393,13 +530,6 @@ public class VictimController {
                         .getByVictim(victim)
                         .orElse(null);
 
-
-        // -----------------------------------------------------
-        // Add Family & Affected Information
-        //
-        // If the victim has not submitted it yet,
-        // the value will be null.
-        // -----------------------------------------------------
 
         model.addAttribute(
                 "familyInformation",
@@ -413,7 +543,7 @@ public class VictimController {
 
     // =========================================================
     // VM-02
-    // SHOW EDIT / RECORD FORM
+    // SHOW EDIT FORM
     // =========================================================
 
     @GetMapping("/edit/{id}")
@@ -426,6 +556,11 @@ public class VictimController {
 
         Victim victim =
                 victimService.getVictimById(id);
+
+
+        if (victim == null) {
+            return "redirect:/victims";
+        }
 
 
         model.addAttribute(
@@ -448,7 +583,8 @@ public class VictimController {
 
             @PathVariable Long id,
 
-            @Valid @ModelAttribute("victim")
+            @Valid
+            @ModelAttribute("victim")
             Victim victim,
 
             BindingResult bindingResult,
@@ -457,30 +593,20 @@ public class VictimController {
 
 
         // -----------------------------------------------------
-        // Get existing victim
+        // GET EXISTING VICTIM
         // -----------------------------------------------------
 
         Victim existingVictim =
                 victimService.getVictimById(id);
 
 
-        // -----------------------------------------------------
-        // Keep existing username
-        //
-        // Username is used for victim login.
-        // We do not allow the edit form to accidentally
-        // replace it with a blank value.
-        // -----------------------------------------------------
-
-        victim.setUsername(
-                existingVictim.getUsername()
-        );
+        if (existingVictim == null) {
+            return "redirect:/victims";
+        }
 
 
         // -----------------------------------------------------
-        // Keep existing password
-        //
-        // VM-02 edit does not change the victim password.
+        // KEEP EXISTING PASSWORD
         // -----------------------------------------------------
 
         victim.setPassword(
@@ -489,17 +615,34 @@ public class VictimController {
 
 
         // -----------------------------------------------------
-        // Check validation errors
+        // KEEP EXISTING NIC
+        // -----------------------------------------------------
+
+        victim.setNicNumber(
+                existingVictim.getNicNumber()
+        );
+
+
+        // -----------------------------------------------------
+        // KEEP EXISTING DISASTER
+        // -----------------------------------------------------
+
+        victim.setDisaster(
+                existingVictim.getDisaster()
+        );
+
+
+        // -----------------------------------------------------
+        // VALIDATION
         // -----------------------------------------------------
 
         if (bindingResult.hasErrors()) {
-
             return "victim/edit";
         }
 
 
         // -----------------------------------------------------
-        // Update victim
+        // UPDATE VICTIM
         // -----------------------------------------------------
 
         victimService.updateVictim(
@@ -518,14 +661,10 @@ public class VictimController {
 
     @PostMapping("/delete/{id}")
     public String deleteVictim(
-
             @PathVariable Long id) {
-
 
         victimService.deleteVictim(id);
 
-
         return "redirect:/victims";
     }
-
 }

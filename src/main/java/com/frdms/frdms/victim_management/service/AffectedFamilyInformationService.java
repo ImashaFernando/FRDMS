@@ -14,6 +14,11 @@ public class AffectedFamilyInformationService {
 
     private final AffectedFamilyInformationRepository repository;
 
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public AffectedFamilyInformationService(
             AffectedFamilyInformationRepository repository) {
 
@@ -44,8 +49,7 @@ public class AffectedFamilyInformationService {
 
 
     // =========================================================
-    // GET ALL VICTIM FAMILY INFORMATION
-    // Used by Relief Coordinator
+    // GET ALL INFORMATION
     // =========================================================
 
     public List<AffectedFamilyInformation> getAllInformation() {
@@ -65,7 +69,52 @@ public class AffectedFamilyInformationService {
                         new IllegalArgumentException(
                                 "Affected family information not found with ID: "
                                         + id
-                        ));
+                        )
+                );
+    }
+
+
+    // =========================================================
+    // GET FAMILIES FOR A DISASTER
+    // DM-06
+    // =========================================================
+
+    public List<AffectedFamilyInformation>
+    getByDisaster(Long disasterId) {
+
+        return repository
+                .findByVictim_Disaster_Id(disasterId);
+    }
+
+
+    // =========================================================
+    // COUNT AFFECTED FAMILIES
+    // DM-06
+    // =========================================================
+
+    public long countAffectedFamilies(
+            Long disasterId) {
+
+        return repository
+                .countByVictim_Disaster_Id(
+                        disasterId
+                );
+    }
+
+
+    // =========================================================
+    // COUNT FAMILIES REQUIRING SHELTER
+    // DM-06
+    // =========================================================
+
+    public long countShelterRequiredFamilies(
+            Long disasterId) {
+
+        return repository
+                .countByVictim_Disaster_IdAndShelterRequired(
+                        disasterId,
+                        true
+                );
     }
 
 
@@ -111,6 +160,8 @@ public class AffectedFamilyInformationService {
         );
 
 
-        return repository.save(existingInformation);
+        return repository.save(
+                existingInformation
+        );
     }
 }

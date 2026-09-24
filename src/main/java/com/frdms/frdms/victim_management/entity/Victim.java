@@ -1,141 +1,103 @@
 package com.frdms.frdms.victim_management.entity;
 
+import com.frdms.frdms.disaster_management.entity.Disaster;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "victims")
+@Table(
+        name = "victims",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "nic_number"),
+                @UniqueConstraint(columnNames = "username")
+        }
+)
 public class Victim {
-
-    // =========================================================
-    // PRIMARY KEY
-    // =========================================================
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    // =========================================================
-    // VICTIM NAME
-    // =========================================================
-
     @NotBlank(message = "Full name is required")
     @Column(name = "full_name", nullable = false)
     private String fullName;
-
-
-    // =========================================================
-    // NIC NUMBER
-    // Used for victim identification and verification
-    // =========================================================
 
     @NotBlank(message = "NIC number is required")
     @Column(name = "nic_number", nullable = false, unique = true)
     private String nicNumber;
 
-
-    // =========================================================
-    // PHONE NUMBER
-    // =========================================================
-
-    @NotBlank(message = "Phone number is required")
-    @Pattern(
-            regexp = "^[0-9]{10}$",
-            message = "Phone number must contain 10 digits"
-    )
-    @Column(name = "phone_number", nullable = false)
-    private String phoneNumber;
-
-
-    // =========================================================
-    // ADDRESS
-    // =========================================================
-
-    @NotBlank(message = "Address is required")
-    @Column(
-            name = "address",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
-    private String address;
-
-
-    // =========================================================
-    // USERNAME
-    // Used for victim login
-    // =========================================================
-
-    @NotBlank(message = "Username is required")
+    /*
+     * Username is automatically generated from the NIC number.
+     * The victim does not need to enter a separate username.
+     */
     @Column(name = "username", nullable = false, unique = true)
     private String username;
-
-
-    // =========================================================
-    // PASSWORD
-    // Used for victim login
-    // =========================================================
 
     @NotBlank(message = "Password is required")
     @Column(name = "password", nullable = false)
     private String password;
 
+    @NotBlank(message = "Phone number is required")
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
 
-    // =========================================================
-    // REGISTRATION DATE
-    // =========================================================
+    @NotBlank(message = "Address is required")
+    @Column(name = "address", nullable = false)
+    private String address;
 
-    @Column(name = "registration_date", nullable = false)
-    private LocalDateTime registrationDate;
+    @Column(name = "registration_date")
+    private LocalDate registrationDate;
+
+    /*
+     * Disaster selected by the victim during registration.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "disaster_id")
+    private Disaster disaster;
 
 
-    // =========================================================
-    // CONSTRUCTOR
-    // =========================================================
+    // ---------------------------------------------------------
+    // Constructors
+    // ---------------------------------------------------------
 
     public Victim() {
     }
 
-
     public Victim(
             String fullName,
             String nicNumber,
+            String password,
             String phoneNumber,
             String address,
-            String username,
-            String password) {
-
+            Disaster disaster
+    ) {
         this.fullName = fullName;
         this.nicNumber = nicNumber;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.username = username;
-        this.password = password;
+        this.disaster = disaster;
+
+        // NIC is used as the login username
+        this.username = nicNumber;
+
+        this.registrationDate = LocalDate.now();
     }
 
 
-    // =========================================================
-    // PRE-PERSIST
-    // =========================================================
-
-    @PrePersist
-    protected void onCreate() {
-
-        if (registrationDate == null) {
-            registrationDate = LocalDateTime.now();
-        }
-    }
-
-
-    // =========================================================
-    // GETTERS
-    // =========================================================
+    // ---------------------------------------------------------
+    // Getters and Setters
+    // ---------------------------------------------------------
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 
@@ -143,19 +105,24 @@ public class Victim {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
 
     public String getNicNumber() {
         return nicNumber;
     }
 
+    public void setNicNumber(String nicNumber) {
+        this.nicNumber = nicNumber;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-
-    public String getAddress() {
-        return address;
+        /*
+         * Automatically keep username equal to NIC.
+         */
+        if (nicNumber != null && !nicNumber.trim().isEmpty()) {
+            this.username = nicNumber.trim();
+        }
     }
 
 
@@ -163,52 +130,75 @@ public class Victim {
         return username;
     }
 
-
-    public String getPassword() {
-        return password;
-    }
-
-
-    public LocalDateTime getRegistrationDate() {
-        return registrationDate;
-    }
-
-
-    // =========================================================
-    // SETTERS
-    // =========================================================
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-
-    public void setNicNumber(String nicNumber) {
-        this.nicNumber = nicNumber;
-    }
-
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
     public void setUsername(String username) {
         this.username = username;
     }
 
+
+    public String getPassword() {
+        return password;
+    }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
 
-    public void setRegistrationDate(LocalDateTime registrationDate) {
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+
+    public Disaster getDisaster() {
+        return disaster;
+    }
+
+    public void setDisaster(Disaster disaster) {
+        this.disaster = disaster;
+    }
+
+
+    // ---------------------------------------------------------
+    // Automatically prepare data before saving
+    // ---------------------------------------------------------
+
+    @PrePersist
+    protected void beforeSave() {
+
+        /*
+         * NIC is the victim's login identifier.
+         */
+        if (username == null || username.trim().isEmpty()) {
+            username = nicNumber;
+        }
+
+        /*
+         * Automatically store today's registration date.
+         */
+        if (registrationDate == null) {
+            registrationDate = LocalDate.now();
+        }
     }
 }

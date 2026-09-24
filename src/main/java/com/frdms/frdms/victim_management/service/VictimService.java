@@ -2,6 +2,7 @@ package com.frdms.frdms.victim_management.service;
 
 import com.frdms.frdms.victim_management.entity.Victim;
 import com.frdms.frdms.victim_management.repository.VictimRepository;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.List;
 public class VictimService {
 
     private final VictimRepository victimRepository;
+
 
     // =========================================================
     // PASSWORD ENCODER
@@ -25,8 +27,11 @@ public class VictimService {
     // CONSTRUCTOR
     // =========================================================
 
-    public VictimService(VictimRepository victimRepository) {
-        this.victimRepository = victimRepository;
+    public VictimService(
+            VictimRepository victimRepository) {
+
+        this.victimRepository =
+                victimRepository;
     }
 
 
@@ -35,32 +40,39 @@ public class VictimService {
     // REGISTER NEW VICTIM
     // =========================================================
 
-    public Victim registerVictim(Victim victim) {
-
-        /*
-         * The password entered by the victim must NOT
-         * be stored directly in the database.
-         *
-         * BCrypt converts the password into a secure hash.
-         */
+    public Victim registerVictim(
+            Victim victim) {
 
         String encodedPassword =
-                passwordEncoder.encode(victim.getPassword());
+                passwordEncoder.encode(
+                        victim.getPassword()
+                );
 
-        victim.setPassword(encodedPassword);
+        victim.setPassword(
+                encodedPassword
+        );
 
-        return victimRepository.save(victim);
+        return victimRepository.save(
+                victim
+        );
     }
 
 
     // =========================================================
     // CHECK PASSWORD
-    // Used during victim login
     // =========================================================
 
     public boolean checkPassword(
             String enteredPassword,
             String storedPassword) {
+
+        if (
+                enteredPassword == null
+                        ||
+                        storedPassword == null
+        ) {
+            return false;
+        }
 
         return passwordEncoder.matches(
                 enteredPassword,
@@ -83,39 +95,40 @@ public class VictimService {
     // GET VICTIM BY ID
     // =========================================================
 
-    public Victim getVictimById(Long id) {
+    public Victim getVictimById(
+            Long id) {
 
-        return victimRepository.findById(id)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Victim not found with ID: " + id
-                        )
+        return victimRepository
+                .findById(id)
+                .orElseThrow(
+                        () ->
+                                new IllegalArgumentException(
+                                        "Victim not found with ID: "
+                                                + id
+                                )
                 );
     }
 
 
     // =========================================================
     // FIND VICTIM BY NIC
-    // Used for victim identification and verification
     // =========================================================
 
-    public Victim getVictimByNic(String nicNumber) {
+    public Victim getVictimByNic(
+            String nicNumber) {
+
+        if (
+                nicNumber == null
+                        ||
+                        nicNumber.trim().isEmpty()
+        ) {
+            return null;
+        }
 
         return victimRepository
-                .findByNicNumber(nicNumber)
-                .orElse(null);
-    }
-
-
-    // =========================================================
-    // FIND VICTIM BY USERNAME
-    // Used for victim login
-    // =========================================================
-
-    public Victim getVictimByUsername(String username) {
-
-        return victimRepository
-                .findByUsername(username)
+                .findByNicNumber(
+                        nicNumber.trim()
+                )
                 .orElse(null);
     }
 
@@ -132,20 +145,36 @@ public class VictimService {
                 getVictimById(id);
 
 
+        // -----------------------------------------------------
+        // UPDATE FULL NAME
+        // -----------------------------------------------------
+
         existingVictim.setFullName(
                 updatedVictim.getFullName()
         );
 
+
+        // -----------------------------------------------------
+        // UPDATE NIC
+        // -----------------------------------------------------
 
         existingVictim.setNicNumber(
                 updatedVictim.getNicNumber()
         );
 
 
+        // -----------------------------------------------------
+        // UPDATE PHONE
+        // -----------------------------------------------------
+
         existingVictim.setPhoneNumber(
                 updatedVictim.getPhoneNumber()
         );
 
+
+        // -----------------------------------------------------
+        // UPDATE ADDRESS
+        // -----------------------------------------------------
 
         existingVictim.setAddress(
                 updatedVictim.getAddress()
@@ -153,19 +182,9 @@ public class VictimService {
 
 
         /*
-         * Username is used for login.
-         *
-         * We keep the existing username unchanged
-         * when normal victim information is updated.
+         * Password is intentionally NOT changed
+         * during a normal victim information update.
          */
-
-        /*
-         * We do NOT change the password here.
-         *
-         * The victim's existing password should remain
-         * unchanged when updating normal information.
-         */
-
 
         return victimRepository.save(
                 existingVictim
@@ -177,11 +196,14 @@ public class VictimService {
     // DELETE VICTIM
     // =========================================================
 
-    public void deleteVictim(Long id) {
+    public void deleteVictim(
+            Long id) {
 
         Victim victim =
                 getVictimById(id);
 
-        victimRepository.delete(victim);
+        victimRepository.delete(
+                victim
+        );
     }
 }

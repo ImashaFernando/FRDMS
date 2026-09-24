@@ -22,6 +22,10 @@ public class AffectedFamilyInformationController {
     private final AffectedFamilyInformationService informationService;
     private final VictimService victimService;
 
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public AffectedFamilyInformationController(
             AffectedFamilyInformationService informationService,
             VictimService victimService) {
@@ -33,7 +37,7 @@ public class AffectedFamilyInformationController {
 
     // =========================================================
     // VICTIM SIDE
-    // VIEW FAMILY & AFFECTED INFORMATION FORM
+    // SHOW FAMILY & AFFECTED INFORMATION FORM
     // =========================================================
 
     @GetMapping("/victim/family-information")
@@ -41,27 +45,41 @@ public class AffectedFamilyInformationController {
             HttpSession session,
             Model model) {
 
-        // Get logged-in victim ID
-        Long victimId =
-                (Long) session.getAttribute("victimId");
+        Long victimId = (Long) session.getAttribute("victimId");
 
         // Victim must be logged in
         if (victimId == null) {
-            return "redirect:/victim-login";
+            return "redirect:/victims/login";
         }
 
-        // Get logged-in victim
-        Victim victim =
-                victimService.getVictimById(victimId);
+        // =====================================================
+        // GET VICTIM
+        // getVictimById() returns Victim
+        // =====================================================
 
-        // Check whether information already exists
+        Victim victim = victimService.getVictimById(victimId);
+
+        // Victim not found
+        if (victim == null) {
+            session.invalidate();
+            return "redirect:/victims/login";
+        }
+
+
+        // =====================================================
+        // CHECK EXISTING FAMILY INFORMATION
+        // =====================================================
+
         Optional<AffectedFamilyInformation> existingInformation =
                 informationService.getByVictim(victim);
 
 
+        // =====================================================
+        // EXISTING INFORMATION
+        // =====================================================
+
         if (existingInformation.isPresent()) {
 
-            // Load existing information for viewing/editing
             model.addAttribute(
                     "information",
                     existingInformation.get()
@@ -69,7 +87,10 @@ public class AffectedFamilyInformationController {
 
         } else {
 
-            // Create empty form for first submission
+            // =================================================
+            // FIRST-TIME SUBMISSION
+            // =================================================
+
             AffectedFamilyInformation information =
                     new AffectedFamilyInformation();
 
@@ -81,6 +102,10 @@ public class AffectedFamilyInformationController {
             );
         }
 
+
+        // =====================================================
+        // ADD VICTIM TO MODEL
+        // =====================================================
 
         model.addAttribute(
                 "victim",
@@ -99,7 +124,9 @@ public class AffectedFamilyInformationController {
 
     @PostMapping("/victim/family-information")
     public String saveVictimFamilyInformation(
-            @Valid @ModelAttribute("information")
+
+            @Valid
+            @ModelAttribute("information")
             AffectedFamilyInformation information,
 
             BindingResult bindingResult,
@@ -110,18 +137,44 @@ public class AffectedFamilyInformationController {
 
             RedirectAttributes redirectAttributes) {
 
-        // Get logged-in victim ID
+
+        // =====================================================
+        // GET LOGGED-IN VICTIM ID
+        // =====================================================
+
         Long victimId =
                 (Long) session.getAttribute("victimId");
 
-        // Victim must be logged in
+
+        // =====================================================
+        // VICTIM MUST BE LOGGED IN
+        // =====================================================
+
         if (victimId == null) {
-            return "redirect:/victim-login";
+            return "redirect:/victims/login";
         }
 
-        // Get logged-in victim
+
+        // =====================================================
+        // GET VICTIM
+        // =====================================================
+
         Victim victim =
                 victimService.getVictimById(victimId);
+
+
+        // Victim no longer exists
+        if (victim == null) {
+
+            session.invalidate();
+
+            return "redirect:/victims/login";
+        }
+
+
+        // =====================================================
+        // ADD VICTIM TO MODEL
+        // =====================================================
 
         model.addAttribute(
                 "victim",
@@ -135,6 +188,7 @@ public class AffectedFamilyInformationController {
 
         if (bindingResult.hasErrors()) {
 
+            // Maintain relationship
             information.setVictim(victim);
 
             return "victim/family-information";
@@ -163,10 +217,12 @@ public class AffectedFamilyInformationController {
                     information
             );
 
+
             redirectAttributes.addFlashAttribute(
                     "successMessage",
                     "Your Family & Affected Information has been updated successfully."
             );
+
         }
 
 
@@ -182,12 +238,17 @@ public class AffectedFamilyInformationController {
                     information
             );
 
+
             redirectAttributes.addFlashAttribute(
                     "successMessage",
                     "Your Family & Affected Information has been submitted successfully."
             );
         }
 
+
+        // =====================================================
+        // RETURN TO FAMILY INFORMATION PAGE
+        // =====================================================
 
         return "redirect:/victim/family-information";
     }
@@ -201,27 +262,50 @@ public class AffectedFamilyInformationController {
 
     @GetMapping("/project-manager/victims/{victimId}/family-information")
     public String showPMFamilyInformation(
+
             @PathVariable Long victimId,
+
             Model model) {
 
-        // Get selected victim
+
+        // =====================================================
+        // GET SELECTED VICTIM
+        // =====================================================
+
         Victim victim =
                 victimService.getVictimById(victimId);
 
-        // Get family information
+
+        // =====================================================
+        // VICTIM NOT FOUND
+        // =====================================================
+
+        if (victim == null) {
+            return "redirect:/victims";
+        }
+
+
+        // =====================================================
+        // GET FAMILY INFORMATION
+        // =====================================================
+
         Optional<AffectedFamilyInformation> existingInformation =
                 informationService.getByVictim(victim);
 
 
-        /*
-         * The PM can see whether the victim has
-         * submitted Family & Affected Information.
-         */
+        // =====================================================
+        // ADD VICTIM
+        // =====================================================
 
         model.addAttribute(
                 "victim",
                 victim
         );
+
+
+        // =====================================================
+        // ADD FAMILY INFORMATION
+        // =====================================================
 
         model.addAttribute(
                 "information",
@@ -240,9 +324,11 @@ public class AffectedFamilyInformationController {
 
     @PostMapping("/project-manager/victims/{victimId}/family-information")
     public String savePMFamilyInformation(
+
             @PathVariable Long victimId,
 
-            @Valid @ModelAttribute("information")
+            @Valid
+            @ModelAttribute("information")
             AffectedFamilyInformation information,
 
             BindingResult bindingResult,
@@ -251,9 +337,27 @@ public class AffectedFamilyInformationController {
 
             RedirectAttributes redirectAttributes) {
 
-        // Get selected victim
+
+        // =====================================================
+        // GET SELECTED VICTIM
+        // =====================================================
+
         Victim victim =
                 victimService.getVictimById(victimId);
+
+
+        // =====================================================
+        // VICTIM NOT FOUND
+        // =====================================================
+
+        if (victim == null) {
+            return "redirect:/victims";
+        }
+
+
+        // =====================================================
+        // ADD VICTIM TO MODEL
+        // =====================================================
 
         model.addAttribute(
                 "victim",
@@ -295,15 +399,17 @@ public class AffectedFamilyInformationController {
                     information
             );
 
+
             redirectAttributes.addFlashAttribute(
                     "successMessage",
                     "Family & Affected Information has been updated successfully."
             );
+
         }
 
 
         // =====================================================
-        // CREATE INFORMATION IF NOT YET SUBMITTED
+        // CREATE NEW INFORMATION
         // =====================================================
 
         else {
@@ -314,6 +420,7 @@ public class AffectedFamilyInformationController {
                     information
             );
 
+
             redirectAttributes.addFlashAttribute(
                     "successMessage",
                     "Family & Affected Information has been recorded successfully."
@@ -321,7 +428,10 @@ public class AffectedFamilyInformationController {
         }
 
 
-        // Return to selected victim details
+        // =====================================================
+        // RETURN TO SELECTED VICTIM
+        // =====================================================
+
         return "redirect:/victims/" + victimId;
     }
 }

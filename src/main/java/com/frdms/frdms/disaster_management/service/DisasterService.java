@@ -2,6 +2,7 @@ package com.frdms.frdms.disaster_management.service;
 
 import com.frdms.frdms.disaster_management.entity.Disaster;
 import com.frdms.frdms.disaster_management.repository.DisasterRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -89,18 +90,23 @@ public class DisasterService {
             Long id,
             Disaster updatedDisaster) {
 
+        // Find existing flood event
         Disaster existingDisaster =
                 getDisasterById(id);
 
 
+        // =====================================================
         // UPDATE EVENT NAME
+        // =====================================================
 
         existingDisaster.setEventName(
                 updatedDisaster.getEventName()
         );
 
 
+        // =====================================================
         // UPDATE EVENT DATE
+        // =====================================================
 
         if (updatedDisaster.getEventDate() != null) {
 
@@ -110,14 +116,27 @@ public class DisasterService {
         }
 
 
+        // =====================================================
         // UPDATE DESCRIPTION
+        // =====================================================
 
         existingDisaster.setDescription(
                 updatedDisaster.getDescription()
         );
 
 
+        // =====================================================
+        // UPDATE SEVERITY LEVEL - DM-05
+        // =====================================================
+
+        existingDisaster.setSeverityLevel(
+                updatedDisaster.getSeverityLevel()
+        );
+
+
+        // =====================================================
         // SAVE UPDATED EVENT
+        // =====================================================
 
         return disasterRepository.save(
                 existingDisaster

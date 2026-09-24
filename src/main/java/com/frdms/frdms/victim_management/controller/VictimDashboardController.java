@@ -48,9 +48,7 @@ public class VictimDashboardController {
         Long victimId =
                 (Long) session.getAttribute("victimId");
 
-
         if (victimId == null) {
-
             return "redirect:/victim-login";
         }
 
@@ -61,6 +59,18 @@ public class VictimDashboardController {
 
         Victim victim =
                 victimService.getVictimById(victimId);
+
+
+        // =====================================================
+        // VICTIM NOT FOUND
+        // =====================================================
+
+        if (victim == null) {
+
+            session.invalidate();
+
+            return "redirect:/victim-login";
+        }
 
 
         // =====================================================

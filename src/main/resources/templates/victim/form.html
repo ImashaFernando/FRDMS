@@ -9,83 +9,117 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Victim Registration - FRDMS</title>
-
+    <title>Victim Registration | FRDMS</title>
 
     <style>
 
-        /* =====================================================
-           GLOBAL
-           ===================================================== */
-
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-
         body {
-            margin: 0;
 
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            font-family:
+                    "Segoe UI",
+                    Arial,
+                    sans-serif;
 
             background:
                     linear-gradient(
                             135deg,
-                            #e6e8e9 0%,
-                            #dcecf5 100%
+                            #eaf4ff,
+                            #f8fbff,
+                            #e9f7f4
                     );
 
-            color: #1b3557;
+            color: #18324d;
 
-            min-height: 100vh;
+            padding-bottom: 50px;
         }
 
 
-
-        /* =====================================================
-           HEADER
-           ===================================================== */
+        /* ================= HEADER ================= */
 
         .header {
-            background: #0c1721;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #173f68,
+                            #236fa8
+                    );
 
             color: white;
 
-            padding: 22px 60px;
+            padding: 24px 60px;
 
             display: flex;
 
-            justify-content: space-between;
+            justify-content:
+                    space-between;
 
             align-items: center;
 
             box-shadow:
-                    0 4px 15px rgba(0, 0, 0, 0.18);
+                    0 8px 25px
+                    rgba(20, 65, 100, 0.18);
+        }
+
+
+        .header-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        .header-icon {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            background:
+                    rgba(255,255,255,0.15);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
         }
 
 
         .header h1 {
-            margin: 0;
 
-            font-size: 30px;
+            font-size: 25px;
 
-            letter-spacing: 0.5px;
+            font-weight: 800;
         }
 
 
         .header span {
-            color: #9bc5ff;
 
-            font-size: 18px;
+            color: #d9efff;
+
+            font-size: 14px;
         }
 
 
-
-        /* =====================================================
-           CONTAINER
-           ===================================================== */
+        /* ================= CONTAINER ================= */
 
         .container {
+
             max-width: 950px;
 
             margin: 45px auto;
@@ -94,72 +128,134 @@
         }
 
 
+        /* ================= CARD ================= */
+
         .card {
+
             background: white;
 
-            border-radius: 20px;
+            border-radius: 24px;
 
             padding: 42px;
 
             box-shadow:
-                    0 15px 40px rgba(0, 0, 0, 0.12);
+                    0 20px 55px
+                    rgba(35, 72, 110, 0.13);
 
-            border-top: 6px solid #248be0;
+            border:
+                    1px solid
+                    rgba(36,139,224,0.10);
+
+            position: relative;
+
+            overflow: hidden;
         }
 
 
+        .card::before {
 
-        /* =====================================================
-           TITLE
-           ===================================================== */
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+
+            height: 6px;
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            #248be0,
+                            #2aa7a0,
+                            #248be0
+                    );
+        }
+
+
+        /* ================= TITLE ================= */
 
         .title-section {
-            margin-bottom: 30px;
+
+            text-align: center;
+
+            margin-bottom: 28px;
+        }
+
+
+        .title-icon {
+
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 20px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #248be0,
+                            #176fb8
+                    );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 34px;
+
+            box-shadow:
+                    0 12px 28px
+                    rgba(36,139,224,0.22);
         }
 
 
         .title-section h2 {
-            margin: 0;
 
-            font-size: 32px;
+            color: #183b63;
 
-            color: #173457;
+            font-size: 30px;
+
+            margin-bottom: 8px;
         }
 
 
         .title-section p {
-            margin-top: 10px;
 
-            color: #47758a;
+            color: #718395;
 
-            font-size: 16px;
+            font-size: 15px;
 
             line-height: 1.6;
         }
 
 
-
-        /* =====================================================
-           INFORMATION NOTE
-           ===================================================== */
+        /* ================= INFORMATION ================= */
 
         .info-note {
-            background:
-                    linear-gradient(
-                            135deg,
-                            #cfe8f7,
-                            #e8f6fb
-                    );
 
-            border-left: 5px solid #28888f;
+            background: #f1f8ff;
 
-            border-radius: 10px;
+            border:
+                    1px solid
+                    #d6eafa;
+
+            border-left:
+                    5px solid
+                    #248be0;
+
+            border-radius: 13px;
 
             padding: 17px 20px;
 
-            margin-bottom: 30px;
+            margin-bottom: 28px;
 
-            color: #28536b;
+            color: #49667f;
 
             line-height: 1.6;
 
@@ -168,25 +264,51 @@
 
 
         .info-note strong {
-            color: #174f66;
+
+            color: #248be0;
         }
 
 
+        /* ================= ERROR ================= */
 
-        /* =====================================================
-           FORM
-           ===================================================== */
+        .duplicate-error,
+        .disaster-error {
+
+            background: #fff1f1;
+
+            border:
+                    1px solid
+                    #efb5b5;
+
+            color: #b42318;
+
+            padding: 13px 16px;
+
+            border-radius: 11px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        /* ================= FORM GRID ================= */
 
         .form-grid {
+
             display: grid;
 
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns:
+                    1fr 1fr;
 
-            gap: 24px;
+            gap: 22px;
         }
 
 
         .form-group {
+
             display: flex;
 
             flex-direction: column;
@@ -194,207 +316,259 @@
 
 
         .form-group.full {
-            grid-column: span 2;
+
+            grid-column:
+                    span 2;
         }
 
 
         label {
-            font-size: 15px;
 
-            font-weight: bold;
+            color: #34536f;
 
-            color: #29445e;
+            font-size: 14px;
+
+            font-weight: 700;
 
             margin-bottom: 8px;
         }
 
 
         .required {
-            color: #d64545;
+
+            color: #e04b4b;
         }
 
 
-
-        /* =====================================================
-           INPUTS
-           ===================================================== */
-
         input,
-        textarea {
+        textarea,
+        select {
+
             width: 100%;
 
             padding: 14px 15px;
 
-            border: 1px solid #ccd7df;
+            border:
+                    1px solid
+                    #d5e0ea;
 
-            border-radius: 9px;
+            border-radius: 12px;
 
             font-size: 15px;
 
-            font-family: Arial, sans-serif;
+            color: #18324d;
+
+            background: #fbfdff;
 
             outline: none;
 
-            color: #29445e;
-
-            background: white;
-
-            transition:
-                    border-color 0.2s ease,
-                    box-shadow 0.2s ease;
-        }
-
-
-        input {
-            height: 48px;
-        }
-
-
-        input::placeholder,
-        textarea::placeholder {
-            color: #9aaab4;
-        }
-
-
-        input:hover,
-        textarea:hover {
-            border-color: #aebfc9;
+            transition: 0.2s;
         }
 
 
         input:focus,
-        textarea:focus {
-            border-color: #248be0;
+        textarea:focus,
+        select:focus {
+
+            border-color:
+                    #248be0;
+
+            background: white;
 
             box-shadow:
-                    0 0 0 3px rgba(36, 139, 224, 0.12);
+                    0 0 0 4px
+                    rgba(36,139,224,0.10);
         }
 
 
         textarea {
-            min-height: 120px;
+
+            min-height: 115px;
 
             resize: vertical;
         }
 
 
+        select {
 
-        /* =====================================================
-           USERNAME
-           ===================================================== */
+            cursor: pointer;
+        }
 
-        .username-help {
-            margin-top: 7px;
+
+        /* ================= DISASTER BOX ================= */
+
+        .disaster-section {
+
+            grid-column:
+                    span 2;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f0f8ff,
+                            #f8fcff
+                    );
+
+            border:
+                    1px solid
+                    #d9eafa;
+
+            border-radius: 17px;
+
+            padding: 22px;
+
+            margin-top: 3px;
+        }
+
+
+        .disaster-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .disaster-icon {
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 12px;
+
+            background:
+                    #dcefff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        .disaster-heading h3 {
+
+            color: #183b63;
+
+            font-size: 17px;
+        }
+
+
+        .disaster-help {
+
+            color: #6d8090;
 
             font-size: 13px;
 
-            color: #6b7d88;
+            margin-bottom: 15px;
 
             line-height: 1.5;
         }
 
 
-        .username-help strong {
-            color: #28888f;
-        }
-
-
-
-        /* =====================================================
-           PASSWORD
-           ===================================================== */
+        /* ================= PASSWORD ================= */
 
         .password-help {
+
             margin-top: 7px;
 
-            font-size: 13px;
+            font-size: 12px;
 
-            color: #6b7d88;
-
-            line-height: 1.5;
+            color: #718395;
         }
 
 
-
-        /* =====================================================
-           ERROR
-           ===================================================== */
+        /* ================= FIELD ERROR ================= */
 
         .error {
+
             margin-top: 7px;
 
             color: #c0392b;
 
             font-size: 13px;
-
-            line-height: 1.4;
         }
 
 
-        .duplicate-error {
-            background: #fdecea;
-
-            border: 1px solid #efb5ad;
-
-            color: #a93226;
-
-            padding: 13px 16px;
-
-            border-radius: 8px;
-
-            margin-bottom: 20px;
-
-            font-size: 14px;
-        }
-
-
-
-        /* =====================================================
-           BUTTONS
-           ===================================================== */
+        /* ================= BUTTONS ================= */
 
         .actions {
+
             display: flex;
 
-            justify-content: flex-end;
+            justify-content:
+                    space-between;
 
             align-items: center;
 
-            margin-top: 35px;
+            margin-top: 32px;
 
             padding-top: 25px;
 
-            border-top: 1px solid #e0e4e7;
+            border-top:
+                    1px solid
+                    #e4e9ee;
 
             gap: 15px;
         }
 
 
         .btn {
+
             text-decoration: none;
 
             border: none;
 
-            padding: 14px 25px;
+            padding:
+                    14px 24px;
 
-            border-radius: 9px;
+            border-radius: 12px;
 
             font-size: 15px;
 
-            font-weight: bold;
+            font-weight: 700;
 
             cursor: pointer;
 
-            display: inline-block;
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
 
             transition:
-                    transform 0.2s ease,
-                    background 0.2s ease,
-                    box-shadow 0.2s ease;
+                    0.2s;
+        }
+
+
+        .btn-back {
+
+            background: #eef2f6;
+
+            color: #496176;
+        }
+
+
+        .btn-back:hover {
+
+            background: #dfe7ee;
+
+            transform:
+                    translateY(-1px);
         }
 
 
         .btn-register {
+
             background:
                     linear-gradient(
                             135deg,
@@ -405,128 +579,113 @@
             color: white;
 
             box-shadow:
-                    0 7px 18px rgba(36, 139, 224, 0.22);
+                    0 8px 20px
+                    rgba(36,139,224,0.20);
         }
 
 
         .btn-register:hover {
-            background: #176fba;
 
-            transform: translateY(-2px);
+            transform:
+                    translateY(-2px);
 
             box-shadow:
-                    0 10px 22px rgba(36, 139, 224, 0.28);
+                    0 12px 28px
+                    rgba(36,139,224,0.28);
         }
 
 
-        .btn-register:active {
-            transform: translateY(0);
-        }
-
-
-
-        /* =====================================================
-           LOGIN NOTE
-           ===================================================== */
+        /* ================= FOOTER NOTE ================= */
 
         .login-note {
+
             margin-top: 25px;
 
             text-align: center;
 
-            color: #657783;
+            color: #718395;
 
             font-size: 14px;
         }
 
 
-        .login-note strong {
-            color: #28888f;
+        .login-note a {
+
+            color: #248be0;
+
+            font-weight: 700;
+
+            text-decoration: none;
         }
 
 
+        .login-note a:hover {
 
-        /* =====================================================
-           SECURITY / PRIVACY NOTE
-           ===================================================== */
-
-        .privacy-note {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 7px;
-
-            margin-top: 18px;
-
-            color: #87959d;
-
-            font-size: 12px;
-
-            text-align: center;
+            text-decoration: underline;
         }
 
 
-
-        /* =====================================================
-           RESPONSIVE
-           ===================================================== */
+        /* ================= RESPONSIVE ================= */
 
         @media (max-width: 700px) {
 
             .header {
+
                 padding: 20px;
             }
 
 
-            .header h1 {
-                font-size: 22px;
-            }
-
-
             .header span {
+
                 display: none;
             }
 
 
+            .header h1 {
+
+                font-size: 20px;
+            }
+
+
             .container {
-                margin: 30px auto;
+
+                margin: 25px auto;
             }
 
 
             .card {
-                padding: 25px;
+
+                padding: 28px 22px;
             }
 
 
             .form-grid {
+
                 grid-template-columns: 1fr;
             }
 
 
-            .form-group.full {
-                grid-column: span 1;
+            .form-group.full,
+            .disaster-section {
+
+                grid-column:
+                        span 1;
             }
 
 
             .actions {
-                flex-direction: column;
 
-                align-items: stretch;
+                flex-direction:
+                        column-reverse;
+
+                align-items:
+                        stretch;
             }
 
 
             .btn {
+
                 width: 100%;
-
-                text-align: center;
-            }
-
-
-            .title-section h2 {
-                font-size: 27px;
             }
         }
 
@@ -538,114 +697,104 @@
 <body>
 
 
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
 <header class="header">
 
-    <h1>
-        Flood Disaster Relief System
-    </h1>
+    <div class="header-title">
 
+        <div class="header-icon">
+            🌊
+        </div>
 
-    <span>
-        Victim Management Module
-    </span>
+        <div>
+
+            <h1>
+                Flood Disaster Relief System
+            </h1>
+
+            <span>
+                Victim Management Module
+            </span>
+
+        </div>
+
+    </div>
 
 </header>
 
-
-
-<!-- =====================================================
-     MAIN
-     ===================================================== -->
 
 <main class="container">
 
     <div class="card">
 
 
-        <!-- =================================================
-             TITLE
-             ================================================= -->
+        <!-- ================= TITLE ================= -->
 
         <div class="title-section">
 
+            <div class="title-icon">
+                🧑‍🤝‍🧑
+            </div>
+
             <h2>
-                Create Your Victim Account
+                Victim Registration
             </h2>
 
-
             <p>
-                Register your information to access relief
-                services and manage your disaster assistance
-                requests through the Flood Disaster Relief System.
+                Register your information to receive
+                assistance through the Flood Disaster
+                Relief System.
             </p>
 
         </div>
 
 
-
-        <!-- =================================================
-             INFORMATION
-             ================================================= -->
+        <!-- ================= INFORMATION ================= -->
 
         <div class="info-note">
 
             <strong>
-                Account Information
+                💡 Important:
             </strong>
 
-            <br>
+            Your NIC number will be used as your
+            login identifier.
 
-            Your NIC number is collected for
-            <strong>victim identification and verification</strong>.
-            You will use your unique
-            <strong>username and password</strong>
-            to log in to your account.
+            Please select the flood event that
+            affected you or your family.
 
         </div>
 
 
+        <!-- ================= NIC ERROR ================= -->
 
-        <!-- =================================================
-             DUPLICATE NIC ERROR
-             ================================================= -->
-
-        <div class="duplicate-error"
-             th:if="${nicError}"
-             th:text="${nicError}">
+        <div
+                class="duplicate-error"
+                th:if="${nicError}"
+                th:text="${nicError}">
         </div>
 
 
+        <!-- ================= DISASTER ERROR ================= -->
 
-        <!-- =================================================
-             DUPLICATE USERNAME ERROR
-             ================================================= -->
-
-        <div class="duplicate-error"
-             th:if="${usernameError}"
-             th:text="${usernameError}">
+        <div
+                class="disaster-error"
+                th:if="${disasterError}"
+                th:text="${disasterError}">
         </div>
 
 
+        <!-- ================= FORM ================= -->
 
-        <!-- =================================================
-             REGISTRATION FORM
-             ================================================= -->
-
-        <form th:action="@{/victims/register}"
-              th:object="${victim}"
-              method="post">
+        <form
+                th:action="@{/victims/register}"
+                th:object="${victim}"
+                method="post">
 
 
             <div class="form-grid">
 
 
-                <!-- =================================================
-                     FULL NAME
-                     ================================================= -->
+                <!-- ================= FULL NAME ================= -->
 
                 <div class="form-group full">
 
@@ -659,15 +808,12 @@
 
                     </label>
 
-
                     <input
                             type="text"
                             id="fullName"
                             th:field="*{fullName}"
                             placeholder="Enter your full name"
-                            autocomplete="name"
-                    >
-
+                            required>
 
                     <div
                             class="error"
@@ -678,10 +824,7 @@
                 </div>
 
 
-
-                <!-- =================================================
-                     NIC
-                     ================================================= -->
+                <!-- ================= NIC ================= -->
 
                 <div class="form-group">
 
@@ -695,15 +838,12 @@
 
                     </label>
 
-
                     <input
                             type="text"
                             id="nicNumber"
                             th:field="*{nicNumber}"
-                            placeholder="Enter NIC number"
-                            autocomplete="off"
-                    >
-
+                            placeholder="Enter your NIC number"
+                            required>
 
                     <div
                             class="error"
@@ -714,10 +854,7 @@
                 </div>
 
 
-
-                <!-- =================================================
-                     PHONE
-                     ================================================= -->
+                <!-- ================= PHONE ================= -->
 
                 <div class="form-group">
 
@@ -731,15 +868,13 @@
 
                     </label>
 
-
                     <input
                             type="text"
                             id="phoneNumber"
                             th:field="*{phoneNumber}"
                             placeholder="Enter 10 digit phone number"
-                            autocomplete="tel"
-                    >
-
+                            maxlength="10"
+                            required>
 
                     <div
                             class="error"
@@ -750,56 +885,9 @@
                 </div>
 
 
+                <!-- ================= ADDRESS ================= -->
 
-                <!-- =================================================
-                     USERNAME
-                     ================================================= -->
-
-                <div class="form-group">
-
-                    <label for="username">
-
-                        Username
-
-                        <span class="required">
-                            *
-                        </span>
-
-                    </label>
-
-
-                    <input
-                            type="text"
-                            id="username"
-                            th:field="*{username}"
-                            placeholder="Create a unique username"
-                            autocomplete="username"
-                    >
-
-
-                    <div class="username-help">
-
-                        Choose a unique username.
-                        <strong>Do not use your NIC as your username.</strong>
-
-                    </div>
-
-
-                    <div
-                            class="error"
-                            th:if="${#fields.hasErrors('username')}"
-                            th:errors="*{username}">
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     ADDRESS
-                     ================================================= -->
-
-                <div class="form-group">
+                <div class="form-group full">
 
                     <label for="address">
 
@@ -811,13 +899,12 @@
 
                     </label>
 
-
                     <textarea
                             id="address"
                             th:field="*{address}"
                             placeholder="Enter your residential address"
-                    ></textarea>
-
+                            required>
+                    </textarea>
 
                     <div
                             class="error"
@@ -828,10 +915,76 @@
                 </div>
 
 
+                <!-- ================= DISASTER ================= -->
 
-                <!-- =================================================
-                     PASSWORD
-                     ================================================= -->
+                <div class="disaster-section">
+
+                    <div class="disaster-heading">
+
+                        <div class="disaster-icon">
+                            🌊
+                        </div>
+
+                        <h3>
+                            Select Affected Flood Event
+                        </h3>
+
+                    </div>
+
+
+                    <div class="disaster-help">
+
+                        Select the flood/disaster that
+                        affected you.
+
+                    </div>
+
+
+                    <label for="disasterId">
+
+                        Affected Flood Event
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <select
+                            id="disasterId"
+                            name="disasterId"
+                            required>
+
+                        <option
+                                value=""
+                                selected
+                                disabled>
+
+                            -- Select a flood event --
+
+                        </option>
+
+
+                        <option
+                                th:each="disaster : ${disasters}"
+                                th:value="${disaster.id}"
+                                th:text="${disaster.eventName}">
+                        </option>
+
+                    </select>
+
+
+                    <div
+                            class="error"
+                            th:if="${disasterError}"
+                            th:text="${disasterError}">
+                    </div>
+
+                </div>
+
+
+                <!-- ================= PASSWORD ================= -->
 
                 <div class="form-group full">
 
@@ -845,23 +998,19 @@
 
                     </label>
 
-
                     <input
                             type="password"
                             id="password"
                             th:field="*{password}"
-                            placeholder="Create a secure password"
-                            autocomplete="new-password"
-                    >
-
+                            placeholder="Create a password"
+                            required>
 
                     <div class="password-help">
 
-                        This password will be used to securely
-                        access your victim account.
+                        This password will be used
+                        when you log in to your victim account.
 
                     </div>
-
 
                     <div
                             class="error"
@@ -875,18 +1024,24 @@
             </div>
 
 
-
-            <!-- =================================================
-                 BUTTON
-                 ================================================= -->
+            <!-- ================= BUTTONS ================= -->
 
             <div class="actions">
+
+                <a
+                        th:href="@{/victims/login}"
+                        class="btn btn-back">
+
+                    ← Back to Login
+
+                </a>
+
 
                 <button
                         type="submit"
                         class="btn btn-register">
 
-                    Create Victim Account
+                    📝 Create Victim Account
 
                 </button>
 
@@ -896,30 +1051,15 @@
         </form>
 
 
-
-        <!-- =================================================
-             LOGIN INFORMATION
-             ================================================= -->
+        <!-- ================= LOGIN NOTE ================= -->
 
         <div class="login-note">
 
             Already registered?
 
-            <strong>
-                Use your username and password to log in.
-            </strong>
-
-        </div>
-
-
-
-        <!-- =================================================
-             PRIVACY NOTE
-             ================================================= -->
-
-        <div class="privacy-note">
-
-            🔒 Your password is securely protected.
+            <a th:href="@{/victims/login}">
+                Login to your Victim Account
+            </a>
 
         </div>
 

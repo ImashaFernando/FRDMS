@@ -1,11 +1,6 @@
 /* =========================================================
-   FRDMS - FLOOD DISASTER RELIEF MANAGEMENT SYSTEM
-   DISASTER MANAGEMENT MODULE
-   ========================================================= */
-
-
-/* =========================================================
-   GLOBAL
+   FRDMS - DISASTER MANAGEMENT
+   Modern Disaster Management Interface
    ========================================================= */
 
 * {
@@ -18,22 +13,9 @@ html {
 
 body {
     margin: 0;
-    padding: 0;
-
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-
-    background: #eef1f3;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f3f7fb;
     color: #172b4d;
-}
-
-a {
-    text-decoration: none;
-}
-
-button,
-input,
-textarea {
-    font-family: inherit;
 }
 
 
@@ -41,283 +23,250 @@ textarea {
    HEADER
    ========================================================= */
 
-.header {
-    width: 100%;
-
-    background: #0c1721;
-    color: white;
-
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.20);
-}
-
-.header-content {
-    min-height: 112px;
-
-    padding: 20px 55px;
+.page-header {
+    min-height: 92px;
+    padding: 18px 55px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    gap: 30px;
-}
+    background:
+            linear-gradient(135deg, #082f49, #0369a1, #0284c7);
 
+    color: white;
 
-/* =========================================================
-   BRAND
-   ========================================================= */
-
-.brand-area {
-    display: flex;
-    align-items: center;
-
-    gap: 16px;
-}
-
-.logo {
-    width: 60px;
-    height: 60px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #568bd9;
-
-    border-radius: 14px;
-
-    font-size: 30px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+    box-shadow:
+            0 8px 25px rgba(3, 105, 161, .18);
 }
 
 .brand {
-    color: white;
-
-    font-size: 32px;
-    font-weight: 700;
-
-    letter-spacing: 0.5px;
-}
-
-.module-name {
-    margin-top: 3px;
-
-    color: #9fc5ff;
-
-    font-size: 18px;
-}
-
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-.navigation {
     display: flex;
     align-items: center;
-
-    gap: 12px;
+    gap: 15px;
 }
 
-.nav-link {
-    padding: 14px 22px;
+.brand-icon {
+    width: 56px;
+    height: 56px;
 
-    color: white;
-
-    font-size: 17px;
-    font-weight: 600;
-
-    border-radius: 10px;
-
-    transition: all 0.2s ease;
-}
-
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.10);
-}
-
-.nav-link.active {
-    background: #568bd9;
-
-    box-shadow: 0 4px 10px rgba(86, 139, 217, 0.30);
-}
-
-
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
-
-.main-container {
-    width: calc(100% - 144px);
-
-    max-width: 1500px;
-
-    margin: 55px auto;
-}
-
-
-/* =========================================================
-   GENERAL PAGE CARD
-   ========================================================= */
-
-.page-card {
-    background: white;
-
-    border-radius: 16px;
-
-    padding: 48px 55px;
-
-    border-top: 6px solid #568bd9;
-
-    box-shadow: 0 8px 28px rgba(22, 42, 61, 0.12);
-
-    margin-bottom: 48px;
-}
-
-
-/* =========================================================
-   FLOOD EVENT LIST PAGE
-   ========================================================= */
-
-.page-header h1 {
-    margin: 0;
-
-    color: #132b50;
-
-    font-size: 44px;
-    line-height: 1.2;
-}
-
-.page-description {
-    margin: 12px 0 0;
-
-    color: #39778b;
-
-    font-size: 21px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   CREATE SECTION
-   ========================================================= */
-
-.create-section {
-    margin-top: 42px;
-}
-
-.create-button {
-    min-width: 360px;
-}
-
-
-/* =========================================================
-   DIVIDER
-   ========================================================= */
-
-.divider {
-    height: 1px;
-
-    background: #d9dee3;
-
-    margin: 45px 0 38px;
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-.btn {
-    display: inline-flex;
-
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    gap: 8px;
+    border-radius: 16px;
 
-    min-height: 54px;
+    background: rgba(255,255,255,.16);
 
-    padding: 13px 24px;
+    font-size: 29px;
 
-    border: none;
-
-    border-radius: 10px;
-
-    font-size: 17px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: all 0.2s ease;
+    box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.15);
 }
 
-.btn:hover {
-    transform: translateY(-1px);
+.brand-title {
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.brand-subtitle {
+    margin-top: 3px;
+    font-size: 12px;
+    opacity: .85;
+}
+
+.header-badge {
+    padding: 10px 17px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.14);
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .7px;
 }
 
 
-/* Primary */
+/* =========================================================
+   PAGE
+   ========================================================= */
 
-.btn-primary {
-    background: #6a8edb;
+.page-container {
+    width: min(1400px, calc(100% - 70px));
+    margin: 40px auto 70px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 32px;
+
+    border-radius: 24px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #eef8ff
+            );
+
+    border: 1px solid #dbeafe;
+
+    box-shadow:
+            0 12px 35px rgba(15,23,42,.08);
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hero-icon {
+    width: 76px;
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+            linear-gradient(135deg, #0284c7, #0369a1);
 
     color: white;
 
-    box-shadow: 0 4px 10px rgba(86, 139, 217, 0.25);
+    font-size: 38px;
+
+    box-shadow:
+            0 10px 25px rgba(2,132,199,.25);
 }
 
-.btn-primary:hover {
-    background: #567dca;
+.hero-label {
+    color: #0369a1;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
+.hero-section h1 {
+    margin: 5px 0;
 
-/* Secondary */
+    color: #0f2742;
 
-.btn-secondary {
-    background: #e5e7e9;
-
-    color: #172b4d;
-
-    border: 1px solid #c7cdd2;
+    font-size: 38px;
 }
 
-.btn-secondary:hover {
-    background: #d8dcdf;
+.hero-section p {
+    margin: 0;
+
+    max-width: 650px;
+
+    color: #64748b;
+
+    line-height: 1.6;
 }
 
+.create-button {
+    min-height: 52px;
 
-/* Search */
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
 
-.btn-search {
-    min-width: 155px;
+    padding: 13px 20px;
 
-    background: #668f98;
+    border-radius: 13px;
+
+    background:
+            linear-gradient(135deg, #0284c7, #0369a1);
 
     color: white;
+
+    text-decoration: none;
+
+    font-weight: 800;
+
+    box-shadow:
+            0 8px 18px rgba(2,132,199,.22);
+
+    transition: .2s ease;
 }
 
-.btn-search:hover {
-    background: #527d86;
+.create-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 12px 24px rgba(2,132,199,.30);
+}
+
+.button-icon {
+    font-size: 22px;
 }
 
 
-/* Clear */
+/* =========================================================
+   DM06 BANNER
+   ========================================================= */
 
-.btn-clear {
-    min-width: 125px;
+.dm06-banner {
+    margin-top: 22px;
 
-    background: #e5e7e9;
+    padding: 20px 24px;
 
-    color: #172b4d;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
-    border: 1px solid #c7cdd2;
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    border-left: 5px solid #0284c7;
+
+    border-radius: 15px;
 }
 
-.btn-clear:hover {
-    background: #d8dcdf;
+.dm06-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #dbeafe;
+
+    font-size: 24px;
+}
+
+.dm06-banner strong {
+    color: #075985;
+    font-size: 16px;
+}
+
+.dm06-banner p {
+    margin: 5px 0 0;
+
+    color: #526b80;
+
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 
@@ -325,168 +274,194 @@ textarea {
    SEARCH
    ========================================================= */
 
-.search-section h2 {
-    margin: 0 0 17px;
+.search-card {
+    margin-top: 25px;
 
-    color: #163256;
+    padding: 23px;
 
-    font-size: 25px;
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 18px;
+
+    box-shadow:
+            0 8px 25px rgba(15,23,42,.06);
+}
+
+.search-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-bottom: 18px;
+}
+
+.search-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #e0f2fe;
+
+    font-size: 20px;
+}
+
+.search-title h2 {
+    margin: 0;
+
+    color: #17375e;
+
+    font-size: 19px;
+}
+
+.search-title p {
+    margin: 3px 0 0;
+
+    color: #718096;
+
+    font-size: 13px;
 }
 
 .search-form {
     display: flex;
-
-    gap: 16px;
-
-    width: 100%;
+    gap: 10px;
 }
 
-.search-input {
+.search-input-wrapper {
     flex: 1;
 
-    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    height: 68px;
+    padding: 0 15px;
 
-    padding: 0 24px;
-
-    border: 1px solid #c5cbd0;
+    border: 1px solid #cbd5e1;
 
     border-radius: 11px;
 
-    background: white;
+    background: #f8fafc;
+}
 
-    color: #172b4d;
+.search-input-wrapper input {
+    width: 100%;
+    height: 48px;
 
-    font-size: 20px;
-
+    border: none;
     outline: none;
 
-    transition: border-color 0.2s, box-shadow 0.2s;
+    background: transparent;
+
+    font-size: 14px;
 }
 
-.search-input::placeholder {
-    color: #777f87;
-}
+.search-button,
+.clear-button {
+    min-height: 48px;
 
-.search-input:focus {
-    border-color: #568bd9;
+    padding: 0 19px;
 
-    box-shadow: 0 0 0 3px rgba(86, 139, 217, 0.12);
-}
-
-
-/* =========================================================
-   SEARCH RESULT
-   ========================================================= */
-
-.search-result {
-    margin-top: 20px;
-
-    padding: 14px 18px;
-
-    border-radius: 9px;
-
-    background: #edf6fb;
-
-    border-left: 4px solid #568bd9;
-
-    color: #37566e;
-
-    font-size: 16px;
-}
-
-.search-result strong {
-    color: #17375e;
-}
-
-
-/* =========================================================
-   SUCCESS MESSAGE
-   ========================================================= */
-
-.success-message {
-    margin-top: 20px;
-
-    padding: 15px 18px;
-
-    border-radius: 9px;
-
-    background: #e9f7ef;
-
-    border-left: 4px solid #2e9b62;
-
-    color: #216b45;
-
-    font-size: 16px;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   TABLE CARD
-   ========================================================= */
-
-.table-card {
-    background: white;
-
-    border-radius: 16px;
-
-    overflow: hidden;
-
-    box-shadow: 0 8px 28px rgba(22, 42, 61, 0.12);
-}
-
-
-/* =========================================================
-   TABLE HEADER
-   ========================================================= */
-
-.table-header {
-    padding: 28px 32px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    border-bottom: 1px solid #e1e5e8;
-}
-
-.table-header h2 {
-    margin: 0;
-
-    color: #172f51;
-
-    font-size: 26px;
-}
-
-.table-header p {
-    margin: 6px 0 0;
-
-    color: #6b7782;
-
-    font-size: 15px;
-}
-
-.event-count {
-    padding: 10px 17px;
-
-    border-radius: 20px;
-
-    background: #edf4fc;
-
-    color: #416fae;
-
-    font-size: 15px;
+    border-radius: 10px;
 
     font-weight: 700;
 
-    white-space: nowrap;
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-button {
+    border: none;
+
+    background: #0284c7;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.clear-button {
+    background: #f1f5f9;
+
+    color: #475569;
+
+    border: 1px solid #cbd5e1;
+}
+
+
+/* =========================================================
+   EVENT CARD
+   ========================================================= */
+
+.events-card {
+    margin-top: 28px;
+
+    background: white;
+
+    border-radius: 21px;
+
+    overflow: hidden;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+            0 12px 35px rgba(15,23,42,.08);
+}
+
+.events-card-header {
+    padding: 27px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section-label {
+    color: #0284c7;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.events-card-header h2 {
+    margin: 5px 0;
+
+    color: #17375e;
+
+    font-size: 25px;
+}
+
+.events-card-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.records-badge {
+    padding: 10px 16px;
+
+    border-radius: 30px;
+
+    background: #eff6ff;
+
+    color: #0369a1;
+
+    font-size: 13px;
+    font-weight: 800;
 }
 
 
@@ -496,61 +471,52 @@ textarea {
 
 .table-wrapper {
     width: 100%;
-
     overflow-x: auto;
 }
 
-.data-table {
+.event-table {
     width: 100%;
-
-    min-width: 900px;
+    min-width: 1000px;
 
     border-collapse: collapse;
 }
 
-.data-table thead {
-    background: #253452;
+.event-table thead {
+    background: #0f2942;
 }
 
-.data-table th {
-    padding: 21px 25px;
+.event-table th {
+    padding: 17px 20px;
 
     color: white;
 
     text-align: left;
 
-    font-size: 16px;
-
-    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .5px;
 
     white-space: nowrap;
 }
 
-.data-table td {
-    padding: 22px 25px;
+.event-table td {
+    padding: 18px 20px;
 
-    border-bottom: 1px solid #e7eaed;
+    border-bottom: 1px solid #edf2f7;
 
     vertical-align: middle;
-
-    font-size: 16px;
 }
 
-.data-table tbody tr {
-    transition: background 0.2s ease;
+.event-table tbody tr {
+    transition: .2s ease;
 }
 
-.data-table tbody tr:hover {
-    background: #f7fafd;
-}
-
-.data-table tbody tr:last-child td {
-    border-bottom: none;
+.event-table tbody tr:hover {
+    background: #f8fbff;
 }
 
 
 /* =========================================================
-   TABLE DATA
+   ID
    ========================================================= */
 
 .id-badge {
@@ -558,48 +524,152 @@ textarea {
     height: 36px;
 
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    border-radius: 11px;
 
-    background: #e9f1fc;
+    background: #e0f2fe;
 
-    color: #3e70b1;
+    color: #0369a1;
 
-    font-size: 14px;
+    font-weight: 800;
+}
 
+
+/* =========================================================
+   EVENT NAME
+   ========================================================= */
+
+.event-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.event-mini-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #eff6ff;
+
+    font-size: 19px;
+}
+
+.event-name-cell strong {
+    display: block;
+
+    color: #17375e;
+
+    font-size: 15px;
+}
+
+.event-name-cell small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 8px 10px;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+
+    color: #475569;
+
+    font-size: 13px;
     font-weight: 700;
 }
 
-.event-name {
-    color: #18395f;
 
-    font-size: 17px;
+/* =========================================================
+   SEVERITY
+   ========================================================= */
 
-    font-weight: 700;
+.severity-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 90px;
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: .3px;
 }
 
-.event-date {
-    color: #526575;
-
-    font-weight: 600;
-
-    white-space: nowrap;
+.severity-low {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
 }
 
-.description {
-    max-width: 390px;
+.severity-medium {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
 
-    color: #5d6973;
+.severity-high {
+    background: #dc2626;
+    color: white;
+    border: 1px solid #b91c1c;
 
+    box-shadow:
+            0 4px 10px rgba(185,28,28,.25);
+}
+
+.severity-critical {
+    background: #7f1d1d;
+    color: white;
+    border: 1px solid #450a0a;
+
+    box-shadow:
+            0 4px 12px rgba(69,10,10,.30);
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.description-cell {
+    max-width: 300px;
+
+    color: #64748b;
+
+    font-size: 13px;
     line-height: 1.5;
 
     display: -webkit-box;
 
     -webkit-line-clamp: 2;
-
     -webkit-box-orient: vertical;
 
     overflow: hidden;
@@ -607,80 +677,34 @@ textarea {
 
 
 /* =========================================================
-   TABLE ACTIONS
+   VIEW BUTTON
    ========================================================= */
 
-.table-actions {
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    flex-wrap: wrap;
-}
-
-.delete-form {
-    margin: 0;
-}
-
-.action-button {
+.view-button {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
-    min-height: 42px;
-
     padding: 9px 14px;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
-    border: none;
+    background: #e0f2fe;
 
-    font-size: 14px;
+    color: #0369a1;
 
-    font-weight: 700;
+    text-decoration: none;
 
-    cursor: pointer;
+    font-size: 12px;
+    font-weight: 800;
 
-    transition: all 0.2s ease;
-
-    white-space: nowrap;
-}
-
-.action-button:hover {
-    transform: translateY(-1px);
-}
-
-.view-button {
-    background: #e8f4f6;
-
-    color: #32747d;
+    transition: .2s ease;
 }
 
 .view-button:hover {
-    background: #d7ebee;
-}
+    background: #bae6fd;
 
-.edit-button {
-    background: #edf3fd;
-
-    color: #416fae;
-}
-
-.edit-button:hover {
-    background: #dfeafa;
-}
-
-.delete-button {
-    background: #fdecec;
-
-    color: #b94b4b;
-}
-
-.delete-button:hover {
-    background: #f9dcdc;
+    transform: translateY(-1px);
 }
 
 
@@ -689,1168 +713,652 @@ textarea {
    ========================================================= */
 
 .empty-state {
-    padding: 65px 25px;
+    padding: 70px 25px;
 
     text-align: center;
 }
 
 .empty-icon {
-    font-size: 48px;
+    font-size: 50px;
 
     margin-bottom: 12px;
 }
 
-.empty-title {
+.empty-state h3 {
     margin: 0;
 
-    color: #243a59;
+    color: #334155;
 
-    font-size: 24px;
+    font-size: 21px;
 }
 
-.empty-text {
-    margin: 10px auto 25px;
+.empty-state p {
+    color: #64748b;
 
-    max-width: 500px;
+    font-size: 14px;
+}
 
-    color: #707b84;
+.empty-create-button {
+    display: inline-flex;
 
-    font-size: 16px;
+    padding: 11px 17px;
 
-    line-height: 1.5;
+    border-radius: 10px;
+
+    background: #0284c7;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 700;
 }
 
 
 /* =========================================================
-   INFORMATION BAR
+   WORKFLOW
    ========================================================= */
 
-.info-bar {
-    margin-top: 28px;
+.workflow-card {
+    margin-top: 25px;
 
-    padding: 22px 25px;
+    padding: 20px 23px;
 
     display: flex;
+    align-items: center;
+    gap: 15px;
 
-    align-items: flex-start;
+    background: #f8fafc;
 
-    gap: 16px;
+    border: 1px solid #e2e8f0;
 
-    background: #eaf4f8;
+    border-radius: 15px;
+}
 
-    border: 1px solid #d2e6ed;
+.workflow-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 12px;
 
-    color: #31576b;
+    background: #e0f2fe;
+
+    font-size: 21px;
 }
 
-.info-icon {
-    width: 32px;
-    height: 32px;
+.workflow-card strong {
+    color: #334155;
+}
 
-    flex-shrink: 0;
+.workflow-card p {
+    margin: 4px 0 0;
 
-    display: flex;
+    color: #64748b;
 
-    align-items: center;
-    justify-content: center;
+    font-size: 13px;
 
-    border-radius: 50%;
+    line-height: 1.5;
+}
 
-    background: #5d8995;
+
+/* =========================================================
+   FORM PAGE
+   ========================================================= */
+
+.form-page {
+    width: min(1050px, calc(100% - 40px));
+
+    margin: 40px auto 70px;
+}
+
+.header-back-button {
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.13);
 
     color: white;
+
+    text-decoration: none;
 
     font-weight: 700;
 }
 
-.info-bar strong {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color: #244c61;
-
-    font-size: 16px;
-}
-
-.info-bar p {
-    margin: 0;
-
-    line-height: 1.5;
-
-    font-size: 15px;
-}
-
-
-/* =========================================================
-   CREATE FLOOD EVENT FORM
-   ========================================================= */
-
-.form-card {
-    max-width: 1000px;
-
-    margin: 0 auto;
-
-    padding: 48px 55px;
-
-    background: white;
-
-    border-radius: 16px;
-
-    border-top: 6px solid #568bd9;
-
-    box-shadow: 0 8px 28px rgba(22, 42, 61, 0.12);
-}
-
-
-/* =========================================================
-   FORM PAGE HEADER
-   ========================================================= */
-
-.form-page-header {
+.form-hero {
     display: flex;
-
     align-items: center;
-
     gap: 20px;
 
-    margin-bottom: 32px;
+    margin-bottom: 25px;
 }
 
-.form-icon {
-    width: 64px;
-    height: 64px;
-
-    flex-shrink: 0;
+.form-hero-icon {
+    width: 68px;
+    height: 68px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    background: #edf4fc;
+    border-radius: 18px;
 
-    border-radius: 14px;
+    background:
+            linear-gradient(135deg,#0284c7,#0369a1);
 
-    font-size: 32px;
+    color: white;
+
+    font-size: 31px;
+
+    box-shadow:
+            0 9px 22px rgba(2,132,199,.22);
 }
 
-.form-page-header h1 {
-    margin: 0;
+.form-hero > div:last-child > span {
+    color: #0284c7;
 
-    color: #132b50;
+    font-size: 11px;
+    font-weight: 900;
 
-    font-size: 40px;
-
-    line-height: 1.2;
+    letter-spacing: 1px;
 }
 
-.form-page-header p {
-    margin: 9px 0 0;
-
-    color: #39778b;
-
-    font-size: 18px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   ROLE BOX
-   ========================================================= */
-
-.role-box {
-    margin-bottom: 35px;
-
-    padding: 18px 20px;
-
-    background: #edf6fb;
-
-    border-left: 5px solid #568bd9;
-
-    border-radius: 9px;
-}
-
-.role-title {
-    margin-bottom: 6px;
+.form-hero h1 {
+    margin: 4px 0;
 
     color: #17375e;
 
-    font-size: 17px;
-
-    font-weight: 700;
+    font-size: 34px;
 }
 
-.role-text {
-    color: #596b78;
+.form-hero p {
+    margin: 0;
 
-    font-size: 15px;
-
-    line-height: 1.6;
+    color: #64748b;
 }
 
+.form-card {
+    background: white;
 
-/* =========================================================
-   FORM SECTION HEADING
-   ========================================================= */
+    border-radius: 21px;
 
-.section-heading {
+    border: 1px solid #e2e8f0;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 14px 40px rgba(15,23,42,.08);
+}
+
+.form-card-header {
+    padding: 27px 32px;
+
     display: flex;
-
     align-items: center;
+    gap: 14px;
 
-    gap: 12px;
+    background:
+            linear-gradient(135deg,#f8fbff,#eef8ff);
 
-    margin: 10px 0 28px;
-
-    padding-bottom: 13px;
-
-    border-bottom: 2px solid #dcebf4;
-
-    color: #163256;
-
-    font-size: 21px;
-
-    font-weight: 700;
+    border-bottom: 1px solid #dbeafe;
 }
 
-.section-number {
-    width: 34px;
-    height: 34px;
-
-    flex-shrink: 0;
+.form-section-icon {
+    width: 42px;
+    height: 42px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    border-radius: 12px;
 
-    background: #568bd9;
+    background: #0284c7;
 
     color: white;
 
-    font-size: 14px;
-
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 900;
 }
 
+.form-card-header h2 {
+    margin: 0;
 
-/* =========================================================
-   FORM GROUP
-   ========================================================= */
+    color: #17375e;
+
+    font-size: 20px;
+}
+
+.form-card-header p {
+    margin: 3px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.form-card form {
+    padding: 32px;
+}
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+}
 
 .form-group {
-    margin-bottom: 27px;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    grid-column: 1 / -1;
 }
 
 .form-group label {
-    display: block;
+    margin-bottom: 8px;
 
-    margin-bottom: 9px;
+    color: #334155;
 
-    color: #17375e;
-
-    font-size: 16px;
-
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
 }
 
 .required {
-    color: #d45757;
-
-    margin-left: 3px;
+    color: #dc2626;
 }
 
+.input-wrapper,
+.severity-select-wrapper {
+    height: 52px;
 
-/* =========================================================
-   INPUTS
-   ========================================================= */
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-.form-group input,
-.form-group textarea {
+    padding: 0 14px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 11px;
+
+    background: #fff;
+}
+
+.input-wrapper:focus-within,
+.severity-select-wrapper:focus-within {
+    border-color: #0284c7;
+
+    box-shadow:
+            0 0 0 4px rgba(2,132,199,.10);
+}
+
+.input-wrapper input,
+.severity-select-wrapper select {
     width: 100%;
 
-    padding: 15px 17px;
+    height: 100%;
 
-    border: 1px solid #c5cbd0;
-
-    border-radius: 9px;
-
-    background: #ffffff;
-
-    color: #172b4d;
-
-    font-size: 16px;
-
+    border: none;
     outline: none;
 
-    transition: border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+    background: transparent;
+
+    font-size: 14px;
 }
 
-.form-group input {
-    height: 55px;
-}
+textarea {
+    width: 100%;
 
-.form-group textarea {
-    min-height: 170px;
+    min-height: 150px;
+
+    padding: 14px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 11px;
 
     resize: vertical;
 
-    line-height: 1.6;
+    font-family: inherit;
+
+    outline: none;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #89929a;
+textarea:focus {
+    border-color: #0284c7;
+
+    box-shadow:
+            0 0 0 4px rgba(2,132,199,.10);
 }
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #568bd9;
-
-    background: #ffffff;
-
-    box-shadow: 0 0 0 4px rgba(86, 139, 217, 0.12);
-}
-
-
-/* =========================================================
-   DATE INPUT
-   ========================================================= */
-
-.form-group input[type="date"] {
-    cursor: pointer;
-}
-
-
-/* =========================================================
-   HELP TEXT
-   ========================================================= */
-
-.help-text {
-    margin-top: 7px;
-
-    color: #707c85;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   VALIDATION ERROR
-   ========================================================= */
 
 .error {
-    margin-top: 7px;
+    margin-top: 6px;
 
-    color: #b42318;
+    color: #dc2626;
 
-    font-size: 14px;
-
+    font-size: 12px;
     font-weight: 600;
 }
 
 
 /* =========================================================
-   BUTTON AREA
+   SEVERITY GUIDE
    ========================================================= */
 
-.button-area {
-    display: flex;
+.severity-guide {
+    margin-top: 13px;
 
-    align-items: center;
+    padding: 16px;
 
-    gap: 14px;
+    border-radius: 13px;
 
-    margin-top: 35px;
+    background: #f8fafc;
 
-    padding-top: 28px;
-
-    border-top: 1px solid #e1e5e8;
+    border: 1px solid #e2e8f0;
 }
 
-.button-area .btn {
-    min-width: 200px;
+.guide-title {
+    margin-bottom: 11px;
+
+    color: #334155;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.guide-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4,1fr);
+
+    gap: 9px;
+}
+
+.guide-item {
+    padding: 11px;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+}
+
+.guide-item strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+.guide-item span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #64748b;
+
+    font-size: 10px;
+}
+
+.guide-item.low strong {
+    color: #15803d;
+}
+
+.guide-item.medium strong {
+    color: #b45309;
+}
+
+.guide-item.high strong {
+    color: #dc2626;
+}
+
+.guide-item.critical strong {
+    color: #7f1d1d;
 }
 
 
 /* =========================================================
-   WORKFLOW BOX
+   FORM ACTIONS
+   ========================================================= */
+
+.form-actions {
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #e2e8f0;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+.cancel-button,
+.submit-button {
+    min-height: 48px;
+
+    padding: 0 20px;
+
+    border-radius: 10px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: #f1f5f9;
+
+    border: 1px solid #cbd5e1;
+
+    color: #475569;
+}
+
+.submit-button {
+    border: none;
+
+    background:
+            linear-gradient(135deg,#0284c7,#0369a1);
+
+    color: white;
+
+    box-shadow:
+            0 6px 15px rgba(2,132,199,.22);
+}
+
+
+/* =========================================================
+   WORKFLOW
    ========================================================= */
 
 .workflow-box {
-    margin-top: 35px;
+    margin: 0 32px 32px;
 
-    padding: 22px;
+    padding: 20px;
 
-    background: #f7f9fb;
+    background: #f8fafc;
 
-    border: 1px solid #dce3e8;
+    border: 1px solid #e2e8f0;
 
-    border-radius: 11px;
+    border-radius: 13px;
 }
 
-.workflow-title {
-    margin-bottom: 17px;
-
-    color: #17375e;
-
-    font-size: 17px;
-
-    font-weight: 700;
+.workflow-box > strong {
+    color: #334155;
 }
 
-.workflow-item {
+.workflow-steps {
+    display: grid;
+
+    grid-template-columns: repeat(4,1fr);
+
+    gap: 10px;
+
+    margin-top: 13px;
+}
+
+.workflow-step {
+    padding: 11px;
+
     display: flex;
-
     align-items: center;
+    gap: 8px;
 
-    gap: 12px;
+    background: white;
 
-    margin-bottom: 12px;
+    border: 1px solid #e2e8f0;
 
-    color: #5d6b75;
+    border-radius: 9px;
 
-    font-size: 15px;
+    color: #64748b;
+
+    font-size: 11px;
 }
 
-.workflow-item:last-child {
-    margin-bottom: 0;
-}
-
-.workflow-badge {
-    min-width: 30px;
-    height: 30px;
+.workflow-step span {
+    width: 25px;
+    height: 25px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border-radius: 50%;
 
-    background: #dce7f5;
+    background: #e2e8f0;
 
-    color: #416fae;
+    color: #475569;
 
-    font-size: 13px;
-
-    font-weight: 700;
+    font-weight: 800;
 }
 
-.workflow-badge.current {
-    background: #568bd9;
-
+.workflow-step.current span {
+    background: #0284c7;
     color: white;
 }
 
 
 /* =========================================================
-   RESPONSIVE - TABLET
+   RESPONSIVE
    ========================================================= */
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
 
-    .header-content {
-        padding: 18px 30px;
+    .page-header {
+        padding: 18px 25px;
     }
 
-    .main-container {
-        width: calc(100% - 50px);
-
-        margin: 35px auto;
+    .header-badge {
+        display: none;
     }
 
-    .page-card {
-        padding: 35px;
-    }
-
-    .form-card {
-        padding: 40px;
-    }
-
-    .page-header h1 {
-        font-size: 36px;
-    }
-
-    .form-page-header h1 {
-        font-size: 34px;
-    }
-
-    .search-form {
-        flex-wrap: wrap;
-    }
-
-    .search-input {
-        flex-basis: 100%;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE - MOBILE
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .header-content {
-        padding: 18px 20px;
-
+    .hero-section {
+        align-items: flex-start;
         flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .navigation {
-        width: 100%;
-    }
-
-    .nav-link {
-        flex: 1;
-
-        text-align: center;
-    }
-
-    .brand {
-        font-size: 27px;
-    }
-
-    .module-name {
-        font-size: 14px;
-    }
-
-    .logo {
-        width: 52px;
-        height: 52px;
-
-        font-size: 25px;
-    }
-
-    .main-container {
-        width: calc(100% - 25px);
-
-        margin: 25px auto;
-    }
-
-    .page-card {
-        padding: 28px 22px;
-
-        border-radius: 12px;
-    }
-
-    .form-card {
-        padding: 28px 22px;
-
-        border-radius: 12px;
-    }
-
-    .page-header h1 {
-        font-size: 32px;
-    }
-
-    .form-page-header {
-        align-items: flex-start;
-    }
-
-    .form-page-header h1 {
-        font-size: 30px;
-    }
-
-    .form-page-header p {
-        font-size: 16px;
-    }
-
-    .form-icon {
-        width: 52px;
-        height: 52px;
-
-        font-size: 25px;
     }
 
     .create-button {
         width: 100%;
-
-        min-width: 0;
     }
 
-    .search-section h2 {
-        font-size: 21px;
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .workflow-steps {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .page-container {
+        width: calc(100% - 22px);
+        margin-top: 22px;
+    }
+
+    .hero-section {
+        padding: 23px;
+    }
+
+    .hero-section h1 {
+        font-size: 29px;
+    }
+
+    .hero-content {
+        align-items: flex-start;
+    }
+
+    .hero-icon {
+        width: 58px;
+        height: 58px;
+        font-size: 27px;
     }
 
     .search-form {
         flex-direction: column;
     }
 
-    .search-input,
-    .btn-search,
-    .btn-clear {
+    .search-button,
+    .clear-button {
         width: 100%;
     }
 
-    .table-header {
-        padding: 22px;
-
+    .events-card-header {
         align-items: flex-start;
-
         flex-direction: column;
     }
 
-    .table-card {
-        border-radius: 12px;
+    .form-page {
+        width: calc(100% - 20px);
     }
 
-    .button-area {
-        flex-direction: column;
+    .form-card form {
+        padding: 22px;
     }
 
-    .button-area .btn {
-        width: 100%;
-
-        min-width: 0;
+    .workflow-box {
+        margin: 0 22px 22px;
     }
 
-    .info-bar {
-        padding: 18px;
-    }
-    /* =========================================================
-   EDIT FLOOD EVENT - ENHANCED DESIGN
-   ========================================================= */
-
-    .form-card {
-        max-width: 1100px;
-        margin: 0 auto;
-
-        background: #ffffff;
-
-        border-radius: 18px;
-
-        border-top: 6px solid #568bd9;
-
-        box-shadow:
-                0 12px 35px rgba(22, 42, 61, 0.14);
-
-        padding: 0;
-
-        overflow: hidden;
+    .workflow-steps {
+        grid-template-columns: 1fr;
     }
 
-
-    /* =========================================================
-       EDIT PAGE HEADER
-       ========================================================= */
-
-    .form-page-header {
-        display: flex;
-
-        align-items: center;
-
-        gap: 22px;
-
-        padding: 38px 48px 32px;
-
-        background: linear-gradient(
-                135deg,
-                #f4f8fd 0%,
-                #ffffff 100%
-        );
-
-        border-bottom: 1px solid #e2e8ee;
+    .guide-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .form-icon {
-        width: 68px;
-        height: 68px;
-
-        flex-shrink: 0;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        background: #568bd9;
-
-        border-radius: 16px;
-
-        color: white;
-
-        font-size: 30px;
-
-        box-shadow:
-                0 6px 15px rgba(86, 139, 217, 0.25);
-    }
-
-    .form-page-header h1 {
-        margin: 0;
-
-        color: #132b50;
-
-        font-size: 38px;
-
-        font-weight: 700;
-    }
-
-    .form-page-header p {
-        margin: 8px 0 0;
-
-        color: #527487;
-
-        font-size: 17px;
-
-        line-height: 1.5;
-    }
-
-
-    /* =========================================================
-       EDIT FORM CONTENT
-       ========================================================= */
-
-    .form-card > form,
-    .form-card > .role-box,
-    .form-card > .workflow-box {
-        margin-left: 48px;
-        margin-right: 48px;
-    }
-
-    .form-card > form {
-        margin-top: 30px;
-    }
-
-
-    /* =========================================================
-       INFORMATION BOX
-       ========================================================= */
-
-    .form-card .role-box {
-        margin-top: 28px;
-
-        margin-bottom: 0;
-
-        padding: 20px 22px;
-
-        background: #eef6fb;
-
-        border: 1px solid #d5e7f0;
-
-        border-left: 5px solid #568bd9;
-
-        border-radius: 10px;
-    }
-
-    .form-card .role-title {
-        color: #17375e;
-
-        font-size: 17px;
-
-        font-weight: 700;
-
-        margin-bottom: 7px;
-    }
-
-    .form-card .role-text {
-        color: #5b6d79;
-
-        font-size: 15px;
-
-        line-height: 1.6;
-    }
-
-
-    /* =========================================================
-       SECTION HEADING
-       ========================================================= */
-
-    .form-card .section-heading {
-        display: flex;
-
-        align-items: center;
-
-        gap: 13px;
-
-        margin: 0 0 30px;
-
-        padding: 0 0 15px;
-
-        border-bottom: 2px solid #dceaf4;
-
-        color: #17375e;
-
-        font-size: 21px;
-
-        font-weight: 700;
-    }
-
-    .form-card .section-number {
-        width: 36px;
-        height: 36px;
-
-        flex-shrink: 0;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 50%;
-
-        background: #568bd9;
-
-        color: white;
-
-        font-size: 15px;
-
-        font-weight: 700;
-
-        box-shadow:
-                0 4px 10px rgba(86, 139, 217, 0.20);
-    }
-
-
-    /* =========================================================
-       FORM GROUPS
-       ========================================================= */
-
-    .form-card .form-group {
-        margin-bottom: 28px;
-    }
-
-    .form-card .form-group label {
-        display: block;
-
-        margin-bottom: 10px;
-
-        color: #17375e;
-
-        font-size: 16px;
-
-        font-weight: 700;
-    }
-
-    .form-card .required {
-        color: #d45757;
-    }
-
-
-    /* =========================================================
-       INPUT FIELDS
-       ========================================================= */
-
-    .form-card .form-group input,
-    .form-card .form-group textarea {
-        width: 100%;
-
-        border: 1px solid #c6ced5;
-
-        border-radius: 10px;
-
-        background: #ffffff;
-
-        color: #172b4d;
-
-        font-size: 16px;
-
-        outline: none;
-
-        transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
-    }
-
-    .form-card .form-group input {
-        height: 56px;
-
-        padding: 0 17px;
-    }
-
-    .form-card .form-group textarea {
-        min-height: 175px;
-
-        padding: 16px 17px;
-
-        resize: vertical;
-
-        line-height: 1.6;
-    }
-
-    .form-card .form-group input:focus,
-    .form-card .form-group textarea:focus {
-        border-color: #568bd9;
-
-        box-shadow:
-                0 0 0 4px rgba(86, 139, 217, 0.12);
-    }
-
-
-    /* =========================================================
-       READ-ONLY DATE
-       ========================================================= */
-
-    .form-card .readonly-date {
-        height: 56px;
-
-        background: #f0f2f4;
-
-        border: 1px solid #c8ced3;
-
-        color: #314a62;
-
-        font-size: 16px;
-
-        font-weight: 700;
-
-        cursor: not-allowed;
-    }
-
-    .form-card .readonly-date:hover {
-        background: #eceff1;
-    }
-
-    .form-card .readonly-date:focus {
-        border-color: #c8ced3;
-
-        box-shadow: none;
-    }
-
-
-    /* =========================================================
-       HELP TEXT
-       ========================================================= */
-
-    .form-card .help-text {
-        margin-top: 8px;
-
-        color: #71808b;
-
-        font-size: 14px;
-
-        line-height: 1.5;
-    }
-
-
-    /* =========================================================
-       VALIDATION
-       ========================================================= */
-
-    .form-card .error {
-        margin-top: 8px;
-
-        padding: 7px 10px;
-
-        background: #fff2f2;
-
-        border-left: 3px solid #d45757;
-
-        border-radius: 5px;
-
-        color: #b42318;
-
-        font-size: 14px;
-
-        font-weight: 600;
-    }
-
-
-    /* =========================================================
-       BUTTON AREA
-       ========================================================= */
-
-    .form-card .button-area {
-        display: flex;
-
-        align-items: center;
-
-        gap: 14px;
-
-        margin-top: 38px;
-
-        padding-top: 28px;
-
-        border-top: 1px solid #e1e5e8;
-    }
-
-    .form-card .button-area .btn {
-        min-width: 210px;
-
-        min-height: 52px;
-
-        border-radius: 9px;
-
-        font-size: 16px;
-
-        font-weight: 700;
-    }
-
-    .form-card .button-area .btn-primary {
-        background: #568bd9;
-
-        color: white;
-
-        box-shadow:
-                0 5px 12px rgba(86, 139, 217, 0.22);
-    }
-
-    .form-card .button-area .btn-primary:hover {
-        background: #4678c2;
-
-        transform: translateY(-1px);
-    }
-
-    .form-card .button-area .btn-secondary {
-        background: #eef0f2;
-
-        color: #243a59;
-
-        border: 1px solid #cbd1d6;
-    }
-
-    .form-card .button-area .btn-secondary:hover {
-        background: #e1e5e8;
-    }
-
-
-    /* =========================================================
-       WORKFLOW
-       ========================================================= */
-
-    .form-card .workflow-box {
-        margin-top: 35px;
-
-        margin-bottom: 48px;
-
-        padding: 24px;
-
-        background: #f8fafc;
-
-        border: 1px solid #dce4ea;
-
-        border-radius: 11px;
-    }
-
-    .form-card .workflow-title {
-        margin-bottom: 18px;
-
-        color: #17375e;
-
-        font-size: 17px;
-
-        font-weight: 700;
-    }
-
-    .form-card .workflow-item {
-        display: flex;
-
-        align-items: center;
-
-        gap: 13px;
-
-        margin-bottom: 13px;
-
-        color: #5d6c77;
-
-        font-size: 15px;
-    }
-
-    .form-card .workflow-item:last-child {
-        margin-bottom: 0;
-    }
-
-    .form-card .workflow-badge {
-        width: 32px;
-        height: 32px;
-
-        min-width: 32px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 50%;
-
-        background: #e3ebf5;
-
-        color: #416fae;
-
-        font-size: 13px;
-
-        font-weight: 700;
-    }
-
-    .form-card .workflow-badge.current {
-        background: #568bd9;
-
-        color: white;
-
-        box-shadow:
-                0 3px 8px rgba(86, 139, 217, 0.25);
-    }
-
-
-    /* =========================================================
-       MOBILE EDIT PAGE
-       ========================================================= */
-
-    @media (max-width: 700px) {
-
-        .form-card {
-            width: 100%;
-
-            border-radius: 12px;
-        }
-
-        .form-page-header {
-            padding: 28px 22px;
-
-            gap: 15px;
-        }
-
-        .form-icon {
-            width: 52px;
-            height: 52px;
-
-            font-size: 24px;
-
-            border-radius: 12px;
-        }
-
-        .form-page-header h1 {
-            font-size: 28px;
-        }
-
-        .form-page-header p {
-            font-size: 15px;
-        }
-
-        .form-card > form,
-        .form-card > .role-box,
-        .form-card > .workflow-box {
-            margin-left: 22px;
-            margin-right: 22px;
-        }
-
-        .form-card > form {
-            margin-top: 25px;
-        }
-
-        .form-card .button-area {
-            flex-direction: column;
-
-            align-items: stretch;
-        }
-
-        .form-card .button-area .btn {
-            width: 100%;
-        }
-
-    }
 }

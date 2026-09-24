@@ -8,15 +8,12 @@ import com.frdms.frdms.victim_management.service.VictimService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-
 
 @Controller
 @RequestMapping("/gn-reports")
@@ -24,7 +21,6 @@ public class GNReportController {
 
     private final GNReportService gnReportService;
     private final VictimService victimService;
-
 
     // =========================================================
     // CONSTRUCTOR
@@ -49,23 +45,14 @@ public class GNReportController {
             @PathVariable Long victimId,
             Model model) {
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim = victimService.getVictimById(victimId);
 
-        GNReport gnReport =
-                new GNReport();
+        GNReport gnReport = new GNReport();
 
         gnReport.setVictim(victim);
 
-        model.addAttribute(
-                "gnReport",
-                gnReport
-        );
-
-        model.addAttribute(
-                "victim",
-                victim
-        );
+        model.addAttribute("gnReport", gnReport);
+        model.addAttribute("victim", victim);
 
         return "gn-report/form";
     }
@@ -98,22 +85,17 @@ public class GNReportController {
 
             Model model) throws IOException {
 
-
         // =====================================================
         // FIND VICTIM
         // =====================================================
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim = victimService.getVictimById(victimId);
 
-        model.addAttribute(
-                "victim",
-                victim
-        );
+        model.addAttribute("victim", victim);
 
 
         // =====================================================
-        // CHECK REQUIRED TEXT FIELDS
+        // CHECK REPORT NUMBER
         // =====================================================
 
         if (reportNumber == null ||
@@ -128,6 +110,10 @@ public class GNReportController {
         }
 
 
+        // =====================================================
+        // CHECK GN OFFICER NAME
+        // =====================================================
+
         if (gnOfficerName == null ||
                 gnOfficerName.trim().isEmpty()) {
 
@@ -140,6 +126,10 @@ public class GNReportController {
         }
 
 
+        // =====================================================
+        // CHECK GN DIVISION
+        // =====================================================
+
         if (gnDivision == null ||
                 gnDivision.trim().isEmpty()) {
 
@@ -151,6 +141,10 @@ public class GNReportController {
             return "gn-report/form";
         }
 
+
+        // =====================================================
+        // CHECK REPORT DESCRIPTION
+        // =====================================================
 
         if (reportDescription == null ||
                 reportDescription.trim().isEmpty()) {
@@ -184,22 +178,14 @@ public class GNReportController {
         // CHECK FILE TYPE
         // =====================================================
 
-        String contentType =
-                reportFile.getContentType();
-
+        String contentType = reportFile.getContentType();
 
         boolean validFileType =
-
                 "application/pdf".equals(contentType)
-
                         ||
-
                         "image/jpeg".equals(contentType)
-
                         ||
-
                         "image/png".equals(contentType);
-
 
         if (!validFileType) {
 
@@ -221,7 +207,6 @@ public class GNReportController {
                         reportNumber.trim()
                 );
 
-
         if (existingReport != null) {
 
             model.addAttribute(
@@ -237,9 +222,7 @@ public class GNReportController {
         // CREATE GN REPORT
         // =====================================================
 
-        GNReport gnReport =
-                new GNReport();
-
+        GNReport gnReport = new GNReport();
 
         gnReport.setReportNumber(
                 reportNumber.trim()
@@ -286,9 +269,7 @@ public class GNReportController {
         // SAVE GN REPORT
         // =====================================================
 
-        gnReportService.submitGNReport(
-                gnReport
-        );
+        gnReportService.submitGNReport(gnReport);
 
 
         // =====================================================
@@ -435,48 +416,62 @@ public class GNReportController {
                         gnReport.getReportFile()
                 );
     }
+
+
     // =========================================================
-// PM - APPROVE GN REPORT
-// =========================================================
+    // PM - APPROVE GN REPORT
+    // =========================================================
 
     @PostMapping("/approve/{id}")
-    public String approveGNReport(@PathVariable Long id) {
+    public String approveGNReport(
+            @PathVariable Long id) {
 
         GNReport gnReport =
                 gnReportService.getGNReportById(id);
 
-        gnReport.setVerificationStatus("APPROVED");
+        gnReport.setVerificationStatus(
+                "APPROVED"
+        );
 
-        gnReportService.submitGNReport(gnReport);
+        gnReportService.submitGNReport(
+                gnReport
+        );
 
         return "redirect:/gn-reports/verify/" + id;
     }
 
 
-// =========================================================
-// PM - REJECT GN REPORT
-// =========================================================
+    // =========================================================
+    // PM - REJECT GN REPORT
+    // =========================================================
 
     @PostMapping("/reject/{id}")
-    public String rejectGNReport(@PathVariable Long id) {
+    public String rejectGNReport(
+            @PathVariable Long id) {
 
         GNReport gnReport =
                 gnReportService.getGNReportById(id);
 
-        gnReport.setVerificationStatus("REJECTED");
+        gnReport.setVerificationStatus(
+                "REJECTED"
+        );
 
-        gnReportService.submitGNReport(gnReport);
+        gnReportService.submitGNReport(
+                gnReport
+        );
 
         return "redirect:/gn-reports/verify/" + id;
     }
+
+
     // =========================================================
-// ADMIN / PM - VIEW GN REPORT FROM VICTIM INFORMATION
-// =========================================================
+    // ADMIN / PM - VIEW GN REPORT FROM VICTIM INFORMATION
+    // =========================================================
 
     @GetMapping("/view/{id}")
-    public String viewGNReportFromVictim(@PathVariable Long id) {
+    public String viewGNReportFromVictim(
+            @PathVariable Long id) {
 
         return "redirect:/gn-reports/verify/" + id;
     }
-
 }

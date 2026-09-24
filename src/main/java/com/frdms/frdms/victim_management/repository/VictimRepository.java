@@ -10,9 +10,22 @@ import java.util.Optional;
 public interface VictimRepository
         extends JpaRepository<Victim, Long> {
 
-    // Find victim by NIC number
-    Optional<Victim> findByNicNumber(String nicNumber);
+    // =========================================================
+    // FIND VICTIM BY NIC
+    // =========================================================
 
-    // Find victim by username for victim login
-    Optional<Victim> findByUsername(String username);
+    Optional<Victim> findByNicNumber(
+            String nicNumber
+    );
+
+
+    // =========================================================
+    // COUNT VICTIMS REGISTERED FOR A DISASTER
+    //
+    // Used by Disaster Management / PM dashboard
+    // =========================================================
+
+    long countByDisaster_Id(
+            Long disasterId
+    );
 }

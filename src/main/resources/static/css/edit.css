@@ -1,17 +1,43 @@
 /* =========================================================
-   FRDMS - EDIT FLOOD EVENT PAGE
-   Dedicated stylesheet
+   FRDMS - UPDATE FLOOD EVENT
+   Modern Disaster Management Interface
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL
    ========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
+
+html {
+    scroll-behavior: smooth;
+}
+
+
 body {
     margin: 0;
-    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-    background: #eef2f5;
-    color: #172b4d;
+
+    font-family:
+            "Segoe UI",
+            Arial,
+            Helvetica,
+            sans-serif;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #eef6ff 0%,
+                    #f8fbff 50%,
+                    #eef9f8 100%
+            );
+
+    color: #17375e;
+
+    min-height: 100vh;
 }
 
 
@@ -20,230 +46,507 @@ body {
    ========================================================= */
 
 .edit-header {
+
     width: 100%;
-    min-height: 105px;
 
-    background: #0c1721;
+    min-height: 88px;
 
-    color: white;
-
-    padding: 18px 55px;
+    padding: 15px 55px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.20);
-}
+    gap: 30px;
 
-.edit-brand-area {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.edit-logo {
-    width: 58px;
-    height: 58px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #568bd9;
-
-    border-radius: 14px;
-
-    font-size: 29px;
-}
-
-.edit-brand {
-    font-size: 30px;
-    font-weight: 700;
-}
-
-.edit-system-name {
-    margin-top: 3px;
-
-    color: #9fc5ff;
-
-    font-size: 16px;
-}
-
-.edit-navigation {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.edit-nav-link {
-    padding: 13px 21px;
+    background:
+            linear-gradient(
+                    135deg,
+                    #102a43,
+                    #155e9e,
+                    #1683c7
+            );
 
     color: white;
 
-    border-radius: 9px;
+    box-shadow:
+            0 8px 25px rgba(15, 54, 85, 0.20);
 
-    font-size: 16px;
+    position: relative;
+
+    z-index: 10;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 0;
+}
+
+
+.brand-logo {
+
+    width: 55px;
+
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #63b3ed,
+                    #3182ce
+            );
+
+    font-size: 27px;
+
+    box-shadow:
+            0 7px 18px rgba(0, 0, 0, 0.16);
+}
+
+
+.brand-name {
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
+}
+
+
+.brand-subtitle {
+
+    margin-top: 2px;
+
+    color: #d9efff;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   HEADER NAVIGATION
+   ========================================================= */
+
+.header-navigation {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.nav-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 17px;
+
+    border-radius: 11px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+}
+
+
+.nav-link:hover {
+
+    background: rgba(255, 255, 255, 0.14);
+
+    transform: translateY(-1px);
+}
+
+
+.nav-link.active {
+
+    background: rgba(255, 255, 255, 0.20);
+
+    box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   PAGE CONTAINER
+   ========================================================= */
+
+.page-container {
+
+    width: min(1180px, calc(100% - 60px));
+
+    margin: 32px auto 70px;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+   ========================================================= */
+
+.breadcrumb {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 18px;
+
+    color: #6b8297;
+
+    font-size: 13px;
+
     font-weight: 600;
+}
+
+
+.breadcrumb a {
+
+    color: #1976b8;
 
     text-decoration: none;
 }
 
-.edit-nav-link:hover {
-    background: rgba(255, 255, 255, 0.10);
-}
 
-.edit-nav-link.active {
-    background: #568bd9;
-}
+.breadcrumb a:hover {
 
-
-/* =========================================================
-   PAGE
-   ========================================================= */
-
-.edit-page {
-    width: calc(100% - 120px);
-
-    max-width: 1250px;
-
-    margin: 45px auto 70px;
+    text-decoration: underline;
 }
 
 
 /* =========================================================
-   TOP TITLE AREA
+   HERO
    ========================================================= */
 
-.edit-title-area {
-    margin-bottom: 25px;
+.hero-section {
+
+    position: relative;
 
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    gap: 25px;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 30px;
+
+    margin-bottom: 22px;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #eef8ff 60%,
+                    #e5f5ff 100%
+            );
+
+    border: 1px solid #d6e9f7;
+
+    box-shadow:
+            0 14px 40px rgba(34, 90, 130, 0.10);
 }
 
-.edit-title-left {
-    display: flex;
-    align-items: center;
 
-    gap: 18px;
+/* Decorative circle */
+
+.hero-section::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+
+    height: 190px;
+
+    right: -65px;
+
+    top: -75px;
+
+    border-radius: 50%;
+
+    background:
+            rgba(49, 130, 206, 0.08);
+
+    pointer-events: none;
 }
 
-.edit-title-icon {
-    width: 62px;
-    height: 62px;
+
+/* =========================================================
+   HERO ICON
+   ========================================================= */
+
+.hero-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    flex-shrink: 0;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    background: #568bd9;
+    border-radius: 19px;
 
-    border-radius: 14px;
+    background:
+            linear-gradient(
+                    135deg,
+                    #3182ce,
+                    #1769aa
+            );
 
     color: white;
 
-    font-size: 28px;
+    font-size: 30px;
 
-    box-shadow: 0 6px 15px rgba(86, 139, 217, 0.25);
-}
-
-.edit-title-area h1 {
-    margin: 0;
-
-    color: #132b50;
-
-    font-size: 38px;
-}
-
-.edit-title-area p {
-    margin: 6px 0 0;
-
-    color: #64808f;
-
-    font-size: 17px;
+    box-shadow:
+            0 10px 22px rgba(49, 130, 206, 0.25);
 }
 
 
 /* =========================================================
-   RECORD ID
+   HERO CONTENT
    ========================================================= */
 
-.record-id {
-    padding: 10px 16px;
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    min-width: 0;
+}
+
+
+.hero-label {
+
+    color: #2180b8;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 4px;
+}
+
+
+.hero-content h1 {
+
+    margin: 0;
+
+    color: #12385f;
+
+    font-size: 34px;
+
+    line-height: 1.15;
+
+    font-weight: 900;
+}
+
+
+.hero-content p {
+
+    margin: 7px 0 0;
+
+    color: #687f92;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   EVENT ID
+   ========================================================= */
+
+.event-id-card {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-left: auto;
+
+    min-width: 105px;
+
+    padding: 13px 17px;
+
+    text-align: center;
+
+    border-radius: 15px;
 
     background: white;
 
-    border: 1px solid #d8e0e6;
+    border: 1px solid #d8e8f4;
 
-    border-radius: 9px;
-
-    color: #587184;
-
-    font-size: 14px;
+    box-shadow:
+            0 6px 18px rgba(30, 70, 100, 0.08);
 }
 
-.record-id strong {
-    color: #315f91;
+
+.event-id-card span {
+
+    display: block;
+
+    color: #72879a;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.event-id-card strong {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #1c67a0;
+
+    font-size: 24px;
+
+    font-weight: 900;
 }
 
 
 /* =========================================================
-   MAIN EDIT CARD
+   MAIN CARD
    ========================================================= */
 
 .edit-card {
+
     background: white;
 
-    border-radius: 16px;
+    border-radius: 22px;
 
-    box-shadow: 0 10px 30px rgba(30, 52, 70, 0.12);
+    border: 1px solid #e0ebf3;
+
+    box-shadow:
+            0 15px 45px rgba(25, 63, 91, 0.10);
 
     overflow: hidden;
 }
 
 
 /* =========================================================
-   CARD TOP BAR
+   CARD HEADER
    ========================================================= */
 
-.edit-card-top {
-    padding: 22px 38px;
-
-    background: #f5f8fb;
-
-    border-bottom: 1px solid #dfe6eb;
+.card-header {
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     gap: 20px;
+
+    padding: 22px 30px;
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #ffffff,
+                    #f8fbfd
+            );
+
+    border-bottom: 1px solid #e6eef4;
 }
 
-.edit-card-top-title {
-    color: #1c3d60;
 
-    font-size: 18px;
+.card-header-title {
 
-    font-weight: 700;
+    color: #183c60;
+
+    font-size: 19px;
+
+    font-weight: 900;
 }
 
-.edit-status {
-    padding: 7px 13px;
 
-    border-radius: 20px;
+.card-header-subtitle {
 
-    background: #eaf3ff;
+    margin-top: 3px;
 
-    color: #3d6fa8;
+    color: #7a8fa1;
 
     font-size: 13px;
+}
 
-    font-weight: 700;
+
+.status-badge {
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    background: #e8f4ff;
+
+    color: #1769a5;
+
+    border: 1px solid #cce6fa;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
 }
 
 
@@ -251,34 +554,74 @@ body {
    INFORMATION NOTICE
    ========================================================= */
 
-.edit-notice {
-    margin: 30px 38px 0;
+.information-notice {
 
-    padding: 18px 20px;
+    display: flex;
 
-    background: #edf7fa;
+    align-items: flex-start;
 
-    border: 1px solid #d3e8ed;
+    gap: 14px;
 
-    border-left: 5px solid #5d929d;
+    margin: 24px 30px 0;
 
-    border-radius: 9px;
+    padding: 17px 19px;
+
+    border-radius: 15px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #eff8ff,
+                    #f4fbff
+            );
+
+    border: 1px solid #cfe7f7;
+
+    border-left: 5px solid #3182ce;
 }
 
-.edit-notice-title {
-    margin-bottom: 5px;
 
-    color: #285968;
+.notice-icon {
 
-    font-size: 16px;
+    width: 38px;
 
-    font-weight: 700;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #dcefff;
+
+    font-size: 18px;
 }
 
-.edit-notice-text {
-    color: #607681;
+
+.notice-content strong {
+
+    display: block;
+
+    color: #14547e;
 
     font-size: 14px;
+
+    font-weight: 900;
+}
+
+
+.notice-content p {
+
+    margin: 4px 0 0;
+
+    color: #6c8293;
+
+    font-size: 12px;
 
     line-height: 1.55;
 }
@@ -288,49 +631,82 @@ body {
    FORM
    ========================================================= */
 
-.edit-form {
-    padding: 35px 38px 40px;
+.disaster-form {
+
+    padding: 30px;
 }
 
 
 /* =========================================================
-   SECTION
+   SECTION TITLE
    ========================================================= */
 
-.edit-section-heading {
+.section-title {
+
     display: flex;
+
     align-items: center;
 
-    gap: 12px;
+    gap: 13px;
 
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 
-    padding-bottom: 14px;
+    padding-bottom: 17px;
 
-    border-bottom: 2px solid #dceaf3;
-
-    color: #17375e;
-
-    font-size: 21px;
-
-    font-weight: 700;
+    border-bottom: 1px solid #e5edf3;
 }
 
-.edit-section-number {
-    width: 35px;
-    height: 35px;
+
+.section-number {
+
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    background: #568bd9;
+    border-radius: 12px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #3182ce,
+                    #1769aa
+            );
 
     color: white;
 
-    border-radius: 50%;
+    font-size: 11px;
 
-    font-size: 14px;
+    font-weight: 900;
+}
+
+
+.section-title h2 {
+
+    margin: 0;
+
+    color: #193e62;
+
+    font-size: 19px;
+
+    font-weight: 900;
+}
+
+
+.section-title p {
+
+    margin: 3px 0 0;
+
+    color: #7c8f9f;
+
+    font-size: 12px;
 }
 
 
@@ -338,90 +714,146 @@ body {
    FORM GRID
    ========================================================= */
 
-.edit-form-grid {
+.form-grid {
+
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    gap: 25px;
+    gap: 22px;
 }
 
 
-/* =========================================================
-   FORM GROUP
-   ========================================================= */
+.form-group {
 
-.edit-field {
-    margin-bottom: 25px;
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
 }
 
-.edit-field.full-width {
+
+.form-group.full-width {
+
     grid-column: 1 / -1;
 }
 
-.edit-field label {
-    display: block;
 
-    margin-bottom: 9px;
+/* =========================================================
+   LABEL
+   ========================================================= */
 
-    color: #193a5c;
+.form-group label {
 
-    font-size: 15px;
+    margin-bottom: 8px;
 
-    font-weight: 700;
+    color: #244664;
+
+    font-size: 13px;
+
+    font-weight: 900;
 }
 
-.edit-required {
-    color: #d45757;
+
+.required {
+
+    color: #e05252;
+
+    margin-left: 3px;
 }
 
 
 /* =========================================================
-   INPUTS
+   INPUT WRAPPER
    ========================================================= */
 
-.edit-input,
-.edit-textarea,
-.edit-date {
-    width: 100%;
+.input-wrapper,
+.select-wrapper {
 
-    border: 1px solid #c7d0d7;
+    min-height: 54px;
 
-    border-radius: 9px;
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d3e0e9;
+
+    border-radius: 13px;
 
     background: #ffffff;
 
-    color: #172b4d;
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+}
 
-    font-size: 16px;
+
+.input-wrapper:hover,
+.select-wrapper:hover {
+
+    border-color: #a9cbe2;
+}
+
+
+.input-wrapper:focus-within,
+.select-wrapper:focus-within {
+
+    border-color: #3182ce;
+
+    box-shadow:
+            0 0 0 4px rgba(49, 130, 206, 0.10);
+}
+
+
+.input-icon {
+
+    width: 25px;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   TEXT INPUT
+   ========================================================= */
+
+.input-wrapper input {
+
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
 
     outline: none;
 
-    transition: 0.2s ease;
+    background: transparent;
+
+    color: #193d60;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
 }
 
-.edit-input,
-.edit-date {
-    height: 55px;
 
-    padding: 0 16px;
-}
+.input-wrapper input::placeholder {
 
-.edit-textarea {
-    min-height: 180px;
+    color: #9aabb8;
 
-    padding: 15px 16px;
-
-    resize: vertical;
-
-    line-height: 1.6;
-}
-
-.edit-input:focus,
-.edit-textarea:focus {
-    border-color: #568bd9;
-
-    box-shadow: 0 0 0 4px rgba(86, 139, 217, 0.11);
+    font-weight: 400;
 }
 
 
@@ -429,66 +861,163 @@ body {
    READ ONLY DATE
    ========================================================= */
 
-.edit-date {
-    background: #f1f3f5;
+.date-wrapper {
 
-    color: #455d70;
+    background:
+            linear-gradient(
+                    135deg,
+                    #f5f8fa,
+                    #eef3f6
+            );
+
+    border-color: #d4dfe6;
+}
+
+
+.date-wrapper input {
+
+    cursor: not-allowed;
+
+    color: #4c667b;
+
+    font-weight: 800;
+}
+
+
+.locked-icon {
+
+    margin-left: auto;
+
+    font-size: 13px;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.select-wrapper select {
+
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #234764;
+
+    font-family: inherit;
+
+    font-size: 14px;
 
     font-weight: 700;
 
-    cursor: not-allowed;
-}
-
-.date-lock {
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    margin-top: 8px;
-
-    color: #72818b;
-
-    font-size: 13px;
+    cursor: pointer;
 }
 
 
 /* =========================================================
-   HELP
+   TEXTAREA
    ========================================================= */
 
-.edit-help {
+.textarea-wrapper {
+
+    width: 100%;
+}
+
+
+.textarea-wrapper textarea {
+
+    width: 100%;
+
+    min-height: 150px;
+
+    display: block;
+
+    padding: 15px 16px;
+
+    border: 1px solid #d3e0e9;
+
+    border-radius: 13px;
+
+    background: white;
+
+    color: #234764;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    resize: vertical;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+
+.textarea-wrapper textarea:focus {
+
+    border-color: #3182ce;
+
+    box-shadow:
+            0 0 0 4px rgba(49, 130, 206, 0.10);
+}
+
+
+.textarea-wrapper textarea::placeholder {
+
+    color: #9aabb8;
+}
+
+
+/* =========================================================
+   HELP TEXT
+   ========================================================= */
+
+.field-help {
+
     margin-top: 7px;
 
-    color: #74828c;
+    color: #8093a2;
 
-    font-size: 13px;
+    font-size: 11px;
 
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
 
 /* =========================================================
-   VALIDATION
+   VALIDATION ERROR
    ========================================================= */
 
-.edit-error {
-    margin-top: 8px;
+.field-error {
+
+    margin-top: 7px;
 
     padding: 8px 10px;
 
-    background: #fff1f1;
+    border-radius: 8px;
 
-    border-left: 3px solid #d45757;
+    background: #fff2f2;
 
-    border-radius: 5px;
+    border-left: 3px solid #dc5353;
 
     color: #b42318;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    font-weight: 600;
+    font-weight: 700;
 }
 
 
@@ -496,119 +1025,233 @@ body {
    ACTION AREA
    ========================================================= */
 
-.edit-actions {
-    margin-top: 15px;
-
-    padding-top: 28px;
-
-    border-top: 1px solid #e1e6ea;
+.action-area {
 
     display: flex;
+
     align-items: center;
 
-    justify-content: space-between;
+    justify-content: flex-end;
 
-    gap: 15px;
-}
-
-.edit-actions-left {
-    display: flex;
     gap: 12px;
-}
 
-.edit-button {
-    min-height: 52px;
+    margin-top: 28px;
 
-    padding: 13px 24px;
+    padding-top: 23px;
 
-    border-radius: 9px;
-
-    border: none;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    text-decoration: none;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: 0.2s ease;
-}
-
-.edit-update {
-    background: #568bd9;
-
-    color: white;
-
-    box-shadow: 0 5px 12px rgba(86, 139, 217, 0.22);
-}
-
-.edit-update:hover {
-    background: #4678c2;
-
-    transform: translateY(-1px);
-}
-
-.edit-cancel {
-    background: #edf0f2;
-
-    color: #263f59;
-
-    border: 1px solid #cbd2d7;
-}
-
-.edit-cancel:hover {
-    background: #e0e5e8;
+    border-top: 1px solid #e5edf3;
 }
 
 
 /* =========================================================
-   WORKFLOW
+   CANCEL BUTTON
    ========================================================= */
 
-.edit-workflow {
-    margin: 0 38px 38px;
+.cancel-button {
 
-    padding: 22px;
+    min-height: 50px;
 
-    background: #f8fafc;
+    display: inline-flex;
 
-    border: 1px solid #dce4ea;
+    align-items: center;
 
-    border-radius: 10px;
-}
+    justify-content: center;
 
-.edit-workflow-title {
-    margin-bottom: 18px;
+    padding: 0 21px;
 
-    color: #24425f;
+    border-radius: 12px;
 
-    font-size: 16px;
-
-    font-weight: 700;
-}
-
-.edit-workflow-steps {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 15px;
-}
-
-.edit-workflow-step {
-    padding: 14px;
+    border: 1px solid #d2dde5;
 
     background: white;
 
-    border: 1px solid #e0e6eb;
+    color: #4d667a;
 
-    border-radius: 8px;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    transition:
+            background 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+}
+
+
+.cancel-button:hover {
+
+    background: #f4f7f9;
+
+    border-color: #b8cbd8;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   UPDATE BUTTON
+   ========================================================= */
+
+.update-button {
+
+    min-height: 50px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 23px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #1683c7,
+                    #155e9e
+            );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 8px 18px rgba(21, 94, 158, 0.22);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+
+.update-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 11px 23px rgba(21, 94, 158, 0.28);
+}
+
+
+.update-button:active {
+
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   WORKFLOW SECTION
+   ========================================================= */
+
+.workflow-section {
+
+    margin: 0 30px 30px;
+
+    padding: 23px;
+
+    border-radius: 17px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #f7fafc,
+                    #f1f7fb
+            );
+
+    border: 1px solid #dce8ef;
+}
+
+
+/* =========================================================
+   WORKFLOW HEADING
+   ========================================================= */
+
+.workflow-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.workflow-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #e0effa;
+
+    font-size: 18px;
+}
+
+
+.workflow-heading h3 {
+
+    margin: 0;
+
+    color: #234765;
+
+    font-size: 15px;
+
+    font-weight: 900;
+}
+
+
+.workflow-heading p {
+
+    margin: 3px 0 0;
+
+    color: #8194a2;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   WORKFLOW STEPS
+   ========================================================= */
+
+.workflow-steps {
+
+    display: grid;
+
+    grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+.workflow-step {
+
+    min-width: 0;
 
     display: flex;
 
@@ -616,46 +1259,177 @@ body {
 
     gap: 10px;
 
-    color: #657680;
+    padding: 14px;
 
-    font-size: 13px;
+    border-radius: 12px;
+
+    background: white;
+
+    border: 1px solid #dfe8ee;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
 }
 
-.edit-workflow-step.current {
-    border-color: #8fb4e5;
 
-    background: #f1f6fd;
+.workflow-step:hover {
 
-    color: #315f91;
+    transform: translateY(-2px);
 
-    font-weight: 600;
+    box-shadow:
+            0 6px 16px rgba(38, 72, 99, 0.08);
 }
 
-.edit-workflow-number {
-    width: 29px;
-    height: 29px;
+
+/* =========================================================
+   WORKFLOW NUMBER
+   ========================================================= */
+
+.step-number {
+
+    width: 31px;
+
+    height: 31px;
 
     flex-shrink: 0;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border-radius: 50%;
 
-    background: #e1eaf5;
+    background: #e9f0f5;
 
-    color: #416fae;
+    color: #647c8e;
+
+    font-size: 11px;
+
+    font-weight: 900;
+}
+
+
+/* Completed */
+
+.workflow-step.completed {
+
+    border-color: #cce8d9;
+
+    background: #f4fcf7;
+}
+
+
+.workflow-step.completed .step-number {
+
+    background: #28a66a;
+
+    color: white;
+}
+
+
+/* Current */
+
+.workflow-step.current {
+
+    border-color: #b9dcf5;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #eef8ff,
+                    #f7fbff
+            );
+
+    box-shadow:
+            0 5px 15px rgba(49, 130, 206, 0.08);
+}
+
+
+.workflow-step.current .step-number {
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #3182ce,
+                    #1769aa
+            );
+
+    color: white;
+}
+
+
+.step-content {
+
+    min-width: 0;
+}
+
+
+.step-content strong {
+
+    display: block;
+
+    overflow: hidden;
+
+    color: #31516c;
 
     font-size: 12px;
 
-    font-weight: 700;
+    font-weight: 900;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
-.current .edit-workflow-number {
-    background: #568bd9;
 
-    color: white;
+.step-content span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+
+    color: #8799a7;
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .edit-header {
+
+        padding: 14px 25px;
+
+    }
+
+
+    .page-container {
+
+        width: calc(100% - 35px);
+
+    }
+
+
+    .workflow-steps {
+
+        grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+    }
+
 }
 
 
@@ -663,109 +1437,200 @@ body {
    MOBILE
    ========================================================= */
 
-@media (max-width: 850px) {
+@media (max-width: 700px) {
 
     .edit-header {
-        padding: 18px 25px;
-    }
 
-    .edit-page {
-        width: calc(100% - 35px);
+        flex-direction: column;
 
-        margin-top: 30px;
-    }
-
-    .edit-title-area {
         align-items: flex-start;
 
+        padding: 18px 20px;
+
+        gap: 14px;
+
+    }
+
+
+    .header-navigation {
+
+        width: 100%;
+
+    }
+
+
+    .nav-link {
+
+        flex: 1;
+
+    }
+
+
+    .page-container {
+
+        width: calc(100% - 24px);
+
+        margin-top: 20px;
+
+    }
+
+
+    .hero-section {
+
         flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 22px;
+
     }
 
-    .edit-form-grid {
+
+    .event-id-card {
+
+        margin-left: 0;
+
+    }
+
+
+    .hero-content h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 20px;
+
+    }
+
+
+    .information-notice {
+
+        margin-left: 20px;
+
+        margin-right: 20px;
+
+    }
+
+
+    .disaster-form {
+
+        padding: 20px;
+
+    }
+
+
+    .form-grid {
+
         grid-template-columns: 1fr;
+
     }
 
-    .edit-field.full-width {
+
+    .form-group.full-width {
+
         grid-column: auto;
+
     }
 
-    .edit-workflow-steps {
-        grid-template-columns: 1fr;
-    }
 
-    .edit-actions {
-        flex-direction: column;
+    .action-area {
+
+        flex-direction: column-reverse;
 
         align-items: stretch;
+
     }
 
-    .edit-actions-left {
-        flex-direction: column;
-    }
 
-    .edit-button {
+    .cancel-button,
+    .update-button {
+
         width: 100%;
+
+    }
+
+
+    .workflow-section {
+
+        margin-left: 20px;
+
+        margin-right: 20px;
+
+        padding: 18px;
+
+    }
+
+
+    .workflow-steps {
+
+        grid-template-columns: 1fr;
+
     }
 
 }
 
 
-@media (max-width: 600px) {
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
 
-    .edit-header {
-        min-height: auto;
+@media (max-width: 450px) {
 
-        flex-direction: column;
+    .brand-name {
 
-        align-items: flex-start;
+        font-size: 24px;
 
-        gap: 15px;
     }
 
-    .edit-navigation {
-        width: 100%;
+
+    .brand-subtitle {
+
+        font-size: 11px;
+
     }
 
-    .edit-nav-link {
-        flex: 1;
 
-        text-align: center;
+    .brand-logo {
+
+        width: 48px;
+
+        height: 48px;
+
+        font-size: 23px;
+
     }
 
-    .edit-brand {
+
+    .hero-icon {
+
+        width: 58px;
+
+        height: 58px;
+
         font-size: 25px;
+
     }
 
-    .edit-system-name {
-        font-size: 13px;
+
+    .hero-content h1 {
+
+        font-size: 25px;
+
     }
 
-    .edit-page {
-        width: calc(100% - 20px);
 
-        margin-top: 20px;
-    }
+    .breadcrumb {
 
-    .edit-title-area h1 {
-        font-size: 30px;
-    }
+        font-size: 11px;
 
-    .edit-card-top {
-        padding: 18px 22px;
-    }
-
-    .edit-notice {
-        margin-left: 22px;
-        margin-right: 22px;
-    }
-
-    .edit-form {
-        padding: 28px 22px;
-    }
-
-    .edit-workflow {
-        margin-left: 22px;
-        margin-right: 22px;
     }
 
 }

@@ -11,230 +11,1611 @@
 
   <title>Flood Events | FRDMS</title>
 
-  <!-- External CSS -->
-  <link rel="stylesheet"
-        th:href="@{/css/disaster.css}">
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    :root {
+
+      --navy: #10284d;
+      --navy-light: #183b70;
+
+      --blue: #4d83d9;
+      --blue-dark: #3568b8;
+      --blue-light: #eef5ff;
+
+      --background: #f4f7fb;
+
+      --white: #ffffff;
+
+      --text: #18345d;
+      --muted: #667892;
+
+      --border: #dce5f0;
+
+      --green: #17865b;
+      --orange: #d98918;
+      --red: #c94a4a;
+
+      --shadow:
+              0 12px 35px
+              rgba(25, 55, 95, 0.09);
+    }
+
+
+    body {
+
+      font-family:
+              "Segoe UI",
+              Arial,
+              sans-serif;
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #f5f8fc 0%,
+                      #edf4fb 100%
+              );
+
+      color: var(--text);
+
+      min-height: 100vh;
+    }
+
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
+
+    .page-header {
+
+      min-height: 92px;
+
+      background:
+              linear-gradient(
+                      120deg,
+                      #0e1c31,
+                      #152f56
+              );
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 18px 6%;
+
+      box-shadow:
+              0 5px 20px
+              rgba(9, 27, 50, 0.18);
+    }
+
+
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+    }
+
+
+    .brand-icon {
+
+      width: 55px;
+      height: 55px;
+
+      border-radius: 16px;
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #6d9ce8,
+                      #3f70c3
+              );
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 28px;
+    }
+
+
+    .brand-title {
+
+      font-size: 27px;
+
+      font-weight: 800;
+    }
+
+
+    .brand-subtitle {
+
+      margin-top: 3px;
+
+      color: #a9c9f5;
+
+      font-size: 14px;
+    }
+
+
+    .header-badge {
+
+      padding: 12px 18px;
+
+      border:
+              1px solid
+              rgba(255,255,255,.15);
+
+      background:
+              rgba(255,255,255,.08);
+
+      border-radius: 30px;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: .8px;
+    }
+
+
+    /* =====================================================
+       PAGE
+       ===================================================== */
+
+    .page-container {
+
+      width: min(1450px, 92%);
+
+      margin:
+              34px auto 60px;
+    }
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .hero-section {
+
+      background:
+              linear-gradient(
+                      120deg,
+                      #263e88,
+                      #4d75c9
+              );
+
+      border-radius: 24px;
+
+      padding: 32px;
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 25px;
+
+      box-shadow:
+              0 16px 35px
+              rgba(49, 81, 153, .20);
+
+      margin-bottom: 24px;
+    }
+
+
+    .hero-content {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 20px;
+    }
+
+
+    .hero-icon {
+
+      width: 70px;
+      height: 70px;
+
+      border-radius: 20px;
+
+      background:
+              rgba(255,255,255,.15);
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 35px;
+    }
+
+
+    .hero-label {
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.2px;
+    }
+
+
+    .hero-section h1 {
+
+      font-size: 36px;
+
+      margin:
+              5px 0 8px;
+    }
+
+
+    .hero-section p {
+
+      color: #e5edff;
+
+      max-width: 680px;
+
+      line-height: 1.6;
+    }
+
+
+    .create-button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 9px;
+
+      background: white;
+
+      color: #27458f;
+
+      padding: 14px 20px;
+
+      border-radius: 13px;
+
+      font-weight: 800;
+
+      white-space: nowrap;
+
+      transition: .2s;
+    }
+
+
+    .create-button:hover {
+
+      transform:
+              translateY(-2px);
+    }
+
+
+    /* =====================================================
+       DM06 BANNER
+       ===================================================== */
+
+    .dm06-banner {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 18px;
+
+      background: white;
+
+      border:
+              1px solid
+              #dbe6f4;
+
+      border-left:
+              5px solid
+              var(--blue);
+
+      border-radius: 17px;
+
+      padding: 20px 22px;
+
+      box-shadow: var(--shadow);
+
+      margin-bottom: 24px;
+    }
+
+
+    .dm06-icon {
+
+      width: 50px;
+      height: 50px;
+
+      border-radius: 14px;
+
+      background: #edf5ff;
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 25px;
+    }
+
+
+    .dm06-banner strong {
+
+      font-size: 16px;
+    }
+
+
+    .dm06-banner p {
+
+      color: var(--muted);
+
+      margin-top: 4px;
+
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       SEARCH
+       ===================================================== */
+
+    .search-card {
+
+      background: white;
+
+      border:
+              1px solid
+              var(--border);
+
+      border-radius: 22px;
+
+      box-shadow: var(--shadow);
+
+      padding: 24px;
+
+      margin-bottom: 24px;
+    }
+
+
+    .search-title {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      margin-bottom: 18px;
+    }
+
+
+    .search-icon {
+
+      width: 48px;
+      height: 48px;
+
+      background:
+              var(--blue-light);
+
+      border-radius: 13px;
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 22px;
+    }
+
+
+    .search-title h2 {
+
+      font-size: 20px;
+    }
+
+
+    .search-title p {
+
+      color: var(--muted);
+
+      margin-top: 4px;
+
+      font-size: 14px;
+    }
+
+
+    .search-form {
+
+      display: flex;
+
+      gap: 10px;
+    }
+
+
+    .search-input-wrapper {
+
+      flex: 1;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      background: #f7f9fc;
+
+      border:
+              1px solid
+              var(--border);
+
+      border-radius: 12px;
+
+      padding: 0 15px;
+    }
+
+
+    .search-input-wrapper input {
+
+      border: none;
+
+      outline: none;
+
+      background: transparent;
+
+      width: 100%;
+
+      height: 48px;
+
+      font-size: 15px;
+    }
+
+
+    .search-button,
+    .clear-button {
+
+      min-width: 100px;
+
+      height: 48px;
+
+      border-radius: 12px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      border: none;
+    }
+
+
+    .search-button {
+
+      background:
+              var(--blue);
+
+      color: white;
+
+      padding:
+              0 20px;
+    }
+
+
+    .clear-button {
+
+      background: #edf2f8;
+
+      color: #49617e;
+
+      padding:
+              0 20px;
+    }
+
+
+    /* =====================================================
+       TABLE
+       ===================================================== */
+
+    .events-card {
+
+      background: white;
+
+      border:
+              1px solid
+              var(--border);
+
+      border-radius: 22px;
+
+      box-shadow: var(--shadow);
+
+      overflow: hidden;
+    }
+
+
+    .events-card-header {
+
+      padding:
+              26px 28px;
+
+      display: flex;
+
+      justify-content:
+              space-between;
+
+      align-items: center;
+
+      border-bottom:
+              1px solid
+              var(--border);
+    }
+
+
+    .section-label {
+
+      font-size: 11px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      color: var(--blue);
+    }
+
+
+    .events-card-header h2 {
+
+      font-size: 23px;
+
+      margin:
+              5px 0;
+    }
+
+
+    .events-card-header p {
+
+      color: var(--muted);
+
+      font-size: 14px;
+    }
+
+
+    .records-badge {
+
+      background:
+              #edf5ff;
+
+      color:
+              #3867aa;
+
+      padding:
+              10px 14px;
+
+      border-radius:
+              25px;
+
+      font-weight:
+              800;
+    }
+
+
+    .table-wrapper {
+
+      overflow-x: auto;
+    }
+
+
+    .event-table {
+
+      width: 100%;
+
+      border-collapse:
+              collapse;
+
+      min-width:
+              1200px;
+    }
+
+
+    .event-table th {
+
+      background:
+              #f7f9fc;
+
+      color:
+              #60738c;
+
+      text-align:
+              left;
+
+      font-size:
+              11px;
+
+      text-transform:
+              uppercase;
+
+      letter-spacing:
+              .8px;
+
+      padding:
+              16px 18px;
+
+      border-bottom:
+              1px solid
+              var(--border);
+
+      white-space:
+              nowrap;
+    }
+
+
+    .event-table td {
+
+      padding:
+              18px;
+
+      border-bottom:
+              1px solid
+              #edf1f6;
+
+      vertical-align:
+              middle;
+    }
+
+
+    .event-table tbody tr {
+
+      transition:
+              .18s;
+    }
+
+
+    .event-table tbody tr:hover {
+
+      background:
+              #f8fbff;
+    }
+
+
+    /* =====================================================
+       EVENT NAME
+       ===================================================== */
+
+    .id-badge {
+
+      min-width:
+              38px;
+
+      display:
+              inline-flex;
+
+      justify-content:
+              center;
+
+      padding:
+              7px 10px;
+
+      border-radius:
+              9px;
+
+      background:
+              #eef3fa;
+
+      color:
+              #46617f;
+
+      font-weight:
+              800;
+    }
+
+
+    .event-name-cell {
+
+      display:
+              flex;
+
+      align-items:
+              center;
+
+      gap:
+              12px;
+
+      min-width:
+              240px;
+    }
+
+
+    .event-mini-icon {
+
+      width:
+              43px;
+
+      height:
+              43px;
+
+      border-radius:
+              12px;
+
+      background:
+              #edf5ff;
+
+      display:
+              grid;
+
+      place-items:
+              center;
+
+      font-size:
+              21px;
+
+      flex-shrink:
+              0;
+    }
+
+
+    .event-name-cell strong {
+
+      display:
+              block;
+
+      font-size:
+              15px;
+    }
+
+
+    .event-name-cell small {
+
+      display:
+              block;
+
+      color:
+              #8594a8;
+
+      margin-top:
+              3px;
+    }
+
+
+    /* =====================================================
+       DATE
+       ===================================================== */
+
+    .date-badge {
+
+      display:
+              inline-flex;
+
+      align-items:
+              center;
+
+      gap:
+              7px;
+
+      padding:
+              8px 10px;
+
+      border-radius:
+              9px;
+
+      background:
+              #f5f8fc;
+
+      color:
+              #435c7c;
+
+      font-weight:
+              700;
+
+      white-space:
+              nowrap;
+    }
+
+
+    /* =====================================================
+       SEVERITY
+       ===================================================== */
+
+    .severity-badge {
+
+      display:
+              inline-flex;
+
+      align-items:
+              center;
+
+      padding:
+              8px 12px;
+
+      border-radius:
+              20px;
+
+      font-size:
+              11px;
+
+      font-weight:
+              900;
+
+      white-space:
+              nowrap;
+    }
+
+
+    .severity-low {
+
+      color:
+              #19734f;
+
+      background:
+              #e9f8f0;
+
+      border:
+              1px solid
+              #c9eedc;
+    }
+
+
+    .severity-medium {
+
+      color:
+              #a36b0b;
+
+      background:
+              #fff4d9;
+
+      border:
+              1px solid
+              #f6dfaa;
+    }
+
+
+    .severity-high {
+
+      color:
+              #bd5a17;
+
+      background:
+              #fff0e4;
+
+      border:
+              1px solid
+              #f4d2b9;
+    }
+
+
+    .severity-critical {
+
+      color:
+              #b43c3c;
+
+      background:
+              #ffe9e9;
+
+      border:
+              1px solid
+              #f4caca;
+    }
+
+
+    .severity-unknown {
+
+      color:
+              #667892;
+
+      background:
+              #f0f3f7;
+
+      border:
+              1px solid
+              #dfe5ec;
+    }
+
+
+    /* =====================================================
+       FAMILY COUNT
+       ===================================================== */
+
+    .family-count {
+
+      display:
+              inline-flex;
+
+      align-items:
+              center;
+
+      gap:
+              8px;
+
+      min-width:
+              125px;
+
+      padding:
+              9px 12px;
+
+      border-radius:
+              12px;
+
+      background:
+              #f0f8ff;
+
+      border:
+              1px solid
+              #d7eafb;
+
+      color:
+              #2f609c;
+
+      font-weight:
+              800;
+    }
+
+
+    .family-count strong {
+
+      font-size:
+              17px;
+
+      color:
+              #1e4f8b;
+    }
+
+
+    .family-count small {
+
+      color:
+              #6e8198;
+
+      font-size:
+              11px;
+
+      font-weight:
+              700;
+    }
+
+
+    .family-zero {
+
+      background:
+              #f5f7fa;
+
+      border-color:
+              #e2e7ee;
+
+      color:
+              #718096;
+    }
+
+
+    /* =====================================================
+       DESCRIPTION
+       ===================================================== */
+
+    .description-cell {
+
+      max-width:
+              280px;
+
+      color:
+              #5d7089;
+
+      line-height:
+              1.5;
+
+      display:
+              -webkit-box;
+
+      -webkit-line-clamp:
+              2;
+
+      -webkit-box-orient:
+              vertical;
+
+      overflow:
+              hidden;
+    }
+
+
+    /* =====================================================
+       ACTIONS
+       ===================================================== */
+
+    .action-buttons {
+
+      display:
+              flex;
+
+      align-items:
+              center;
+
+      gap:
+              7px;
+
+      flex-wrap:
+              wrap;
+
+      min-width:
+              255px;
+    }
+
+
+    .action-button {
+
+      display:
+              inline-flex;
+
+      align-items:
+              center;
+
+      justify-content:
+              center;
+
+      gap:
+              6px;
+
+      min-height:
+              36px;
+
+      padding:
+              8px 11px;
+
+      border-radius:
+              9px;
+
+      font-size:
+              12px;
+
+      font-weight:
+              800;
+
+      border:
+              1px solid
+              transparent;
+    }
+
+
+    .view-button {
+
+      background:
+              #edf5ff;
+
+      color:
+              #3569b2;
+
+      border-color:
+              #d9e8fb;
+    }
+
+
+    .edit-button {
+
+      background:
+              #eef8f3;
+
+      color:
+              #17764f;
+
+      border-color:
+              #d8eee3;
+    }
+
+
+    .delete-form {
+
+      margin:
+              0;
+    }
+
+
+    .delete-button {
+
+      background:
+              #fff0f0;
+
+      color:
+              #bb4646;
+
+      border:
+              1px solid
+              #f5d7d7;
+
+      cursor:
+              pointer;
+
+      min-height:
+              36px;
+
+      padding:
+              8px 11px;
+
+      border-radius:
+              9px;
+
+      font-size:
+              12px;
+
+      font-weight:
+              800;
+    }
+
+
+    /* =====================================================
+       EMPTY
+       ===================================================== */
+
+    .empty-state {
+
+      padding:
+              65px 25px;
+
+      text-align:
+              center;
+    }
+
+
+    .empty-icon {
+
+      width:
+              72px;
+
+      height:
+              72px;
+
+      border-radius:
+              20px;
+
+      background:
+              #edf5ff;
+
+      display:
+              grid;
+
+      place-items:
+              center;
+
+      margin:
+              0 auto 16px;
+
+      font-size:
+              31px;
+    }
+
+
+    .empty-state h3 {
+
+      font-size:
+              20px;
+
+      margin-bottom:
+              8px;
+    }
+
+
+    .empty-state p {
+
+      color:
+              var(--muted);
+
+      margin-bottom:
+              20px;
+    }
+
+
+    .empty-create-button {
+
+      display:
+              inline-flex;
+
+      padding:
+              12px 18px;
+
+      background:
+              var(--blue);
+
+      color:
+              white;
+
+      border-radius:
+              11px;
+
+      font-weight:
+              800;
+    }
+
+
+    /* =====================================================
+       WORKFLOW
+       ===================================================== */
+
+    .workflow-card {
+
+      margin-top:
+              24px;
+
+      padding:
+              20px 24px;
+
+      display:
+              flex;
+
+      align-items:
+              center;
+
+      gap:
+              16px;
+
+      background:
+              white;
+
+      border:
+              1px solid
+              var(--border);
+
+      border-radius:
+              22px;
+
+      box-shadow:
+              var(--shadow);
+    }
+
+
+    .workflow-icon {
+
+      width:
+              48px;
+
+      height:
+              48px;
+
+      background:
+              #edf5ff;
+
+      border-radius:
+              13px;
+
+      display:
+              grid;
+
+      place-items:
+              center;
+
+      font-size:
+              22px;
+    }
+
+
+    .workflow-card p {
+
+      margin-top:
+              4px;
+
+      color:
+              var(--muted);
+
+      line-height:
+              1.55;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 850px) {
+
+      .page-header {
+
+        padding:
+                16px 4%;
+      }
+
+
+      .header-badge {
+
+        display:
+                none;
+      }
+
+
+      .page-container {
+
+        width:
+                94%;
+
+        margin-top:
+                20px;
+      }
+
+
+      .hero-section {
+
+        padding:
+                24px;
+
+        flex-direction:
+                column;
+
+        align-items:
+                flex-start;
+      }
+
+
+      .hero-section h1 {
+
+        font-size:
+                29px;
+      }
+
+
+      .create-button {
+
+        width:
+                100%;
+
+        justify-content:
+                center;
+      }
+
+
+      .search-form {
+
+        flex-direction:
+                column;
+      }
+
+
+      .search-button,
+      .clear-button {
+
+        width:
+                100%;
+      }
+
+
+      .events-card-header {
+
+        align-items:
+                flex-start;
+
+        flex-direction:
+                column;
+      }
+
+    }
+
+  </style>
 
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      HEADER
      ===================================================== -->
 
-<header class="header">
+<header class="page-header">
 
-  <div class="header-content">
+  <div class="brand">
 
-    <div class="brand-area">
+    <div class="brand-icon">
+      🌊
+    </div>
 
-      <div class="logo">
-        🌊
+    <div>
+
+      <div class="brand-title">
+        FRDMS
       </div>
 
-      <div>
-
-        <div class="brand">
-          FRDMS
-        </div>
-
-        <div class="module-name">
-          Flood Disaster Relief Management System
-        </div>
-
+      <div class="brand-subtitle">
+        Flood Disaster Relief Management System
       </div>
 
     </div>
 
+  </div>
 
-    <!-- Navigation -->
 
-    <nav class="navigation">
-
-      <a th:href="@{/disasters}"
-         class="nav-link active">
-        Flood Events
-      </a>
-
-      <a th:href="@{/victims}"
-         class="nav-link">
-        Victims
-      </a>
-
-    </nav>
-
+  <div class="header-badge">
+    DISASTER MANAGEMENT
   </div>
 
 </header>
 
 
-<!-- =====================================================
-     MAIN CONTENT
-     ===================================================== -->
 
-<main class="main-container">
+<main class="page-container">
 
 
   <!-- =================================================
-       PAGE INTRODUCTION
+       HERO
        ================================================= -->
 
-  <section class="page-card">
+  <section class="hero-section">
 
-    <div class="page-header">
+    <div class="hero-content">
 
-      <h1>
-        Flood Events
-      </h1>
+      <div class="hero-icon">
+        🌊
+      </div>
 
-      <p class="page-description">
-        View and manage recorded flood events and
-        their affected areas.
-      </p>
+
+      <div>
+
+                <span class="hero-label">
+                    DISASTER MANAGEMENT
+                </span>
+
+
+        <h1>
+          Flood Events
+        </h1>
+
+
+        <p>
+          Manage flood events, severity levels,
+          affected areas and registered affected
+          families from one place.
+        </p>
+
+      </div>
 
     </div>
 
 
-    <!-- =================================================
-         CREATE BUTTON
-         ================================================= -->
+    <a th:href="@{/disasters/new}"
+       class="create-button">
 
-    <div class="create-section">
+      ＋ Create Flood Event
 
-      <a th:href="@{/disasters/new}"
-         class="btn btn-primary create-button">
+    </a>
 
-        <span>+</span>
-        Create New Flood Event
+  </section>
 
-      </a>
+
+
+
+
+
+
+  <!-- =================================================
+       SEARCH
+       ================================================= -->
+
+  <section class="search-card">
+
+    <div class="search-title">
+
+      <div class="search-icon">
+        🔎
+      </div>
+
+
+      <div>
+
+        <h2>
+          Search Flood Events
+        </h2>
+
+        <p>
+          Find a recorded flood event quickly.
+        </p>
+
+      </div>
 
     </div>
 
 
-    <div class="divider"></div>
+    <form th:action="@{/disasters}"
+          method="get"
+          class="search-form">
 
 
-    <!-- =================================================
-         SEARCH SECTION
-         ================================================= -->
+      <div class="search-input-wrapper">
 
-    <section class="search-section">
-
-      <h2>
-        Search Flood Events by Event Name
-      </h2>
-
-
-      <form th:action="@{/disasters}"
-            method="get"
-            class="search-form">
+        🔍
 
         <input
                 type="text"
                 name="keyword"
                 th:value="${keyword}"
-                placeholder="Enter flood event name..."
-                class="search-input"
-                autocomplete="off"
-        >
+                placeholder="Search by flood event name...">
+
+      </div>
 
 
-        <button type="submit"
-                class="btn btn-search">
+      <button
+              type="submit"
+              class="search-button">
 
-          🔎 Search
+        Search
 
-        </button>
-
-
-        <a th:href="@{/disasters}"
-           class="btn btn-clear">
-
-          Clear
-
-        </a>
-
-      </form>
-
-    </section>
+      </button>
 
 
-    <!-- =================================================
-         SEARCH RESULT MESSAGE
-         ================================================= -->
+      <a
+              th:href="@{/disasters}"
+              class="clear-button">
 
-    <div th:if="${keyword != null and !#strings.isEmpty(keyword)}"
-         class="search-result">
+        Clear
 
-            <span>
-                Search results for:
-            </span>
+      </a>
 
-      <strong th:text="${keyword}">
-        keyword
-      </strong>
-
-    </div>
-
-
-    <!-- =================================================
-         SUCCESS MESSAGE
-         ================================================= -->
-
-    <div th:if="${param.deleted}"
-         class="success-message">
-
-      ✓ Flood event deleted successfully.
-
-    </div>
+    </form>
 
   </section>
 
 
-  <!-- =====================================================
-       FLOOD EVENTS TABLE
-       ===================================================== -->
 
-  <section class="table-card">
+  <!-- =================================================
+       EVENTS
+       ================================================= -->
+
+  <section class="events-card">
 
 
-    <!-- =================================================
-         TABLE HEADER
-         ================================================= -->
-
-    <div class="table-header">
+    <div class="events-card-header">
 
       <div>
 
+                <span class="section-label">
+                    RECORDED EVENTS
+                </span>
+
+
         <h2>
-          Recorded Flood Events
+          Flood Event Records
         </h2>
 
+
         <p>
-          Manage registered flood events
+          View the disaster information and
+          affected-family registrations.
         </p>
 
       </div>
 
-      <div class="event-count"
-           th:text="${#lists.size(disasters)} + ' Events'">
 
-        0 Events
-
+      <div class="records-badge">
+        🌊 Flood Events
       </div>
 
     </div>
 
 
-    <!-- =================================================
-         TABLE
-         ================================================= -->
 
     <div class="table-wrapper">
 
-      <table class="data-table">
+
+      <table class="event-table">
+
 
         <thead>
 
@@ -249,7 +1630,15 @@
           </th>
 
           <th>
-            Event Date
+            Date
+          </th>
+
+          <th>
+            Severity
+          </th>
+
+          <th>
+            Registered Families
           </th>
 
           <th>
@@ -257,7 +1646,7 @@
           </th>
 
           <th>
-            Actions
+            Action
           </th>
 
         </tr>
@@ -265,121 +1654,266 @@
         </thead>
 
 
+
         <tbody>
 
 
-        <!-- =================================================
-             FLOOD EVENT ROWS
-             ================================================= -->
-
-        <tr th:each="disaster : ${disasters}">
+        <tr
+                th:each="disaster : ${disasters}">
 
 
           <!-- ID -->
 
           <td>
 
-                        <span class="id-badge"
-                              th:text="${disaster.id}">
+                        <span
+                                class="id-badge"
+                                th:text="${disaster.id}">
+
                             1
+
                         </span>
 
           </td>
 
 
-          <!-- EVENT NAME -->
+
+          <!-- EVENT -->
 
           <td>
 
-            <div class="event-name"
-                 th:text="${disaster.eventName}">
-              Flood Event
+            <div class="event-name-cell">
+
+              <div class="event-mini-icon">
+                🌊
+              </div>
+
+
+              <div>
+
+                <strong
+                        th:text="${disaster.eventName}">
+
+                  Flood Event
+
+                </strong>
+
+
+                <small>
+                  Flood Disaster Event
+                </small>
+
+              </div>
+
             </div>
 
           </td>
 
 
-          <!-- EVENT DATE -->
+
+          <!-- DATE -->
 
           <td>
 
-                        <span class="event-date"
-                              th:text="${#temporals.format(disaster.eventDate, 'dd/MM/yyyy')}">
-                            01/01/2026
+                        <span class="date-badge">
+
+                            📅
+
+                            <span
+                                    th:text="${disaster.eventDate != null ? #temporals.format(disaster.eventDate, 'dd/MM/yyyy') : 'Not available'}">
+
+                                08/09/2026
+
+                            </span>
+
                         </span>
 
           </td>
+
+
+
+          <!-- SEVERITY -->
+
+          <td>
+
+
+                        <span
+                                th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'LOW')}"
+                                class="severity-badge severity-low">
+
+                            ● LOW
+
+                        </span>
+
+
+            <span
+                    th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'MEDIUM')}"
+                    class="severity-badge severity-medium">
+
+                            ⚠ MEDIUM
+
+                        </span>
+
+
+            <span
+                    th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'HIGH')}"
+                    class="severity-badge severity-high">
+
+                            ⚠ HIGH
+
+                        </span>
+
+
+            <span
+                    th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'CRITICAL')}"
+                    class="severity-badge severity-critical">
+
+                            ⛔ CRITICAL
+
+                        </span>
+
+
+            <span
+                    th:if="${disaster.severityLevel == null or
+                                (
+                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'LOW')
+                                    and
+                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'MEDIUM')
+                                    and
+                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'HIGH')
+                                    and
+                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'CRITICAL')
+                                )}"
+                    class="severity-badge severity-unknown">
+
+                            <span
+                                    th:text="${disaster.severityLevel != null ? disaster.severityLevel : 'NOT SET'}">
+
+                                NOT SET
+
+                            </span>
+
+                        </span>
+
+          </td>
+
+
+
+          <!-- =================================================
+               REGISTERED FAMILIES - DM06
+               ================================================= -->
+
+          <td>
+
+            <div
+                    th:if="${affectedFamilyCounts[disaster.id] != null and affectedFamilyCounts[disaster.id] > 0}"
+                    class="family-count">
+
+              👨‍👩‍👧
+
+              <strong
+                      th:text="${affectedFamilyCounts[disaster.id]}">
+
+                0
+
+              </strong>
+
+              <small>
+                Families
+              </small>
+
+            </div>
+
+
+            <div
+                    th:if="${affectedFamilyCounts[disaster.id] == null or affectedFamilyCounts[disaster.id] == 0}"
+                    class="family-count family-zero">
+
+              👨‍👩‍👧
+
+              <strong>
+                0
+              </strong>
+
+              <small>
+                Families
+              </small>
+
+            </div>
+
+          </td>
+
 
 
           <!-- DESCRIPTION -->
 
           <td>
 
-            <div class="description"
-                 th:text="${disaster.description}">
-              Flood event description
+            <div
+                    class="description-cell"
+                    th:text="${disaster.description}">
+
+              Flood event description.
+
             </div>
 
           </td>
+
 
 
           <!-- ACTIONS -->
 
           <td>
 
-            <div class="table-actions">
+            <div class="action-buttons">
 
 
               <!-- VIEW -->
 
-              <a th:href="@{/disasters/details/{id}(id=${disaster.id})}"
-                 class="action-button view-button">
+              <a
+                      th:href="@{/disasters/details/{id}(id=${disaster.id})}"
+                      class="action-button view-button">
 
                 👁 View
 
               </a>
 
 
-              <!-- EDIT -->
 
-              <a th:href="@{/disasters/edit/{id}(id=${disaster.id})}"
-                 class="action-button edit-button">
 
-                ✏ Edit
 
-              </a>
 
 
               <!-- DELETE -->
 
-              <form th:action="@{/disasters/delete/{id}(id=${disaster.id})}"
-                    method="post"
-                    class="delete-form"
-                    onsubmit="return confirmDelete();">
+              <form
+                      th:action="@{/disasters/delete/{id}(id=${disaster.id})}"
+                      method="post"
+                      class="delete-form"
+                      onsubmit="return confirmDelete();">
 
-                <button type="submit"
-                        class="action-button delete-button">
 
-                  🗑 Delete
-
-                </button>
 
               </form>
+
 
             </div>
 
           </td>
 
+
         </tr>
 
 
+
         <!-- =================================================
-             NO RESULTS
+             EMPTY STATE
              ================================================= -->
 
-        <tr th:if="${#lists.isEmpty(disasters)}">
+        <tr
+                th:if="${#lists.isEmpty(disasters)}">
 
-          <td colspan="5">
+          <td colspan="7">
 
             <div class="empty-state">
 
@@ -387,31 +1921,23 @@
                 🌊
               </div>
 
-              <h3 class="empty-title">
+
+              <h3>
                 No Flood Events Found
               </h3>
 
-              <p class="empty-text">
 
-                                <span th:if="${keyword != null and !#strings.isEmpty(keyword)}">
-
-                                    No flood events match your search.
-
-                                </span>
-
-                <span th:unless="${keyword != null and !#strings.isEmpty(keyword)}">
-
-                                    No flood events have been recorded yet.
-
-                                </span>
-
+              <p>
+                There are currently no recorded
+                flood events.
               </p>
 
 
-              <a th:href="@{/disasters/new}"
-                 class="btn btn-primary">
+              <a
+                      th:href="@{/disasters/new}"
+                      class="empty-create-button">
 
-                + Create Flood Event
+                ＋ Create First Flood Event
 
               </a>
 
@@ -431,40 +1957,11 @@
   </section>
 
 
-  <!-- =====================================================
-       INFORMATION SECTION
-       ===================================================== -->
-
-  <section class="info-bar">
-
-    <div class="info-icon">
-      ℹ
-    </div>
-
-    <div>
-
-      <strong>
-        Flood Event Management
-      </strong>
-
-      <p>
-        Use the actions above to view, update or
-        delete flood event information. Affected
-        areas can be managed from the flood event
-        details page.
-      </p>
-
-    </div>
-
-  </section>
 
 
 </main>
 
 
-<!-- =====================================================
-     DELETE CONFIRMATION
-     ===================================================== -->
 
 <script>
 
