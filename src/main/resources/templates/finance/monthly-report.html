@@ -97,10 +97,16 @@
 
                 </div>
 
-                <button type="submit">
+                <button type="submit"
+                        class="generate-btn">
                     Generate Report
                 </button>
 
+                <button type="button"
+                        class="pdf-btn"
+                        onclick="downloadPDF()">
+                    📄 Download PDF
+                </button>
             </form>
 
         </section>
@@ -599,4 +605,9 @@
 </div>
 
 </body>
+<script>
+    function downloadPDF() {
+        window.print();
+    }
+</script>
 </html>

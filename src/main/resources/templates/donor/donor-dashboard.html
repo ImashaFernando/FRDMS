@@ -14,7 +14,7 @@
     <link rel="stylesheet"
           th:href="@{/css/donor-dashboard.css}">
 
-    <!-- Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -32,6 +32,9 @@
 
     <aside class="sidebar">
 
+
+        <!-- LOGO -->
+
         <div class="logo-section">
 
             <div class="logo">
@@ -39,17 +42,21 @@
             </div>
 
             <div class="logo-subtitle">
-                FLOOD RELIEF & DISASTER
+                FLOOD RELIEF &amp; DISASTER<br>
                 MANAGEMENT SYSTEM
             </div>
 
         </div>
 
 
+        <!-- PROFILE -->
+
         <div class="profile-section">
 
             <div class="profile-icon">
+
                 <i class="fa-solid fa-user"></i>
+
             </div>
 
             <div class="profile-info">
@@ -67,47 +74,69 @@
         </div>
 
 
+        <!-- NAVIGATION -->
+
         <nav class="sidebar-nav">
+
+
+            <!-- DASHBOARD -->
 
             <a th:href="@{/donor/dashboard}"
                class="nav-item active">
 
                 <i class="fa-solid fa-house"></i>
 
-                <span>Dashboard</span>
+                <span>
+                    Dashboard
+                </span>
 
             </a>
 
+
+            <!-- SUBMIT DONATION -->
 
             <a th:href="@{/donations/submit}"
                class="nav-item">
 
                 <i class="fa-solid fa-hand-holding-heart"></i>
 
-                <span>Submit Donation</span>
+                <span>
+                    Submit Donation
+                </span>
 
             </a>
 
+
+            <!-- MY DONATIONS -->
 
             <a th:href="@{/donations/my}"
                class="nav-item">
 
                 <i class="fa-solid fa-clock-rotate-left"></i>
 
-                <span>My Donations</span>
+                <span>
+                    My Donations
+                </span>
 
             </a>
+
 
         </nav>
 
 
-        <div class="sidebar-bottom">
+        <!-- ========================================= -->
+        <!-- LOGOUT                                   -->
+        <!-- ========================================= -->
 
-            <form th:action="@{/donor/logout}"
-                  method="post">
+        <div class="sidebar-logout-section">
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="sidebar-logout-form">
 
                 <button type="submit"
-                        class="logout-btn">
+                        class="sidebar-logout-btn"
+                        title="Logout">
 
                     <i class="fa-solid fa-right-from-bracket"></i>
 
@@ -119,8 +148,8 @@
 
         </div>
 
-    </aside>
 
+    </aside>
 
 
     <!-- ========================================= -->
@@ -150,8 +179,11 @@
             <div class="user-badge">
 
                 <div class="small-user-icon">
+
                     <i class="fa-solid fa-user"></i>
+
                 </div>
+
 
                 <div>
 
@@ -170,8 +202,9 @@
         </header>
 
 
-
-        <!-- WELCOME -->
+        <!-- ========================================= -->
+        <!-- WELCOME                                   -->
+        <!-- ========================================= -->
 
         <section class="welcome-card">
 
@@ -202,8 +235,9 @@
         </section>
 
 
-
-        <!-- SECTION TITLE -->
+        <!-- ========================================= -->
+        <!-- SECTION TITLE                             -->
+        <!-- ========================================= -->
 
         <div class="section-heading">
 
@@ -222,8 +256,9 @@
         </div>
 
 
-
-        <!-- ACTION CARDS -->
+        <!-- ========================================= -->
+        <!-- ACTION CARDS                              -->
+        <!-- ========================================= -->
 
         <section class="action-grid">
 
@@ -239,6 +274,7 @@
 
                 </div>
 
+
                 <div class="action-content">
 
                     <h3>
@@ -251,14 +287,16 @@
                     </p>
 
                     <span class="card-link">
+
                         Make Donation
+
                         <i class="fa-solid fa-arrow-right"></i>
+
                     </span>
 
                 </div>
 
             </a>
-
 
 
             <!-- MY DONATIONS -->
@@ -272,6 +310,7 @@
 
                 </div>
 
+
                 <div class="action-content">
 
                     <h3>
@@ -284,14 +323,16 @@
                     </p>
 
                     <span class="card-link">
+
                         View Donations
+
                         <i class="fa-solid fa-arrow-right"></i>
+
                     </span>
 
                 </div>
 
             </a>
-
 
 
             <!-- DONATION POLICY -->
@@ -303,6 +344,7 @@
                     <i class="fa-solid fa-circle-info"></i>
 
                 </div>
+
 
                 <div class="action-content">
 
@@ -316,27 +358,36 @@
                     </p>
 
                     <span class="policy-note">
+
                         <i class="fa-solid fa-shield-halved"></i>
+
                         Secure donor access
+
                     </span>
 
                 </div>
 
             </div>
 
+
         </section>
 
 
-
-        <!-- INFORMATION SECTION -->
+        <!-- ========================================= -->
+        <!-- INFORMATION SECTION                       -->
+        <!-- ========================================= -->
 
         <section class="info-section">
+
 
             <div class="info-item">
 
                 <div class="info-icon-small">
+
                     <i class="fa-solid fa-calendar-check"></i>
+
                 </div>
+
 
                 <div>
 
@@ -357,8 +408,11 @@
             <div class="info-item">
 
                 <div class="info-icon-small">
+
                     <i class="fa-solid fa-lock"></i>
+
                 </div>
+
 
                 <div>
 
@@ -375,16 +429,18 @@
 
             </div>
 
+
         </section>
 
 
-
-        <!-- FOOTER -->
+        <!-- ========================================= -->
+        <!-- FOOTER                                   -->
+        <!-- ========================================= -->
 
         <footer>
 
             <p>
-                © 2026 FRDMS — Flood Relief & Disaster
+                © 2026 FRDMS — Flood Relief &amp; Disaster
                 Management System
             </p>
 
@@ -397,7 +453,9 @@
 
     </main>
 
+
 </div>
+
 
 </body>
 

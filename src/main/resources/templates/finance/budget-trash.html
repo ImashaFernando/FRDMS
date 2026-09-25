@@ -32,11 +32,9 @@
 
   </div>
 
-  <a href="/finance/budgets/pending"
+  <a th:href="@{/pm/budgets/pending}"
      class="back-btn">
-
     ← Pending Requirements
-
   </a>
 
 </header>
@@ -46,17 +44,21 @@
 
   <div class="page-heading">
 
-        <span class="eyebrow">
-            PROJECT MANAGER
-        </span>
+    <div>
+      <span class="eyebrow">PROJECT MANAGER</span>
 
-    <h2>
-      Rejected Budget Requirements
-    </h2>
+      <h2>Pending Budget Requirements</h2>
 
-    <p>
-      Previously rejected budget requirements are retained for reference.
-    </p>
+      <p>
+        Review budget requirements submitted by the Finance Officer.
+      </p>
+    </div>
+
+    <a th:href="@{/finance/budgets/trash}" class="trash-btn">
+      🗑 Trash Bin
+    </a>
+
+  </div>
 
   </div>
 
@@ -79,7 +81,6 @@
 
         </thead>
 
-
         <tbody>
 
         <tr th:each="budget : ${budgets}">
@@ -97,8 +98,8 @@
             LKR
 
             <span th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
-                            100,000.00
-                        </span>
+              100,000.00
+            </span>
 
           </td>
 
@@ -108,9 +109,9 @@
 
           <td>
 
-                        <span class="rejected">
-                            REJECTED
-                        </span>
+            <span class="rejected">
+              REJECTED
+            </span>
 
           </td>
 

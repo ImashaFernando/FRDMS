@@ -12,7 +12,8 @@
 
   <link rel="stylesheet"
         th:href="@{/css/expense-records.css}">
-
+  <link rel="stylesheet"
+        th:href="@{/css/confirmation.css}">
 </head>
 
 <body>
@@ -335,18 +336,14 @@
               </a>
 
 
-              <form
-                      th:action="@{/finance/expenses/delete/{id}(id=${expense.id})}"
-                      method="post"
-                      class="delete-form"
-                      onsubmit="return confirmDelete();">
+              <form th:action="@{/finance/expenses/delete/{id}(id=${expense.id})}"
+                    method="post"
+                    th:id="'deleteExpenseForm-' + ${expense.id}">
 
-
-                <button type="submit"
-                        class="delete-btn">
-
+                <button type="button"
+                        class="delete-btn"
+                        th:onclick="'confirmDeleteExpense(' + ${expense.id} + ')'">
                   Delete
-
                 </button>
 
               </form>
@@ -407,12 +404,48 @@
 
 </main>
 
+<!-- ================= CONFIRMATION MODAL ================= -->
 
+<div id="confirmationModal" class="confirm-overlay">
 
-<script th:src="@{/js/expense-records.js}">
-</script>
+  <div class="confirm-modal">
 
+    <div id="confirmIcon"
+         class="confirm-icon">
+      !
+    </div>
 
+    <h3 id="confirmTitle"
+        class="confirm-title">
+      Confirmation
+    </h3>
+
+    <p id="confirmMessage"
+       class="confirm-message">
+      Are you sure?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button type="button"
+              id="confirmCancel"
+              class="confirm-btn confirm-cancel">
+        Cancel
+      </button>
+
+      <button type="button"
+              id="confirmOk"
+              class="confirm-btn confirm-danger">
+        Delete
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+<script th:src="@{/js/expense-records.js}"></script>
+<script th:src="@{/js/confirmation.js}"></script>
 </body>
 
 </html>

@@ -227,3 +227,15 @@ select:focus {
         width: 100%;
     }
 }
+/* Validation Errors */
+.error {
+    display: block;
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* Invalid input */
+.input-error {
+    border: 1px solid #dc3545 !important;
+}

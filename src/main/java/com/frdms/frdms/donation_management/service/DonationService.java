@@ -2,7 +2,9 @@ package com.frdms.frdms.donation_management.service;
 
 import com.frdms.frdms.donation_management.entity.Donation;
 import com.frdms.frdms.donation_management.repository.DonationRepository;
+import com.frdms.frdms.finance_management.service.InventoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -13,8 +15,19 @@ public class DonationService {
 
     private final DonationRepository donationRepository;
 
-    public DonationService(DonationRepository donationRepository) {
+    private final InventoryService inventoryService;
+
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
+    public DonationService(
+            DonationRepository donationRepository,
+            InventoryService inventoryService) {
+
         this.donationRepository = donationRepository;
+        this.inventoryService = inventoryService;
     }
 
 
@@ -33,7 +46,10 @@ public class DonationService {
 
         // Automatically set today's date
         if (donation.getDonationDate() == null) {
-            donation.setDonationDate(LocalDate.now());
+
+            donation.setDonationDate(
+                    LocalDate.now()
+            );
         }
 
         return donationRepository.save(donation);
@@ -105,18 +121,21 @@ public class DonationService {
     // CHECK 2-DAY EDIT / DELETE PERIOD
     // =========================================================
 
-    public boolean isWithinEditPeriod(Donation donation) {
+    public boolean isWithinEditPeriod(
+            Donation donation) {
 
         // If donation has no date,
         // editing/deleting is not allowed.
         if (donation.getDonationDate() == null) {
+
             return false;
         }
 
-        long daysPassed = ChronoUnit.DAYS.between(
-                donation.getDonationDate(),
-                LocalDate.now()
-        );
+        long daysPassed =
+                ChronoUnit.DAYS.between(
+                        donation.getDonationDate(),
+                        LocalDate.now()
+                );
 
         /*
          * Allowed:
@@ -128,7 +147,8 @@ public class DonationService {
          * Day 3 → NO
          */
 
-        return daysPassed >= 0 && daysPassed < 2;
+        return daysPassed >= 0
+                && daysPassed < 2;
     }
 
 
@@ -203,7 +223,9 @@ public class DonationService {
          * status
          */
 
-        return donationRepository.save(existingDonation);
+        return donationRepository.save(
+                existingDonation
+        );
     }
 
 
@@ -289,25 +311,168 @@ public class DonationService {
     // FINANCE OFFICER - ACCEPT DONATION
     // =========================================================
 
+    @Transactional
     public Donation acceptDonation(Long id) {
 
-        Donation donation = getDonationById(id);
+        Donation donation =
+                getDonationById(id);
 
-        /*
-         * Some older donations may have been created
-         * before donationDate was added to the entity.
-         *
-         * If the date is missing, set today's date
-         * before saving the updated status.
-         */
+
+        // -----------------------------------------------------
+        // PREVENT DUPLICATE ACCEPTANCE
+        // -----------------------------------------------------
+
+        if ("ACCEPTED".equalsIgnoreCase(
+                donation.getStatus())) {
+
+            return donation;
+        }
+
+
+        // -----------------------------------------------------
+        // PREVENT ACCEPTING REJECTED DONATION
+        // -----------------------------------------------------
+
+        if ("REJECTED".equalsIgnoreCase(
+                donation.getStatus())) {
+
+            throw new IllegalStateException(
+                    "A rejected donation cannot be accepted"
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // HANDLE OLD DONATIONS WITHOUT DATE
+        // -----------------------------------------------------
 
         if (donation.getDonationDate() == null) {
 
-            donation.setDonationDate(LocalDate.now());
+            donation.setDonationDate(
+                    LocalDate.now()
+            );
         }
+
+
+        // =====================================================
+        // GOODS DONATION → INVENTORY
+        // =====================================================
+
+        if ("GOODS".equalsIgnoreCase(
+                donation.getDonationType())) {
+
+
+            // -------------------------------------------------
+            // CHECK GOODS DESCRIPTION
+            // -------------------------------------------------
+
+            if (donation.getGoodsDescription() == null
+                    || donation.getGoodsDescription()
+                    .trim()
+                    .isEmpty()) {
+
+                throw new IllegalStateException(
+                        "Goods description is required"
+                );
+            }
+
+
+            // -------------------------------------------------
+            // CHECK GOODS QUANTITY
+            // -------------------------------------------------
+
+            if (donation.getGoodsQuantity() == null
+                    || donation.getGoodsQuantity()
+                    .trim()
+                    .isEmpty()) {
+
+                throw new IllegalStateException(
+                        "Goods quantity is required"
+                );
+            }
+
+
+            // -------------------------------------------------
+            // READ GOODS QUANTITY
+            // -------------------------------------------------
+
+            String quantityText =
+                    donation.getGoodsQuantity()
+                            .trim();
+
+            int quantity;
+
+
+            try {
+
+                /*
+                 * Supports:
+                 *
+                 * 10
+                 * 10 kg
+                 * 10 kg pack
+                 * 50 bottles
+                 * 20 boxes
+                 *
+                 * The first number is used
+                 * as the inventory quantity.
+                 */
+
+                String numberOnly =
+                        quantityText.replaceAll(
+                                "^\\D*(\\d+).*",
+                                "$1"
+                        );
+
+                quantity =
+                        Integer.parseInt(numberOnly);
+
+            } catch (Exception e) {
+
+                throw new IllegalStateException(
+                        "Invalid goods quantity: "
+                                + donation.getGoodsQuantity()
+                );
+            }
+
+
+            // -------------------------------------------------
+            // CHECK QUANTITY
+            // -------------------------------------------------
+
+            if (quantity <= 0) {
+
+                throw new IllegalStateException(
+                        "Goods quantity must be greater than zero"
+                );
+            }
+
+
+            // -------------------------------------------------
+            // UPDATE INVENTORY
+            // -------------------------------------------------
+
+            inventoryService.addDonationToInventory(
+
+                    donation
+                            .getGoodsDescription()
+                            .trim(),
+
+                    quantity,
+
+                    donation.getDescription()
+            );
+        }
+
+
+        // =====================================================
+        // SET DONATION STATUS
+        // =====================================================
 
         donation.setStatus("ACCEPTED");
 
+
+        // Save accepted donation
         return donationRepository.save(donation);
     }
 
@@ -316,20 +481,62 @@ public class DonationService {
     // FINANCE OFFICER - REJECT DONATION
     // =========================================================
 
+    @Transactional
     public Donation rejectDonation(Long id) {
 
-        Donation donation = getDonationById(id);
+        Donation donation =
+                getDonationById(id);
 
-        /*
-         * Handle older donations with no donation date.
-         */
+
+        // -----------------------------------------------------
+        // PREVENT REJECTING ALREADY ACCEPTED DONATION
+        // -----------------------------------------------------
+
+        if ("ACCEPTED".equalsIgnoreCase(
+                donation.getStatus())) {
+
+            throw new IllegalStateException(
+                    "An accepted donation cannot be rejected"
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // PREVENT DUPLICATE REJECTION
+        // -----------------------------------------------------
+
+        if ("REJECTED".equalsIgnoreCase(
+                donation.getStatus())) {
+
+            return donation;
+        }
+
+
+        // -----------------------------------------------------
+        // HANDLE OLD DONATIONS WITHOUT DATE
+        // -----------------------------------------------------
 
         if (donation.getDonationDate() == null) {
 
-            donation.setDonationDate(LocalDate.now());
+            donation.setDonationDate(
+                    LocalDate.now()
+            );
         }
 
+
+        // -----------------------------------------------------
+        // SET REJECTED
+        // -----------------------------------------------------
+
         donation.setStatus("REJECTED");
+
+
+        /*
+         * IMPORTANT:
+         *
+         * Rejected goods are NOT added
+         * to inventory.
+         */
 
         return donationRepository.save(donation);
     }

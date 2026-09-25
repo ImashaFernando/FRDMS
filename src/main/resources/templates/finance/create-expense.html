@@ -23,6 +23,7 @@
   <a href="/finance/dashboard" class="back-btn">← Dashboard</a>
 </header>
 
+
 <main class="page-container">
 
   <div class="page-heading">
@@ -31,17 +32,24 @@
     <p>Enter the details of a disaster-relief expense.</p>
   </div>
 
+
   <section class="form-card">
 
     <form th:action="@{/finance/expenses/create}"
           th:object="${expense}"
           method="post"
-          id="expenseForm">
+          id="expenseForm"
+          novalidate>
 
       <div class="form-grid">
 
-        <!-- Expense Date -->
+
+        <!-- =====================================================
+             EXPENSE DATE
+        ====================================================== -->
+
         <div class="form-group">
+
           <label for="expenseDate">
             Expense Date <span>*</span>
           </label>
@@ -51,14 +59,21 @@
                  th:field="*{expenseDate}"
                  required>
 
-          <small class="error"
-                 th:if="${#fields.hasErrors('expenseDate')}"
-                 th:errors="*{expenseDate}">
+          <small id="expenseDateError"
+                 class="error"
+                 th:text="${#fields.hasErrors('expenseDate') ? #fields.errors('expenseDate')[0] : ''}"
+                 th:style="${#fields.hasErrors('expenseDate') ? 'display:block;' : 'display:none;'}">
           </small>
+
         </div>
 
-        <!-- Amount -->
+
+        <!-- =====================================================
+             AMOUNT
+        ====================================================== -->
+
         <div class="form-group">
+
           <label for="amount">
             Amount (LKR) <span>*</span>
           </label>
@@ -71,14 +86,21 @@
                  placeholder="Enter amount"
                  required>
 
-          <small class="error"
-                 th:if="${#fields.hasErrors('amount')}"
-                 th:errors="*{amount}">
+          <small id="amountError"
+                 class="error"
+                 th:text="${#fields.hasErrors('amount') ? #fields.errors('amount')[0] : ''}"
+                 th:style="${#fields.hasErrors('amount') ? 'display:block;' : 'display:none;'}">
           </small>
+
         </div>
 
-        <!-- Description -->
+
+        <!-- =====================================================
+             DESCRIPTION
+        ====================================================== -->
+
         <div class="form-group full-width">
+
           <label for="description">
             Expense Description <span>*</span>
           </label>
@@ -90,14 +112,21 @@
                  placeholder="e.g. Purchase of drinking water"
                  required>
 
-          <small class="error"
-                 th:if="${#fields.hasErrors('description')}"
-                 th:errors="*{description}">
+          <small id="descriptionError"
+                 class="error"
+                 th:text="${#fields.hasErrors('description') ? #fields.errors('description')[0] : ''}"
+                 th:style="${#fields.hasErrors('description') ? 'display:block;' : 'display:none;'}">
           </small>
+
         </div>
 
-        <!-- Category -->
+
+        <!-- =====================================================
+             CATEGORY
+        ====================================================== -->
+
         <div class="form-group full-width">
+
           <label for="category">
             Expense Category <span>*</span>
           </label>
@@ -114,17 +143,27 @@
             <option value="RELIEF_ITEMS">Relief Items</option>
             <option value="LOGISTICS">Logistics</option>
             <option value="OTHER">Other</option>
+
           </select>
 
-          <small class="error"
-                 th:if="${#fields.hasErrors('category')}"
-                 th:errors="*{category}">
+          <small id="categoryError"
+                 class="error"
+                 th:text="${#fields.hasErrors('category') ? #fields.errors('category')[0] : ''}"
+                 th:style="${#fields.hasErrors('category') ? 'display:block;' : 'display:none;'}">
           </small>
+
         </div>
+
 
       </div>
 
+
+      <!-- =====================================================
+           FORM ACTIONS
+      ====================================================== -->
+
       <div class="form-actions">
+
         <a href="/finance/dashboard" class="cancel-btn">
           Cancel
         </a>
@@ -132,6 +171,7 @@
         <button type="submit" class="submit-btn">
           Record Expense
         </button>
+
       </div>
 
     </form>
@@ -139,6 +179,11 @@
   </section>
 
 </main>
+
+
+<!-- =========================================================
+     EXPENSE VALIDATION JAVASCRIPT
+========================================================= -->
 
 <script th:src="@{/js/create-expense.js}"></script>
 

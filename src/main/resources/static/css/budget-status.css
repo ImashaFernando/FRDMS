@@ -1,5 +1,18 @@
+/* =========================================================
+   FRDMS - FINANCE MANAGER BUDGET STATUS
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 * {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -9,161 +22,487 @@ body {
     color: #172033;
 }
 
-.page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 
-
-/* HEADER */
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
 .topbar {
+    width: 100%;
+
     background: #101c3d;
-    color: white;
+    color: #ffffff;
+
     padding: 18px 42px;
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 3px 12px rgba(16, 28, 61, 0.15);
 }
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
 
 .brand {
     display: flex;
     align-items: center;
+
     gap: 13px;
 }
 
 .brand-icon {
     width: 42px;
     height: 42px;
+
     border-radius: 10px;
+
     background: #3157d5;
+
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-weight: bold;
+    justify-content: center;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .brand h1 {
     margin: 0;
+
+    color: #ffffff;
+
     font-size: 20px;
+    font-weight: 700;
 }
 
-.brand p {
-    margin: 3px 0 0;
+.brand span {
+    display: block;
+
+    margin-top: 3px;
+
     color: #b8c4dd;
+
     font-size: 12px;
 }
 
-.dashboard-btn {
-    color: white;
-    text-decoration: none;
-    border: 1px solid #607099;
-    padding: 9px 17px;
+
+/* =========================================================
+   BACK TO DASHBOARD BUTTON
+   ========================================================= */
+
+.back-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    background: #3582B8;
+    color: #ffffff !important;
+
+    border: none;
     border-radius: 8px;
-    font-size: 13px;
+
+    text-decoration: none !important;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
 }
 
-.dashboard-btn:hover {
-    background: #1c2b52;
+.back-btn:hover {
+    background: #85B6D6;
+
+    color: #12355B !important;
+
+    transform: translateY(-1px);
+
+    text-decoration: none !important;
+}
+
+.back-btn:active {
+    transform: scale(0.98);
 }
 
 
-/* CONTENT */
+/* =========================================================
+   MAIN PAGE CONTAINER
+   ========================================================= */
 
-.content {
+.page-container {
     width: 92%;
     max-width: 1350px;
+
     margin: 42px auto;
+
+    min-height: calc(100vh - 150px);
+}
+
+
+/* =========================================================
+   PAGE HEADING
+   ========================================================= */
+
+.page-heading {
+    margin-bottom: 28px;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.page-heading > div:first-child {
     flex: 1;
 }
 
-.page-heading {
-    margin-bottom: 25px;
+
+/* FINANCE MANAGEMENT LABEL */
+
+.page-heading .eyebrow {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #3157d5;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
 }
 
-.label {
-    color: #3157d5;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
+
+/* MAIN HEADING */
 
 .page-heading h2 {
-    margin: 6px 0;
-    font-size: 30px;
+    margin: 0 0 8px;
+
+    color: #172033;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    line-height: 1.2;
 }
+
+
+/* DESCRIPTION */
 
 .page-heading p {
     margin: 0;
-    color: #6d788c;
-    font-size: 14px;
+
+    color: #60708a;
+
+    font-size: 15px;
+
+    line-height: 1.5;
 }
 
 
-/* SUMMARY */
+/* =========================================================
+   STATUS SUMMARY GRID
+   ========================================================= */
 
-.summary-grid {
+.status-grid {
     display: grid;
+
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 25px;
+
+    gap: 18px;
+
+    margin-bottom: 28px;
 }
 
-.summary-card {
-    background: white;
-    padding: 21px;
-    border-radius: 13px;
+
+/* =========================================================
+   STATUS CARD
+   ========================================================= */
+
+.status-card {
+    min-height: 145px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+
+    border: 1px solid #edf0f5;
+
     box-shadow: 0 5px 20px rgba(20, 35, 70, 0.06);
+
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.summary-label {
+.status-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 9px 26px rgba(20, 35, 70, 0.10);
+}
+
+
+/* =========================================================
+   STATUS ICON
+   ========================================================= */
+
+.status-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PENDING CARD
+   ========================================================= */
+
+.pending-card .status-icon {
+    background: #fff5dc;
+
+    color: #b77900;
+}
+
+
+/* =========================================================
+   APPROVED CARD
+   ========================================================= */
+
+.approved-card .status-icon {
+    background: #e8efff;
+
+    color: #3157d5;
+}
+
+
+/* =========================================================
+   ALLOCATED CARD
+   ========================================================= */
+
+.allocated-card .status-icon {
+    background: #e5f8ee;
+
+    color: #16834d;
+}
+
+
+/* =========================================================
+   REJECTED CARD
+   ========================================================= */
+
+.rejected-card .status-icon {
+    background: #ffe8e8;
+
+    color: #c0392b;
+}
+
+
+/* =========================================================
+   STATUS CONTENT
+   ========================================================= */
+
+.status-content {
+    min-width: 0;
+}
+
+.status-label {
     display: block;
+
+    margin-bottom: 7px;
+
     color: #7b8598;
+
     font-size: 10px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
 }
 
-.summary-card strong {
-    font-size: 25px;
+.status-content h3 {
+    margin: 0;
+
     color: #1e2d50;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.status-content p {
+    margin: 8px 0 0;
+
+    color: #7b8598;
+
+    font-size: 12px;
 }
 
 
-/* TABLE */
+/* =========================================================
+   TABLE CARD
+   ========================================================= */
 
 .table-card {
-    background: white;
+    background: #ffffff;
+
     border-radius: 16px;
-    box-shadow: 0 8px 28px rgba(20, 35, 70, 0.08);
+
     overflow: hidden;
+
+    border: 1px solid #edf0f5;
+
+    box-shadow: 0 8px 28px rgba(20, 35, 70, 0.08);
 }
 
-.card-header {
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.table-header {
     padding: 24px 27px;
+
     border-bottom: 1px solid #edf0f5;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
 }
 
-.card-header h3 {
+.table-header > div {
+    min-width: 0;
+}
+
+
+/* SMALL SECTION LABEL */
+
+.section-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #3157d5;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+/* TABLE TITLE */
+
+.table-header h3 {
     margin: 0;
-    font-size: 18px;
+
+    color: #172033;
+
+    font-size: 20px;
+    font-weight: 700;
 }
 
-.card-header p {
-    margin: 6px 0 0;
-    color: #7a8498;
+
+/* =========================================================
+   ALLOCATE BUTTON
+   ========================================================= */
+
+.allocate-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background: #3582B8;
+    color: #ffffff !important;
+
+    border-radius: 8px;
+
+    text-decoration: none !important;
+
     font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: all 0.2s ease;
 }
+
+.allocate-btn:hover {
+    background: #2d6f9d;
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+
+    text-decoration: none !important;
+}
+
+.allocate-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
 
 .table-wrapper {
+    width: 100%;
+
     overflow-x: auto;
 }
 
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
 table {
     width: 100%;
+
     border-collapse: collapse;
+
+    min-width: 950px;
 }
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
 
 thead {
     background: #f7f8fb;
@@ -171,173 +510,351 @@ thead {
 
 th {
     padding: 15px 18px;
+
     text-align: left;
+
     color: #59657b;
+
     font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+
     white-space: nowrap;
+
+    border-bottom: 1px solid #edf0f5;
 }
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
 
 td {
     padding: 17px 18px;
+
     border-top: 1px solid #edf0f5;
+
+    color: #34415a;
+
     font-size: 13px;
+
     vertical-align: middle;
 }
 
-tr:hover td {
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover td {
     background: #fbfcff;
 }
 
-.budget-id {
+
+/* =========================================================
+   BUDGET ID
+   ========================================================= */
+
+td:first-child {
     color: #68738a;
-    font-weight: bold;
+
+    font-weight: 700;
+
+    width: 60px;
 }
 
-.money {
-    font-weight: bold;
+
+/* =========================================================
+   AMOUNT
+   ========================================================= */
+
+.amount {
     color: #263b68;
+
+    font-weight: 700;
+
     white-space: nowrap;
 }
 
-.allocated-money {
-    color: #16834d;
-}
-
-.not-allocated {
-    color: #929aaa;
-    font-size: 12px;
+.amount span:first-child {
+    margin-right: 4px;
 }
 
 
-/* STATUS */
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
 
-.status {
-    display: inline-block;
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 82px;
+
     padding: 6px 12px;
+
     border-radius: 20px;
+
     font-size: 10px;
-    font-weight: bold;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
 }
 
-.status.allocated {
-    background: #e5f8ee;
-    color: #16834d;
-}
 
-.status.approved {
-    background: #e8efff;
-    color: #3157d5;
-}
+/* PENDING */
 
-.status.pending {
+.status-badge.pending {
     background: #fff5dc;
+
     color: #b77900;
 }
 
-.status.rejected {
+
+/* APPROVED */
+
+.status-badge.approved {
+    background: #e8efff;
+
+    color: #3157d5;
+}
+
+
+/* ALLOCATED */
+
+.status-badge.allocated {
+    background: #e5f8ee;
+
+    color: #16834d;
+}
+
+
+/* REJECTED */
+
+.status-badge.rejected {
     background: #ffe8e8;
+
     color: #c0392b;
 }
 
 
-/* EMPTY */
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
 
 .empty-state {
+    padding: 60px 20px !important;
+
     text-align: center;
-    padding: 55px 20px;
-}
 
-.empty-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    background: #eef2ff;
-    color: #3157d5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.empty-state h3 {
-    margin: 0;
-}
-
-.empty-state p {
     color: #7b8598;
-    font-size: 13px;
+
+    font-size: 14px;
 }
 
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 footer {
     padding: 20px;
+
     text-align: center;
+
     color: #8a94a7;
+
     font-size: 12px;
 }
 
 
-/* RESPONSIVE */
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
 
-    .summary-grid {
+    .status-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .page-container {
+        width: 94%;
+    }
+
+    .table-header {
+        align-items: flex-start;
+    }
+
 }
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .topbar {
+        padding: 16px 25px;
+    }
+
+    .page-container {
+        margin: 30px auto;
+    }
+
+    .page-heading h2 {
+        font-size: 28px;
+    }
+
+    .status-card {
+        min-height: 130px;
+
+        padding: 18px;
+    }
+
+    .status-icon {
+        width: 46px;
+        height: 46px;
+
+        font-size: 19px;
+    }
+
+    .status-content h3 {
+        font-size: 25px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 600px) {
 
     .topbar {
-        padding: 16px 20px;
+        padding: 15px 18px;
+
+        gap: 15px;
     }
 
-    .content {
+    .brand {
+        gap: 9px;
+    }
+
+    .brand-icon {
+        width: 38px;
+        height: 38px;
+
+        border-radius: 9px;
+
+        font-size: 16px;
+    }
+
+    .brand h1 {
+        font-size: 18px;
+    }
+
+    .brand span {
+        font-size: 10px;
+    }
+
+    .back-btn {
+        padding: 9px 13px;
+
+        font-size: 12px;
+    }
+
+
+    .page-container {
         width: 94%;
-        margin: 28px auto;
+
+        margin: 27px auto;
     }
 
-    .summary-grid {
+
+    .page-heading {
+        margin-bottom: 22px;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .page-heading h2 {
+        font-size: 26px;
+    }
+
+    .page-heading p {
+        font-size: 14px;
+    }
+
+
+    .status-grid {
         grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-bottom: 22px;
     }
-}
-/* =========================
-   DASHBOARD BUTTON
-   ========================= */
 
-.dashboard-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
 
-    padding: 11px 20px;
+    .status-card {
+        min-height: 110px;
 
-    background: #3582B8;
-    color: #FFFFFF !important;
+        padding: 17px;
+    }
 
-    text-decoration: none !important;
 
-    border: none;
-    border-radius: 8px;
+    .status-icon {
+        width: 45px;
+        height: 45px;
 
-    font-size: 14px;
-    font-weight: 700;
+        border-radius: 11px;
 
-    white-space: nowrap;
-    cursor: pointer;
+        font-size: 18px;
+    }
 
-    transition: all 0.2s ease;
-}
 
-.dashboard-btn:hover {
-    background: #85B6D6;
-    color: #12355B !important;
+    .status-content h3 {
+        font-size: 24px;
+    }
 
-    text-decoration: none !important;
 
-    transform: translateY(-1px);
+    .table-header {
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .table-header h3 {
+        font-size: 18px;
+    }
+
+
+    .allocate-btn {
+        width: 100%;
+
+        padding: 11px 15px;
+    }
+
+
+    th {
+        padding: 13px 14px;
+    }
+
+    td {
+        padding: 15px 14px;
+    }
+
 }

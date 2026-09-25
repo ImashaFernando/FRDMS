@@ -181,3 +181,31 @@ td {
 
     color: #68758a;
 }
+.trash-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    background: #f1f3f5;
+    color: #555;
+
+    border: 1px solid #d5d9dd;
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: all 0.2s ease;
+}
+
+.trash-btn:hover {
+    background: #e1e5e8;
+    color: #222;
+}

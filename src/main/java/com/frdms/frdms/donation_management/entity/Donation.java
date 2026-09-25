@@ -1,6 +1,7 @@
 package com.frdms.frdms.donation_management.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,34 +15,83 @@ public class Donation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    // =========================================================
+    // DONOR
+    // =========================================================
+
     @NotNull(message = "Donor is required")
     private Long donorId;
 
+
+    // =========================================================
+    // DONATION TYPE
+    // =========================================================
+
+    @NotBlank(message = "Donation type is required")
     private String donationType;
+
+
+    // =========================================================
+    // CASH AMOUNT
+    // =========================================================
+
+    @DecimalMin(
+            value = "0.01",
+            message = "Cash amount must be greater than 0"
+    )
 
     private Double cashAmount;
 
+
+    // =========================================================
+    // GOODS DESCRIPTION
+    // =========================================================
+
     private String goodsDescription;
+
+
+    // =========================================================
+    // GOODS QUANTITY
+    // =========================================================
 
     private String goodsQuantity;
 
-    @NotBlank(message = "Description is required")
+
+    // =========================================================
+    // DESCRIPTION
+    // =========================================================
+
     private String description;
+
+
+    // =========================================================
+    // STATUS
+    // =========================================================
 
     private String status;
 
-    // =========================
-    // Donation Date
-    // =========================
+
+    // =========================================================
+    // DONATION DATE
+    // =========================================================
 
     @NotNull(message = "Donation date is required")
     @Column(nullable = false)
     private LocalDate donationDate;
 
 
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public Donation() {
     }
 
+
+    // =========================================================
+    // GETTERS AND SETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -114,10 +164,6 @@ public class Donation {
         this.status = status;
     }
 
-
-    // =========================
-    // Donation Date Getter/Setter
-    // =========================
 
     public LocalDate getDonationDate() {
         return donationDate;

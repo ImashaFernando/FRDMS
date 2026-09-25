@@ -24,10 +24,14 @@ public class PmDashboardController {
         this.budgetService = budgetService;
     }
 
+
     @GetMapping("/pm/dashboard")
     public String pmDashboard(Model model) {
 
-        // Donation information
+        // =========================
+        // DONATION INFORMATION
+        // =========================
+
         model.addAttribute(
                 "totalDonations",
                 donationService.getTotalCashDonationAmount()
@@ -44,14 +48,20 @@ public class PmDashboardController {
         );
 
 
-        // Finance information
+        // =========================
+        // FINANCE INFORMATION
+        // =========================
+
         model.addAttribute(
                 "totalExpenses",
                 expenseService.getTotalExpenseAmount()
         );
 
 
-        // Budget information
+        // =========================
+        // BUDGET INFORMATION
+        // =========================
+
         model.addAttribute(
                 "availableBudget",
                 budgetService.getAvailableBudget()
@@ -65,16 +75,6 @@ public class PmDashboardController {
         model.addAttribute(
                 "pendingBudgets",
                 budgetService.getPendingBudgets()
-        );
-
-        model.addAttribute(
-                "approvedBudgets",
-                budgetService.getApprovedBudgets()
-        );
-
-        model.addAttribute(
-                "rejectedBudgets",
-                budgetService.getRejectedBudgets()
         );
 
 

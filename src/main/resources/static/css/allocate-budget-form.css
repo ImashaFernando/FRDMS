@@ -1,12 +1,17 @@
+/* =========================================================
+   FRDMS - Allocate Budget Form
+   ========================================================= */
+
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     background: #f4f7fb;
-    color: #172033;
+    color: #12355B;
 }
 
 .page {
@@ -15,147 +20,178 @@ body {
     flex-direction: column;
 }
 
-
-/* HEADER */
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
 .topbar {
-    background: #101c3d;
-    color: white;
-    padding: 18px 42px;
+    height: 105px;
+    background: #10245b;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 20px 55px;
+    color: #ffffff;
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 18px;
 }
 
 .brand-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: #3157d5;
+    width: 58px;
+    height: 58px;
+    background: #315bdc;
+    border-radius: 15px;
+
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-weight: bold;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
 }
 
 .brand h1 {
-    margin: 0;
-    font-size: 20px;
+    font-size: 28px;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
 }
 
 .brand p {
-    margin: 3px 0 0;
-    color: #b8c4dd;
-    font-size: 12px;
+    font-size: 15px;
+    color: #d7e1f3;
 }
 
 .back-btn {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
-    border: 1px solid #607099;
-    padding: 9px 17px;
-    border-radius: 8px;
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.2s ease;
 }
 
 .back-btn:hover {
-    background: #1c2b52;
+    color: #8dc8ed;
+    text-decoration: underline;
 }
 
-
-/* CONTENT */
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
 
 .content {
-    width: 92%;
-    max-width: 850px;
+    width: 100%;
+    max-width: 1000px;
     margin: 45px auto;
-    flex: 1;
+    padding: 0 25px;
 }
 
-
-/* CARD */
+/* =========================================================
+   FORM CARD
+   ========================================================= */
 
 .form-card {
-    background: white;
-    border-radius: 17px;
-    padding: 35px;
-    box-shadow: 0 8px 30px rgba(20, 35, 70, 0.09);
+    background: #ffffff;
+    border: 1px solid #e0e7ef;
+    border-radius: 16px;
+    padding: 38px 42px;
+
+    box-shadow: 0 8px 25px rgba(18, 53, 91, 0.08);
 }
 
-
-/* HEADING */
+/* =========================================================
+   HEADING
+   ========================================================= */
 
 .heading {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e8edf3;
 }
 
 .icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 13px;
-    background: #e9edff;
-    color: #3157d5;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+
+    background: #e9f3fb;
+    color: #3582B8;
+
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 20px;
-    font-weight: bold;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: 700;
 }
 
 .label {
-    color: #3157d5;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 7px;
+
+    color: #3582B8;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
 }
 
 .heading h2 {
-    margin: 4px 0;
-    font-size: 25px;
+    font-size: 30px;
+    color: #12355B;
+    margin-bottom: 8px;
 }
 
 .heading p {
-    margin: 0;
-    color: #727d91;
-    font-size: 13px;
+    color: #68788c;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-
-/* ERROR */
+/* =========================================================
+   ERROR
+   ========================================================= */
 
 .error-message {
+    margin-top: 25px;
+    padding: 13px 16px;
+
     background: #fff0f0;
-    border: 1px solid #ffd0d0;
-    color: #c0392b;
-    padding: 12px 15px;
+    border: 1px solid #f2b8b8;
     border-radius: 8px;
-    margin-bottom: 22px;
-    font-size: 13px;
+
+    color: #b42318;
+    font-size: 14px;
+    font-weight: 600;
 }
 
-
-/* DETAILS */
+/* =========================================================
+   BUDGET DETAILS
+   ========================================================= */
 
 .details {
+    margin-top: 30px;
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
 }
 
 .detail {
-    background: #f7f8fb;
+    background: #f7f9fc;
+    border: 1px solid #e5ebf2;
     border-radius: 10px;
-    padding: 17px;
+
+    padding: 17px 18px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
 .detail.full {
@@ -163,101 +199,157 @@ body {
 }
 
 .detail span:first-child {
-    display: block;
-    color: #788398;
-    font-size: 11px;
-    margin-bottom: 7px;
+    color: #748398;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .detail strong {
-    font-size: 14px;
-    color: #26324a;
+    color: #12355B;
+    font-size: 15px;
+    font-weight: 700;
 }
 
-.detail strong.approved {
-    color: #16834d;
+.detail .approved {
+    color: #218739;
 }
 
+/* =========================================================
+   ALLOCATION FORM
+   ========================================================= */
 
-/* FORM */
+form {
+    margin-top: 32px;
+    padding-top: 28px;
+
+    border-top: 1px solid #e8edf3;
+}
 
 .form-group {
-    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group label {
-    display: block;
     margin-bottom: 9px;
-    font-weight: bold;
+
+    color: #12355B;
     font-size: 14px;
+    font-weight: 700;
 }
 
-input {
+.form-group input {
     width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #ccd3df;
+    height: 48px;
+
+    padding: 0 14px;
+
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
     border-radius: 8px;
+
+    color: #12355B;
     font-size: 15px;
-}
 
-input:focus {
     outline: none;
-    border-color: #3157d5;
-    box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.08);
+    transition: 0.2s ease;
 }
 
-small {
-    display: block;
-    margin-top: 7px;
-    color: #7b8598;
-    font-size: 11px;
+.form-group input:focus {
+    border-color: #3582B8;
+    box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
 }
 
+.form-group small {
+    margin-top: 8px;
 
-/* BUTTON */
-
-.submit-btn {
-    width: 100%;
-    border: none;
-    padding: 14px;
-    border-radius: 9px;
-    background: #3157d5;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.submit-btn:hover {
-    background: #2446b7;
-}
-
-
-/* FOOTER */
-
-footer {
-    padding: 20px;
-    text-align: center;
-    color: #8a94a7;
+    color: #718096;
     font-size: 12px;
 }
 
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
 
-/* RESPONSIVE */
+.submit-btn {
+    margin-top: 25px;
 
-@media (max-width: 650px) {
+    min-width: 180px;
+    padding: 12px 24px;
+
+    background: #3582B8;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #2c6f9e;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(53, 130, 184, 0.2);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    margin-top: auto;
+    padding: 25px;
+
+    text-align: center;
+
+    border-top: 1px solid #dfe6ee;
+    background: #ffffff;
+
+    color: #7890aa;
+    font-size: 13px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
 
     .topbar {
-        padding: 16px 20px;
+        height: auto;
+        padding: 18px 22px;
+    }
+
+    .brand-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .brand h1 {
+        font-size: 23px;
     }
 
     .content {
-        width: 94%;
         margin: 25px auto;
+        padding: 0 15px;
     }
 
     .form-card {
         padding: 25px 20px;
+    }
+
+    .heading h2 {
+        font-size: 25px;
     }
 
     .details {

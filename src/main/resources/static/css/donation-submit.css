@@ -182,7 +182,9 @@ body {
 .validation-error {
     color: #C0392B;
     font-size: 12px;
+    font-weight: 600;
     margin-top: 6px;
+    line-height: 1.4;
 }
 
 /* ========================================

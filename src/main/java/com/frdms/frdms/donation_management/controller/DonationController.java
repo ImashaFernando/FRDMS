@@ -44,6 +44,7 @@ public class DonationController {
 
         Donation donation = new Donation();
 
+        // Set logged-in donor automatically
         donation.setDonorId(donor.getId());
 
         model.addAttribute("donation", donation);
@@ -58,14 +59,90 @@ public class DonationController {
             BindingResult bindingResult,
             Authentication authentication) {
 
+        // =====================================
+        // CONDITIONAL VALIDATION
+        // =====================================
+
+        // GOODS DONATION
+        if ("GOODS".equalsIgnoreCase(donation.getDonationType())) {
+
+            // Goods Description
+            if (donation.getGoodsDescription() == null ||
+                    donation.getGoodsDescription().trim().isEmpty()) {
+
+                bindingResult.rejectValue(
+                        "goodsDescription",
+                        "goodsDescription.required",
+                        "Goods description is required"
+                );
+            }
+
+            // Goods Quantity
+            if (donation.getGoodsQuantity() == null ||
+                    donation.getGoodsQuantity().trim().isEmpty()) {
+
+                bindingResult.rejectValue(
+                        "goodsQuantity",
+                        "goodsQuantity.required",
+                        "Goods quantity is required"
+                );
+            }
+        }
+
+
+        // =====================================
+        // CASH DONATION
+        // =====================================
+
+        if ("CASH".equalsIgnoreCase(donation.getDonationType())) {
+
+            // Cash amount required
+            if (donation.getCashAmount() == null) {
+
+                bindingResult.rejectValue(
+                        "cashAmount",
+                        "cashAmount.required",
+                        "Cash amount is required"
+                );
+
+            }
+            // Cash amount must be greater than zero
+            else if (donation.getCashAmount() <= 0) {
+
+                bindingResult.rejectValue(
+                        "cashAmount",
+                        "cashAmount.invalid",
+                        "Cash amount must be greater than 0"
+                );
+            }
+        }
+
+
+        // =====================================
+        // RETURN FORM IF VALIDATION ERRORS
+        // =====================================
+
         if (bindingResult.hasErrors()) {
             return "donation/donation-submit";
         }
 
+
+        // =====================================
+        // GET LOGGED-IN DONOR
+        // =====================================
+
         Donor donor = getLoggedInDonor(authentication);
 
-        // Never trust donorId from the form
+        /*
+         * Never trust donorId coming from the form.
+         * Always use the authenticated donor's ID.
+         */
         donation.setDonorId(donor.getId());
+
+
+        // =====================================
+        // SAVE DONATION
+        // =====================================
 
         donationService.submitDonation(donation);
 

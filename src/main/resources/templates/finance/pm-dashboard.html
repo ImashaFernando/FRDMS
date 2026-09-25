@@ -14,139 +14,249 @@
     <link rel="stylesheet"
           th:href="@{/css/pm-dashboard.css}">
 
+    <link rel="stylesheet"
+          th:href="@{/css/confirmation.css}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 
 <body>
 
 <div class="layout">
 
-    <!-- SIDEBAR -->
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
 
     <aside class="sidebar">
 
+        <!-- BRAND -->
+
         <div class="brand">
 
-            <h1>FRDMS</h1>
+            <h1>
+                FRDMS
+            </h1>
 
-            <span>PROJECT MANAGEMENT</span>
+            <span>
+                PROJECT MANAGEMENT
+            </span>
 
         </div>
 
 
+        <!-- =================================================
+             SIDEBAR NAVIGATION
+             ================================================= -->
+
         <nav class="sidebar-nav">
+
+
+            <!-- OVERVIEW -->
 
             <div class="nav-section-title">
                 OVERVIEW
             </div>
 
+
             <a href="/project-manager/dashboard"
                class="nav-item active">
 
-                <span class="nav-icon">⌁</span>
+                <span class="nav-icon">
+                    ⌁
+                </span>
 
                 Dashboard
 
             </a>
 
 
+            <!-- =================================================
+                 FINANCIAL MONITORING
+                 ================================================= -->
+
             <div class="nav-section-title">
                 FINANCIAL MONITORING
             </div>
 
+
             <a href="/donors/details"
                class="nav-item">
 
-                <span class="nav-icon">♟</span>
+                <span class="nav-icon">
+                    ♟
+                </span>
 
                 Donor Details
 
             </a>
 
+
             <a href="/donations/cash"
                class="nav-item">
 
-                <span class="nav-icon">▣</span>
+                <span class="nav-icon">
+                    ▣
+                </span>
 
                 Cash Donations
 
             </a>
 
+
             <a href="/donations/goods"
                class="nav-item">
 
-                <span class="nav-icon">◆</span>
+                <span class="nav-icon">
+                    ◆
+                </span>
 
                 Goods Donations
 
             </a>
 
 
+            <!-- =================================================
+                 BUDGET MANAGEMENT
+                 ================================================= -->
+
             <div class="nav-section-title">
                 BUDGET MANAGEMENT
             </div>
 
+
             <a href="/pm/budgets/pending"
                class="nav-item">
 
-                <span class="nav-icon">◷</span>
+                <span class="nav-icon">
+                    ◷
+                </span>
 
                 Pending Requirements
 
             </a>
 
-            <a href="/finance/budgets/approved"
-               class="nav-item">
 
-                <span class="nav-icon">✓</span>
-
-                Approved Budgets
-
-            </a>
-
-            <a href="/finance/budgets/trash"
-               class="nav-item">
-
-                <span class="nav-icon">×</span>
-
-                Rejected Budgets
-
-            </a>
-
+            <!-- =================================================
+                 REPORTS
+                 ================================================= -->
 
             <div class="nav-section-title">
                 REPORTS
             </div>
 
+
             <a href="/finance/reports/donations"
                class="nav-item">
 
-                <span class="nav-icon">▤</span>
+                <span class="nav-icon">
+                    ▤
+                </span>
 
                 Donation Report
 
             </a>
 
-            <a href="/finance/expenses"
+
+            <a href="/pm/expenses"
                class="nav-item">
 
-                <span class="nav-icon">▥</span>
+                <span class="nav-icon">
+                    ▥
+                </span>
 
                 Expense Records
 
             </a>
 
+
         </nav>
+
+
+        <!-- =====================================================
+             SIDEBAR USER / LOGOUT
+             SAME STYLE AS FINANCE OFFICER
+             ===================================================== -->
+
+        <div class="sidebar-user">
+
+
+            <!-- PM AVATAR -->
+
+            <div class="sidebar-user-avatar">
+                PM
+            </div>
+
+
+            <!-- USER INFORMATION -->
+
+            <div class="sidebar-user-info">
+
+                <strong>
+                    Project Manager
+                </strong>
+
+                <span>
+                    Internal User
+                </span>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  id="pmLogoutForm">
+
+                <button type="button"
+                        class="sidebar-logout-btn"
+                        title="Logout"
+                        onclick="showConfirmation({
+                title: 'Logout',
+                message: 'Are you sure you want to log out?',
+                confirmText: 'Logout',
+                type: 'danger',
+                icon: '↪',
+                action: function() {
+                    document.getElementById('pmLogoutForm').submit();
+                }
+            })">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                </button>
+
+            </form>
+
+
+        </div>
+
 
     </aside>
 
 
-    <!-- MAIN CONTENT -->
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
 
     <main class="main-content">
 
-        <!-- HEADER -->
+
+        <!-- =================================================
+             HEADER
+             ================================================= -->
 
         <header class="top-header">
+
+
+            <!-- HEADER TITLE -->
 
             <div>
 
@@ -161,16 +271,34 @@
             </div>
 
 
+            <!-- =================================================
+                 TOP PROFILE
+                 ================================================= -->
+
             <div class="profile-area">
 
+
+                <!-- Notification -->
+
                 <div class="notification">
+
                     ♧
-                    <span>0</span>
+
+                    <span>
+                        0
+                    </span>
+
                 </div>
+
+
+                <!-- PM Avatar -->
 
                 <div class="profile-avatar">
                     PM
                 </div>
+
+
+                <!-- PM Information -->
 
                 <div class="profile-info">
 
@@ -184,14 +312,19 @@
 
                 </div>
 
+
             </div>
 
         </header>
 
 
-        <!-- FINANCIAL OVERVIEW -->
+
+        <!-- =====================================================
+             FINANCIAL OVERVIEW
+             ===================================================== -->
 
         <section class="hero-section">
+
 
             <div>
 
@@ -210,16 +343,24 @@
 
             </div>
 
+
             <div class="hero-badge">
                 🛡 Project Management
             </div>
 
+
         </section>
 
 
-        <!-- SUMMARY CARDS -->
+
+        <!-- =====================================================
+             SUMMARY CARDS
+             ===================================================== -->
 
         <section class="summary-grid">
+
+
+            <!-- TOTAL DONATIONS -->
 
             <div class="summary-card">
 
@@ -235,7 +376,9 @@
 
                     <strong class="summary-value"
                             th:text="'Rs. ' + ${#numbers.formatDecimal(totalDonations, 1, 2)}">
+
                         Rs. 0.00
+
                     </strong>
 
                     <small>
@@ -246,6 +389,9 @@
 
             </div>
 
+
+
+            <!-- TOTAL EXPENSES -->
 
             <div class="summary-card">
 
@@ -261,7 +407,9 @@
 
                     <strong class="summary-value"
                             th:text="'Rs. ' + ${#numbers.formatDecimal(totalExpenses, 1, 2)}">
+
                         Rs. 0.00
+
                     </strong>
 
                     <small>
@@ -272,6 +420,9 @@
 
             </div>
 
+
+
+            <!-- AVAILABLE BUDGET -->
 
             <div class="summary-card">
 
@@ -287,7 +438,9 @@
 
                     <strong class="summary-value"
                             th:text="'Rs. ' + ${#numbers.formatDecimal(availableBudget, 1, 2)}">
+
                         Rs. 0.00
+
                     </strong>
 
                     <small>
@@ -298,6 +451,9 @@
 
             </div>
 
+
+
+            <!-- PENDING REQUIREMENTS -->
 
             <div class="summary-card">
 
@@ -313,7 +469,9 @@
 
                     <strong class="summary-value"
                             th:text="${pendingRequirements}">
+
                         0
+
                     </strong>
 
                     <small>
@@ -324,14 +482,20 @@
 
             </div>
 
+
         </section>
 
 
-        <!-- BUDGET REQUIREMENTS -->
+
+        <!-- =====================================================
+             BUDGET REQUIREMENTS
+             ===================================================== -->
 
         <section class="requirements-section">
 
+
             <div class="section-heading">
+
 
                 <div>
 
@@ -345,6 +509,7 @@
 
                 </div>
 
+
                 <a href="/pm/budgets/pending"
                    class="view-link">
 
@@ -352,15 +517,23 @@
 
                 </a>
 
+
             </div>
 
+
+
+            <!-- =================================================
+                 NO PENDING REQUESTS
+                 ================================================= -->
 
             <div class="requirement-card"
                  th:if="${pendingBudgets == null or #lists.isEmpty(pendingBudgets)}">
 
+
                 <div class="requirement-icon">
                     ✓
                 </div>
+
 
                 <div>
 
@@ -375,6 +548,7 @@
 
                 </div>
 
+
                 <a href="/pm/budgets/pending"
                    class="review-button">
 
@@ -382,127 +556,202 @@
 
                 </a>
 
+
             </div>
 
 
+
+            <!-- =================================================
+                 PENDING REQUESTS
+                 ================================================= -->
+
             <div th:each="budget : ${pendingBudgets}"
                  class="requirement-card">
+
 
                 <div class="requirement-icon">
                     !
                 </div>
 
+
                 <div class="requirement-details">
+
 
                     <strong th:text="${budget.activity}">
                         Relief Activity
                     </strong>
 
+
                     <p th:text="${budget.reason}">
                         Budget requirement reason
                     </p>
 
+
                     <span>
+
                         Requested:
+
                         <strong
                                 th:text="'Rs. ' + ${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
+
                             Rs. 0.00
+
                         </strong>
+
                     </span>
+
 
                 </div>
 
-                <a th:href="@{/pm/budgets/review/{id}(id=${budget.id})}"
+
+                <a th:href="@{/pm/budgets/pending}"
                    class="review-button">
 
                     Review →
 
                 </a>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- BUDGET STATUS -->
+
+        <!-- =====================================================
+             BUDGET STATUS
+             ===================================================== -->
 
         <section class="status-section">
 
+
             <div class="section-heading">
+
 
                 <div>
 
                     <div class="section-label">
-                        BUDGET STATUS
+                        BUDGET WORKFLOW
                     </div>
 
                     <h3>
-                        Budget Overview
+                        Budget Review Process
                     </h3>
 
                 </div>
+
 
             </div>
 
 
             <div class="status-grid">
 
-                <a href="/finance/budgets/approved"
-                   class="status-card">
+
+                <!-- PENDING -->
+
+                <div class="status-card">
 
                     <span class="status-number"
-                          th:text="${#lists.size(approvedBudgets)}">
+                          th:text="${pendingRequirements}">
+
                         0
+
                     </span>
 
                     <span>
-                        Approved Budgets
+                        Pending Review
+                    </span>
+
+                </div>
+
+
+
+                <!-- REVIEW -->
+
+                <a href="/pm/budgets/pending"
+                   class="status-card">
+
+                    <span class="status-number">
+                        →
+                    </span>
+
+                    <span>
+                        Review Requests
                     </span>
 
                 </a>
 
-
-                <a href="/finance/budgets/trash"
-                   class="status-card">
-
-                    <span class="status-number"
-                          th:text="${#lists.size(rejectedBudgets)}">
-                        0
-                    </span>
-
-                    <span>
-                        Rejected Budgets
-                    </span>
-
-                </a>
 
             </div>
+
 
         </section>
 
 
-        <!-- LOGOUT -->
 
-        <div class="logout-section">
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
 
-            <form th:action="@{/project-manager/logout}"
-                  method="post">
+        <footer>
 
-                <button type="submit"
-                        class="logout-button">
+            <span>
+                FRDMS
+            </span>
 
-                    Logout
+            <p>
+                Flood Relief & Disaster Management System
+            </p>
 
-                </button>
+        </footer>
 
-            </form>
-
-        </div>
 
     </main>
 
+
+</div>
+<div id="confirmationModal"
+     class="confirm-overlay">
+
+    <div class="confirm-modal">
+
+        <div id="confirmIcon"
+             class="confirm-icon">
+            ⚠
+        </div>
+
+        <h3 id="confirmTitle"
+            class="confirm-title">
+            Confirmation
+        </h3>
+
+        <p id="confirmMessage"
+           class="confirm-message">
+            Are you sure?
+        </p>
+
+        <div class="confirm-actions">
+
+            <button type="button"
+                    id="confirmCancel"
+                    class="confirm-btn confirm-cancel">
+                Cancel
+            </button>
+
+            <button type="button"
+                    id="confirmOk"
+                    class="confirm-btn confirm-ok">
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
 
+<script th:src="@{/js/confirmation.js}"></script>
 </body>
 
 </html>

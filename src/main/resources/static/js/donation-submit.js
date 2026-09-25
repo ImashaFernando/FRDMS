@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const goodsSection = document.getElementById("goodsSection");
 
     const cashAmount = document.getElementById("cashAmount");
-
     const goodsDescription = document.getElementById("goodsDescription");
     const goodsQuantity = document.getElementById("goodsQuantity");
 
@@ -15,69 +14,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const selectedType = donationType.value;
 
+        // ==============================
+        // CASH DONATION
+        // ==============================
 
         if (selectedType === "CASH") {
 
-            // Show cash fields
             cashSection.style.display = "block";
-
-            // Hide goods fields
             goodsSection.style.display = "none";
 
-            // Clear goods values
+            // Clear goods fields
             goodsDescription.value = "";
             goodsQuantity.value = "";
 
-            // Required only for cash
-            cashAmount.required = true;
-
-            goodsDescription.required = false;
-            goodsQuantity.required = false;
-
         }
+
+            // ==============================
+            // GOODS DONATION
+        // ==============================
 
         else if (selectedType === "GOODS") {
 
-            // Hide cash fields
             cashSection.style.display = "none";
-
-            // Show goods fields
             goodsSection.style.display = "block";
 
-            // Clear cash value
+            // Clear cash field
             cashAmount.value = "";
-
-            // Required only for goods
-            cashAmount.required = false;
-
-            goodsDescription.required = true;
-            goodsQuantity.required = true;
 
         }
 
+            // ==============================
+            // NO TYPE SELECTED
+        // ==============================
+
         else {
 
-            // No donation type selected
             cashSection.style.display = "none";
             goodsSection.style.display = "none";
 
-            // Clear all donation-specific values
             cashAmount.value = "";
             goodsDescription.value = "";
             goodsQuantity.value = "";
-
-            cashAmount.required = false;
-            goodsDescription.required = false;
-            goodsQuantity.required = false;
         }
     }
 
 
-    // Run when donation type changes
-    donationType.addEventListener("change", updateDonationFields);
+    // When donation type changes
+    donationType.addEventListener(
+        "change",
+        updateDonationFields
+    );
 
 
-    // Run once when page loads
+    // Run when page loads
     updateDonationFields();
 
 });

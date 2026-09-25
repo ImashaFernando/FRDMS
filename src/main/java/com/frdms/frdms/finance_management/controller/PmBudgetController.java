@@ -15,8 +15,10 @@ public class PmBudgetController {
         this.budgetService = budgetService;
     }
 
+    // ==========================================
+    // PM - VIEW PENDING BUDGET REQUESTS
+    // ==========================================
 
-    // View pending budget requirements
     @GetMapping("/pending")
     public String viewPendingBudgets(Model model) {
 
@@ -29,40 +31,28 @@ public class PmBudgetController {
     }
 
 
-    // View a single budget requirement
-    @GetMapping("/review/{id}")
-    public String reviewBudget(
-            @PathVariable Long id,
-            Model model) {
+    // ==========================================
+    // PM - APPROVE BUDGET
+    // ==========================================
 
-        model.addAttribute(
-                "budget",
-                budgetService.getBudgetById(id)
-        );
-
-        return "finance/pm-budget-review";
-    }
-
-
-    // Approve
     @PostMapping("/approve/{id}")
-    public String approveBudget(
-            @PathVariable Long id) {
+    public String approveBudget(@PathVariable Long id) {
 
         budgetService.approveBudget(id);
 
-        return "redirect:/pm/budgets/pending?success=approved";
+        return "redirect:/pm/budgets/pending";
     }
 
 
-    // Reject
+    // ==========================================
+    // PM - REJECT BUDGET
+    // ==========================================
+
     @PostMapping("/reject/{id}")
-    public String rejectBudget(
-            @PathVariable Long id) {
+    public String rejectBudget(@PathVariable Long id) {
 
         budgetService.rejectBudget(id);
 
-        return "redirect:/pm/budgets/pending?success=rejected";
+        return "redirect:/pm/budgets/pending";
     }
-
 }

@@ -323,3 +323,45 @@ footer {
         flex-direction: column;
     }
 }
+/* =========================
+   VIEW BUDGET STATUS BUTTON
+   ========================= */
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 18px;
+    padding: 10px 20px;
+
+    background: #ffffff;
+    color: #3157d5;
+
+    border: 1.5px solid #3157d5;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none !important;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.secondary-button:hover {
+    background: #3157d5;
+    color: #ffffff;
+
+    text-decoration: none !important;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(49, 87, 213, 0.20);
+}
+
+.secondary-button:active {
+    transform: translateY(0);
+}

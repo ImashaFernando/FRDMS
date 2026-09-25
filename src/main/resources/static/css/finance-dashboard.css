@@ -658,3 +658,191 @@ footer span {
     }
 
 }
+/* =========================
+   RECENT TRANSACTIONS
+   ========================= */
+
+.transaction-section {
+    margin-bottom: 25px;
+}
+
+.transaction-section h3 {
+    margin-bottom: 15px;
+    color: #12355B;
+    font-size: 18px;
+}
+
+.transaction-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+.transaction-table th {
+    padding: 13px 15px;
+    text-align: left;
+    background: #f4f7fb;
+    color: #12355B;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.transaction-table td {
+    padding: 13px 15px;
+    border-top: 1px solid #edf0f4;
+    color: #4a5568;
+    font-size: 13px;
+}
+
+.transaction-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.donation-badge {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.expense-badge {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+/* =========================================================
+   LOGOUT BUTTON
+   ========================================================= */
+
+.logout-form {
+    margin-left: 18px;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #d8e2ec;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #c62828;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.logout-btn i {
+    font-size: 14px;
+}
+
+.logout-btn:hover {
+    background: #fff1f1;
+    border-color: #c62828;
+    color: #b71c1c;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   SIDEBAR LOGOUT
+   ========================================================= */
+
+.sidebar-logout-form {
+    margin-left: auto;
+}
+
+.sidebar-logout-btn {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+    color: #8fc8ed;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.sidebar-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+}
+
+.sidebar-logout-btn i {
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   PROFILE ALIGNMENT
+   ========================================================= */
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info strong {
+    color: #123b5d;
+}
+
+.profile-info span {
+    color: #7890a5;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE LOGOUT
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .logout-btn span {
+        display: none;
+    }
+
+    .logout-btn {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+}

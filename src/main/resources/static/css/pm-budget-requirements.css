@@ -429,3 +429,32 @@ td {
 
     transform: translateY(-1px);
 }
+.trash-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    background: #c0392b;
+    color: #ffffff !important;
+
+    border: none;
+    border-radius: 8px;
+
+    text-decoration: none !important;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.trash-btn:hover {
+    background: #a93226;
+    color: #ffffff !important;
+}
