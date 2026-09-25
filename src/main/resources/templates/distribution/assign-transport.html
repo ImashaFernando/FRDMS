@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assign Transport</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .header {
+            background: #0f172a;
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .package-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 25px;
+        }
+
+        .package-box strong {
+            color: #0f172a;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .driver-info {
+            display: none;
+            margin-top: 12px;
+            padding: 15px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 9px;
+        }
+
+        .driver-info strong {
+            color: #1d4ed8;
+        }
+
+        .warning {
+            display: none;
+            margin-top: 12px;
+            padding: 14px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 9px;
+            color: #9a3412;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .button {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .assign-button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .assign-button:hover {
+            background: #1d4ed8;
+        }
+
+        .back-button {
+            background: white;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .back-button:hover {
+            background: #f8fafc;
+        }
+
+        .empty {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Assign Transport</h1>
+    <p>Assign a suitable vehicle and driver to the relief package.</p>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="package-box">
+            <strong>Package ID:</strong>
+            <span th:text="${packageId}">1</span>
+        </div>
+
+        <form th:action="@{/distribution/transport/assign/save}"
+              method="post"
+              onsubmit="return validateAssignment();">
+
+            <input type="hidden"
+                   name="packageId"
+                   th:value="${packageId}">
+
+
+            <!-- VEHICLE -->
+
+            <div class="form-group">
+
+                <label for="vehicleId">
+                    Select Vehicle *
+                </label>
+
+                <select id="vehicleId"
+                        name="vehicleId"
+                        required
+                        onchange="vehicleChanged()">
+
+                    <option value="">
+                        -- Select Available Vehicle --
+                    </option>
+
+                    <option th:each="vehicle : ${availableVehicles}"
+                            th:value="${vehicle.id}"
+                            th:text="${vehicle.vehicleNumber + ' - ' + vehicle.vehicleType}"
+                            th:attr="data-has-driver=${vehicle.hasDriver},
+                                     data-driver-name=${vehicle.driverName}">
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- OWNER DRIVER INFORMATION -->
+
+            <div id="ownerDriverInfo"
+                 class="driver-info">
+
+                <strong>✓ Owner-provided driver</strong>
+
+                <p>
+                    Driver:
+                    <span id="ownerDriverName"></span>
+                </p>
+
+                <p>
+                    This vehicle already has a driver provided
+                    by the vehicle owner. You do not need to
+                    select another driver.
+                </p>
+
+            </div>
+
+
+            <!-- INDEPENDENT DRIVER -->
+
+            <div id="independentDriverSection"
+                 class="form-group"
+                 style="display: none;">
+
+                <label for="driverId">
+                    Select Driver *
+                </label>
+
+                <select id="driverId"
+                        name="driverId">
+
+                    <option value="">
+                        -- Select Available Driver --
+                    </option>
+
+                    <option th:each="driver : ${availableDrivers}"
+                            th:value="${driver.id}"
+                            th:text="${driver.driverName + ' - ' + driver.driverLicenseNumber}">
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- NO DRIVER WARNING -->
+
+            <div id="noDriverWarning"
+                 class="warning">
+
+                ⚠ This vehicle does not have a driver.
+                Please select an available independent driver.
+
+            </div>
+
+
+            <div class="actions">
+
+                <a href="/distribution/transport/availability"
+                   class="button back-button">
+                    ← Back
+                </a>
+
+                <button type="submit"
+                        class="button assign-button">
+                    Assign Transport
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function vehicleChanged() {
+
+        const vehicleSelect =
+            document.getElementById("vehicleId");
+
+        const selectedOption =
+            vehicleSelect.options[vehicleSelect.selectedIndex];
+
+        const ownerDriverInfo =
+            document.getElementById("ownerDriverInfo");
+
+        const independentDriverSection =
+            document.getElementById("independentDriverSection");
+
+        const noDriverWarning =
+            document.getElementById("noDriverWarning");
+
+        const driverSelect =
+            document.getElementById("driverId");
+
+        const ownerDriverName =
+            document.getElementById("ownerDriverName");
+
+
+        // Reset everything
+
+        ownerDriverInfo.style.display = "none";
+        independentDriverSection.style.display = "none";
+        noDriverWarning.style.display = "none";
+
+        driverSelect.required = false;
+
+
+        if (!selectedOption.value) {
+            return;
+        }
+
+
+        const hasDriver =
+            selectedOption.getAttribute("data-has-driver") === "true";
+
+        const driverName =
+            selectedOption.getAttribute("data-driver-name");
+
+
+        // Vehicle has owner-provided driver
+
+        if (hasDriver) {
+
+            ownerDriverInfo.style.display = "block";
+
+            ownerDriverName.textContent =
+                driverName || "Owner-provided driver";
+
+        }
+
+        // Vehicle does not have a driver
+
+        else {
+
+            independentDriverSection.style.display = "block";
+
+            noDriverWarning.style.display = "block";
+
+            driverSelect.required = true;
+        }
+    }
+
+
+    function validateAssignment() {
+
+        const vehicleSelect =
+            document.getElementById("vehicleId");
+
+        const selectedOption =
+            vehicleSelect.options[vehicleSelect.selectedIndex];
+
+        if (!selectedOption.value) {
+            alert("Please select a vehicle.");
+            return false;
+        }
+
+        const hasDriver =
+            selectedOption.getAttribute("data-has-driver") === "true";
+
+        const driverSelect =
+            document.getElementById("driverId");
+
+
+        if (!hasDriver && !driverSelect.value) {
+
+            alert(
+                "This vehicle does not have a driver. " +
+                "Please select an available driver."
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+</script>
+
+</body>
+</html>

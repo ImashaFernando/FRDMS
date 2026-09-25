@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Relief Packages</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/distribution.css}">
+
+</head>
+
+<body>
+
+
+    <div class="page-container">
+
+  <div class="requirements-section">
+
+    <!-- Page Header -->
+    <div class="package-page-header">
+
+      <div class="package-title-area">
+
+        <div class="package-title-icon">
+          📦
+        </div>
+
+        <div>
+          <h1>Relief Packages</h1>
+
+          <p>
+            Manage and track relief packages for affected communities.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="package-header-actions">
+
+        <!-- Back to Dashboard -->
+        <a class="dashboard-icon-button"
+           th:href="@{/distribution/dashboard}"
+           title="Back to Dashboard"
+           aria-label="Back to Dashboard">
+
+          <svg viewBox="0 0 24 24"
+               xmlns="http://www.w3.org/2000/svg">
+
+            <path d="M3 10.5L12 3l9 7.5"></path>
+
+            <path d="M5.5 9.5V21h13V9.5"></path>
+
+            <path d="M9.5 21v-6h5v6"></path>
+
+          </svg>
+
+        </a>
+
+
+        <!-- Recycle Bin -->
+        <a class="recycle-bin-button"
+           th:href="@{/distribution/packages/recycle-bin}"
+           title="Recycle Bin">
+          🗑️
+        </a>
+
+
+        <!-- Create Package -->
+        <a class="create-package-button"
+           th:href="@{/distribution/packages/new}">
+          <span>+</span>
+          Create Package
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- Package Count -->
+    <div class="package-statistics">
+
+      <!-- Total Packages -->
+      <div class="package-stat-card">
+
+        <div class="stat-icon total-icon">
+          📦
+        </div>
+
+        <div class="stat-content">
+
+          <span>Total Packages</span>
+
+          <strong th:text="${packages.size()}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- Successful -->
+      <div class="package-stat-card">
+
+        <div class="stat-icon success-icon">
+          ✓
+        </div>
+
+        <div class="stat-content">
+
+          <span>Successful</span>
+
+          <strong th:text="${successfulCount}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- Requesting Items -->
+      <div class="package-stat-card">
+
+        <div class="stat-icon requesting-icon">
+          ◷
+        </div>
+
+        <div class="stat-content">
+
+          <span>Requesting Items</span>
+
+          <strong th:text="${requestingItemsCount}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- Search and Filter -->
+    <div class="package-search-section">
+
+      <div class="package-search-box">
+
+        <span class="search-icon">🔍</span>
+
+        <input type="text"
+               id="packageSearch"
+               placeholder="Search by package ID, recipient name or affected area..."
+               autocomplete="off">
+
+      </div>
+
+      <div class="package-filter-box">
+
+        <label for="statusFilter">
+          Status
+        </label>
+
+        <select id="statusFilter">
+
+          <option value="ALL">
+            All Statuses
+          </option>
+
+          <option value="REQUESTING_ITEMS">
+            Requesting Items
+          </option>
+
+          <option value="PREPARING">
+            Preparing
+          </option>
+
+          <option value="DELIVERY">
+            Delivery
+          </option>
+
+          <option value="SUCCESSFUL">
+            Successful
+          </option>
+
+          <option value="NOT_SUCCESSFUL">
+            Not Successful
+          </option>
+
+          <option value="RE_DELIVERY">
+            Re-delivery
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+
+      <!-- Package Cards -->
+      <div class="package-grid">
+
+        <div class="package-card"
+             th:each="reliefPackage : ${packages}"
+             th:attr="data-package-code=${reliefPackage.packageCode},
+                data-recipient=${reliefPackage.recipientName},
+                data-area=${reliefPackage.affectedArea},
+                data-status=${reliefPackage.status}">
+
+          <!-- Card Header -->
+          <div class="package-card-header">
+
+            <div class="package-card-title">
+
+              <h2 th:text="${reliefPackage.packageCode}">
+                PKG-001
+              </h2>
+
+              <span class="package-type">
+          RELIEF PACKAGE
+        </span>
+
+            </div>
+
+            <!-- Status -->
+            <span class="package-status-badge"
+                  th:text="${reliefPackage.status}">
+        SUCCESSFUL
+      </span>
+
+          </div>
+
+
+          <!-- Card Body -->
+          <div class="package-card-body">
+
+            <!-- Recipient -->
+            <div class="package-info-row">
+
+              <div class="package-info-icon">
+                👤
+              </div>
+
+              <div class="package-info-content">
+
+                <span>Recipient</span>
+
+                <strong th:text="${reliefPackage.recipientName}">
+                  Kamal Perera
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <!-- Affected Area -->
+            <div class="package-info-row">
+
+              <div class="package-info-icon">
+                📍
+              </div>
+
+              <div class="package-info-content">
+
+                <span>Affected Area</span>
+
+                <strong th:text="${reliefPackage.affectedArea}">
+                  Kelaniya
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <!-- Package Illustration -->
+            <div class="package-visual">
+
+              <div class="package-visual-circle">
+                📦
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Card Footer -->
+          <div class="package-card-footer">
+
+            <!-- View Details -->
+            <a class="package-view-button"
+               th:href="@{/distribution/packages/{id}(id=${reliefPackage.id})}">
+              👁 View Details
+            </a>
+
+
+            <!-- Edit -->
+            <a class="package-edit-button"
+               th:href="@{/distribution/packages/{id}/edit(id=${reliefPackage.id})}">
+              ✎ Edit
+            </a>
+
+            <!-- Assign Transport -->
+            <a class="package-assign-button"
+               th:href="@{/distribution/transport/assign/{packageId}(packageId=${reliefPackage.id})}">
+              🚚 Assign Transport
+            </a>
+            <!-- Cancel -->
+            <form th:action="@{/distribution/packages/{id}/cancel(id=${reliefPackage.id})}"
+                  method="post"
+                  onsubmit="return confirm('Are you sure you want to cancel this package?');">
+
+              <button type="submit"
+                      class="package-cancel-button">
+                🗑 Cancel
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+
+        <!-- No Packages -->
+        <div class="no-packages"
+             th:if="${#lists.isEmpty(packages)}">
+
+          <div class="empty-package-icon">
+            📦
+          </div>
+
+          <h3>No Relief Packages Yet</h3>
+
+          <p>
+            Create a package for a recipient to begin the distribution process.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+      <!-- No Packages -->
+      <div class="no-packages"
+           th:if="${#lists.isEmpty(packages)}">
+
+        <div class="empty-package-icon">
+          📦
+        </div>
+
+        <h3>No Relief Packages Yet</h3>
+
+        <p>
+          Create a package for a recipient to begin the distribution process.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<script>
+
+  const searchInput =
+          document.getElementById("packageSearch");
+
+  const statusFilter =
+          document.getElementById("statusFilter");
+
+  const packageCards =
+          document.querySelectorAll(".package-card");
+
+
+  function filterPackages() {
+
+    const searchValue =
+            searchInput.value.toLowerCase().trim();
+
+    const selectedStatus =
+            statusFilter.value;
+
+
+    packageCards.forEach(card => {
+
+      const packageCode =
+              card.dataset.packageCode.toLowerCase();
+
+      const recipient =
+              card.dataset.recipient.toLowerCase();
+
+      const area =
+              card.dataset.area.toLowerCase();
+
+      const status =
+              card.dataset.status;
+
+
+      const matchesSearch =
+              packageCode.includes(searchValue) ||
+              recipient.includes(searchValue) ||
+              area.includes(searchValue);
+
+
+      const matchesStatus =
+              selectedStatus === "ALL" ||
+              status === selectedStatus;
+
+
+      if (matchesSearch && matchesStatus) {
+
+        card.style.display = "";
+
+      } else {
+
+        card.style.display = "none";
+
+      }
+
+    });
+
+  }
+
+
+  searchInput.addEventListener(
+          "input",
+          filterPackages
+  );
+
+
+  statusFilter.addEventListener(
+          "change",
+          filterPackages
+  );
+
+</script>
+
+</div>
+
+
+
+</div>
+
+</body>
+
+</html>

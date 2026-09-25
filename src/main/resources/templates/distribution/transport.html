@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transport Resources - Distribution Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 22px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.85;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #3582B8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #286d9d;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top-section h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .vehicle-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(31, 58, 96, 0.10);
+        }
+
+        .vehicle-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3582B8;
+            margin-bottom: 15px;
+        }
+
+        .info {
+            margin: 9px 0;
+            font-size: 14px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #1F3A60;
+        }
+
+        .driver-box {
+            margin-top: 18px;
+            padding: 14px;
+            background: #f4f8fa;
+            border-radius: 8px;
+        }
+
+        .driver-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .no-driver {
+            color: #777;
+            font-style: italic;
+        }
+
+        .empty {
+            background: white;
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(31, 58, 96, 0.10);
+        }
+
+        .empty h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #666;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-icon-button {
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #1F3A60;
+            border: 1px solid #85B6D6;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .dashboard-icon-button svg {
+            width: 21px !important;
+            height: 21px !important;
+            stroke: currentColor !important;
+            stroke-width: 2 !important;
+            fill: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <div>
+        <h1>Transport Resources</h1>
+        <p>Registered vehicles for relief distribution</p>
+    </div>
+
+
+    <div class="header-actions">
+
+        <!-- Back to Distribution Dashboard -->
+
+        <a class="dashboard-icon-button"
+           th:href="@{/distribution/dashboard}"
+           title="Back to Dashboard"
+           aria-label="Back to Dashboard">
+
+            <svg viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+
+                <path d="M3 10.5L12 3l9 7.5"></path>
+
+                <path d="M5.5 9.5V21h13V9.5"></path>
+
+                <path d="M9.5 21v-6h5v6"></path>
+
+            </svg>
+
+        </a>
+
+
+        <!-- Register Vehicle -->
+
+        <a th:href="@{/distribution/transport/new}"
+           class="btn btn-primary">
+
+            + Register Vehicle
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+    <div class="top-section">
+        <h2>Registered Vehicles</h2>
+    </div>
+
+
+    <!-- Vehicles Available -->
+    <div class="vehicle-grid"
+         th:if="${not #lists.isEmpty(transportResources)}">
+
+        <div class="vehicle-card"
+             th:each="vehicle : ${transportResources}">
+
+            <div class="vehicle-number"
+                 th:text="${vehicle.vehicleNumber}">
+                WP ABC-1234
+            </div>
+
+
+            <div class="info">
+                <span class="label">Vehicle Type:</span>
+                <span th:text="${vehicle.vehicleType}">
+                    Truck
+                </span>
+            </div>
+
+
+            <div class="info"
+                 th:if="${vehicle.vehicleModel != null and !vehicle.vehicleModel.isEmpty()}">
+
+                <span class="label">Model:</span>
+
+                <span th:text="${vehicle.vehicleModel}">
+                    Toyota Dyna
+                </span>
+
+            </div>
+
+
+            <div class="info"
+                 th:if="${vehicle.vehicleCapacity != null and !vehicle.vehicleCapacity.isEmpty()}">
+
+                <span class="label">Capacity:</span>
+
+                <span th:text="${vehicle.vehicleCapacity}">
+                    5000 kg
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <span class="label">Owner:</span>
+
+                <span th:text="${vehicle.vehicleOwnerName}">
+                    Owner Name
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <span class="label">Owner Phone:</span>
+
+                <span th:text="${vehicle.ownerPhoneNumber}">
+                    0771234567
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <span class="label">Available Area:</span>
+
+                <span th:text="${vehicle.availableArea}">
+                    Colombo
+                </span>
+
+            </div>
+
+
+            <!-- Driver Information -->
+            <div class="driver-box">
+
+                <div class="driver-title">
+                    Driver
+                </div>
+
+                <div th:if="${vehicle.hasDriver}">
+
+                    <div class="info">
+
+                        <span class="label">Name:</span>
+
+                        <span th:text="${vehicle.driverName}">
+                            Driver Name
+                        </span>
+
+                    </div>
+
+                    <div class="info"
+                         th:if="${vehicle.driverPhoneNumber != null and !vehicle.driverPhoneNumber.isEmpty()}">
+
+                        <span class="label">Phone:</span>
+
+                        <span th:text="${vehicle.driverPhoneNumber}">
+                            0771234567
+                        </span>
+
+                    </div>
+
+                    <div class="info"
+                         th:if="${vehicle.driverLicenseNumber != null and !vehicle.driverLicenseNumber.isEmpty()}">
+
+                        <span class="label">License:</span>
+
+                        <span th:text="${vehicle.driverLicenseNumber}">
+                            B1234567
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="no-driver"
+                     th:unless="${vehicle.hasDriver}">
+
+                    No driver provided by owner.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- No vehicles -->
+    <div class="empty"
+         th:if="${#lists.isEmpty(transportResources)}">
+
+        <h3>No Vehicles Registered Yet</h3>
+
+        <p>
+            Register a vehicle to make it available for relief distribution.
+        </p>
+
+        <a th:href="@{/distribution/transport/new}"
+           class="btn btn-primary">
+
+            Register First Vehicle
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
