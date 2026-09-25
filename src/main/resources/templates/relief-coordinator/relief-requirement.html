@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Relief Requirement | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(
+                    135deg,
+                    #eef4ff,
+                    #f8faff
+            );
+            color: #19345f;
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .page-container {
+            width: 92%;
+            max-width: 1500px;
+            margin: 35px auto 70px;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .hero {
+            background: linear-gradient(
+                    135deg,
+                    #263f78,
+                    #5878c2
+            );
+
+            color: white;
+
+            padding: 48px 55px;
+
+            border-radius: 30px;
+
+            box-shadow:
+                    0 20px 45px rgba(38, 63, 120, 0.22);
+
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            margin: 0 0 12px;
+
+            font-size: 46px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            margin: 0;
+
+            font-size: 19px;
+
+            opacity: 0.94;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           REVIEW CARD
+        ===================================================== */
+
+        .review-card {
+            background: white;
+
+            border-radius: 28px;
+
+            padding: 38px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                    0 15px 40px rgba(40, 65, 110, 0.10);
+
+            border-left: 7px solid #6389df;
+        }
+
+        .review-card h2 {
+            margin-top: 0;
+
+            font-size: 30px;
+
+            color: #203d70;
+        }
+
+        .review-card p {
+            color: #6b7f9f;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           VICTIM INFORMATION
+        ===================================================== */
+
+        .victim-info {
+            margin-top: 25px;
+
+            display: grid;
+
+            grid-template-columns:
+                    repeat(2, minmax(250px, 1fr));
+
+            gap: 18px;
+        }
+
+        .info-box {
+            background: #f3f7ff;
+
+            border: 1px solid #dce6f7;
+
+            border-radius: 18px;
+
+            padding: 20px 24px;
+        }
+
+        .info-label {
+            display: block;
+
+            color: #8295b5;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            color: #203d70;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           FORM CARD
+        ===================================================== */
+
+        .form-card {
+            background: white;
+
+            border-radius: 28px;
+
+            padding: 42px;
+
+            box-shadow:
+                    0 15px 40px rgba(40, 65, 110, 0.10);
+
+            margin-bottom: 30px;
+        }
+
+        .section-heading {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 8px;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background: #edf3ff;
+
+            font-size: 24px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+
+            font-size: 29px;
+
+            color: #203d70;
+        }
+
+        .section-description {
+            color: #7185a5;
+
+            font-size: 16px;
+
+            margin: 0 0 28px;
+        }
+
+
+        /* =====================================================
+           STANDARD ITEMS
+        ===================================================== */
+
+        .standard-box {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f0f8f2,
+                            #f8fcf9
+                    );
+
+            border: 2px solid #cde7d4;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            margin-bottom: 35px;
+        }
+
+        .standard-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            color: #28613a;
+
+            margin-bottom: 18px;
+        }
+
+        .standard-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 16px 20px;
+
+            margin-top: 10px;
+
+            border: 1px solid #dcecdf;
+        }
+
+        .standard-check {
+            width: 28px;
+            height: 28px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #4ca567;
+
+            color: white;
+
+            font-weight: 900;
+
+            font-size: 17px;
+        }
+
+        .standard-item strong {
+            color: #285f3a;
+
+            font-size: 17px;
+        }
+
+        .standard-item span {
+            color: #789083;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           ADDITIONAL ITEMS
+        ===================================================== */
+
+        .additional-title {
+            margin: 0 0 8px;
+
+            color: #203d70;
+
+            font-size: 24px;
+        }
+
+        .additional-description {
+            color: #7b8ca8;
+
+            margin-bottom: 20px;
+        }
+
+        .items-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(2, minmax(300px, 1fr));
+
+            gap: 18px;
+        }
+
+        .item-card {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            padding: 22px;
+
+            background: white;
+
+            border: 2px solid #e1e8f4;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            transition:
+                    0.25s ease;
+
+            min-height: 105px;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+
+            border-color: #7f9fe4;
+
+            box-shadow:
+                    0 10px 25px rgba(67, 102, 170, 0.12);
+        }
+
+        .item-card:has(input:checked) {
+            border-color: #527fd6;
+
+            background: #f4f7ff;
+
+            box-shadow:
+                    0 8px 24px rgba(82, 127, 214, 0.14);
+        }
+
+        .item-card input {
+            width: 25px;
+            height: 25px;
+
+            accent-color: #4f7ed6;
+
+            flex-shrink: 0;
+
+            cursor: pointer;
+        }
+
+        .item-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #f0f4fc;
+
+            border-radius: 16px;
+
+            font-size: 28px;
+
+            flex-shrink: 0;
+        }
+
+        .item-content strong {
+            display: block;
+
+            font-size: 18px;
+
+            color: #274577;
+
+            margin-bottom: 5px;
+        }
+
+        .item-content span {
+            display: block;
+
+            color: #8191aa;
+
+            font-size: 14px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .message-section {
+            margin-top: 40px;
+
+            padding-top: 35px;
+
+            border-top: 1px solid #e6ebf3;
+        }
+
+        .field-label {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: #243f70;
+
+            font-size: 18px;
+
+            font-weight: 800;
+        }
+
+        textarea {
+            width: 100%;
+
+            min-height: 140px;
+
+            resize: vertical;
+
+            padding: 18px;
+
+            border: 2px solid #dce4f1;
+
+            border-radius: 17px;
+
+            font-family: inherit;
+
+            font-size: 16px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #6288dc;
+
+            box-shadow:
+                    0 0 0 4px rgba(
+                            98,
+                            136,
+                            220,
+                            0.10
+                    );
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status-section {
+            margin-top: 28px;
+        }
+
+        select {
+            width: 100%;
+
+            padding: 17px;
+
+            border-radius: 16px;
+
+            border: 2px solid #dce4f1;
+
+            background: white;
+
+            font-size: 16px;
+
+            color: #243f70;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #6288dc;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 15px;
+
+            margin-top: 35px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e6ebf3;
+        }
+
+        .btn {
+            border: none;
+
+            border-radius: 14px;
+
+            padding: 15px 30px;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: 0.25s;
+        }
+
+        .btn-secondary {
+            background: #edf1f7;
+
+            color: #51657f;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e7f1;
+        }
+
+        .btn-primary {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #4778d0,
+                            #638ddd
+                    );
+
+            color: white;
+
+            box-shadow:
+                    0 8px 18px rgba(
+                            71,
+                            120,
+                            208,
+                            0.25
+                    );
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 12px 25px rgba(
+                            71,
+                            120,
+                            208,
+                            0.35
+                    );
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .page-container {
+                width: 95%;
+            }
+
+            .hero {
+                padding: 35px 28px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .form-card,
+            .review-card {
+                padding: 25px;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .victim-info {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <section class="hero">
+
+        <h1>Relief Requirement</h1>
+
+        <p>
+            Determine and record the relief assistance required
+            for the victim based on the submitted needs assessment.
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         NEEDS ASSESSMENT REVIEW
+    ====================================================== -->
+
+    <section class="review-card">
+
+        <div class="section-heading">
+
+            <div class="section-icon">
+                📋
+            </div>
+
+            <h2>
+                Needs Assessment Review
+            </h2>
+
+        </div>
+
+        <p>
+            Review the victim's submitted needs assessment carefully
+            before selecting additional relief assistance.
+            Every victim receives the standard dried food package
+            and 10 kg rice bag.
+        </p>
+
+
+        <div class="victim-info">
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Victim
+                </span>
+
+                <span class="info-value"
+                      th:text="${victim.fullName}">
+                    Victim Name
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Needs Assessment ID
+                </span>
+
+                <span class="info-value"
+                      th:text="${needsAssessment.id}">
+                    0
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RELIEF FORM
+    ====================================================== -->
+
+    <form th:action="@{/relief-requirements/save}"
+          method="post">
+
+
+        <!-- =================================================
+             SPRING SECURITY CSRF TOKEN
+
+             This is important because your previous
+             POST /save request returned HTTP 403.
+        ================================================== -->
+
+        <input type="hidden"
+               th:if="${_csrf != null}"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+
+
+        <!-- ================================================
+             NEEDS ASSESSMENT ID
+        ================================================= -->
+
+        <input type="hidden"
+               name="needsAssessmentId"
+               th:value="${needsAssessment.id}">
+
+
+
+        <!-- =================================================
+             RELIEF ITEMS
+        ================================================== -->
+
+        <section class="form-card">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🎁
+                </div>
+
+                <h2>
+                    Relief Assistance
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+
+                Select the additional assistance required according
+                to the victim's needs assessment.
+
+            </p>
+
+
+            <!-- =============================================
+                 STANDARD MANDATORY ITEMS
+            ============================================== -->
+
+            <div class="standard-box">
+
+                <div class="standard-title">
+
+                    ✅ Standard Assistance — Automatically Included
+
+                </div>
+
+
+                <!-- Dried Food -->
+
+                <div class="standard-item">
+
+                    <div class="standard-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dried Food Bag
+                        </strong>
+
+                        <span>
+                            Standard food assistance provided to every victim
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Rice -->
+
+                <div class="standard-item">
+
+                    <div class="standard-check">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            10 kg Rice Bag
+                        </strong>
+
+                        <span>
+                            Standard rice assistance provided to every victim
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!--
+                    Hidden fields make sure these mandatory
+                    items are always submitted to the controller.
+                -->
+
+                <input type="hidden"
+                       name="reliefItems"
+                       value="Dried Food Bag">
+
+                <input type="hidden"
+                       name="reliefItems"
+                       value="10 kg Rice Bag">
+
+            </div>
+
+
+
+            <!-- =============================================
+                 ADDITIONAL ITEMS
+            ============================================== -->
+
+            <h3 class="additional-title">
+
+                Additional Assistance
+
+            </h3>
+
+            <p class="additional-description">
+
+                Select only the items required according to
+                the victim's submitted needs assessment.
+
+            </p>
+
+
+            <div class="items-grid">
+
+
+                <!-- DRINKING WATER -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Drinking Water"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Drinking Water')}">
+
+                    <div class="item-icon">
+                        💧
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Drinking Water
+                        </strong>
+
+                        <span>
+                            Safe drinking water for affected households
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- MEDICINE -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Medicine / Medical Supplies"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Medicine / Medical Supplies')}">
+
+                    <div class="item-icon">
+                        💊
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Medicine / Medical Supplies
+                        </strong>
+
+                        <span>
+                            Medical and health-related assistance
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- CLOTHING -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Clothing"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Clothing')}">
+
+                    <div class="item-icon">
+                        👕
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Clothing
+                        </strong>
+
+                        <span>
+                            Essential clothing for affected victims
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- HYGIENE -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Hygiene Kit"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Hygiene Kit')}">
+
+                    <div class="item-icon">
+                        🧼
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Hygiene Kit
+                        </strong>
+
+                        <span>
+                            Soap, sanitary and personal hygiene items
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- BABY CARE -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Baby Care Items"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Baby Care Items')}">
+
+                    <div class="item-icon">
+                        👶
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Baby Care Items
+                        </strong>
+
+                        <span>
+                            Items required for infants and young children
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- BLANKETS -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Blankets / Bedding"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Blankets / Bedding')}">
+
+                    <div class="item-icon">
+                        🛏️
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Blankets / Bedding
+                        </strong>
+
+                        <span>
+                            Sleeping materials for affected victims
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- TORCH -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Torch / Emergency Light"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Torch / Emergency Light')}">
+
+                    <div class="item-icon">
+                        🔦
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Torch / Emergency Light
+                        </strong>
+
+                        <span>
+                            Lighting support for households without electricity
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- COOKING -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Cooking Equipment"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cooking Equipment')}">
+
+                    <div class="item-icon">
+                        🍳
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Cooking Equipment
+                        </strong>
+
+                        <span>
+                            Basic cooking utensils and equipment
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- CLEANING -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Cleaning Supplies"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cleaning Supplies')}">
+
+                    <div class="item-icon">
+                        🧹
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Cleaning Supplies
+                        </strong>
+
+                        <span>
+                            Items required for cleaning affected homes
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+
+                <!-- SPECIAL NEEDS -->
+
+                <label class="item-card">
+
+                    <input type="checkbox"
+                           name="reliefItems"
+                           value="Special Needs Assistance"
+                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Special Needs Assistance')}">
+
+                    <div class="item-icon">
+                        ❤️
+                    </div>
+
+                    <div class="item-content">
+
+                        <strong>
+                            Special Needs Assistance
+                        </strong>
+
+                        <span>
+                            Support for elderly, disabled or special requirements
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MESSAGE
+            ================================================== -->
+
+            <div class="message-section">
+
+                <label class="field-label"
+                       for="victimMessage">
+
+                    💬 Message / Instructions for Victim
+
+                </label>
+
+                <textarea id="victimMessage"
+                          name="victimMessage"
+                          placeholder="Enter any message, instructions or information that should be communicated to the victim..."
+                          th:text="${reliefRequirement.victimMessage}">
+                </textarea>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATUS
+            ================================================== -->
+
+            <div class="status-section">
+
+                <label class="field-label"
+                       for="status">
+
+                    📌 Relief Status
+
+                </label>
+
+                <select id="status"
+                        name="status">
+
+                    <option value="Pending"
+                            th:selected="${reliefRequirement.status == null or reliefRequirement.status == 'Pending'}">
+                        Pending
+                    </option>
+
+                    <option value="Approved"
+                            th:selected="${reliefRequirement.status == 'Approved'}">
+                        Approved
+                    </option>
+
+                    <option value="Ready for Distribution"
+                            th:selected="${reliefRequirement.status == 'Ready for Distribution'}">
+                        Ready for Distribution
+                    </option>
+
+                    <option value="Completed"
+                            th:selected="${reliefRequirement.status == 'Completed'}">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BUTTONS
+            ================================================== -->
+
+            <div class="actions">
+
+                <a href="/relief-coordinator/needs-assessments"
+                   class="btn btn-secondary">
+
+                    ← Back to Assessments
+
+                </a>
+
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    💾 Save Relief Requirement
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+    </form>
+
+
+</div>
+
+
+</body>
+
+</html>
