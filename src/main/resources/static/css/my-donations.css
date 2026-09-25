@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef7fb;
+    color: #1f3a60;
+}
+
+.page-wrapper {
+    padding: 35px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.header p {
+    color: #718096;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.dashboard-btn,
+.add-btn {
+    padding: 11px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.dashboard-btn {
+    background: #12355b;
+    color: white;
+}
+
+.add-btn {
+    background: #1d6b8f;
+    color: white;
+}
+
+.dashboard-btn:hover,
+.add-btn:hover {
+    opacity: 0.9;
+}
+
+.info-box {
+    background: #e2f0f7;
+    border-left: 4px solid #12355b;
+    padding: 15px 18px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    color: #1f3a60;
+}
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 8px 25px rgba(18, 53, 91, 0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #12355b;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.edit-btn,
+.delete-btn,
+.view-btn {
+    display: inline-block;
+    padding: 7px 11px;
+    margin-right: 5px;
+    border-radius: 6px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.edit-btn {
+    background: #e5f2f8;
+    color: #12355b;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.view-btn {
+    background: #edf3f6;
+    color: #1f3a60;
+}
+
+.expired {
+    color: #9a3412;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status {
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #fff3cd;
+    color: #856404;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.empty {
+    text-align: center;
+    padding: 40px;
+    color: #718096;
+}
+
+@media (max-width: 768px) {
+
+    .page-wrapper {
+        padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .dashboard-btn,
+    .add-btn {
+        text-align: center;
+        flex: 1;
+    }
+}

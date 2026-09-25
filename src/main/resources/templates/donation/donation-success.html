@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Donation Submitted | FRDMS</title>
+
+  <link rel="stylesheet" th:href="@{/css/donation-success.css}">
+</head>
+
+<body>
+
+<div class="success-wrapper">
+
+  <div class="success-card">
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <div class="success-brand">
+      FRDMS
+    </div>
+
+    <div class="success-line"></div>
+
+    <span class="success-badge">
+            DONATION SUBMITTED
+        </span>
+
+    <h1>Thank You!</h1>
+
+    <p class="success-message">
+      Your donation has been submitted successfully.
+    </p>
+
+    <p class="success-subtext">
+      Your contribution has been recorded and is currently
+      pending verification. Thank you for supporting flood
+      relief and disaster recovery efforts.
+    </p>
+
+    <div class="success-actions">
+
+      <a href="/donations/submit"
+         class="primary-success-button">
+        Submit Another Donation
+      </a>
+
+      <a href="/"
+         class="secondary-success-button">
+        Back to Home
+      </a>
+
+    </div>
+
+    <div class="success-footer">
+
+      <span class="yellow-dot"></span>
+
+      <span>
+                People • Support • Resilience
+            </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

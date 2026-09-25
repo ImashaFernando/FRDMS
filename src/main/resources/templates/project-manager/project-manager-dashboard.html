@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Project Manager Dashboard - FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/project-manager-dashboard.css}">
+
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="card dashboard-card">
+
+        <!-- PAGE TITLE -->
+
+        <h2 class="page-title">
+            Project Manager Dashboard
+        </h2>
+
+        <p class="page-subtitle">
+            Flood Relief and Disaster Management System
+        </p>
+
+
+        <!-- LOGGED-IN INFORMATION -->
+
+        <div class="info-box">
+
+            Logged in as:
+
+            <strong th:text="${projectManagerEmail}">
+                Project Manager
+            </strong>
+
+        </div>
+
+
+        <!-- MANAGEMENT MODULE -->
+
+        <div class="management-section">
+
+            <h3>
+                Management Module
+            </h3>
+
+            <p>
+                Select the module to monitor and manage
+                disaster relief financial operations.
+            </p>
+
+
+            <div class="management-grid">
+
+
+                <!-- DONATION & FINANCE MANAGEMENT -->
+
+                <a th:href="@{/pm/dashboard}"
+                   class="management-card active">
+
+                    <h3>
+                        Donation & Finance Management
+                    </h3>
+
+                    <p>
+                        Monitor donations, expenses, budgets
+                        and financial activities.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <div class="logout-section">
+
+            <form th:action="@{/logout}" method="post">
+
+                <button type="submit"
+                        class="btn">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

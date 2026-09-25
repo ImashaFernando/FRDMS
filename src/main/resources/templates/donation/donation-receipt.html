@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donation Receipt | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/donation-receipt.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <main class="receipt-card">
+
+        <!-- Header -->
+        <div class="receipt-header">
+
+            <div class="brand">FRDMS</div>
+
+            <span class="badge">
+                DONATION MANAGEMENT
+            </span>
+
+            <h1>Donation Receipt</h1>
+
+            <p>
+                Thank you for supporting disaster relief efforts.
+            </p>
+
+        </div>
+
+
+        <!-- Receipt Information -->
+        <div class="receipt-section">
+
+            <div class="section-title">
+                Donation Information
+            </div>
+
+            <div class="details-grid">
+
+                <div class="detail-item">
+                    <span class="label">Receipt ID</span>
+                    <span class="value"
+                          th:text="${donation.id}">
+                        1
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="label">Donor ID</span>
+                    <span class="value"
+                          th:text="${donation.donorId}">
+                        1
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="label">Donation Type</span>
+                    <span class="value"
+                          th:text="${donation.donationType}">
+                        CASH
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="label">Status</span>
+                    <span class="status"
+                          th:text="${donation.status}">
+                        PENDING
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Cash Details -->
+        <div class="receipt-section"
+             th:if="${donation.donationType == 'CASH'}">
+
+            <div class="section-title">
+                Cash Donation
+            </div>
+
+            <div class="amount-box">
+
+                <span class="amount-label">
+                    Donation Amount
+                </span>
+
+                <span class="amount"
+                      th:text="${donation.cashAmount != null
+                               ? 'LKR ' + #numbers.formatDecimal(donation.cashAmount, 1, 2)
+                               : 'LKR 0.00'}">
+                    LKR 0.00
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Goods Details -->
+        <div class="receipt-section"
+             th:if="${donation.donationType == 'GOODS'}">
+
+            <div class="section-title">
+                Goods Donation
+            </div>
+
+            <div class="goods-details">
+
+                <div class="detail-row">
+                    <span>Item Description</span>
+
+                    <strong th:text="${donation.goodsDescription != null
+                                      ? donation.goodsDescription
+                                      : 'Not provided'}">
+                        Rice
+                    </strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Quantity</span>
+
+                    <strong th:text="${donation.goodsQuantity != null
+                                      ? donation.goodsQuantity
+                                      : 'Not provided'}">
+                        10 kg
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Additional Details -->
+        <div class="receipt-section"
+             th:if="${donation.description != null
+                     && !donation.description.isBlank()}">
+
+            <div class="section-title">
+                Additional Details
+            </div>
+
+            <p class="description"
+               th:text="${donation.description}">
+                Additional donation information
+            </p>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="receipt-footer">
+
+            <p>
+                Thank you for your valuable contribution.
+            </p>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="receipt-actions">
+
+            <button type="button"
+                    class="print-button"
+                    onclick="window.print()">
+                🖨 Print Receipt
+            </button>
+
+            <a th:href="@{/donations/my}" class="back-button">
+                Back to Donations
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

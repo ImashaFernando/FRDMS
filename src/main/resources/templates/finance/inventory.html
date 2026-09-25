@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Inventory Management</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/inventory.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="header">
+
+        <div>
+
+            <h1>Inventory Management</h1>
+
+            <p>
+                Available relief goods and supplies
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Item</th>
+
+                <th>Category</th>
+
+                <th>Quantity</th>
+
+                <th>Unit</th>
+
+                <th>Description</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="item : ${inventoryItems}">
+
+                <td th:text="${item.id}">
+                    1
+                </td>
+
+                <td th:text="${item.itemName}">
+                    Rice
+                </td>
+
+                <td th:text="${item.category}">
+                    Donated Goods
+                </td>
+
+                <td th:text="${item.quantity}">
+                    100
+                </td>
+
+                <td th:text="${item.unit}">
+                    Units
+                </td>
+
+                <td th:text="${item.description}">
+                    Relief goods
+                </td>
+
+                <td>
+
+                    <a th:href="@{/finance/inventory/send/{id}(id=${item.id})}"
+                       class="send-btn">
+                        Send to Distribution
+                    </a>
+
+                </td>
+
+            </tr>
+
+
+            <tr th:if="${#lists.isEmpty(inventoryItems)}">
+
+                <td colspan="7"
+                    class="empty">
+
+                    No inventory items available.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <a th:href="@{/finance/dashboard}"
+       class="back-btn">
+
+        ← Back to Finance Dashboard
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Allocate Budget | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/allocate-budget-form.css}">
+    <link rel="stylesheet" th:href="@{/css/confirmation.css}">
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-icon">FR</div>
+
+            <div>
+                <h1>FRDMS</h1>
+                <p>Finance Management</p>
+            </div>
+        </div>
+
+        <a href="/finance/budgets/approved" class="back-btn">
+            ← Back
+        </a>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <div class="form-card">
+
+            <div class="heading">
+
+                <div class="icon">₹</div>
+
+                <div>
+                    <span class="label">FINANCE OFFICER</span>
+
+                    <h2>Allocate Budget</h2>
+
+                    <p>
+                        Allocate funds to the approved
+                        disaster relief activity.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ERROR MESSAGE -->
+
+            <div th:if="${error}"
+                 class="error-message"
+                 th:text="${error}">
+            </div>
+
+
+            <!-- BUDGET DETAILS -->
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <span>Budget ID</span>
+
+                    <strong th:text="${budget.id}">
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Status</span>
+
+                    <strong class="approved">
+                        APPROVED
+                    </strong>
+
+                </div>
+
+
+                <div class="detail full">
+
+                    <span>Relief Activity</span>
+
+                    <strong th:text="${budget.activity}">
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Requested Amount</span>
+
+                    <strong>
+                        Rs.
+                        <span th:text="${budget.requestedAmount}">
+                        </span>
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Reason</span>
+
+                    <strong th:text="${budget.reason}">
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ALLOCATION FORM -->
+
+            <form th:action="@{/finance/budgets/allocate/{id}(id=${budget.id})}"
+                  method="post"
+                  id="allocationForm">
+
+                <div class="form-group">
+
+                    <label for="allocatedAmount">
+                        Allocation Amount
+                    </label>
+
+                    <input
+                            type="number"
+                            id="allocatedAmount"
+                            name="allocatedAmount"
+                            min="0.01"
+                            step="0.01"
+                            th:max="${budget.requestedAmount}"
+                            th:value="${budget.requestedAmount}"
+                            required>
+
+                    <small>
+                        Maximum allocation:
+                        Rs.
+                        <span th:text="${budget.requestedAmount}">
+                        </span>
+                    </small>
+
+                </div>
+
+                <button type="button"
+                        class="submit-btn"
+                        onclick="confirmAllocation()">
+                    Allocate Budget
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        <p>FRDMS · Finance Management</p>
+    </footer>
+    <div id="confirmationModal" class="confirm-overlay">
+
+        <div class="confirm-modal">
+
+            <div id="confirmIcon" class="confirm-icon">⚠</div>
+
+            <h3 id="confirmTitle" class="confirm-title">
+                Confirmation
+            </h3>
+
+            <p id="confirmMessage" class="confirm-message">
+                Are you sure?
+            </p>
+
+            <div class="confirm-actions">
+
+                <button type="button"
+                        id="confirmCancel"
+                        class="confirm-btn confirm-cancel">
+                    Cancel
+                </button>
+
+                <button type="button"
+                        id="confirmOk"
+                        class="confirm-btn confirm-ok">
+                    Confirm
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script th:src="@{/js/confirmation.js}"></script>
+<script>
+    function confirmAllocation() {
+
+        const form = document.getElementById("allocationForm");
+        const amount = document.getElementById("allocatedAmount");
+
+        if (!amount.value || parseFloat(amount.value) <= 0) {
+            amount.reportValidity();
+            return;
+        }
+
+        showConfirmation({
+            title: "Allocate Budget",
+            message: "Are you sure you want to allocate this budget?",
+            confirmText: "Allocate",
+            type: "success",
+            icon: "✓",
+
+            action: function () {
+                form.submit();
+            }
+        });
+    }
+</script>
+</body>
+</html>

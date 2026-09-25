@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Inter', sans-serif;
+
+    min-height: 100vh;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #f5f3ff,
+                    #edf8ff
+            );
+
+    color: #263d68;
+}
+
+
+.review-container {
+    max-width: 850px;
+
+    margin: auto;
+
+    padding: 45px 25px;
+}
+
+
+.back-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #6d59c8;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    margin-bottom: 25px;
+}
+
+
+.review-header span {
+    color: #7557d2;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+
+.review-header h1 {
+    margin-top: 7px;
+
+    color: #243b66;
+
+    font-size: 28px;
+}
+
+
+.review-header p {
+    margin-top: 8px;
+
+    color: #8494aa;
+
+    font-size: 11px;
+}
+
+
+.review-card {
+    margin-top: 28px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    border: 1px solid #e2e7ef;
+
+    padding: 30px;
+
+    box-shadow:
+            0 18px 45px rgba(57,62,110,.08);
+}
+
+
+.card-top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+
+.requirement-icon {
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 16px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #eee8ff,
+                    #e8f2ff
+            );
+
+    color: #6956cf;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+
+.small-label {
+    color: #8795a7;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+.card-top h2 {
+    margin-top: 5px;
+
+    color: #294268;
+
+    font-size: 16px;
+}
+
+
+.status {
+    margin-left: auto;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    background: #fff3d4;
+
+    color: #c28a00;
+
+    font-size: 8px;
+
+    font-weight: 800;
+}
+
+
+/* DETAILS */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+    margin-top: 25px;
+}
+
+
+.detail {
+    padding: 18px;
+
+    border-radius: 14px;
+
+    background: #f8f9fc;
+
+    border: 1px solid #edf0f5;
+}
+
+
+.detail span,
+.reason-box > span {
+    display: block;
+
+    color: #8a98a9;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: .9px;
+
+    margin-bottom: 8px;
+}
+
+
+.detail strong {
+    color: #30486d;
+
+    font-size: 13px;
+}
+
+
+.detail .amount {
+    color: #5961c9;
+
+    font-size: 16px;
+}
+
+
+/* REASON */
+
+.reason-box {
+    margin-top: 18px;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    background: #f8f9fc;
+
+    border: 1px solid #edf0f5;
+}
+
+
+.reason-box p {
+    color: #647891;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+
+/* DECISION */
+
+.decision-section {
+    margin-top: 27px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #edf0f5;
+}
+
+
+.decision-section h3 {
+    color: #2b4267;
+
+    font-size: 15px;
+}
+
+
+.decision-section p {
+    margin-top: 7px;
+
+    color: #8998aa;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+.decision-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+
+.decision-buttons form {
+    flex: 1;
+}
+
+
+.decision-buttons button {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.approve-button {
+    background:
+            linear-gradient(
+                    135deg,
+                    #20b982,
+                    #35a96f
+            );
+
+    color: white;
+}
+
+
+.reject-button {
+    background:
+            linear-gradient(
+                    135deg,
+                    #ff7676,
+                    #e45b70
+            );
+
+    color: white;
+}
+
+
+.decision-buttons button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 8px 20px rgba(60,70,100,.15);
+}
+
+
+@media (max-width: 650px) {
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-top {
+        align-items: flex-start;
+    }
+
+    .decision-buttons {
+        flex-direction: column;
+    }
+
+}

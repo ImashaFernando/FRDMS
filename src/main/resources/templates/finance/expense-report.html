@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Report | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/expense-report.css}">
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =========================
+         TOP BAR
+         ========================= -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                FR
+            </div>
+
+            <div>
+
+                <h1>FRDMS</h1>
+
+                <p>
+                    Finance Management
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a th:href="@{/finance/dashboard}"
+           class="dashboard-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </header>
+
+
+
+    <!-- =========================
+         CONTENT
+         ========================= -->
+
+    <main class="content">
+
+
+        <!-- PAGE HEADING -->
+
+        <section class="report-heading">
+
+            <span class="label">
+                FINANCE OFFICER
+            </span>
+
+            <h2>
+                Expense Report
+            </h2>
+
+            <p>
+                Summary and detailed records of expenses
+                recorded for disaster-relief activities.
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             SUMMARY
+             ========================= -->
+
+        <section class="summary-grid">
+
+
+            <!-- TOTAL EXPENSE RECORDS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <span class="summary-label">
+                        TOTAL EXPENSES
+                    </span>
+
+                    <strong th:text="${totalExpenses}">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOTAL AMOUNT -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    💰
+                </div>
+
+                <div>
+
+                    <span class="summary-label">
+                        TOTAL EXPENSE AMOUNT
+                    </span>
+
+                    <strong>
+
+                        Rs.
+
+                        <span th:text="${#numbers.formatDecimal(totalExpenseAmount, 1, 2)}">
+                            0.00
+                        </span>
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CATEGORIES -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📁
+                </div>
+
+                <div>
+
+                    <span class="summary-label">
+                        EXPENSE CATEGORIES
+                    </span>
+
+                    <strong th:text="${categoryCount}">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+        </section>
+
+
+
+        <!-- =========================
+             EXPENSE RECORDS
+             ========================= -->
+
+        <section class="report-card">
+
+
+            <div class="report-card-header">
+
+                <div>
+
+                    <h3>
+                        Expense Records
+                    </h3>
+
+                    <p>
+                        Detailed expense information
+                        recorded in the FRDMS system.
+                    </p>
+
+                </div>
+
+
+                <span class="record-count">
+
+                    Records:
+
+                    <strong th:text="${totalExpenses}">
+                        0
+                    </strong>
+
+                </span>
+
+            </div>
+
+
+
+            <!-- TABLE -->
+
+            <div class="table-wrapper">
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Expense Date
+                        </th>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <!-- EXPENSE RECORDS -->
+
+                    <tr th:each="expense : ${expenses}">
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            <span class="expense-id"
+                                  th:text="${expense.id}">
+                                1
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- DATE -->
+
+                        <td>
+
+                            <span th:text="${expense.expenseDate}">
+                                2026-09-16
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- DESCRIPTION -->
+
+                        <td>
+
+                            <span class="description"
+                                  th:text="${expense.description}">
+                                Emergency food supplies
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- CATEGORY -->
+
+                        <td>
+
+                            <span class="category"
+                                  th:text="${expense.category}">
+                                Food
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- AMOUNT -->
+
+                        <td>
+
+                            <span class="money">
+
+                                Rs.
+
+                                <span th:text="${#numbers.formatDecimal(expense.amount, 1, 2)}">
+                                    25,000.00
+                                </span>
+
+                            </span>
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <!-- EMPTY STATE -->
+
+                    <tr th:if="${#lists.isEmpty(expenses)}">
+
+                        <td colspan="5">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    💰
+                                </div>
+
+                                <h3>
+                                    No Expense Records
+                                </h3>
+
+                                <p>
+                                    There are currently no expenses
+                                    available for this report.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- REPORT NOTE -->
+
+        <div class="report-note">
+
+            <strong>
+                Report Information
+            </strong>
+
+            <p>
+                This report is generated from the expense
+                records currently maintained in the FRDMS system.
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <span class="yellow-dot"></span>
+
+        <span>
+            People • Support • Resilience
+        </span>
+
+    </footer>
+
+
+</div>
+
+
+</body>
+
+</html>
