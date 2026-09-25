@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Relief Coordinator Login | FRDMS</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #0C1721;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+
+        /* ================= LOGIN CARD ================= */
+
+        .login-card {
+
+            background: white;
+
+            width: 100%;
+
+            max-width: 430px;
+
+            padding: 40px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                    0 8px 30px
+                    rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .login-header {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .login-header h1 {
+
+            color: #0B2A4A;
+
+            font-size: 26px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .login-header h2 {
+
+            color: #28888F;
+
+            font-size: 18px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .login-header p {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            font-size: 14px;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ccd4da;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+
+        input:focus {
+
+            border-color: #248BE0;
+
+            box-shadow:
+                    0 0 0 2px
+                    rgba(36, 139, 224, 0.12);
+        }
+
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            border: none;
+
+            background: #248BE0;
+
+            color: white;
+
+            padding: 13px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+
+        .login-btn:hover {
+
+            background: #1c72b9;
+        }
+
+
+        /* ================= ERROR ================= */
+
+        .error-message {
+
+            background: #fde8e7;
+
+            color: #b42318;
+
+            border-left: 4px solid #d93025;
+
+            padding: 12px;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= LOGOUT ================= */
+
+        .logout-message {
+
+            background: #e7f6ea;
+
+            color: #216e39;
+
+            border-left: 4px solid #28a745;
+
+            padding: 12px;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= INFO ================= */
+
+        .info-box {
+
+            margin-top: 25px;
+
+            background: #CFE8F7;
+
+            border-left: 5px solid #248BE0;
+
+            padding: 15px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            color: #333;
+        }
+
+
+        /* ================= BACK ================= */
+
+        .back-link {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #248BE0;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-link:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 500px) {
+
+            .login-card {
+
+                padding: 28px 22px;
+            }
+
+
+            .login-header h1 {
+
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN CARD
+     ===================================================== -->
+
+<div class="login-card">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="login-header">
+
+        <h1>
+            Flood Relief & Disaster
+            Management System
+        </h1>
+
+
+        <h2>
+            Relief Coordinator Login
+        </h2>
+
+
+        <p>
+
+            Sign in to review and assess
+            victim needs assessments.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         LOGIN ERROR
+         ================================================= -->
+
+    <div
+            class="error-message"
+
+            th:if="${param.error}">
+
+        Invalid username or password.
+        Please try again.
+
+    </div>
+
+
+
+    <!-- =================================================
+         LOGOUT MESSAGE
+         ================================================= -->
+
+    <div
+            class="logout-message"
+
+            th:if="${param.logout}">
+
+        You have been logged out successfully.
+
+    </div>
+
+
+
+    <!-- =================================================
+         LOGIN FORM
+         ================================================= -->
+
+    <form
+            th:action="@{/relief-coordinator/login}"
+            method="post">
+
+
+        <!-- ================= USERNAME ================= -->
+
+        <div class="form-group">
+
+            <label for="username">
+
+                Username
+
+            </label>
+
+
+            <input
+
+                    type="text"
+
+                    id="username"
+
+                    name="username"
+
+                    placeholder="Enter your username"
+
+                    required
+
+                    autocomplete="username">
+
+        </div>
+
+
+
+        <!-- ================= PASSWORD ================= -->
+
+        <div class="form-group">
+
+            <label for="password">
+
+                Password
+
+            </label>
+
+
+            <input
+
+                    type="password"
+
+                    id="password"
+
+                    name="password"
+
+                    placeholder="Enter your password"
+
+                    required
+
+                    autocomplete="current-password">
+
+        </div>
+
+
+
+        <!-- ================= LOGIN ================= -->
+
+        <button
+
+                type="submit"
+
+                class="login-btn">
+
+            Login
+
+        </button>
+
+    </form>
+
+
+
+    <!-- =================================================
+         INFORMATION
+         ================================================= -->
+
+
+
+
+
+    <!-- =================================================
+         BACK LINK
+         ================================================= -->
+
+    <a
+
+            th:href="@{/}"
+
+            class="back-link">
+
+        ← Back to Home
+
+    </a>
+
+</div>
+
+
+</body>
+
+</html>

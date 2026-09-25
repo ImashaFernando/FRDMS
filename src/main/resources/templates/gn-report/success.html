@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>GN Report Submitted | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #e6e8e9;
+
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-card {
+
+      width: 520px;
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 50px 45px;
+
+      text-align: center;
+
+      box-shadow:
+              0 15px 40px
+              rgba(0, 0, 0, 0.12);
+    }
+
+
+    /* =================================
+       SUCCESS ICON
+    ================================= */
+
+    .success-icon {
+
+      width: 100px;
+      height: 100px;
+
+      margin: 0 auto 25px;
+
+      border-radius: 50%;
+
+      background: #dff3ee;
+
+      border: 6px solid #28888f;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      color: #28888f;
+
+      font-size: 52px;
+
+      font-weight: bold;
+
+      animation: pop 0.5s ease;
+    }
+
+
+    @keyframes pop {
+
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+
+    /* =================================
+       TEXT
+    ================================= */
+
+    h1 {
+
+      color: #0B2A4A;
+
+      font-size: 30px;
+
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+
+      color: #28888f;
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+      margin-bottom: 20px;
+    }
+
+    .message {
+
+      color: #557080;
+
+      font-size: 15px;
+
+      line-height: 1.7;
+
+      margin-bottom: 30px;
+    }
+
+
+    /* =================================
+       STATUS BOX
+    ================================= */
+
+    .status-box {
+
+      background: #f2f8fa;
+
+      border: 1px solid #d2e5e8;
+
+      border-radius: 12px;
+
+      padding: 18px;
+
+      margin-bottom: 30px;
+    }
+
+    .status-box strong {
+
+      display: block;
+
+      color: #0B2A4A;
+
+      margin-bottom: 7px;
+    }
+
+    .status-box span {
+
+      color: #28888f;
+
+      font-weight: bold;
+    }
+
+
+    /* =================================
+       BUTTON
+    ================================= */
+
+    .dashboard-btn {
+
+      display: inline-block;
+
+      background: #248BE0;
+
+      color: white;
+
+      text-decoration: none;
+
+      padding: 14px 28px;
+
+      border-radius: 9px;
+
+      font-size: 16px;
+
+      font-weight: bold;
+
+      transition: 0.2s;
+    }
+
+    .dashboard-btn:hover {
+
+      background: #176fba;
+
+      transform: translateY(-1px);
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="success-card">
+
+
+  <!-- SUCCESS ICON -->
+
+  <div class="success-icon">
+    ✓
+  </div>
+
+
+  <!-- TITLE -->
+
+  <h1>
+    GN Report Submitted!
+  </h1>
+
+
+  <div class="subtitle">
+    Successfully Submitted
+  </div>
+
+
+  <!-- MESSAGE -->
+
+  <p class="message">
+
+    Your Grama Niladhari report has been
+    successfully submitted to the Flood Disaster
+    Relief Management System.
+
+    <br><br>
+
+    The report is now waiting for verification
+    by the Project Manager.
+
+  </p>
+
+
+  <!-- STATUS -->
+
+  <div class="status-box">
+
+    <strong>
+      Current Status
+    </strong>
+
+    <span>
+            ✓ Submitted - Awaiting Verification
+        </span>
+
+  </div>
+
+
+  <!-- DASHBOARD -->
+
+  <a
+          th:href="@{/victim/dashboard}"
+          class="dashboard-btn">
+
+    ← Back to My Dashboard
+
+  </a>
+
+
+</div>
+
+
+</body>
+
+</html>

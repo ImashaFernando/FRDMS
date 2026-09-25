@@ -3,6 +3,7 @@ package com.frdms.frdms.config;
 import com.frdms.frdms.common.service.DonorUserDetailsService;
 import com.frdms.frdms.common.service.FinanceOfficerUserDetailsService;
 import com.frdms.frdms.common.service.ProjectManagerUserDetailsService;
+import com.frdms.frdms.common.service.ReliefCoordinatorUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,7 +27,9 @@ public class SecurityConfig {
     private final ProjectManagerUserDetailsService projectManagerUserDetailsService;
     private final FinanceOfficerUserDetailsService financeOfficerUserDetailsService;
     private final DonorUserDetailsService donorUserDetailsService;
+    private final ReliefCoordinatorUserDetailsService reliefCoordinatorUserDetailsService;
     private final PasswordEncoder passwordEncoder;
+
 
     // =========================================================
     // CONSTRUCTOR
@@ -35,6 +39,7 @@ public class SecurityConfig {
             ProjectManagerUserDetailsService projectManagerUserDetailsService,
             FinanceOfficerUserDetailsService financeOfficerUserDetailsService,
             DonorUserDetailsService donorUserDetailsService,
+            ReliefCoordinatorUserDetailsService reliefCoordinatorUserDetailsService,
             PasswordEncoder passwordEncoder) {
 
         this.projectManagerUserDetailsService =
@@ -46,13 +51,26 @@ public class SecurityConfig {
         this.donorUserDetailsService =
                 donorUserDetailsService;
 
+        this.reliefCoordinatorUserDetailsService =
+                reliefCoordinatorUserDetailsService;
+
         this.passwordEncoder =
                 passwordEncoder;
     }
 
 
     // =========================================================
-    // 1. PROJECT MANAGER AUTHENTICATION PROVIDER
+    // PASSWORD ENCODER
+    // =========================================================
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    // =========================================================
+    // PROJECT MANAGER AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
@@ -70,7 +88,7 @@ public class SecurityConfig {
 
 
     // =========================================================
-    // 2. FINANCE OFFICER AUTHENTICATION PROVIDER
+    // FINANCE OFFICER AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
@@ -88,7 +106,7 @@ public class SecurityConfig {
 
 
     // =========================================================
-    // 3. DONOR AUTHENTICATION PROVIDER
+    // DONOR AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
@@ -106,7 +124,25 @@ public class SecurityConfig {
 
 
     // =========================================================
-    // 4. COMMON AUTHENTICATION MANAGER
+    // RELIEF COORDINATOR AUTHENTICATION PROVIDER
+    // =========================================================
+
+    @Bean
+    public DaoAuthenticationProvider reliefCoordinatorAuthenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(
+                        reliefCoordinatorUserDetailsService
+                );
+
+        provider.setPasswordEncoder(passwordEncoder);
+
+        return provider;
+    }
+
+
+    // =========================================================
+    // COMMON AUTHENTICATION MANAGER
     // =========================================================
 
     @Bean
@@ -123,7 +159,7 @@ public class SecurityConfig {
 
 
     // =========================================================
-    // 5. COMMON LOGIN
+    // 1. COMMON LOGIN
     // =========================================================
 
     @Bean
@@ -149,19 +185,12 @@ public class SecurityConfig {
 
                 .formLogin(form -> form
 
-                        // COMMON LOGIN PAGE
                         .loginPage("/login")
 
-                        // COMMON LOGIN PROCESSING URL
                         .loginProcessingUrl("/login")
 
-                        // Login form field
                         .usernameParameter("username")
                         .passwordParameter("password")
-
-                        // =================================================
-                        // ROLE BASED REDIRECT
-                        // =================================================
 
                         .successHandler(
                                 (request, response, authentication) -> {
@@ -202,36 +231,25 @@ public class SecurityConfig {
                                                                     )
                                                     );
 
-
-                                    // PROJECT MANAGER
                                     if (isPM) {
 
                                         response.sendRedirect(
                                                 "/project-manager/dashboard"
                                         );
 
-                                    }
-
-                                    // FINANCE OFFICER
-                                    else if (isFinance) {
+                                    } else if (isFinance) {
 
                                         response.sendRedirect(
                                                 "/finance/dashboard"
                                         );
 
-                                    }
-
-                                    // DONOR
-                                    else if (isDonor) {
+                                    } else if (isDonor) {
 
                                         response.sendRedirect(
                                                 "/donor/dashboard"
                                         );
 
-                                    }
-
-                                    // UNKNOWN ROLE
-                                    else {
+                                    } else {
 
                                         response.sendRedirect("/");
                                     }
@@ -242,11 +260,6 @@ public class SecurityConfig {
 
                         .permitAll()
                 )
-
-
-                // =========================================================
-                // COMMON LOGOUT
-                // =========================================================
 
                 .logout(logout -> logout
 
@@ -263,13 +276,12 @@ public class SecurityConfig {
                         .permitAll()
                 );
 
-
         return http.build();
     }
 
 
     // =========================================================
-    // 6. PROJECT MANAGER
+    // 2. PROJECT MANAGER
     // =========================================================
 
     @Bean
@@ -293,6 +305,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
+                                "/project-manager/login",
                                 "/access-denied",
                                 "/css/**",
                                 "/js/**",
@@ -301,24 +314,140 @@ public class SecurityConfig {
                         .permitAll()
 
                         .anyRequest()
-                        .authenticated()
+                        .hasRole("PROJECT_MANAGER")
+                )
+
+                .formLogin(form -> form
+
+                        .loginPage(
+                                "/project-manager/login"
+                        )
+
+                        .loginProcessingUrl(
+                                "/project-manager/login"
+                        )
+
+                        .usernameParameter("email")
+
+                        .passwordParameter("password")
+
+                        .defaultSuccessUrl(
+                                "/project-manager/dashboard",
+                                true
+                        )
+
+                        .failureUrl(
+                                "/project-manager/login?error=true"
+                        )
+
+                        .permitAll()
+                )
+
+                .logout(logout -> logout
+
+                        .logoutUrl(
+                                "/project-manager/logout"
+                        )
+
+                        .logoutSuccessUrl(
+                                "/project-manager/login?logout=true"
+                        )
+
+                        .permitAll()
                 )
 
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/access-denied")
                 );
 
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 3. RELIEF COORDINATOR
+    // =========================================================
+
+    @Bean
+    @Order(3)
+    public SecurityFilterChain reliefCoordinatorSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+                .securityMatcher(
+                        "/relief-coordinator/**"
+                )
+
+                .authenticationProvider(
+                        reliefCoordinatorAuthenticationProvider()
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/relief-coordinator/login",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole("RELIEF_COORDINATOR")
+                )
+
+                .formLogin(form -> form
+
+                        .loginPage(
+                                "/relief-coordinator/login"
+                        )
+
+                        .loginProcessingUrl(
+                                "/relief-coordinator/login"
+                        )
+
+                        .usernameParameter("username")
+
+                        .passwordParameter("password")
+
+                        .defaultSuccessUrl(
+                                "/relief-coordinator/dashboard",
+                                true
+                        )
+
+                        .failureUrl(
+                                "/relief-coordinator/login?error=true"
+                        )
+
+                        .permitAll()
+                )
+
+                .logout(logout -> logout
+
+                        .logoutUrl(
+                                "/relief-coordinator/logout"
+                        )
+
+                        .logoutSuccessUrl(
+                                "/relief-coordinator/login?logout=true"
+                        )
+
+                        .permitAll()
+                );
 
         return http.build();
     }
 
 
     // =========================================================
-    // 7. FINANCE OFFICER
+    // 4. FINANCE OFFICER
     // =========================================================
 
     @Bean
-    @Order(3)
+    @Order(4)
     public SecurityFilterChain financeOfficerSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -353,17 +482,16 @@ public class SecurityConfig {
                         .accessDeniedPage("/access-denied")
                 );
 
-
         return http.build();
     }
 
 
     // =========================================================
-    // 8. DONOR
+    // 5. DONOR
     // =========================================================
 
     @Bean
-    @Order(4)
+    @Order(5)
     public SecurityFilterChain donorSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -397,17 +525,16 @@ public class SecurityConfig {
                         .accessDeniedPage("/access-denied")
                 );
 
-
         return http.build();
     }
 
 
     // =========================================================
-    // 9. DONATION MANAGEMENT
+    // 6. DONATION MANAGEMENT
     // =========================================================
 
     @Bean
-    @Order(5)
+    @Order(6)
     public SecurityFilterChain donationSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -429,25 +556,29 @@ public class SecurityConfig {
                         .accessDeniedPage("/access-denied")
                 );
 
-
         return http.build();
     }
 
 
     // =========================================================
-    // 10. DEFAULT / PUBLIC
+    // 7. DEFAULT / PUBLIC / VICTIM / DISASTER
     // =========================================================
 
     @Bean
-    @Order(6)
+    @Order(7)
     public SecurityFilterChain defaultSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
+
+                        // -----------------------------------------
+                        // STATIC FILES
+                        // -----------------------------------------
 
                         .requestMatchers(
                                 "/",
@@ -459,10 +590,88 @@ public class SecurityConfig {
                         )
                         .permitAll()
 
-                        .anyRequest()
-                        .permitAll()
-                );
 
+                        // -----------------------------------------
+                        // VICTIM REGISTRATION
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/victims/register"
+                        )
+                        .permitAll()
+
+
+                        // -----------------------------------------
+                        // VICTIM LOGIN
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/victim-login",
+                                "/victim-login/**"
+                        )
+                        .permitAll()
+
+
+                        // -----------------------------------------
+                        // VICTIM DASHBOARD / SESSION FUNCTIONS
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/victim/**"
+                        )
+                        .permitAll()
+
+
+                        // -----------------------------------------
+                        // NEEDS ASSESSMENT - VICTIM SIDE
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/needs-assessment/form",
+                                "/needs-assessment/submit",
+                                "/needs-assessment/status"
+                        )
+                        .permitAll()
+
+
+                        // -----------------------------------------
+                        // GN REPORT
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/gn-reports/**"
+                        )
+                        .permitAll()
+
+
+                        // -----------------------------------------
+                        // DISASTER MANAGEMENT
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/disasters/**",
+                                "/affected-areas/**"
+                        )
+                        .hasRole("PROJECT_MANAGER")
+
+
+                        // -----------------------------------------
+                        // VICTIM MANAGEMENT - PROJECT MANAGER
+                        // -----------------------------------------
+
+                        .requestMatchers(
+                                "/victims/**"
+                        )
+                        .hasRole("PROJECT_MANAGER")
+
+
+                        // -----------------------------------------
+                        // EVERYTHING ELSE
+                        // -----------------------------------------
+
+                        .anyRequest()
+                        .authenticated()
+                );
 
         return http.build();
     }
