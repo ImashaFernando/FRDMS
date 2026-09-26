@@ -332,3 +332,22 @@ body {
         padding: 30px 25px;
     }
 }
+.login-link {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #718096;
+}
+
+.login-link a {
+    color: #0D5F96;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 5px;
+    transition: 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #246A98;
+    text-decoration: underline;
+}

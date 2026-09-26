@@ -91,6 +91,40 @@
 
       </a>
 
+      <div class="register-dropdown">
+
+        <button type="button" class="register-btn">
+          <i class="fa-solid fa-user-plus"></i>
+          Register
+          <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+        </button>
+
+        <div class="register-menu">
+
+          <!-- Donor -->
+          <a th:href="@{/donors/register}">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            <span>Register as Donor</span>
+          </a>
+
+          <!-- Volunteer -->
+          <a th:href="@{/volunteer/register}">
+            <i class="fa-solid fa-people-group"></i>
+            <span>Register as Volunteer</span>
+          </a>
+
+          <!-- Victim -->
+          <a th:href="@{/victims/register}">
+            <i class="fa-solid fa-user"></i>
+            <span>Register as Victim</span>
+          </a>
+
+        </div>
+
+      </div>
+
+
+
     </nav>
 
   </div>

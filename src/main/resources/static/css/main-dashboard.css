@@ -219,46 +219,287 @@ section {
 /* =========================================================
    LOGIN BUTTON
 ========================================================= */
+/* ================================
+   HEADER AUTH BUTTONS
+   ================================ */
 
-.login-button {
+.login-button,
+.register-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
 
-    gap: 9px;
-
-    padding: 12px 23px;
-
-    color: white;
-
-    background:
-            linear-gradient(
-                    135deg,
-                    #1268a8,
-                    #084879
-            );
+    height: 44px;
+    padding: 0 20px;
 
     border-radius: 10px;
 
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
 
-    box-shadow:
-            0 10px 22px rgba(8, 44, 76, 0.18);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* =================================
+   HEADER LOGIN + REGISTER BUTTONS
+   ================================= */
+
+.login-button,
+.register-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 145px;
+    height: 44px;
+
+    padding: 0;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+
+    cursor: pointer;
 
     transition:
-            transform 0.25s ease,
-            box-shadow 0.25s ease;
+            transform 0.3s ease,
+            box-shadow 0.3s ease,
+            background 0.3s ease;
+
+    animation: buttonAppear 0.7s ease both;
 }
 
+
+/* LOGIN */
+.login-button {
+    background: #0D5F96;
+    color: #FFFFFF !important;
+    border: 1px solid #0D5F96;
+
+    box-shadow: 0 4px 10px rgba(13, 95, 150, 0.20);
+}
+
+
+/* REGISTER */
+.register-btn {
+    background: #2F80B7;
+    color: #FFFFFF !important;
+    border: 1px solid #2F80B7;
+
+    box-shadow: 0 4px 10px rgba(47, 128, 183, 0.20);
+
+    animation-delay: 0.15s;
+}
+
+
+/* ICONS */
+.login-button i,
+.register-btn i {
+    color: #FFFFFF !important;
+    font-size: 15px;
+}
+
+
+/* HOVER ANIMATION */
+.login-button:hover,
+.register-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow: 0 8px 18px rgba(13, 95, 150, 0.28);
+}
+
+
+/* LOGIN HOVER */
 .login-button:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-            0 15px 30px rgba(8, 44, 76, 0.25);
+    background: #084F7D;
 }
 
 
+/* REGISTER HOVER */
+.register-btn:hover {
+    background: #246A98;
+}
+
+
+/* CLICK EFFECT */
+.login-button:active,
+.register-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+
+/* BUTTON APPEAR ANIMATION */
+@keyframes buttonAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==============================
+   REGISTER DROPDOWN
+   ============================== */
+
+.register-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* REGISTER BUTTON */
+
+.register-dropdown .register-btn {
+    width: 145px;
+    height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    background: #2F80B7;
+    color: #FFFFFF !important;
+
+    border: 1px solid #2F80B7;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px rgba(47, 128, 183, 0.20);
+
+    transition: all 0.3s ease;
+}
+
+
+/* ARROW */
+
+.dropdown-arrow {
+    font-size: 10px !important;
+    transition: transform 0.3s ease;
+}
+
+
+/* HOVER BUTTON */
+
+.register-dropdown .register-btn:hover {
+    background: #246A98;
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 16px rgba(47, 128, 183, 0.28);
+}
+
+
+/* ==============================
+   DROPDOWN MENU
+   ============================== */
+
+.register-menu {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    right: 0;
+
+    width: 220px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #D9E8F2;
+    border-radius: 12px;
+
+    padding: 8px;
+
+    box-shadow: 0 10px 25px rgba(20, 70, 100, 0.18);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-8px);
+
+    transition: all 0.25s ease;
+
+    z-index: 1000;
+}
+
+
+/* SHOW DROPDOWN */
+
+.register-dropdown:hover .register-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* ROTATE ARROW */
+
+.register-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* MENU ITEMS */
+
+.register-menu a {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    border-radius: 8px;
+
+    color: #245B78;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+
+/* ICONS */
+
+.register-menu a i {
+    width: 20px;
+
+    text-align: center;
+
+    color: #2F80B7;
+
+    font-size: 15px;
+}
+
+
+/* ITEM HOVER */
+
+.register-menu a:hover {
+    background: #EAF5FB;
+
+    color: #0D5F96;
+
+    transform: translateX(3px);
+}
+
+.register-menu a:hover i {
+    color: #0D5F96;
+}
 /* =========================================================
    HERO
 ========================================================= */

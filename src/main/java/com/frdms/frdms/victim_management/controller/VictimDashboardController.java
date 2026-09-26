@@ -49,7 +49,7 @@ public class VictimDashboardController {
                 (Long) session.getAttribute("victimId");
 
         if (victimId == null) {
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 
@@ -69,7 +69,7 @@ public class VictimDashboardController {
 
             session.invalidate();
 
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 

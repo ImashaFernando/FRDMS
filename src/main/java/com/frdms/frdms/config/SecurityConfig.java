@@ -1,11 +1,14 @@
 package com.frdms.frdms.config;
 
+import com.frdms.frdms.victim_management.repository.VictimRepository;
+import com.frdms.frdms.victim_management.service.VictimUserDetailsService;
 import com.frdms.frdms.common.service.DonorUserDetailsService;
 import com.frdms.frdms.common.service.FinanceOfficerUserDetailsService;
 import com.frdms.frdms.common.service.ProjectManagerUserDetailsService;
 import com.frdms.frdms.common.service.ReliefCoordinatorUserDetailsService;
 import com.frdms.frdms.shelter_management.service.StaffUserDetailsService;
 import com.frdms.frdms.volunteer_management.service.VolunteerUserDetailsService;
+import com.frdms.frdms.common.service.DistributionOfficerUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +18,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,156 +25,308 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.List;
 
+
 @Configuration
 public class SecurityConfig {
 
-    private final ProjectManagerUserDetailsService projectManagerUserDetailsService;
-    private final FinanceOfficerUserDetailsService financeOfficerUserDetailsService;
-    private final DonorUserDetailsService donorUserDetailsService;
-    private final ReliefCoordinatorUserDetailsService reliefCoordinatorUserDetailsService;
-    private final VolunteerUserDetailsService volunteerUserDetailsService;
-    private final StaffUserDetailsService staffUserDetailsService;
+    // =========================================================
+    // USER DETAILS SERVICES
+    // =========================================================
+
+    private final ProjectManagerUserDetailsService
+            projectManagerUserDetailsService;
+
+    private final FinanceOfficerUserDetailsService
+            financeOfficerUserDetailsService;
+
+    private final DonorUserDetailsService
+            donorUserDetailsService;
+
+    private final ReliefCoordinatorUserDetailsService
+            reliefCoordinatorUserDetailsService;
+
+    private final VolunteerUserDetailsService
+            volunteerUserDetailsService;
+
+    private final StaffUserDetailsService
+            staffUserDetailsService;
+
+    private final DistributionOfficerUserDetailsService
+            distributionOfficerUserDetailsService;
+
+    private final VictimUserDetailsService
+            victimUserDetailsService;
+
     private final PasswordEncoder passwordEncoder;
+
+    private final VictimRepository victimRepository;
+
 
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
 
     public SecurityConfig(
-            ProjectManagerUserDetailsService projectManagerUserDetailsService,
-            FinanceOfficerUserDetailsService financeOfficerUserDetailsService,
-            DonorUserDetailsService donorUserDetailsService,
-            ReliefCoordinatorUserDetailsService reliefCoordinatorUserDetailsService,
-            VolunteerUserDetailsService volunteerUserDetailsService,
-            StaffUserDetailsService staffUserDetailsService,
-            PasswordEncoder passwordEncoder) {
+            ProjectManagerUserDetailsService
+                    projectManagerUserDetailsService,
 
-        this.projectManagerUserDetailsService = projectManagerUserDetailsService;
-        this.financeOfficerUserDetailsService = financeOfficerUserDetailsService;
-        this.donorUserDetailsService = donorUserDetailsService;
-        this.reliefCoordinatorUserDetailsService = reliefCoordinatorUserDetailsService;
-        this.volunteerUserDetailsService = volunteerUserDetailsService;
-        this.staffUserDetailsService = staffUserDetailsService;
-        this.passwordEncoder = passwordEncoder;
+            FinanceOfficerUserDetailsService
+                    financeOfficerUserDetailsService,
+
+            DonorUserDetailsService
+                    donorUserDetailsService,
+
+            ReliefCoordinatorUserDetailsService
+                    reliefCoordinatorUserDetailsService,
+
+            VolunteerUserDetailsService
+                    volunteerUserDetailsService,
+
+            StaffUserDetailsService
+                    staffUserDetailsService,
+
+            DistributionOfficerUserDetailsService
+                    distributionOfficerUserDetailsService,
+
+            VictimUserDetailsService
+                    victimUserDetailsService,
+
+            PasswordEncoder passwordEncoder,
+
+            VictimRepository victimRepository) {
+
+        this.projectManagerUserDetailsService =
+                projectManagerUserDetailsService;
+
+        this.financeOfficerUserDetailsService =
+                financeOfficerUserDetailsService;
+
+        this.donorUserDetailsService =
+                donorUserDetailsService;
+
+        this.reliefCoordinatorUserDetailsService =
+                reliefCoordinatorUserDetailsService;
+
+        this.volunteerUserDetailsService =
+                volunteerUserDetailsService;
+
+        this.staffUserDetailsService =
+                staffUserDetailsService;
+
+        this.distributionOfficerUserDetailsService =
+                distributionOfficerUserDetailsService;
+
+        this.victimUserDetailsService =
+                victimUserDetailsService;
+
+        this.passwordEncoder =
+                passwordEncoder;
+
+        this.victimRepository =
+                victimRepository;
     }
 
+
     // =========================================================
-    // PROJECT MANAGER AUTHENTICATION PROVIDER
+    // 1. PROJECT MANAGER AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
-    public DaoAuthenticationProvider projectManagerAuthenticationProvider() {
+    public DaoAuthenticationProvider
+    projectManagerAuthenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(
                         projectManagerUserDetailsService
                 );
 
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
 
         return provider;
     }
 
+
     // =========================================================
-    // FINANCE OFFICER AUTHENTICATION PROVIDER
+    // 2. FINANCE OFFICER AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
-    public DaoAuthenticationProvider financeOfficerAuthenticationProvider() {
+    public DaoAuthenticationProvider
+    financeOfficerAuthenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(
                         financeOfficerUserDetailsService
                 );
 
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
 
         return provider;
     }
 
+
     // =========================================================
-    // DONOR AUTHENTICATION PROVIDER
+    // 3. DONOR AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
-    public DaoAuthenticationProvider donorAuthenticationProvider() {
+    public DaoAuthenticationProvider
+    donorAuthenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(
                         donorUserDetailsService
                 );
 
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
 
         return provider;
     }
 
+
     // =========================================================
-    // RELIEF COORDINATOR AUTHENTICATION PROVIDER
+    // 4. RELIEF COORDINATOR AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
-    public DaoAuthenticationProvider reliefCoordinatorAuthenticationProvider() {
+    public DaoAuthenticationProvider
+    reliefCoordinatorAuthenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(
                         reliefCoordinatorUserDetailsService
                 );
 
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
 
         return provider;
     }
 
+
     // =========================================================
-    // VOLUNTEER AUTHENTICATION PROVIDER
+    // 5. DISTRIBUTION OFFICER AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
-    public DaoAuthenticationProvider volunteerAuthenticationProvider() {
+    public DaoAuthenticationProvider
+    distributionOfficerAuthenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(
+                        distributionOfficerUserDetailsService
+                );
+
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
+
+        return provider;
+    }
+
+
+    // =========================================================
+    // 6. VOLUNTEER AUTHENTICATION PROVIDER
+    // =========================================================
+
+    @Bean
+    public DaoAuthenticationProvider
+    volunteerAuthenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(
                         volunteerUserDetailsService
                 );
 
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
 
         return provider;
     }
 
+
     // =========================================================
-    // STAFF AUTHENTICATION PROVIDER
+    // 7. VICTIM AUTHENTICATION PROVIDER
     // =========================================================
 
     @Bean
-    public DaoAuthenticationProvider staffAuthenticationProvider() {
+    public DaoAuthenticationProvider
+    victimAuthenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(
+                        victimUserDetailsService
+                );
+
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
+
+        return provider;
+    }
+
+
+    // =========================================================
+    // 8. STAFF AUTHENTICATION PROVIDER
+    // =========================================================
+
+    @Bean
+    public DaoAuthenticationProvider
+    staffAuthenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(
                         staffUserDetailsService
                 );
 
-        provider.setPasswordEncoder(passwordEncoder);
+        provider.setPasswordEncoder(
+                passwordEncoder
+        );
 
         return provider;
     }
+
 
     // =========================================================
     // COMMON AUTHENTICATION MANAGER
     // =========================================================
 
     @Bean
-    public AuthenticationManager commonAuthenticationManager() {
+    public AuthenticationManager
+    commonAuthenticationManager() {
 
         return new ProviderManager(
                 List.of(
+
+                        // IMPORTANT:
+                        // Victim provider first
+                        victimAuthenticationProvider(),
+
                         projectManagerAuthenticationProvider(),
+
                         financeOfficerAuthenticationProvider(),
-                        donorAuthenticationProvider()
+
+                        donorAuthenticationProvider(),
+
+                        reliefCoordinatorAuthenticationProvider(),
+
+                        distributionOfficerAuthenticationProvider(),
+
+                        volunteerAuthenticationProvider(),
+
+                        staffAuthenticationProvider()
                 )
         );
     }
+
 
     // =========================================================
     // 1. COMMON LOGIN
@@ -180,72 +334,250 @@ public class SecurityConfig {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain commonLoginSecurityFilterChain(
+    public SecurityFilterChain
+    commonLoginSecurityFilterChain(
             HttpSecurity http,
-            AuthenticationManager commonAuthenticationManager)
+            AuthenticationManager
+                    commonAuthenticationManager)
             throws Exception {
 
         http
-                .securityMatcher("/login")
+
+                // -------------------------------------------------
+                // COMMON LOGIN + LOGOUT
+                // -------------------------------------------------
+
+                .securityMatcher(
+                        "/login",
+                        "/logout"
+                )
 
                 .authenticationManager(
                         commonAuthenticationManager
                 )
 
+                // -------------------------------------------------
+                // CSRF
+                // -------------------------------------------------
+
                 .csrf(csrf -> csrf.disable())
 
+                // -------------------------------------------------
+                // PUBLIC LOGIN
+                // -------------------------------------------------
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login")
+
+                        .requestMatchers(
+                                "/login",
+                                "/logout"
+                        )
                         .permitAll()
                 )
 
+                // -------------------------------------------------
+                // COMMON LOGIN
+                // -------------------------------------------------
+
                 .formLogin(form -> form
 
-                        .loginPage("/login")
+                        .loginPage(
+                                "/login"
+                        )
 
-                        .loginProcessingUrl("/login")
+                        .loginProcessingUrl(
+                                "/login"
+                        )
 
-                        .usernameParameter("username")
-                        .passwordParameter("password")
+                        .usernameParameter(
+                                "username"
+                        )
+
+                        .passwordParameter(
+                                "password"
+                        )
+
+                        // =========================================
+                        // SUCCESS HANDLER
+                        // =========================================
 
                         .successHandler(
-                                (request, response, authentication) -> {
+                                (request,
+                                 response,
+                                 authentication) -> {
+
+                                    System.out.println(
+                                            "================================"
+                                    );
+
+                                    System.out.println(
+                                            "✅ LOGIN SUCCESS"
+                                    );
+
+                                    System.out.println(
+                                            "USERNAME: "
+                                                    + authentication
+                                                    .getName()
+                                    );
+
+                                    System.out.println(
+                                            "AUTHORITIES: "
+                                                    + authentication
+                                                    .getAuthorities()
+                                    );
+
+                                    System.out.println(
+                                            "================================"
+                                    );
+
+
+                                    // ---------------------------------
+                                    // PROJECT MANAGER
+                                    // ---------------------------------
 
                                     boolean isPM =
                                             authentication
                                                     .getAuthorities()
                                                     .stream()
-                                                    .anyMatch(authority ->
-                                                            authority
-                                                                    .getAuthority()
-                                                                    .equals(
-                                                                            "ROLE_PROJECT_MANAGER"
-                                                                    )
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_PROJECT_MANAGER"
+                                                                            )
                                                     );
+
+
+                                    // ---------------------------------
+                                    // FINANCE OFFICER
+                                    // ---------------------------------
 
                                     boolean isFinance =
                                             authentication
                                                     .getAuthorities()
                                                     .stream()
-                                                    .anyMatch(authority ->
-                                                            authority
-                                                                    .getAuthority()
-                                                                    .equals(
-                                                                            "ROLE_FINANCE_OFFICER"
-                                                                    )
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_FINANCE_OFFICER"
+                                                                            )
                                                     );
+
+
+                                    // ---------------------------------
+                                    // DONOR
+                                    // ---------------------------------
 
                                     boolean isDonor =
                                             authentication
                                                     .getAuthorities()
                                                     .stream()
-                                                    .anyMatch(authority ->
-                                                            authority
-                                                                    .getAuthority()
-                                                                    .equals(
-                                                                            "ROLE_DONOR"
-                                                                    )
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_DONOR"
+                                                                            )
                                                     );
+
+
+                                    // ---------------------------------
+                                    // VOLUNTEER
+                                    // ---------------------------------
+
+                                    boolean isVolunteer =
+                                            authentication
+                                                    .getAuthorities()
+                                                    .stream()
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_VOLUNTEER"
+                                                                            )
+                                                    );
+
+
+                                    // ---------------------------------
+                                    // RELIEF COORDINATOR
+                                    // ---------------------------------
+
+                                    boolean isReliefCoordinator =
+                                            authentication
+                                                    .getAuthorities()
+                                                    .stream()
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_RELIEF_COORDINATOR"
+                                                                            )
+                                                    );
+
+
+                                    // ---------------------------------
+                                    // DISTRIBUTION OFFICER
+                                    // ---------------------------------
+
+                                    boolean isDistributionOfficer =
+                                            authentication
+                                                    .getAuthorities()
+                                                    .stream()
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_DISTRIBUTION_OFFICER"
+                                                                            )
+                                                    );
+
+
+                                    // ---------------------------------
+                                    // VICTIM
+                                    // ---------------------------------
+
+                                    boolean isVictim =
+                                            authentication
+                                                    .getAuthorities()
+                                                    .stream()
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    authority
+                                                                            .getAuthority()
+                                                                            .equals(
+                                                                                    "ROLE_VICTIM"
+                                                                            )
+                                                    );
+
+
+                                    // ---------------------------------
+                                    // STAFF
+                                    // ---------------------------------
+
+                                    boolean isStaff =
+                                            authentication
+                                                    .getAuthorities()
+                                                    .stream()
+                                                    .anyMatch(
+                                                            authority ->
+                                                                    "ROLE_STAFF"
+                                                                            .equals(
+                                                                                    authority
+                                                                                            .getAuthority()
+                                                                            )
+                                                    );
+
+
+                                    // =================================
+                                    // ROLE REDIRECTS
+                                    // =================================
 
                                     if (isPM) {
 
@@ -253,47 +585,258 @@ public class SecurityConfig {
                                                 "/project-manager/dashboard"
                                         );
 
-                                    } else if (isFinance) {
+                                    }
+
+                                    else if (isFinance) {
 
                                         response.sendRedirect(
                                                 "/finance/dashboard"
                                         );
 
-                                    } else if (isDonor) {
+                                    }
+
+                                    else if (isDonor) {
 
                                         response.sendRedirect(
                                                 "/donor/dashboard"
                                         );
 
-                                    } else {
+                                    }
 
-                                        response.sendRedirect("/");
+                                    else if (isVolunteer) {
+
+                                        response.sendRedirect(
+                                                "/volunteer/profile"
+                                        );
+
+                                    }
+
+                                    else if (isReliefCoordinator) {
+
+                                        response.sendRedirect(
+                                                "/relief-coordinator/dashboard"
+                                        );
+
+                                    }
+
+                                    else if (isDistributionOfficer) {
+
+                                        response.sendRedirect(
+                                                "/distribution/dashboard"
+                                        );
+
+                                    }
+
+                                    else if (isStaff) {
+
+                                        response.sendRedirect(
+                                                "/staff/shelters"
+                                        );
+
+                                    }
+
+                                    // =================================
+                                    // VICTIM LOGIN
+                                    // =================================
+
+                                    else if (isVictim) {
+
+                                        String nic =
+                                                authentication
+                                                        .getName();
+
+                                        System.out.println(
+                                                "🔍 Loading victim for NIC: "
+                                                        + nic
+                                        );
+
+                                        victimRepository
+                                                .findByNicNumber(
+                                                        nic
+                                                )
+                                                .ifPresent(
+                                                        victim -> {
+
+                                                            // -------------------------
+                                                            // SAVE VICTIM ID
+                                                            // -------------------------
+
+                                                            request
+                                                                    .getSession()
+                                                                    .setAttribute(
+                                                                            "victimId",
+                                                                            victim.getId()
+                                                                    );
+
+
+                                                            // -------------------------
+                                                            // SAVE VICTIM NIC
+                                                            // -------------------------
+
+                                                            request
+                                                                    .getSession()
+                                                                    .setAttribute(
+                                                                            "victimNic",
+                                                                            victim.getNicNumber()
+                                                                    );
+
+
+                                                            // -------------------------
+                                                            // SAVE VICTIM NAME
+                                                            // -------------------------
+
+                                                            request
+                                                                    .getSession()
+                                                                    .setAttribute(
+                                                                            "victimName",
+                                                                            victim.getFullName()
+                                                                    );
+
+
+                                                            // -------------------------
+                                                            // SAVE DISASTER ID
+                                                            // -------------------------
+
+                                                            if (
+                                                                    victim.getDisaster()
+                                                                            != null
+                                                            ) {
+
+                                                                request
+                                                                        .getSession()
+                                                                        .setAttribute(
+                                                                                "victimDisasterId",
+                                                                                victim
+                                                                                        .getDisaster()
+                                                                                        .getId()
+                                                                        );
+                                                            }
+
+
+                                                            System.out.println(
+                                                                    "✅ VICTIM SESSION CREATED"
+                                                            );
+
+                                                            System.out.println(
+                                                                    "Victim ID: "
+                                                                            + victim.getId()
+                                                            );
+
+                                                            System.out.println(
+                                                                    "Victim NIC: "
+                                                                            + victim.getNicNumber()
+                                                            );
+
+                                                            System.out.println(
+                                                                    "Victim Name: "
+                                                                            + victim.getFullName()
+                                                            );
+                                                        }
+                                                );
+
+
+                                        System.out.println(
+                                                "➡️ REDIRECTING TO /victim/dashboard"
+                                        );
+
+                                        response.sendRedirect(
+                                                "/victim/dashboard"
+                                        );
+                                    }
+
+                                    else {
+
+                                        response.sendRedirect(
+                                                "/"
+                                        );
                                     }
                                 }
                         )
 
-                        .failureUrl("/login?error=true")
+                        // =========================================
+                        // LOGIN FAILURE
+                        // =========================================
+
+                        .failureHandler(
+                                (request,
+                                 response,
+                                 exception) -> {
+
+                                    System.out.println(
+                                            "================================"
+                                    );
+
+                                    System.out.println(
+                                            "❌ LOGIN FAILED"
+                                    );
+
+                                    System.out.println(
+                                            "USERNAME: "
+                                                    + request
+                                                    .getParameter(
+                                                            "username"
+                                                    )
+                                    );
+
+                                    System.out.println(
+                                            "EXCEPTION: "
+                                                    + exception
+                                                    .getClass()
+                                                    .getName()
+                                    );
+
+                                    System.out.println(
+                                            "MESSAGE: "
+                                                    + exception
+                                                    .getMessage()
+                                    );
+
+                                    System.out.println(
+                                            "================================"
+                                    );
+
+                                    response.sendRedirect(
+                                            "/login?error=true"
+                                    );
+                                }
+                        )
 
                         .permitAll()
                 )
 
+                // -------------------------------------------------
+                // COMMON LOGOUT
+                // -------------------------------------------------
+
                 .logout(logout -> logout
 
-                        .logoutUrl("/logout")
+                        .logoutUrl(
+                                "/logout"
+                        )
 
-                        .logoutSuccessUrl("/login?logout=true")
+                        .logoutSuccessUrl(
+                                "/?logout=true"
+                        )
 
-                        .invalidateHttpSession(true)
+                        .invalidateHttpSession(
+                                true
+                        )
 
-                        .clearAuthentication(true)
+                        .clearAuthentication(
+                                true
+                        )
 
-                        .deleteCookies("JSESSIONID")
+                        .deleteCookies(
+                                "JSESSIONID"
+                        )
 
                         .permitAll()
                 );
 
+
         return http.build();
     }
+
 
     // =========================================================
     // 2. PROJECT MANAGER
@@ -301,11 +844,13 @@ public class SecurityConfig {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain projectManagerSecurityFilterChain(
+    public SecurityFilterChain
+    projectManagerSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
                 .securityMatcher(
                         "/project-manager/**",
                         "/pm/**"
@@ -329,7 +874,9 @@ public class SecurityConfig {
                         .permitAll()
 
                         .anyRequest()
-                        .hasRole("PROJECT_MANAGER")
+                        .hasRole(
+                                "PROJECT_MANAGER"
+                        )
                 )
 
                 .formLogin(form -> form
@@ -342,9 +889,13 @@ public class SecurityConfig {
                                 "/project-manager/login"
                         )
 
-                        .usernameParameter("email")
+                        .usernameParameter(
+                                "email"
+                        )
 
-                        .passwordParameter("password")
+                        .passwordParameter(
+                                "password"
+                        )
 
                         .defaultSuccessUrl(
                                 "/project-manager/dashboard",
@@ -364,7 +915,6 @@ public class SecurityConfig {
                                 "/project-manager/logout"
                         )
 
-                        // Return to COMMON login after logout
                         .logoutSuccessUrl(
                                 "/login?logout=true"
                         )
@@ -372,12 +922,16 @@ public class SecurityConfig {
                         .permitAll()
                 )
 
-                .exceptionHandling(exception -> exception
-                        .accessDeniedPage("/access-denied")
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
+
 
     // =========================================================
     // 3. RELIEF COORDINATOR
@@ -385,17 +939,15 @@ public class SecurityConfig {
 
     @Bean
     @Order(3)
-    public SecurityFilterChain reliefCoordinatorSecurityFilterChain(
+    public SecurityFilterChain
+    reliefCoordinatorSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
                 .securityMatcher(
                         "/relief-coordinator/**"
-                )
-
-                .authenticationProvider(
-                        reliefCoordinatorAuthenticationProvider()
                 )
 
                 .csrf(csrf -> csrf.disable())
@@ -403,7 +955,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
-                                "/relief-coordinator/login",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"
@@ -411,50 +962,21 @@ public class SecurityConfig {
                         .permitAll()
 
                         .anyRequest()
-                        .hasRole("RELIEF_COORDINATOR")
+                        .hasRole(
+                                "RELIEF_COORDINATOR"
+                        )
                 )
 
-                .formLogin(form -> form
-
-                        .loginPage(
-                                "/relief-coordinator/login"
-                        )
-
-                        .loginProcessingUrl(
-                                "/relief-coordinator/login"
-                        )
-
-                        .usernameParameter("username")
-
-                        .passwordParameter("password")
-
-                        .defaultSuccessUrl(
-                                "/relief-coordinator/dashboard",
-                                true
-                        )
-
-                        .failureUrl(
-                                "/relief-coordinator/login?error=true"
-                        )
-
-                        .permitAll()
-                )
-
-                .logout(logout -> logout
-
-                        .logoutUrl(
-                                "/relief-coordinator/logout"
-                        )
-
-                        .logoutSuccessUrl(
-                                "/relief-coordinator/login?logout=true"
-                        )
-
-                        .permitAll()
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
+
 
     // =========================================================
     // 4. VOLUNTEER
@@ -462,15 +984,15 @@ public class SecurityConfig {
 
     @Bean
     @Order(4)
-    public SecurityFilterChain volunteerSecurityFilterChain(
+    public SecurityFilterChain
+    volunteerSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
-                .securityMatcher("/volunteer/**")
 
-                .authenticationProvider(
-                        volunteerAuthenticationProvider()
+                .securityMatcher(
+                        "/volunteer/**"
                 )
 
                 .csrf(csrf -> csrf.disable())
@@ -479,55 +1001,28 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/volunteer/register",
-                                "/volunteer/login"
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
                         )
                         .permitAll()
 
                         .anyRequest()
-                        .hasRole("VOLUNTEER")
+                        .hasRole(
+                                "VOLUNTEER"
+                        )
                 )
 
-                .formLogin(form -> form
-
-                        .loginPage(
-                                "/volunteer/login"
-                        )
-
-                        .loginProcessingUrl(
-                                "/volunteer/login"
-                        )
-
-                        .usernameParameter("email")
-
-                        .passwordParameter("password")
-
-                        .defaultSuccessUrl(
-                                "/volunteer/profile",
-                                true
-                        )
-
-                        .failureUrl(
-                                "/volunteer/login?error=true"
-                        )
-
-                        .permitAll()
-                )
-
-                .logout(logout -> logout
-
-                        .logoutUrl(
-                                "/volunteer/logout"
-                        )
-
-                        .logoutSuccessUrl(
-                                "/volunteer/login?logout=true"
-                        )
-
-                        .permitAll()
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
+
 
     // =========================================================
     // 5. STAFF / SHELTER
@@ -535,15 +1030,15 @@ public class SecurityConfig {
 
     @Bean
     @Order(5)
-    public SecurityFilterChain staffSecurityFilterChain(
+    public SecurityFilterChain
+    staffSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
-                .securityMatcher("/staff/**")
 
-                .authenticationProvider(
-                        staffAuthenticationProvider()
+                .securityMatcher(
+                        "/staff/**"
                 )
 
                 .csrf(csrf -> csrf.disable())
@@ -551,55 +1046,28 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers(
-                                "/staff/login"
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
                         )
                         .permitAll()
 
                         .anyRequest()
-                        .hasRole("STAFF")
+                        .hasRole(
+                                "STAFF"
+                        )
                 )
 
-                .formLogin(form -> form
-
-                        .loginPage(
-                                "/staff/login"
-                        )
-
-                        .loginProcessingUrl(
-                                "/staff/login"
-                        )
-
-                        .usernameParameter("email")
-
-                        .passwordParameter("password")
-
-                        .defaultSuccessUrl(
-                                "/staff/shelters",
-                                true
-                        )
-
-                        .failureUrl(
-                                "/staff/login?error=true"
-                        )
-
-                        .permitAll()
-                )
-
-                .logout(logout -> logout
-
-                        .logoutUrl(
-                                "/staff/logout"
-                        )
-
-                        .logoutSuccessUrl(
-                                "/staff/login?logout=true"
-                        )
-
-                        .permitAll()
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
+
 
     // =========================================================
     // 6. FINANCE OFFICER
@@ -607,11 +1075,13 @@ public class SecurityConfig {
 
     @Bean
     @Order(6)
-    public SecurityFilterChain financeOfficerSecurityFilterChain(
+    public SecurityFilterChain
+    financeOfficerSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
                 .securityMatcher(
                         "/finance-officer/**",
                         "/finance/**"
@@ -637,12 +1107,16 @@ public class SecurityConfig {
                         .authenticated()
                 )
 
-                .exceptionHandling(exception -> exception
-                        .accessDeniedPage("/access-denied")
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
+
 
     // =========================================================
     // 7. DONOR
@@ -650,11 +1124,13 @@ public class SecurityConfig {
 
     @Bean
     @Order(7)
-    public SecurityFilterChain donorSecurityFilterChain(
+    public SecurityFilterChain
+    donorSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
                 .securityMatcher(
                         "/donor/**"
                 )
@@ -679,12 +1155,16 @@ public class SecurityConfig {
                         .authenticated()
                 )
 
-                .exceptionHandling(exception -> exception
-                        .accessDeniedPage("/access-denied")
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
+
 
     // =========================================================
     // 8. DONATION MANAGEMENT
@@ -692,11 +1172,13 @@ public class SecurityConfig {
 
     @Bean
     @Order(8)
-    public SecurityFilterChain donationSecurityFilterChain(
+    public SecurityFilterChain
+    donationSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
         http
+
                 .securityMatcher(
                         "/donations/**"
                 )
@@ -709,20 +1191,70 @@ public class SecurityConfig {
                         .authenticated()
                 )
 
-                .exceptionHandling(exception -> exception
-                        .accessDeniedPage("/access-denied")
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
                 );
 
         return http.build();
     }
 
+
     // =========================================================
-    // 9. DEFAULT / PUBLIC / VICTIM / DISASTER
+    // 9. DISTRIBUTION OFFICER
     // =========================================================
 
     @Bean
     @Order(9)
-    public SecurityFilterChain defaultSecurityFilterChain(
+    public SecurityFilterChain
+    distributionOfficerSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/distribution/**"
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole(
+                                "DISTRIBUTION_OFFICER"
+                        )
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 10. DEFAULT / PUBLIC / VICTIM / DISASTER
+    // =========================================================
+
+    @Bean
+    @Order(10)
+    public SecurityFilterChain
+    defaultSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
 
@@ -732,13 +1264,14 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
-                        // -----------------------------------------
-                        // STATIC FILES
-                        // -----------------------------------------
+                        // =========================================
+                        // PUBLIC HOME / COMMON LOGIN / REGISTER
+                        // =========================================
 
                         .requestMatchers(
                                 "/",
                                 "/login",
+                                "/register",
                                 "/access-denied",
                                 "/css/**",
                                 "/js/**",
@@ -746,76 +1279,91 @@ public class SecurityConfig {
                         )
                         .permitAll()
 
-                        // -----------------------------------------
+
+                        // =========================================
+                        // DONOR REGISTRATION
+                        // =========================================
+
+                        .requestMatchers(
+                                "/donors/register",
+                                "/donors/success"
+                        )
+                        .permitAll()
+
+
+                        // =========================================
                         // VICTIM REGISTRATION
-                        // -----------------------------------------
+                        // =========================================
 
                         .requestMatchers(
                                 "/victims/register"
                         )
                         .permitAll()
 
-                        // -----------------------------------------
-                        // VICTIM LOGIN
-                        // -----------------------------------------
+
+                        // =========================================
+                        // VOLUNTEER REGISTRATION
+                        // =========================================
 
                         .requestMatchers(
-                                "/victim-login",
-                                "/victim-login/**"
+                                "/volunteer/register"
                         )
                         .permitAll()
 
-                        // -----------------------------------------
-                        // VICTIM DASHBOARD / SESSION FUNCTIONS
-                        // -----------------------------------------
+
+                        // =========================================
+                        // VICTIM
+                        // =========================================
 
                         .requestMatchers(
-                                "/victim/**"
+                                "/victims/**"
                         )
-                        .permitAll()
+                        .hasAnyRole(
+                                "VICTIM",
+                                "PROJECT_MANAGER"
+                        )
 
-                        // -----------------------------------------
-                        // NEEDS ASSESSMENT - VICTIM SIDE
-                        // -----------------------------------------
+
+                        // =========================================
+                        // NEEDS ASSESSMENT - VICTIM
+                        // =========================================
 
                         .requestMatchers(
                                 "/needs-assessment/form",
                                 "/needs-assessment/submit",
                                 "/needs-assessment/status"
                         )
-                        .permitAll()
+                        .hasRole(
+                                "VICTIM"
+                        )
 
-                        // -----------------------------------------
+
+                        // =========================================
                         // GN REPORT
-                        // -----------------------------------------
+                        // =========================================
 
                         .requestMatchers(
                                 "/gn-reports/**"
                         )
                         .permitAll()
 
-                        // -----------------------------------------
+
+                        // =========================================
                         // DISASTER MANAGEMENT
-                        // -----------------------------------------
+                        // =========================================
 
                         .requestMatchers(
                                 "/disasters/**",
                                 "/affected-areas/**"
                         )
-                        .hasRole("PROJECT_MANAGER")
-
-                        // -----------------------------------------
-                        // VICTIM MANAGEMENT - PROJECT MANAGER
-                        // -----------------------------------------
-
-                        .requestMatchers(
-                                "/victims/**"
+                        .hasRole(
+                                "PROJECT_MANAGER"
                         )
-                        .hasRole("PROJECT_MANAGER")
 
-                        // -----------------------------------------
+
+                        // =========================================
                         // EVERYTHING ELSE
-                        // -----------------------------------------
+                        // =========================================
 
                         .anyRequest()
                         .authenticated()

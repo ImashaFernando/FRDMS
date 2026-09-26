@@ -34,7 +34,7 @@ public class ProjectManagerController {
             );
         }
 
-        return "project-manager/project-manager-login";
+        return "login";
     }
 
     // ================================

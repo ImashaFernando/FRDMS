@@ -27,7 +27,7 @@ public class ReliefCoordinatorController {
     @GetMapping("/login")
     public String showLoginPage() {
 
-        return "relief-coordinator/login";
+        return "login";
     }
 
 

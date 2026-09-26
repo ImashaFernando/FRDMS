@@ -3,7 +3,6 @@ package com.frdms.frdms.victim_management.service;
 import com.frdms.frdms.victim_management.entity.Victim;
 import com.frdms.frdms.victim_management.repository.VictimRepository;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +12,7 @@ import java.util.List;
 public class VictimService {
 
     private final VictimRepository victimRepository;
-
-
-    // =========================================================
-    // PASSWORD ENCODER
-    // =========================================================
-
-    private final PasswordEncoder passwordEncoder =
-            new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
 
     // =========================================================
@@ -28,10 +20,11 @@ public class VictimService {
     // =========================================================
 
     public VictimService(
-            VictimRepository victimRepository) {
+            VictimRepository victimRepository,
+            PasswordEncoder passwordEncoder) {
 
-        this.victimRepository =
-                victimRepository;
+        this.victimRepository = victimRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -40,8 +33,7 @@ public class VictimService {
     // REGISTER NEW VICTIM
     // =========================================================
 
-    public Victim registerVictim(
-            Victim victim) {
+    public Victim registerVictim(Victim victim) {
 
         String encodedPassword =
                 passwordEncoder.encode(
@@ -95,8 +87,7 @@ public class VictimService {
     // GET VICTIM BY ID
     // =========================================================
 
-    public Victim getVictimById(
-            Long id) {
+    public Victim getVictimById(Long id) {
 
         return victimRepository
                 .findById(id)
@@ -181,10 +172,8 @@ public class VictimService {
         );
 
 
-        /*
-         * Password is intentionally NOT changed
-         * during a normal victim information update.
-         */
+        // Password is intentionally NOT changed
+        // during a normal victim information update.
 
         return victimRepository.save(
                 existingVictim
@@ -196,8 +185,7 @@ public class VictimService {
     // DELETE VICTIM
     // =========================================================
 
-    public void deleteVictim(
-            Long id) {
+    public void deleteVictim(Long id) {
 
         Victim victim =
                 getVictimById(id);

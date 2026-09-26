@@ -56,7 +56,7 @@ public class NeedsAssessmentController {
                 (Long) session.getAttribute("victimId");
 
         if (victimId == null) {
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 
@@ -69,7 +69,7 @@ public class NeedsAssessmentController {
 
         if (victim == null) {
             session.invalidate();
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 
@@ -140,7 +140,7 @@ public class NeedsAssessmentController {
                 (Long) session.getAttribute("victimId");
 
         if (victimId == null) {
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 
@@ -153,7 +153,7 @@ public class NeedsAssessmentController {
 
         if (victim == null) {
             session.invalidate();
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 
@@ -377,7 +377,7 @@ public class NeedsAssessmentController {
                 (Long) session.getAttribute("victimId");
 
         if (victimId == null) {
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 
@@ -390,7 +390,7 @@ public class NeedsAssessmentController {
 
         if (victim == null) {
             session.invalidate();
-            return "redirect:/victim-login";
+            return "redirect:/login";
         }
 
 

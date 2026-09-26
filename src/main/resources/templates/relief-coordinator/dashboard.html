@@ -286,13 +286,11 @@
         </p>
     </div>
 
-    <a
-            th:href="@{/relief-coordinator/logout}"
-            class="logout-btn">
-
-        Logout
-
-    </a>
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit" class="logout-btn">
+            Logout
+        </button>
+    </form>
 
 </header>
 
