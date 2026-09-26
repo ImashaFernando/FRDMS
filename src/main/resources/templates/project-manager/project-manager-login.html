@@ -30,30 +30,20 @@
             align-items: center;
         }
 
-        /* ================= LOGIN CONTAINER ================= */
-
         .login-container {
             width: 100%;
             max-width: 450px;
             padding: 25px;
         }
 
-        /* ================= LOGIN CARD ================= */
-
         .login-card {
             background: white;
-
             border-radius: 18px;
-
             padding: 40px;
-
             box-shadow:
                     0 10px 30px rgba(0, 0, 0, 0.12);
-
             border-top: 6px solid #558ee0;
         }
-
-        /* ================= HEADER ================= */
 
         .login-header {
             text-align: center;
@@ -78,39 +68,25 @@
             line-height: 1.5;
         }
 
-        /* ================= ERROR MESSAGE ================= */
-
         .alert-error {
             background: #fde8e8;
             border: 1px solid #f5b5b5;
             color: #a33a3a;
-
             padding: 12px 15px;
-
             border-radius: 8px;
-
             margin-bottom: 20px;
-
             font-size: 14px;
         }
-
-        /* ================= SUCCESS MESSAGE ================= */
 
         .alert-success {
             background: #dcefed;
             border: 1px solid #b8dcd8;
             color: #35737a;
-
             padding: 12px 15px;
-
             border-radius: 8px;
-
             margin-bottom: 20px;
-
             font-size: 14px;
         }
-
-        /* ================= FORM ================= */
 
         .form-group {
             margin-bottom: 20px;
@@ -118,84 +94,53 @@
 
         .form-group label {
             display: block;
-
             margin-bottom: 8px;
-
             color: #29445e;
-
             font-weight: bold;
-
             font-size: 14px;
         }
 
         .form-group input {
             width: 100%;
-
             padding: 13px 14px;
-
             border: 1px solid #cfd8de;
-
             border-radius: 8px;
-
             font-size: 15px;
-
             color: #173457;
-
             outline: none;
         }
 
         .form-group input:focus {
             border-color: #558ee0;
-
             box-shadow:
                     0 0 0 3px rgba(85, 142, 224, 0.12);
         }
 
-        /* ================= LOGIN BUTTON ================= */
-
         .login-button {
             width: 100%;
-
             border: none;
-
             padding: 14px;
-
             border-radius: 9px;
-
             background: #558ee0;
-
             color: white;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
-
             transition: 0.2s ease;
         }
 
         .login-button:hover {
             background: #3977cc;
-
             transform: translateY(-1px);
         }
 
-        /* ================= FOOTER ================= */
-
         .login-footer {
             margin-top: 25px;
-
             text-align: center;
-
             color: #557080;
-
             font-size: 13px;
-
             line-height: 1.5;
         }
-
-        /* ================= RESPONSIVE ================= */
 
         @media (max-width: 500px) {
 
@@ -210,7 +155,6 @@
             .login-header h1 {
                 font-size: 24px;
             }
-
         }
 
     </style>
@@ -222,8 +166,6 @@
 <div class="login-container">
 
     <div class="login-card">
-
-        <!-- ================= HEADER ================= -->
 
         <div class="login-header">
 
@@ -241,29 +183,18 @@
 
         </div>
 
-
-        <!-- ================= LOGIN ERROR ================= -->
-
         <div class="alert-error"
              th:if="${loginError}"
              th:text="${loginError}">
         </div>
-
-
-        <!-- ================= LOGOUT MESSAGE ================= -->
 
         <div class="alert-success"
              th:if="${logoutMessage}"
              th:text="${logoutMessage}">
         </div>
 
-
-        <!-- ================= LOGIN FORM ================= -->
-
         <form th:action="@{/project-manager/login}"
               method="post">
-
-            <!-- EMAIL -->
 
             <div class="form-group">
 
@@ -280,9 +211,6 @@
 
             </div>
 
-
-            <!-- PASSWORD -->
-
             <div class="form-group">
 
                 <label for="password">
@@ -298,9 +226,6 @@
 
             </div>
 
-
-            <!-- LOGIN BUTTON -->
-
             <button type="submit"
                     class="login-button">
 
@@ -309,9 +234,6 @@
             </button>
 
         </form>
-
-
-        <!-- ================= FOOTER ================= -->
 
         <div class="login-footer">
 

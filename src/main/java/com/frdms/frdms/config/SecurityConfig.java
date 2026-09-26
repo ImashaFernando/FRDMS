@@ -4,6 +4,8 @@ import com.frdms.frdms.common.service.DonorUserDetailsService;
 import com.frdms.frdms.common.service.FinanceOfficerUserDetailsService;
 import com.frdms.frdms.common.service.ProjectManagerUserDetailsService;
 import com.frdms.frdms.common.service.ReliefCoordinatorUserDetailsService;
+import com.frdms.frdms.shelter_management.service.StaffUserDetailsService;
+import com.frdms.frdms.volunteer_management.service.VolunteerUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,8 +30,9 @@ public class SecurityConfig {
     private final FinanceOfficerUserDetailsService financeOfficerUserDetailsService;
     private final DonorUserDetailsService donorUserDetailsService;
     private final ReliefCoordinatorUserDetailsService reliefCoordinatorUserDetailsService;
+    private final VolunteerUserDetailsService volunteerUserDetailsService;
+    private final StaffUserDetailsService staffUserDetailsService;
     private final PasswordEncoder passwordEncoder;
-
 
     // =========================================================
     // CONSTRUCTOR
@@ -39,30 +43,18 @@ public class SecurityConfig {
             FinanceOfficerUserDetailsService financeOfficerUserDetailsService,
             DonorUserDetailsService donorUserDetailsService,
             ReliefCoordinatorUserDetailsService reliefCoordinatorUserDetailsService,
+            VolunteerUserDetailsService volunteerUserDetailsService,
+            StaffUserDetailsService staffUserDetailsService,
             PasswordEncoder passwordEncoder) {
 
-        this.projectManagerUserDetailsService =
-                projectManagerUserDetailsService;
-
-        this.financeOfficerUserDetailsService =
-                financeOfficerUserDetailsService;
-
-        this.donorUserDetailsService =
-                donorUserDetailsService;
-
-        this.reliefCoordinatorUserDetailsService =
-                reliefCoordinatorUserDetailsService;
-
-        this.passwordEncoder =
-                passwordEncoder;
+        this.projectManagerUserDetailsService = projectManagerUserDetailsService;
+        this.financeOfficerUserDetailsService = financeOfficerUserDetailsService;
+        this.donorUserDetailsService = donorUserDetailsService;
+        this.reliefCoordinatorUserDetailsService = reliefCoordinatorUserDetailsService;
+        this.volunteerUserDetailsService = volunteerUserDetailsService;
+        this.staffUserDetailsService = staffUserDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
-
-
-    // =========================================================
-    // PASSWORD ENCODER
-    // =========================================================
-
-
 
     // =========================================================
     // PROJECT MANAGER AUTHENTICATION PROVIDER
@@ -81,7 +73,6 @@ public class SecurityConfig {
         return provider;
     }
 
-
     // =========================================================
     // FINANCE OFFICER AUTHENTICATION PROVIDER
     // =========================================================
@@ -98,7 +89,6 @@ public class SecurityConfig {
 
         return provider;
     }
-
 
     // =========================================================
     // DONOR AUTHENTICATION PROVIDER
@@ -117,7 +107,6 @@ public class SecurityConfig {
         return provider;
     }
 
-
     // =========================================================
     // RELIEF COORDINATOR AUTHENTICATION PROVIDER
     // =========================================================
@@ -135,6 +124,39 @@ public class SecurityConfig {
         return provider;
     }
 
+    // =========================================================
+    // VOLUNTEER AUTHENTICATION PROVIDER
+    // =========================================================
+
+    @Bean
+    public DaoAuthenticationProvider volunteerAuthenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(
+                        volunteerUserDetailsService
+                );
+
+        provider.setPasswordEncoder(passwordEncoder);
+
+        return provider;
+    }
+
+    // =========================================================
+    // STAFF AUTHENTICATION PROVIDER
+    // =========================================================
+
+    @Bean
+    public DaoAuthenticationProvider staffAuthenticationProvider() {
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(
+                        staffUserDetailsService
+                );
+
+        provider.setPasswordEncoder(passwordEncoder);
+
+        return provider;
+    }
 
     // =========================================================
     // COMMON AUTHENTICATION MANAGER
@@ -151,7 +173,6 @@ public class SecurityConfig {
                 )
         );
     }
-
 
     // =========================================================
     // 1. COMMON LOGIN
@@ -274,7 +295,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     // =========================================================
     // 2. PROJECT MANAGER
     // =========================================================
@@ -344,6 +364,7 @@ public class SecurityConfig {
                                 "/project-manager/logout"
                         )
 
+                        // Return to COMMON login after logout
                         .logoutSuccessUrl(
                                 "/login?logout=true"
                         )
@@ -357,7 +378,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     // =========================================================
     // 3. RELIEF COORDINATOR
@@ -436,13 +456,157 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     // =========================================================
-    // 4. FINANCE OFFICER
+    // 4. VOLUNTEER
     // =========================================================
 
     @Bean
     @Order(4)
+    public SecurityFilterChain volunteerSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+                .securityMatcher("/volunteer/**")
+
+                .authenticationProvider(
+                        volunteerAuthenticationProvider()
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/volunteer/register",
+                                "/volunteer/login"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole("VOLUNTEER")
+                )
+
+                .formLogin(form -> form
+
+                        .loginPage(
+                                "/volunteer/login"
+                        )
+
+                        .loginProcessingUrl(
+                                "/volunteer/login"
+                        )
+
+                        .usernameParameter("email")
+
+                        .passwordParameter("password")
+
+                        .defaultSuccessUrl(
+                                "/volunteer/profile",
+                                true
+                        )
+
+                        .failureUrl(
+                                "/volunteer/login?error=true"
+                        )
+
+                        .permitAll()
+                )
+
+                .logout(logout -> logout
+
+                        .logoutUrl(
+                                "/volunteer/logout"
+                        )
+
+                        .logoutSuccessUrl(
+                                "/volunteer/login?logout=true"
+                        )
+
+                        .permitAll()
+                );
+
+        return http.build();
+    }
+
+    // =========================================================
+    // 5. STAFF / SHELTER
+    // =========================================================
+
+    @Bean
+    @Order(5)
+    public SecurityFilterChain staffSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+                .securityMatcher("/staff/**")
+
+                .authenticationProvider(
+                        staffAuthenticationProvider()
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/staff/login"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole("STAFF")
+                )
+
+                .formLogin(form -> form
+
+                        .loginPage(
+                                "/staff/login"
+                        )
+
+                        .loginProcessingUrl(
+                                "/staff/login"
+                        )
+
+                        .usernameParameter("email")
+
+                        .passwordParameter("password")
+
+                        .defaultSuccessUrl(
+                                "/staff/shelters",
+                                true
+                        )
+
+                        .failureUrl(
+                                "/staff/login?error=true"
+                        )
+
+                        .permitAll()
+                )
+
+                .logout(logout -> logout
+
+                        .logoutUrl(
+                                "/staff/logout"
+                        )
+
+                        .logoutSuccessUrl(
+                                "/staff/login?logout=true"
+                        )
+
+                        .permitAll()
+                );
+
+        return http.build();
+    }
+
+    // =========================================================
+    // 6. FINANCE OFFICER
+    // =========================================================
+
+    @Bean
+    @Order(6)
     public SecurityFilterChain financeOfficerSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -480,13 +644,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     // =========================================================
-    // 5. DONOR
+    // 7. DONOR
     // =========================================================
 
     @Bean
-    @Order(5)
+    @Order(7)
     public SecurityFilterChain donorSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -523,13 +686,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     // =========================================================
-    // 6. DONATION MANAGEMENT
+    // 8. DONATION MANAGEMENT
     // =========================================================
 
     @Bean
-    @Order(6)
+    @Order(8)
     public SecurityFilterChain donationSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -554,13 +716,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     // =========================================================
-    // 7. DEFAULT / PUBLIC / VICTIM / DISASTER
+    // 9. DEFAULT / PUBLIC / VICTIM / DISASTER
     // =========================================================
 
     @Bean
-    @Order(7)
+    @Order(9)
     public SecurityFilterChain defaultSecurityFilterChain(
             HttpSecurity http)
             throws Exception {
@@ -585,7 +746,6 @@ public class SecurityConfig {
                         )
                         .permitAll()
 
-
                         // -----------------------------------------
                         // VICTIM REGISTRATION
                         // -----------------------------------------
@@ -594,7 +754,6 @@ public class SecurityConfig {
                                 "/victims/register"
                         )
                         .permitAll()
-
 
                         // -----------------------------------------
                         // VICTIM LOGIN
@@ -606,7 +765,6 @@ public class SecurityConfig {
                         )
                         .permitAll()
 
-
                         // -----------------------------------------
                         // VICTIM DASHBOARD / SESSION FUNCTIONS
                         // -----------------------------------------
@@ -615,7 +773,6 @@ public class SecurityConfig {
                                 "/victim/**"
                         )
                         .permitAll()
-
 
                         // -----------------------------------------
                         // NEEDS ASSESSMENT - VICTIM SIDE
@@ -628,7 +785,6 @@ public class SecurityConfig {
                         )
                         .permitAll()
 
-
                         // -----------------------------------------
                         // GN REPORT
                         // -----------------------------------------
@@ -637,7 +793,6 @@ public class SecurityConfig {
                                 "/gn-reports/**"
                         )
                         .permitAll()
-
 
                         // -----------------------------------------
                         // DISASTER MANAGEMENT
@@ -649,7 +804,6 @@ public class SecurityConfig {
                         )
                         .hasRole("PROJECT_MANAGER")
 
-
                         // -----------------------------------------
                         // VICTIM MANAGEMENT - PROJECT MANAGER
                         // -----------------------------------------
@@ -658,7 +812,6 @@ public class SecurityConfig {
                                 "/victims/**"
                         )
                         .hasRole("PROJECT_MANAGER")
-
 
                         // -----------------------------------------
                         // EVERYTHING ELSE

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Volunteer Profile - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+
+  <style>
+
+    .profile-top-action {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .edit-button {
+      display: inline-block;
+      background: #3582B8;
+      color: #FFFFFF;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .profile-bottom-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .profile-bottom-actions form {
+      margin: 0;
+    }
+
+    .logout-button {
+      background: #3582B8;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .withdraw-button {
+      background: #B42318;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .logout-only {
+      margin-top: 20px;
+    }
+
+    .logout-only .logout-button {
+      width: 100%;
+    }
+
+
+    /* =========================
+       WITHDRAW CONFIRMATION MODAL
+       ========================= */
+
+    .withdraw-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(31, 45, 61, 0.55);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .withdraw-modal {
+      width: 90%;
+      max-width: 470px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(31, 58, 96, 0.30);
+      text-align: center;
+    }
+
+    .withdraw-modal h3 {
+      margin-top: 0;
+      color: #1F3A60;
+      font-size: 24px;
+    }
+
+    .withdraw-modal p {
+      color: #6C7A89;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .withdraw-modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .cancel-withdraw-button {
+      background: #EDF3F6;
+      color: #1F3A60;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .confirm-withdraw-button {
+      background: #B42318;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="card">
+
+    <h2 class="page-title">
+      Volunteer Profile
+    </h2>
+
+    <p class="page-subtitle">
+      Your submitted volunteer registration details
+    </p>
+
+
+    <!-- Success Message -->
+    <div class="alert-success"
+         th:if="${successMessage}"
+         th:text="${successMessage}">
+    </div>
+
+
+    <!-- Error Message -->
+    <div class="alert-error"
+         th:if="${errorMessage}"
+         th:text="${errorMessage}">
+    </div>
+
+
+    <!-- Edit Registration -->
+    <div class="profile-top-action"
+         th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
+
+      <a th:href="@{/volunteer/profile/edit}"
+         class="edit-button">
+        Edit Registration
+      </a>
+
+    </div>
+
+
+    <!-- Volunteer Name -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Volunteer Name
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.volunteerAccount.fullName}">
+      </div>
+
+    </div>
+
+
+    <!-- Email Address -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Email Address
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.volunteerAccount.email}">
+      </div>
+
+    </div>
+
+
+    <!-- Age -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Age
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.age}">
+      </div>
+
+    </div>
+
+
+    <!-- Work Experience -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Work Experience
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.workExperience}">
+      </div>
+
+    </div>
+
+
+    <!-- Skills -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Skills
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.skills}">
+      </div>
+
+    </div>
+
+
+    <!-- Availability -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Availability
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.availability}">
+      </div>
+
+    </div>
+
+
+    <!-- Preferred Working Area -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Preferred Working Area
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.preferredWorkingArea}">
+      </div>
+
+    </div>
+
+
+    <!-- Registration Status -->
+    <div class="detail-row">
+
+      <div class="detail-label">
+        Registration Status
+      </div>
+
+      <div class="detail-value">
+
+        <span class="status-badge status-pending"
+              th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
+          PENDING
+        </span>
+
+        <span class="status-badge status-approved"
+              th:if="${volunteerProfile.registrationStatus.name() == 'APPROVED'}">
+          APPROVED
+        </span>
+
+        <span class="status-badge status-rejected"
+              th:if="${volunteerProfile.registrationStatus.name() == 'REJECTED'}">
+          REJECTED
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         VM-US9 - REJECTION REASON
+         ========================= -->
+
+    <div class="detail-row"
+         th:if="${volunteerProfile.registrationStatus.name() == 'REJECTED'
+         and volunteerProfile.rejectionReason != null
+         and !#strings.isEmpty(volunteerProfile.rejectionReason)}">
+
+      <div class="detail-label">
+        Rejection Reason
+      </div>
+
+      <div class="detail-value"
+           th:text="${volunteerProfile.rejectionReason}">
+      </div>
+
+    </div>
+
+
+    <!-- Pending Registration Actions -->
+    <div class="profile-bottom-actions"
+         th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
+
+      <!-- Logout -->
+      <form th:action="@{/volunteer/logout}"
+            method="post">
+
+        <button type="submit"
+                class="logout-button">
+          Logout
+        </button>
+
+      </form>
+
+
+      <!-- Withdraw Registration -->
+      <button type="button"
+              class="withdraw-button"
+              onclick="openWithdrawModal()">
+        Withdraw Registration
+      </button>
+
+    </div>
+
+
+    <!-- Logout Only For Approved / Rejected -->
+    <div class="logout-only"
+         th:if="${volunteerProfile.registrationStatus.name() != 'PENDING'}">
+
+      <form th:action="@{/volunteer/logout}"
+            method="post">
+
+        <button type="submit"
+                class="logout-button">
+          Logout
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     WITHDRAW CONFIRMATION MODAL
+     ========================= -->
+
+<div id="withdrawModal"
+     class="withdraw-modal-overlay">
+
+  <div class="withdraw-modal">
+
+    <h3>
+      Withdraw Registration?
+    </h3>
+
+    <p>
+      Are you sure you want to withdraw your volunteer registration?
+      This action cannot be undone.
+    </p>
+
+    <div class="withdraw-modal-actions">
+
+      <button type="button"
+              class="cancel-withdraw-button"
+              onclick="closeWithdrawModal()">
+        Cancel
+      </button>
+
+      <form th:action="@{/volunteer/profile/withdraw}"
+            method="post">
+
+        <button type="submit"
+                class="confirm-withdraw-button">
+          Yes, Withdraw
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  function openWithdrawModal() {
+
+    document.getElementById("withdrawModal").style.display = "flex";
+  }
+
+
+  function closeWithdrawModal() {
+
+    document.getElementById("withdrawModal").style.display = "none";
+  }
+
+</script>
+
+</body>
+
+</html>
