@@ -14,7 +14,6 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
@@ -63,10 +62,6 @@ public class SecurityConfig {
     // PASSWORD ENCODER
     // =========================================================
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 
     // =========================================================
@@ -350,7 +345,7 @@ public class SecurityConfig {
                         )
 
                         .logoutSuccessUrl(
-                                "/project-manager/login?logout=true"
+                                "/login?logout=true"
                         )
 
                         .permitAll()
