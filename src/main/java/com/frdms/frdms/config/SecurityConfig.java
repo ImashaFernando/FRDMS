@@ -269,7 +269,7 @@ public class SecurityConfig {
                         .passwordParameter("password")
 
                         .defaultSuccessUrl(
-                                "/staff/shelters",
+                                "/staff/dashboard",
                                 true
                         )
 
