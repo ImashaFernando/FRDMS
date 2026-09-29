@@ -934,6 +934,7 @@ public class SecurityConfig {
 
 
     // =========================================================
+    // =========================================================
     // 3. RELIEF COORDINATOR
     // =========================================================
 
@@ -952,436 +953,423 @@ public class SecurityConfig {
 
                 .csrf(csrf -> csrf.disable())
 
-                ==================================================
-        // OTHER FRDMS URLS
-        // =========================================================
+                .authorizeHttpRequests(auth -> auth
 
-        @Bean
-        @Order(4)
-        public SecurityFilterChain defaultSecurityFilterChain(
-                HttpSecurity http
-    ) throws Exception {
+                        .requestMatchers(
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
 
-            http
-                    =======
+                        .anyRequest()
+                        .hasRole(
+                                "RELIEF_COORDINATOR"
+                        )
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // 4. VOLUNTEER
+    // =========================================================
+
+    @Bean
+    @Order(4)
+    public SecurityFilterChain
+    volunteerSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/volunteer/**"
+                )
+
+                .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
 
-                    .requestMatchers(
-                            "/css/**",
-                            "/js/**",
-                            "/images/**"
-                    )
-                    .permitAll()
-
-                    .anyRequest()
-                    .hasRole(
-                            "RELIEF_COORDINATOR"
-                    )
-            )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 4. VOLUNTEER
-        // =========================================================
-
-        @Bean
-        @Order(4)
-        public SecurityFilterChain
-        volunteerSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .securityMatcher(
-                            "/volunteer/**"
-                    )
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            .requestMatchers(
-                                    "/volunteer/register",
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**"
-                            )
-                            .permitAll()
-
-                            .anyRequest()
-                            .hasRole(
-                                    "VOLUNTEER"
-                            )
-                    )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 5. STAFF / SHELTER
-        // =========================================================
-
-        @Bean
-        @Order(5)
-        public SecurityFilterChain
-        staffSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .securityMatcher(
-                            "/staff/**"
-                    )
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            .requestMatchers(
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**"
-                            )
-                            .permitAll()
-
-                            .anyRequest()
-                            .hasRole(
-                                    "STAFF"
-                            )
-                    )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 6. FINANCE OFFICER
-        // =========================================================
-
-        @Bean
-        @Order(6)
-        public SecurityFilterChain
-        financeOfficerSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .securityMatcher(
-                            "/finance-officer/**",
-                            "/finance/**"
-                    )
-
-                    .authenticationProvider(
-                            financeOfficerAuthenticationProvider()
-                    )
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            .requestMatchers(
-                                    "/access-denied",
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**"
-                            )
-                            .permitAll()
-
-                            .anyRequest()
-                            .authenticated()
-                    )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 7. DONOR
-        // =========================================================
-
-        @Bean
-        @Order(7)
-        public SecurityFilterChain
-        donorSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .securityMatcher(
-                            "/donor/**"
-                    )
-
-                    .authenticationProvider(
-                            donorAuthenticationProvider()
-                    )
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            .requestMatchers(
-                                    "/access-denied",
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**"
-                            )
-                            .permitAll()
-
-                            .anyRequest()
-                            .authenticated()
-                    )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 8. DONATION MANAGEMENT
-        // =========================================================
-
-        @Bean
-        @Order(8)
-        public SecurityFilterChain
-        donationSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .securityMatcher(
-                            "/donations/**"
-                    )
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            .anyRequest()
-                            .authenticated()
-                    )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 9. DISTRIBUTION OFFICER
-        // =========================================================
-
-        @Bean
-        @Order(9)
-        public SecurityFilterChain
-        distributionOfficerSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .securityMatcher(
-                            "/distribution/**"
-                    )
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            .requestMatchers(
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**"
-                            )
-                            .permitAll()
-
-                            .anyRequest()
-                            .hasRole(
-                                    "DISTRIBUTION_OFFICER"
-                            )
-                    )
-
-                    .exceptionHandling(exception ->
-                            exception
-                                    .accessDeniedPage(
-                                            "/access-denied"
-                                    )
-                    );
-
-            return http.build();
-        }
-
-
-        // =========================================================
-        // 10. DEFAULT / PUBLIC / VICTIM / DISASTER
-        // =========================================================
-
-        @Bean
-        @Order(10)
-        public SecurityFilterChain
-        defaultSecurityFilterChain(
-                HttpSecurity http)
-            throws Exception {
-
-            http
-
-                    .csrf(csrf -> csrf.disable())
-
-                    .authorizeHttpRequests(auth -> auth
-
-                            // =========================================
-                            // PUBLIC HOME / COMMON LOGIN / REGISTER
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/",
-                                    "/login",
-                                    "/register",
-                                    "/access-denied",
-                                    "/css/**",
-                                    "/js/**",
-                                    "/images/**"
-                            )
-                            .permitAll()
-
-
-                            // =========================================
-                            // DONOR REGISTRATION
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/donors/register",
-                                    "/donors/success"
-                            )
-                            .permitAll()
-
-
-                            // =========================================
-                            // VICTIM REGISTRATION
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/victims/register"
-                            )
-                            .permitAll()
-
-
-                            // =========================================
-                            // VOLUNTEER REGISTRATION
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/volunteer/register"
-                            )
-                            .permitAll()
-
-
-                            // =========================================
-                            // VICTIM
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/victims/**"
-                            )
-                            .hasAnyRole(
-                                    "VICTIM",
-                                    "PROJECT_MANAGER"
-                            )
-
-
-                            // =========================================
-                            // NEEDS ASSESSMENT - VICTIM
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/needs-assessment/form",
-                                    "/needs-assessment/submit",
-                                    "/needs-assessment/status"
-                            )
-                            .hasRole(
-                                    "VICTIM"
-                            )
-
-
-                            // =========================================
-                            // GN REPORT
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/gn-reports/**"
-                            )
-                            .permitAll()
-
-
-                            // =========================================
-                            // DISASTER MANAGEMENT
-                            // =========================================
-
-                            .requestMatchers(
-                                    "/disasters/**",
-                                    "/affected-areas/**"
-                            )
-                            .hasRole(
-                                    "PROJECT_MANAGER"
-                            )
-
-
-                            // =========================================
-                            // EVERYTHING ELSE
-                            // =========================================
-
-                            .anyRequest()
-                            .authenticated()
-                    );
-
-            return http.build();
-        }
+                        .requestMatchers(
+                                "/volunteer/register",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole(
+                                "VOLUNTEER"
+                        )
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
     }
+
+
+    // =========================================================
+    // 5. STAFF / SHELTER
+    // =========================================================
+
+    @Bean
+    @Order(5)
+    public SecurityFilterChain
+    staffSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/staff/**"
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole(
+                                "STAFF"
+                        )
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 6. FINANCE OFFICER
+    // =========================================================
+
+    @Bean
+    @Order(6)
+    public SecurityFilterChain
+    financeOfficerSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/finance-officer/**",
+                        "/finance/**"
+                )
+
+                .authenticationProvider(
+                        financeOfficerAuthenticationProvider()
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/access-denied",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .authenticated()
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 7. DONOR
+    // =========================================================
+
+    @Bean
+    @Order(7)
+    public SecurityFilterChain
+    donorSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/donor/**"
+                )
+
+                .authenticationProvider(
+                        donorAuthenticationProvider()
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/access-denied",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .authenticated()
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 8. DONATION MANAGEMENT
+    // =========================================================
+
+    @Bean
+    @Order(8)
+    public SecurityFilterChain
+    donationSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/donations/**"
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .anyRequest()
+                        .authenticated()
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 9. DISTRIBUTION OFFICER
+    // =========================================================
+
+    @Bean
+    @Order(9)
+    public SecurityFilterChain
+    distributionOfficerSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .securityMatcher(
+                        "/distribution/**"
+                )
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers(
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+                        .anyRequest()
+                        .hasRole(
+                                "DISTRIBUTION_OFFICER"
+                        )
+                )
+
+                .exceptionHandling(exception ->
+                        exception
+                                .accessDeniedPage(
+                                        "/access-denied"
+                                )
+                );
+
+        return http.build();
+    }
+
+
+    // =========================================================
+    // 10. DEFAULT / PUBLIC / VICTIM / DISASTER
+    // =========================================================
+
+    @Bean
+    @Order(10)
+    public SecurityFilterChain
+    defaultSecurityFilterChain(
+            HttpSecurity http)
+            throws Exception {
+
+        http
+
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        // =========================================
+                        // PUBLIC HOME / COMMON LOGIN / REGISTER
+                        // =========================================
+
+                        .requestMatchers(
+                                "/",
+                                "/login",
+                                "/register",
+                                "/access-denied",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        )
+                        .permitAll()
+
+
+                        // =========================================
+                        // DONOR REGISTRATION
+                        // =========================================
+
+                        .requestMatchers(
+                                "/donors/register",
+                                "/donors/success"
+                        )
+                        .permitAll()
+
+
+                        // =========================================
+                        // VICTIM REGISTRATION
+                        // =========================================
+
+                        .requestMatchers(
+                                "/victims/register"
+                        )
+                        .permitAll()
+
+
+                        // =========================================
+                        // VOLUNTEER REGISTRATION
+                        // =========================================
+
+                        .requestMatchers(
+                                "/volunteer/register"
+                        )
+                        .permitAll()
+
+
+                        // =========================================
+                        // VICTIM
+                        // =========================================
+
+                        .requestMatchers(
+                                "/victims/**"
+                        )
+                        .hasAnyRole(
+                                "VICTIM",
+                                "PROJECT_MANAGER"
+                        )
+
+
+                        // =========================================
+                        // NEEDS ASSESSMENT - VICTIM
+                        // =========================================
+
+                        .requestMatchers(
+                                "/needs-assessment/form",
+                                "/needs-assessment/submit",
+                                "/needs-assessment/status"
+                        )
+                        .hasRole(
+                                "VICTIM"
+                        )
+
+
+                        // =========================================
+                        // GN REPORT
+                        // =========================================
+
+                        .requestMatchers(
+                                "/gn-reports/**"
+                        )
+                        .permitAll()
+
+
+                        // =========================================
+                        // DISASTER MANAGEMENT
+                        // =========================================
+
+                        .requestMatchers(
+                                "/disasters/**",
+                                "/affected-areas/**"
+                        )
+                        .hasRole(
+                                "PROJECT_MANAGER"
+                        )
+
+
+                        // =========================================
+                        // EVERYTHING ELSE
+                        // =========================================
+
+                        .anyRequest()
+                        .authenticated()
+                );
+
+        return http.build();
+    }
+}
+
