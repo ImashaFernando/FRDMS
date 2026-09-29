@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Budget Report | FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/budget-report.css}">
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+  <!-- =========================
+       TOP BAR
+       ========================= -->
+
+  <header class="topbar">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        FR
+      </div>
+
+      <div>
+
+        <h1>FRDMS</h1>
+
+        <p>
+          Finance Management
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <a th:href="@{/finance/dashboard}"
+       class="dashboard-btn">
+
+      ← Back to Dashboard
+
+    </a>
+
+  </header>
+
+
+
+  <!-- =========================
+       CONTENT
+       ========================= -->
+
+  <main class="content">
+
+
+    <!-- PAGE HEADING -->
+
+    <section class="report-heading">
+
+            <span class="label">
+                FINANCE OFFICER
+            </span>
+
+      <h2>
+        Budget Report
+      </h2>
+
+      <p>
+        Summary of budget requirements,
+        approvals and allocations for
+        disaster-relief activities.
+      </p>
+
+    </section>
+
+
+
+    <!-- =========================
+         SUMMARY
+         ========================= -->
+
+    <section class="summary-grid">
+
+
+      <!-- TOTAL REQUIREMENTS -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          📊
+        </div>
+
+        <div>
+
+                    <span class="summary-label">
+                        TOTAL REQUIREMENTS
+                    </span>
+
+          <strong th:text="${totalRequirements}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- REQUESTED -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          💰
+        </div>
+
+        <div>
+
+                    <span class="summary-label">
+                        TOTAL REQUESTED
+                    </span>
+
+          <strong>
+
+            Rs.
+
+            <span th:text="${#numbers.formatDecimal(totalRequestedAmount, 1, 2)}">
+                            0.00
+                        </span>
+
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ALLOCATED -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          💵
+        </div>
+
+        <div>
+
+                    <span class="summary-label">
+                        TOTAL ALLOCATED
+                    </span>
+
+          <strong>
+
+            Rs.
+
+            <span th:text="${#numbers.formatDecimal(totalAllocatedAmount, 1, 2)}">
+                            0.00
+                        </span>
+
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- PENDING -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ⏳
+        </div>
+
+        <div>
+
+                    <span class="summary-label">
+                        PENDING
+                    </span>
+
+          <strong th:text="${pendingCount}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- APPROVED -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ✓
+        </div>
+
+        <div>
+
+                    <span class="summary-label">
+                        APPROVED
+                    </span>
+
+          <strong th:text="${approvedCount}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ALLOCATED COUNT -->
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          ✓
+        </div>
+
+        <div>
+
+                    <span class="summary-label">
+                        ALLOCATED
+                    </span>
+
+          <strong th:text="${allocatedCount}">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         BUDGET RECORDS
+         ========================= -->
+
+    <section class="report-card">
+
+
+      <div class="report-card-header">
+
+        <div>
+
+          <h3>
+            Budget Records
+          </h3>
+
+          <p>
+            Detailed budget requirements,
+            requested amounts and allocations.
+          </p>
+
+        </div>
+
+
+        <span class="record-count">
+
+                    Records:
+
+                    <strong th:text="${totalRequirements}">
+                        0
+                    </strong>
+
+                </span>
+
+      </div>
+
+
+
+      <!-- TABLE -->
+
+      <div class="table-wrapper">
+
+        <table>
+
+
+          <thead>
+
+          <tr>
+
+            <th>
+              ID
+            </th>
+
+            <th>
+              Relief Activity
+            </th>
+
+            <th>
+              Requested Amount
+            </th>
+
+            <th>
+              Reason
+            </th>
+
+            <th>
+              Allocated Amount
+            </th>
+
+            <th>
+              Allocation Date
+            </th>
+
+            <th>
+              Status
+            </th>
+
+          </tr>
+
+          </thead>
+
+
+
+          <tbody>
+
+
+          <!-- BUDGET RECORDS -->
+
+          <tr th:each="budget : ${budgets}">
+
+
+            <!-- ID -->
+
+            <td>
+
+                            <span class="budget-id"
+                                  th:text="${budget.id}">
+                                1
+                            </span>
+
+            </td>
+
+
+
+            <!-- ACTIVITY -->
+
+            <td>
+
+              <strong
+                      class="activity"
+                      th:text="${budget.activity}">
+                Emergency Food Distribution
+              </strong>
+
+            </td>
+
+
+
+            <!-- REQUESTED -->
+
+            <td>
+
+                            <span class="money">
+
+                                Rs.
+
+                                <span th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
+                                    500000.00
+                                </span>
+
+                            </span>
+
+            </td>
+
+
+
+            <!-- REASON -->
+
+            <td>
+
+                            <span class="reason"
+                                  th:text="${budget.reason}">
+                                Required for disaster relief activities.
+                            </span>
+
+            </td>
+
+
+
+            <!-- ALLOCATED -->
+
+            <td>
+
+                            <span
+                                    th:if="${budget.allocatedAmount != null}"
+                                    class="money allocated-money">
+
+                                Rs.
+
+                                <span th:text="${#numbers.formatDecimal(budget.allocatedAmount, 1, 2)}">
+                                    400000.00
+                                </span>
+
+                            </span>
+
+
+              <span
+                      th:unless="${budget.allocatedAmount != null}"
+                      class="not-allocated">
+
+                                Not allocated
+
+                            </span>
+
+            </td>
+
+
+
+            <!-- ALLOCATION DATE -->
+
+            <td>
+
+                            <span
+                                    th:if="${budget.allocatedDate != null}"
+                                    th:text="${budget.allocatedDate}">
+                                2026-09-16
+                            </span>
+
+
+              <span
+                      th:unless="${budget.allocatedDate != null}"
+                      class="not-allocated">
+
+                                —
+
+                            </span>
+
+            </td>
+
+
+
+            <!-- STATUS -->
+
+            <td>
+
+                            <span
+                                    class="status"
+                                    th:classappend="${budget.status == 'ALLOCATED'} ? ' allocated' :
+                                                    (${budget.status == 'APPROVED'} ? ' approved' :
+                                                    (${budget.status == 'PENDING'} ? ' pending' : ' rejected'))"
+                                    th:text="${budget.status}">
+                                PENDING
+                            </span>
+
+            </td>
+
+
+          </tr>
+
+
+
+          <!-- EMPTY STATE -->
+
+          <tr th:if="${#lists.isEmpty(budgets)}">
+
+            <td colspan="7">
+
+              <div class="empty-state">
+
+                <div class="empty-icon">
+                  💰
+                </div>
+
+                <h3>
+                  No Budget Records
+                </h3>
+
+                <p>
+                  There are currently no budget
+                  requirements available.
+                </p>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          </tbody>
+
+
+        </table>
+
+      </div>
+
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <span class="yellow-dot"></span>
+
+    <span>
+            People • Support • Resilience
+        </span>
+
+  </footer>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Community Feedback | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 24px 40px;
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #D8E7F0;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #3582B8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(31, 58, 96, 0.08);
+        }
+
+        .title {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .description {
+            color: #66788A;
+            margin: 8px 0 25px;
+        }
+
+        .section {
+            border-top: 1px solid #E2EAF0;
+            padding-top: 22px;
+            margin-top: 22px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #B8CBD8;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3582B8;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            border: 1px solid #B8CBD8;
+            border-radius: 9px;
+            padding: 11px 15px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .radio-option input {
+            width: auto;
+            margin-right: 6px;
+        }
+
+        .rating {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .rating-option {
+            border: 1px solid #B8CBD8;
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+
+        .rating-option input {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .error {
+            display: block;
+            color: #C0392B;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .submit-button {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 9px;
+            background: #3582B8;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            background: #1F3A60;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <h1>Community Member Feedback</h1>
+
+    <p>
+        Share your observations and experience of relief activities
+    </p>
+
+</header>
+
+
+<div class="container">
+
+    <a class="back-link"
+       th:href="@{/feedback/submit}">
+        ← Back to Feedback Type
+    </a>
+
+
+    <div class="card">
+
+        <h2 class="title">
+            Share Your Community Experience
+        </h2>
+
+        <p class="description">
+            Your observations can help us improve relief services
+            provided to affected communities.
+        </p>
+
+
+        <form th:action="@{/feedback/save}"
+              th:object="${feedback}"
+              method="post">
+
+            <!-- Keep feedback type -->
+
+            <input type="hidden"
+                   th:field="*{feedbackType}">
+
+
+            <!-- ABOUT YOU -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    1. About You
+                </div>
+
+                <div class="field">
+
+                    <label for="name">
+                        Full Name *
+                    </label>
+
+                    <input id="name"
+                           type="text"
+                           th:field="*{name}"
+                           maxlength="100"
+                           placeholder="Enter your full name">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('name')}"
+                          th:errors="*{name}">
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="contactNumber">
+                        Contact Number
+                    </label>
+
+                    <input id="contactNumber"
+                           type="text"
+                           th:field="*{contactNumber}"
+                           maxlength="20"
+                           placeholder="e.g. 0712345678">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('contactNumber')}"
+                          th:errors="*{contactNumber}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMMUNITY -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    2. Your Community
+                </div>
+
+                <div class="field">
+
+                    <label for="communityArea">
+                        Community / Area *
+                    </label>
+
+                    <input id="communityArea"
+                           type="text"
+                           th:field="*{communityArea}"
+                           maxlength="100"
+                           placeholder="Enter your community or area">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('communityArea')}"
+                          th:errors="*{communityArea}">
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="activityLocation">
+                        Activity Location *
+                    </label>
+
+                    <input id="activityLocation"
+                           type="text"
+                           th:field="*{activityLocation}"
+                           maxlength="100"
+                           placeholder="Where did you observe the activity?">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('activityLocation')}"
+                          th:errors="*{activityLocation}">
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="serviceDate">
+                        Date of Activity *
+                    </label>
+
+                    <input id="serviceDate"
+                           type="date"
+                           th:field="*{serviceDate}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('serviceDate')}"
+                          th:errors="*{serviceDate}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SERVICE -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    3. Service / Activity
+                </div>
+
+                <div class="field">
+
+                    <label for="service">
+                        What service or activity did you observe? *
+                    </label>
+
+                    <select id="service"
+                            th:field="*{service}">
+
+                        <option value="">
+                            -- Select a service --
+                        </option>
+
+                        <option value="Emergency / Disaster Response">
+                            Emergency / Disaster Response
+                        </option>
+
+                        <option value="Victim Assistance">
+                            Victim Assistance
+                        </option>
+
+                        <option value="Shelter Service">
+                            Shelter Service
+                        </option>
+
+                        <option value="Relief Distribution">
+                            Relief Distribution
+                        </option>
+
+                        <option value="Relief / Donation Support">
+                            Relief / Donation Support
+                        </option>
+
+                        <option value="Transportation Service">
+                            Transportation Service
+                        </option>
+
+                        <option value="Volunteer Service">
+                            Volunteer Service
+                        </option>
+
+                        <option value="Community Support">
+                            Community Support
+                        </option>
+
+                        <option value="Other Relief Service">
+                            Other Relief Service
+                        </option>
+
+                    </select>
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('service')}"
+                          th:errors="*{service}">
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Did the relief activity reach affected people?
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+                            <input type="radio"
+                                   th:field="*{peopleReached}"
+                                   value="YES">
+                            Yes
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio"
+                                   th:field="*{peopleReached}"
+                                   value="PARTIALLY">
+                            Partially
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio"
+                                   th:field="*{peopleReached}"
+                                   value="NO">
+                            No
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPERIENCE -->
+
+            <div class="section">
+
+                <div class="section-title">
+                    4. Your Experience
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        How would you rate the service? *
+                    </label>
+
+                    <div class="rating">
+
+                        <label class="rating-option">
+                            <input type="radio"
+                                   th:field="*{rating}"
+                                   value="1">
+                            1 - Very Poor
+                        </label>
+
+                        <label class="rating-option">
+                            <input type="radio"
+                                   th:field="*{rating}"
+                                   value="2">
+                            2 - Poor
+                        </label>
+
+                        <label class="rating-option">
+                            <input type="radio"
+                                   th:field="*{rating}"
+                                   value="3">
+                            3 - Average
+                        </label>
+
+                        <label class="rating-option">
+                            <input type="radio"
+                                   th:field="*{rating}"
+                                   value="4">
+                            4 - Good
+                        </label>
+
+                        <label class="rating-option">
+                            <input type="radio"
+                                   th:field="*{rating}"
+                                   value="5">
+                            5 - Excellent
+                        </label>
+
+                    </div>
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('rating')}"
+                          th:errors="*{rating}">
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="comments">
+                        Your Feedback *
+                    </label>
+
+                    <textarea id="comments"
+                              th:field="*{comments}"
+                              maxlength="1000"
+                              placeholder="Tell us what you observed, what went well, or what could be improved...">
+                    </textarea>
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('comments')}"
+                          th:errors="*{comments}">
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="suggestions">
+                        Suggestions for Improvement
+                    </label>
+
+                    <textarea id="suggestions"
+                              th:field="*{suggestions}"
+                              maxlength="1000"
+                              placeholder="Share your suggestions...">
+                    </textarea>
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('suggestions')}"
+                          th:errors="*{suggestions}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit"
+                    class="submit-button">
+
+                Submit Feedback
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

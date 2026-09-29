@@ -1,0 +1,860 @@
+/* =========================================================
+   FRDMS - FINANCE MANAGER BUDGET STATUS
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+    width: 100%;
+
+    background: #101c3d;
+    color: #ffffff;
+
+    padding: 18px 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 3px 12px rgba(16, 28, 61, 0.15);
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    background: #3157d5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.brand h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #b8c4dd;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD BUTTON
+   ========================================================= */
+
+.back-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    background: #3582B8;
+    color: #ffffff !important;
+
+    border: none;
+    border-radius: 8px;
+
+    text-decoration: none !important;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #85B6D6;
+
+    color: #12355B !important;
+
+    transform: translateY(-1px);
+
+    text-decoration: none !important;
+}
+
+.back-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   MAIN PAGE CONTAINER
+   ========================================================= */
+
+.page-container {
+    width: 92%;
+    max-width: 1350px;
+
+    margin: 42px auto;
+
+    min-height: calc(100vh - 150px);
+}
+
+
+/* =========================================================
+   PAGE HEADING
+   ========================================================= */
+
+.page-heading {
+    margin-bottom: 28px;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.page-heading > div:first-child {
+    flex: 1;
+}
+
+
+/* FINANCE MANAGEMENT LABEL */
+
+.page-heading .eyebrow {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #3157d5;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* MAIN HEADING */
+
+.page-heading h2 {
+    margin: 0 0 8px;
+
+    color: #172033;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+
+/* DESCRIPTION */
+
+.page-heading p {
+    margin: 0;
+
+    color: #60708a;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   STATUS SUMMARY GRID
+   ========================================================= */
+
+.status-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   STATUS CARD
+   ========================================================= */
+
+.status-card {
+    min-height: 145px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+
+    border: 1px solid #edf0f5;
+
+    box-shadow: 0 5px 20px rgba(20, 35, 70, 0.06);
+
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.status-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 0 9px 26px rgba(20, 35, 70, 0.10);
+}
+
+
+/* =========================================================
+   STATUS ICON
+   ========================================================= */
+
+.status-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PENDING CARD
+   ========================================================= */
+
+.pending-card .status-icon {
+    background: #fff5dc;
+
+    color: #b77900;
+}
+
+
+/* =========================================================
+   APPROVED CARD
+   ========================================================= */
+
+.approved-card .status-icon {
+    background: #e8efff;
+
+    color: #3157d5;
+}
+
+
+/* =========================================================
+   ALLOCATED CARD
+   ========================================================= */
+
+.allocated-card .status-icon {
+    background: #e5f8ee;
+
+    color: #16834d;
+}
+
+
+/* =========================================================
+   REJECTED CARD
+   ========================================================= */
+
+.rejected-card .status-icon {
+    background: #ffe8e8;
+
+    color: #c0392b;
+}
+
+
+/* =========================================================
+   STATUS CONTENT
+   ========================================================= */
+
+.status-content {
+    min-width: 0;
+}
+
+.status-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #7b8598;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+}
+
+.status-content h3 {
+    margin: 0;
+
+    color: #1e2d50;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.status-content p {
+    margin: 8px 0 0;
+
+    color: #7b8598;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLE CARD
+   ========================================================= */
+
+.table-card {
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    border: 1px solid #edf0f5;
+
+    box-shadow: 0 8px 28px rgba(20, 35, 70, 0.08);
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.table-header {
+    padding: 24px 27px;
+
+    border-bottom: 1px solid #edf0f5;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.table-header > div {
+    min-width: 0;
+}
+
+
+/* SMALL SECTION LABEL */
+
+.section-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #3157d5;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+/* TABLE TITLE */
+
+.table-header h3 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ALLOCATE BUTTON
+   ========================================================= */
+
+.allocate-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background: #3582B8;
+    color: #ffffff !important;
+
+    border-radius: 8px;
+
+    text-decoration: none !important;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: all 0.2s ease;
+}
+
+.allocate-btn:hover {
+    background: #2d6f9d;
+
+    color: #ffffff !important;
+
+    transform: translateY(-1px);
+
+    text-decoration: none !important;
+}
+
+.allocate-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 950px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+thead {
+    background: #f7f8fb;
+}
+
+th {
+    padding: 15px 18px;
+
+    text-align: left;
+
+    color: #59657b;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+td {
+    padding: 17px 18px;
+
+    border-top: 1px solid #edf0f5;
+
+    color: #34415a;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover td {
+    background: #fbfcff;
+}
+
+
+/* =========================================================
+   BUDGET ID
+   ========================================================= */
+
+td:first-child {
+    color: #68738a;
+
+    font-weight: 700;
+
+    width: 60px;
+}
+
+
+/* =========================================================
+   AMOUNT
+   ========================================================= */
+
+.amount {
+    color: #263b68;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.amount span:first-child {
+    margin-right: 4px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 82px;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
+}
+
+
+/* PENDING */
+
+.status-badge.pending {
+    background: #fff5dc;
+
+    color: #b77900;
+}
+
+
+/* APPROVED */
+
+.status-badge.approved {
+    background: #e8efff;
+
+    color: #3157d5;
+}
+
+
+/* ALLOCATED */
+
+.status-badge.allocated {
+    background: #e5f8ee;
+
+    color: #16834d;
+}
+
+
+/* REJECTED */
+
+.status-badge.rejected {
+    background: #ffe8e8;
+
+    color: #c0392b;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+    padding: 60px 20px !important;
+
+    text-align: center;
+
+    color: #7b8598;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    padding: 20px;
+
+    text-align: center;
+
+    color: #8a94a7;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .status-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .page-container {
+        width: 94%;
+    }
+
+    .table-header {
+        align-items: flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .topbar {
+        padding: 16px 25px;
+    }
+
+    .page-container {
+        margin: 30px auto;
+    }
+
+    .page-heading h2 {
+        font-size: 28px;
+    }
+
+    .status-card {
+        min-height: 130px;
+
+        padding: 18px;
+    }
+
+    .status-icon {
+        width: 46px;
+        height: 46px;
+
+        font-size: 19px;
+    }
+
+    .status-content h3 {
+        font-size: 25px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .topbar {
+        padding: 15px 18px;
+
+        gap: 15px;
+    }
+
+    .brand {
+        gap: 9px;
+    }
+
+    .brand-icon {
+        width: 38px;
+        height: 38px;
+
+        border-radius: 9px;
+
+        font-size: 16px;
+    }
+
+    .brand h1 {
+        font-size: 18px;
+    }
+
+    .brand span {
+        font-size: 10px;
+    }
+
+    .back-btn {
+        padding: 9px 13px;
+
+        font-size: 12px;
+    }
+
+
+    .page-container {
+        width: 94%;
+
+        margin: 27px auto;
+    }
+
+
+    .page-heading {
+        margin-bottom: 22px;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .page-heading h2 {
+        font-size: 26px;
+    }
+
+    .page-heading p {
+        font-size: 14px;
+    }
+
+
+    .status-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .status-card {
+        min-height: 110px;
+
+        padding: 17px;
+    }
+
+
+    .status-icon {
+        width: 45px;
+        height: 45px;
+
+        border-radius: 11px;
+
+        font-size: 18px;
+    }
+
+
+    .status-content h3 {
+        font-size: 24px;
+    }
+
+
+    .table-header {
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .table-header h3 {
+        font-size: 18px;
+    }
+
+
+    .allocate-btn {
+        width: 100%;
+
+        padding: 11px 15px;
+    }
+
+
+    th {
+        padding: 13px 14px;
+    }
+
+    td {
+        padding: 15px 14px;
+    }
+
+}

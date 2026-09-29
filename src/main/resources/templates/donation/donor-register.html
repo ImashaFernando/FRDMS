@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donor Registration | FRDMS</title>
+
+    <!-- Donor Registration CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/donor-register.css}">
+
+    <style>
+
+        /* =========================================
+           FIELD VALIDATION ERROR
+           ========================================= */
+
+        .field-error {
+            display: block;
+            margin-top: 6px;
+            color: #dc3545;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+
+        /* =========================================
+           INVALID INPUT
+           ========================================= */
+
+        .input-error {
+            border: 1.5px solid #dc3545 !important;
+            background: #fff8f8 !important;
+        }
+
+
+        /* =========================================
+           SUCCESS MESSAGE
+           ========================================= */
+
+        .success-message {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: #e8f7ee;
+            color: #198754;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           SERVER ERROR
+           ========================================= */
+
+        .error-message {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: #fdeaea;
+            color: #dc3545;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="registration-wrapper">
+
+
+    <!-- ===================================================== -->
+    <!-- LEFT BRANDING SECTION -->
+    <!-- ===================================================== -->
+
+    <section class="intro-section">
+
+        <div>
+
+            <div class="logo">
+                FRDMS
+            </div>
+
+            <div class="logo-line"></div>
+
+        </div>
+
+
+        <div class="intro-content">
+
+            <h2>
+                Together for
+                <span>Safer Tomorrow</span>
+            </h2>
+
+            <p>
+                Your support helps communities recover,
+                rebuild, and become stronger after disasters.
+            </p>
+
+        </div>
+
+
+        <div class="support-box">
+
+            <strong>
+                People • Support • Resilience
+            </strong>
+
+            <small>
+                Flood Relief & Disaster Management System
+            </small>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===================================================== -->
+    <!-- RIGHT FORM SECTION -->
+    <!-- ===================================================== -->
+
+    <section class="form-section">
+
+
+        <!-- FORM HEADER -->
+
+        <div class="form-top">
+
+            <div class="small-title">
+                Make a Difference
+            </div>
+
+            <h1>
+                Donor Registration
+            </h1>
+
+            <p>
+                Register your information to support disaster relief efforts.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- GENERAL SERVER ERROR -->
+        <!-- ================================================= -->
+
+        <div class="error-message"
+             th:if="${error}">
+
+            <span th:text="${error}">
+            </span>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- SUCCESS MESSAGE -->
+        <!-- ================================================= -->
+
+        <div class="success-message"
+             th:if="${success}">
+
+            <span th:text="${success}">
+            </span>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- DONOR REGISTRATION FORM -->
+        <!-- ================================================= -->
+
+        <form th:action="@{/donors/register}"
+              th:object="${donor}"
+              method="post"
+              id="donorRegistrationForm"
+              autocomplete="off">
+
+
+            <div class="form-grid">
+
+
+                <!-- ================================================= -->
+                <!-- USERNAME -->
+                <!-- ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="username">
+
+                        Username
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input type="text"
+                               id="username"
+                               th:field="*{username}"
+                               placeholder="Enter username"
+                               autocomplete="new-username"
+                               th:classappend="${#fields.hasErrors('username')} ? ' input-error' : ''">
+
+                    </div>
+
+
+                    <small class="field-error"
+                           th:if="${#fields.hasErrors('username')}"
+                           th:text="${#strings.isEmpty(username)
+           ? 'Username is required'
+           : 'Username must be between 3 and 30 characters'}">
+                    </small>
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- PASSWORD -->
+                <!-- ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="password">
+
+                        Password
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input type="password"
+                               id="password"
+                               th:field="*{password}"
+                               placeholder="Enter password"
+                               autocomplete="new-password"
+                               th:classappend="${#fields.hasErrors('password')} ? ' input-error' : ''">
+
+                    </div>
+
+
+                    <small class="field-error"
+                           th:if="${#fields.hasErrors('password')}"
+                           th:text="${#strings.isEmpty(password)
+           ? 'Password is required'
+           : 'Password must contain at least 8 characters'}">
+                    </small>
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- FULL NAME -->
+                <!-- ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="fullName">
+
+                        Full Name
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input type="text"
+                               id="fullName"
+                               th:field="*{fullName}"
+                               placeholder="Enter full name"
+                               th:classappend="${#fields.hasErrors('fullName')} ? ' input-error' : ''">
+
+                    </div>
+
+
+                    <small class="field-error"
+                           th:if="${#fields.hasErrors('fullName')}"
+                           th:text="${#strings.isEmpty(fullName)
+           ? 'Full name is required'
+           : 'Full name can contain only letters and spaces'}">
+                    </small>
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- CONTACT NUMBER -->
+                <!-- ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="contactNumber">
+
+                        Contact Number
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input type="text"
+                               id="contactNumber"
+                               th:field="*{contactNumber}"
+                               placeholder="Enter contact number"
+                               th:classappend="${#fields.hasErrors('contactNumber')} ? ' input-error' : ''">
+
+                    </div>
+
+
+                    <small class="field-error"
+                           th:if="${#fields.hasErrors('contactNumber')}"
+                           th:text="${#strings.isEmpty(contactNumber)
+           ? 'Contact number is required'
+           : 'Enter a valid Sri Lankan mobile number'}">
+                    </small>
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- EMAIL -->
+                <!-- ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="email">
+
+                        Email
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input type="email"
+                               id="email"
+                               th:field="*{email}"
+                               placeholder="Enter email address"
+                               th:classappend="${#fields.hasErrors('email')} ? ' input-error' : ''">
+
+                    </div>
+
+
+                    <small class="field-error"
+                           th:if="${#fields.hasErrors('email')}"
+                           th:text="${#strings.isEmpty(email)
+           ? 'Email is required'
+           : 'Please enter a valid email address'}">
+                    </small>
+
+                </div>
+
+
+
+                <!-- ================================================= -->
+                <!-- ADDRESS -->
+                <!-- ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="address">
+                        Address
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <textarea id="address"
+                                  th:field="*{address}"
+                                  placeholder="Enter your address"
+                                  th:classappend="${#fields.hasErrors('address')} ? ' input-error' : ''">
+                        </textarea>
+
+                    </div>
+
+
+                    <small class="field-error"
+                           th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}">
+
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================================================= -->
+            <!-- REGISTER BUTTON -->
+            <!-- ================================================= -->
+
+            <button type="submit"
+                    class="submit-button">
+
+                Register Donor
+
+            </button>
+            <div class="login-link">
+                <span>Already registered or have an account?</span>
+                <a th:href="@{/login}">Login here</a>
+            </div>
+
+        </form>
+
+
+
+        <!-- ================================================= -->
+        <!-- FORM FOOTER -->
+        <!-- ================================================= -->
+
+        <div class="form-footer">
+
+            <span class="yellow-dot"></span>
+
+            <span>
+                Fields marked with * are required
+            </span>
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+</body>
+
+</html>

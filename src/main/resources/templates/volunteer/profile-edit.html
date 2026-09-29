@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Volunteer Registration - FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/chamya-theme.css}">
+
+    <style>
+        .edit-container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .edit-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 18px 45px rgba(31, 58, 96, 0.25);
+            border-top: 7px solid #F7CF59;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #3582B8;
+            font-weight: 700;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="edit-container">
+
+        <div class="edit-card">
+
+            <h2 class="page-title">
+                Edit Volunteer Registration
+            </h2>
+
+            <p class="page-subtitle">
+                Update your submitted volunteer information.
+            </p>
+
+            <div class="alert-error"
+                 th:if="${profileError}"
+                 th:text="${profileError}">
+            </div>
+
+            <form th:action="@{/volunteer/profile/update}"
+                  th:object="${volunteerProfile}"
+                  method="post"
+                  id="volunteerEditForm"
+                  novalidate>
+
+
+                <!-- Age -->
+                <div class="form-group">
+
+                    <label for="age">
+                        Age
+                    </label>
+
+                    <input type="number"
+                           id="age"
+                           th:field="*{age}"
+                           min="18"
+                           max="80">
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('age')}"
+                         th:errors="*{age}">
+                    </div>
+
+                </div>
+
+
+                <!-- Work Experience -->
+                <div class="form-group">
+
+                    <label for="workExperience">
+                        Work Experience
+                    </label>
+
+                    <textarea id="workExperience"
+                              th:field="*{workExperience}"
+                              rows="4">
+                    </textarea>
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('workExperience')}"
+                         th:errors="*{workExperience}">
+                    </div>
+
+                </div>
+
+
+                <!-- Skills -->
+                <div class="form-group">
+
+                    <label>
+                        Skills
+                    </label>
+
+                    <!-- Final combined skills value sent to backend -->
+                    <input type="hidden"
+                           id="skills"
+                           th:field="*{skills}">
+
+                    <div class="checkbox-group">
+
+                        <label>
+                            <input type="checkbox"
+                                   name="selectedSkills"
+                                   value="First Aid">
+                            First Aid
+                        </label>
+
+                        <label>
+                            <input type="checkbox"
+                                   name="selectedSkills"
+                                   value="Driving">
+                            Driving
+                        </label>
+
+                        <label>
+                            <input type="checkbox"
+                                   name="selectedSkills"
+                                   value="Cooking">
+                            Cooking
+                        </label>
+
+                        <label>
+                            <input type="checkbox"
+                                   name="selectedSkills"
+                                   value="Communication">
+                            Communication
+                        </label>
+
+                        <label>
+                            <input type="checkbox"
+                                   name="selectedSkills"
+                                   value="Logistics">
+                            Logistics
+                        </label>
+
+                    </div>
+
+                    <input type="text"
+                           id="otherSkills"
+                           placeholder="Other skills">
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('skills')}"
+                         th:errors="*{skills}">
+                    </div>
+
+                </div>
+
+
+                <!-- Availability -->
+                <div class="form-group">
+
+                    <label for="availability">
+                        Availability
+                    </label>
+
+                    <select id="availability"
+                            th:field="*{availability}">
+
+                        <option value="">
+                            Select availability
+                        </option>
+
+                        <option value="Weekdays">
+                            Weekdays
+                        </option>
+
+                        <option value="Weekends">
+                            Weekends
+                        </option>
+
+                        <option value="Both">
+                            Both
+                        </option>
+
+                        <option value="Emergency / On-call">
+                            Emergency / On-call
+                        </option>
+
+                    </select>
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('availability')}"
+                         th:errors="*{availability}">
+                    </div>
+
+                </div>
+
+
+                <!-- Preferred Working Area -->
+                <div class="form-group">
+
+                    <label for="preferredWorkingAreaSelect">
+                        Preferred Working Area
+                    </label>
+
+                    <!-- Actual value sent to backend -->
+                    <input type="hidden"
+                           id="preferredWorkingArea"
+                           th:field="*{preferredWorkingArea}">
+
+                    <select id="preferredWorkingAreaSelect"
+                            onchange="toggleOtherWorkingArea()">
+
+                        <option value="">
+                            Select preferred area
+                        </option>
+
+                        <option value="Colombo">
+                            Colombo
+                        </option>
+
+                        <option value="Gampaha">
+                            Gampaha
+                        </option>
+
+                        <option value="Kalutara">
+                            Kalutara
+                        </option>
+
+                        <option value="Kandy">
+                            Kandy
+                        </option>
+
+                        <option value="Galle">
+                            Galle
+                        </option>
+
+                        <option value="Matara">
+                            Matara
+                        </option>
+
+                        <option value="Any Area">
+                            Any Area
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                    <input type="text"
+                           id="otherWorkingArea"
+                           placeholder="Enter your city or preferred working area"
+                           maxlength="150"
+                           style="display: none; margin-top: 10px;">
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('preferredWorkingArea')}"
+                         th:errors="*{preferredWorkingArea}">
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn">
+                    Update Registration
+                </button>
+
+            </form>
+
+            <a th:href="@{/volunteer/profile}"
+               class="back-link">
+                ← Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const volunteerEditForm =
+        document.getElementById("volunteerEditForm");
+
+    const skills =
+        document.getElementById("skills");
+
+    const otherSkills =
+        document.getElementById("otherSkills");
+
+    const preferredWorkingAreaSelect =
+        document.getElementById("preferredWorkingAreaSelect");
+
+    const preferredWorkingArea =
+        document.getElementById("preferredWorkingArea");
+
+    const otherWorkingArea =
+        document.getElementById("otherWorkingArea");
+
+
+    /*
+     * Show Other Working Area field
+     */
+    function toggleOtherWorkingArea() {
+
+        if (preferredWorkingAreaSelect.value === "Other") {
+
+            otherWorkingArea.style.display = "block";
+
+        } else {
+
+            otherWorkingArea.style.display = "none";
+            otherWorkingArea.value = "";
+
+        }
+
+    }
+
+
+    /*
+     * Load existing values when edit page opens
+     */
+    window.addEventListener("DOMContentLoaded", function () {
+
+
+        /* =========================
+           LOAD EXISTING SKILLS
+           ========================= */
+
+        const existingSkills = skills.value
+            .split(",")
+            .map(function (skill) {
+                return skill.trim();
+            })
+            .filter(function (skill) {
+                return skill !== "";
+            });
+
+
+        const predefinedSkills = [
+            "First Aid",
+            "Driving",
+            "Cooking",
+            "Communication",
+            "Logistics"
+        ];
+
+
+        document.querySelectorAll(
+            'input[name="selectedSkills"]'
+        ).forEach(function (checkbox) {
+
+            if (existingSkills.includes(checkbox.value)) {
+
+                checkbox.checked = true;
+
+            }
+
+        });
+
+
+        const customSkills =
+            existingSkills.filter(function (skill) {
+
+                return !predefinedSkills.includes(skill);
+
+            });
+
+
+        otherSkills.value =
+            customSkills.join(", ");
+
+
+
+        /* =========================
+           LOAD WORKING AREA
+           ========================= */
+
+        const currentArea =
+            preferredWorkingArea.value.trim();
+
+
+        const predefinedAreas = [
+            "Colombo",
+            "Gampaha",
+            "Kalutara",
+            "Kandy",
+            "Galle",
+            "Matara",
+            "Any Area"
+        ];
+
+
+        if (currentArea === "") {
+
+            preferredWorkingAreaSelect.value = "";
+
+        } else if (predefinedAreas.includes(currentArea)) {
+
+            preferredWorkingAreaSelect.value =
+                currentArea;
+
+        } else {
+
+            preferredWorkingAreaSelect.value =
+                "Other";
+
+            otherWorkingArea.style.display =
+                "block";
+
+            otherWorkingArea.value =
+                currentArea;
+
+        }
+
+    });
+
+
+
+    /*
+     * Prepare values before updating profile
+     */
+    volunteerEditForm.addEventListener(
+        "submit",
+        function () {
+
+
+            /* =========================
+               SAVE SKILLS
+               ========================= */
+
+            const selectedSkills = [];
+
+
+            document.querySelectorAll(
+                'input[name="selectedSkills"]:checked'
+            ).forEach(function (checkbox) {
+
+                selectedSkills.push(
+                    checkbox.value
+                );
+
+            });
+
+
+            const customSkills =
+                otherSkills.value.trim();
+
+
+            if (customSkills !== "") {
+
+                selectedSkills.push(
+                    customSkills
+                );
+
+            }
+
+
+            skills.value =
+                selectedSkills.join(", ");
+
+
+
+            /* =========================
+               SAVE WORKING AREA
+               ========================= */
+
+            if (
+                preferredWorkingAreaSelect.value
+                === "Other"
+            ) {
+
+                preferredWorkingArea.value =
+                    otherWorkingArea.value.trim();
+
+            } else {
+
+                preferredWorkingArea.value =
+                    preferredWorkingAreaSelect.value;
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>

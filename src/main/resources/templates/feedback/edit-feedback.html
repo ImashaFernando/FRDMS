@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Feedback</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 28px 45px;
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #D9E8F2;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 35px 25px 50px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+            border: 1px solid #DCE8EF;
+        }
+
+        .type-badge {
+            display: inline-block;
+            background: #E7F2F8;
+            color: #3582B8;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #1F3A60;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #EDF3F6;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #1F3A60;
+        }
+
+        .required {
+            color: #B91C1C;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #1F3A60;
+            background: white;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3582B8;
+            box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .radio-option input[type="radio"] {
+            width: auto;
+        }
+
+        .error {
+            display: block;
+            color: #B91C1C;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .btn {
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            padding: 11px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-cancel {
+            background: #E2E8F0;
+            color: #475569;
+        }
+
+        .btn-cancel:hover {
+            background: #CBD5E1;
+        }
+
+        .btn-update {
+            background: #3582B8;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background: #2C6E9C;
+        }
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 22px;
+            }
+
+            .container {
+                padding: 22px 15px 40px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<header class="header">
+
+    <h1>Edit Feedback</h1>
+
+    <p>
+        Update the feedback you previously submitted
+    </p>
+
+</header>
+
+
+<main class="container">
+
+    <div class="form-card">
+
+        <!-- ================================================= -->
+        <!-- MAIN EDIT FORM -->
+        <!-- ================================================= -->
+
+        <form th:action="@{/feedback/update}"
+              th:object="${feedback}"
+              method="post">
+
+
+            <!-- Hidden ID -->
+
+            <input type="hidden"
+                   th:field="*{id}">
+
+
+            <!-- Hidden feedback type -->
+
+            <input type="hidden"
+                   th:field="*{feedbackType}">
+
+
+            <!-- ================================================= -->
+            <!-- FEEDBACK TYPE -->
+            <!-- ================================================= -->
+
+            <div class="type-badge"
+                 th:if="${feedback.feedbackType == 'VICTIM'}">
+
+                Victim / Affected Family
+
+            </div>
+
+
+            <div class="type-badge"
+                 th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
+
+                Community Member
+
+            </div>
+
+
+            <div class="type-badge"
+                 th:if="${feedback.feedbackType == 'VOLUNTEER'}">
+
+                Volunteer
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- BASIC INFORMATION -->
+            <!-- ================================================= -->
+
+            <div class="section-title">
+                Basic Information
+            </div>
+
+
+            <!-- Name -->
+
+            <div class="form-group">
+
+                <label>
+                    Name <span class="required">*</span>
+                </label>
+
+                <input type="text"
+                       th:field="*{name}">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}">
+                </span>
+
+            </div>
+
+
+            <!-- Contact -->
+
+            <div class="form-group">
+
+                <label>
+                    Contact Number
+                </label>
+
+                <input type="text"
+                       th:field="*{contactNumber}">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('contactNumber')}"
+                      th:errors="*{contactNumber}">
+                </span>
+
+            </div>
+
+
+            <!-- Service -->
+
+            <div class="form-group">
+
+                <label>
+                    Service / Activity
+                    <span class="required">*</span>
+                </label>
+
+                <select th:field="*{service}">
+
+                    <option value="">
+                        -- Select Service / Activity --
+                    </option>
+
+                    <option value="Emergency / Disaster Response">
+                        Emergency / Disaster Response
+                    </option>
+
+                    <option value="Victim Assistance">
+                        Victim Assistance
+                    </option>
+
+                    <option value="Shelter Service / Shelter Support">
+                        Shelter Service / Shelter Support
+                    </option>
+
+                    <option value="Relief Distribution">
+                        Relief Distribution
+                    </option>
+
+                    <option value="Relief / Donation Support">
+                        Relief / Donation Support
+                    </option>
+
+                    <option value="Transportation Service / Transportation Support">
+                        Transportation Service / Transportation Support
+                    </option>
+
+                    <option value="Relief Package Service / Relief Package Preparation">
+                        Relief Package Service / Relief Package Preparation
+                    </option>
+
+                    <option value="Volunteer Service">
+                        Volunteer Service
+                    </option>
+
+                    <option value="Community Support">
+                        Community Support
+                    </option>
+
+                    <option value="Other Relief Service">
+                        Other Relief Service
+                    </option>
+
+                </select>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('service')}"
+                      th:errors="*{service}">
+                </span>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- VICTIM FIELDS -->
+            <!-- ================================================= -->
+
+            <div th:if="${feedback.feedbackType == 'VICTIM'}">
+
+                <div class="section-title">
+                    Victim / Affected Family Details
+                </div>
+
+
+                <!-- Affected Area -->
+
+                <div class="form-group">
+
+                    <label>
+                        Affected Area
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{affectedArea}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('affectedArea')}"
+                          th:errors="*{affectedArea}">
+                    </span>
+
+                </div>
+
+
+                <!-- Shelter -->
+
+                <div class="form-group">
+
+                    <label>
+                        Shelter / Relief Centre
+                    </label>
+
+                    <input type="text"
+                           th:field="*{shelter}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('shelter')}"
+                          th:errors="*{shelter}">
+                    </span>
+
+                </div>
+
+
+                <!-- Service Date -->
+
+                <div class="form-group">
+
+                    <label>
+                        Date of Service
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="date"
+                           th:field="*{serviceDate}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('serviceDate')}"
+                          th:errors="*{serviceDate}">
+                    </span>
+
+                </div>
+
+
+                <!-- Assistance -->
+
+                <div class="form-group">
+
+                    <label>
+                        Assistance Provided?
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{assistanceProvided}"
+                                   value="Yes">
+
+                            Yes
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{assistanceProvided}"
+                                   value="Partially">
+
+                            Partially
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{assistanceProvided}"
+                                   value="No">
+
+                            No
+
+                        </label>
+
+                    </div>
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('assistanceProvided')}"
+                          th:errors="*{assistanceProvided}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- COMMUNITY MEMBER FIELDS -->
+            <!-- ================================================= -->
+
+            <div th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
+
+                <div class="section-title">
+                    Community Details
+                </div>
+
+
+                <!-- Community Area -->
+
+                <div class="form-group">
+
+                    <label>
+                        Community / Area
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{communityArea}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('communityArea')}"
+                          th:errors="*{communityArea}">
+                    </span>
+
+                </div>
+
+
+                <!-- Activity Location -->
+
+                <div class="form-group">
+
+                    <label>
+                        Activity Location
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{activityLocation}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('activityLocation')}"
+                          th:errors="*{activityLocation}">
+                    </span>
+
+                </div>
+
+
+                <!-- Activity Date -->
+
+                <div class="form-group">
+
+                    <label>
+                        Date of Activity
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="date"
+                           th:field="*{serviceDate}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('serviceDate')}"
+                          th:errors="*{serviceDate}">
+                    </span>
+
+                </div>
+
+
+                <!-- People Reached -->
+
+                <div class="form-group">
+
+                    <label>
+                        People Reached?
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{peopleReached}"
+                                   value="Yes">
+
+                            Yes
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{peopleReached}"
+                                   value="Partially">
+
+                            Partially
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{peopleReached}"
+                                   value="No">
+
+                            No
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- VOLUNTEER FIELDS -->
+            <!-- ================================================= -->
+
+            <div th:if="${feedback.feedbackType == 'VOLUNTEER'}">
+
+                <div class="section-title">
+                    Volunteer Details
+                </div>
+
+
+                <!-- Service Area -->
+
+                <div class="form-group">
+
+                    <label>
+                        Service Area
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{serviceArea}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('serviceArea')}"
+                          th:errors="*{serviceArea}">
+                    </span>
+
+                </div>
+
+
+                <!-- Service Location -->
+
+                <div class="form-group">
+
+                    <label>
+                        Shelter / Relief Centre
+                    </label>
+
+                    <input type="text"
+                           th:field="*{serviceLocation}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('serviceLocation')}"
+                          th:errors="*{serviceLocation}">
+                    </span>
+
+                </div>
+
+
+                <!-- Service Date -->
+
+                <div class="form-group">
+
+                    <label>
+                        Service Date
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="date"
+                           th:field="*{serviceDate}">
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('serviceDate')}"
+                          th:errors="*{serviceDate}">
+                    </span>
+
+                </div>
+
+
+                <!-- Resources Available -->
+
+                <div class="form-group">
+
+                    <label>
+                        Resources Available?
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{resourcesAvailable}"
+                                   value="Yes">
+
+                            Yes
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{resourcesAvailable}"
+                                   value="Partially">
+
+                            Partially
+
+                        </label>
+
+
+                        <label class="radio-option">
+
+                            <input type="radio"
+                                   th:field="*{resourcesAvailable}"
+                                   value="No">
+
+                            No
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Coordination -->
+
+                <div class="form-group">
+
+                    <label>
+                        Coordination with Relief Team
+                    </label>
+
+                    <select th:field="*{coordinationRating}">
+
+                        <option value="">
+                            -- Select --
+                        </option>
+
+                        <option value="Excellent">
+                            Excellent
+                        </option>
+
+                        <option value="Good">
+                            Good
+                        </option>
+
+                        <option value="Average">
+                            Average
+                        </option>
+
+                        <option value="Poor">
+                            Poor
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Difficulties -->
+
+                <div class="form-group">
+
+                    <label>
+                        Difficulties
+                    </label>
+
+                    <textarea th:field="*{difficulties}"></textarea>
+
+                    <span class="error"
+                          th:if="${#fields.hasErrors('difficulties')}"
+                          th:errors="*{difficulties}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- COMMON EXPERIENCE -->
+            <!-- ================================================= -->
+
+            <div class="section-title">
+                Your Experience
+            </div>
+
+
+            <!-- Rating -->
+
+            <div class="form-group">
+
+                <label>
+                    Rating
+                    <span class="required">*</span>
+                </label>
+
+                <select th:field="*{rating}">
+
+                    <option value="">
+                        -- Select Rating --
+                    </option>
+
+                    <option value="1">
+                        1 - Very Poor
+                    </option>
+
+                    <option value="2">
+                        2 - Poor
+                    </option>
+
+                    <option value="3">
+                        3 - Average
+                    </option>
+
+                    <option value="4">
+                        4 - Good
+                    </option>
+
+                    <option value="5">
+                        5 - Excellent
+                    </option>
+
+                </select>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('rating')}"
+                      th:errors="*{rating}">
+                </span>
+
+            </div>
+
+
+            <!-- Comments -->
+
+            <div class="form-group">
+
+                <label>
+                    Feedback
+                    <span class="required">*</span>
+                </label>
+
+                <textarea th:field="*{comments}"
+                          placeholder="Tell us about your experience..."></textarea>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('comments')}"
+                      th:errors="*{comments}">
+                </span>
+
+            </div>
+
+
+            <!-- Suggestions -->
+
+            <div class="form-group">
+
+                <label>
+                    Suggestions
+                </label>
+
+                <textarea th:field="*{suggestions}"
+                          placeholder="How can we improve our services?"></textarea>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('suggestions')}"
+                      th:errors="*{suggestions}">
+                </span>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- BUTTONS -->
+            <!-- ================================================= -->
+
+            <div class="buttons">
+
+                <a th:href="@{/feedback/my}"
+                   class="btn btn-cancel">
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="btn btn-update">
+
+                    Update Feedback
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</main>
+
+
+</body>
+
+</html>

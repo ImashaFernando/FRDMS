@@ -1,0 +1,1043 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #F4F8FB;
+    color: #173A5E;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 320px;
+    background: #123F63;
+    color: white;
+
+    min-height: 100vh;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    padding: 45px 34px 30px;
+
+    flex-shrink: 0;
+}
+
+.brand h1 {
+    font-size: 40px;
+    letter-spacing: 1px;
+}
+
+.brand span {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #55B9F3;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+   ========================================================= */
+
+.sidebar-nav {
+    padding: 10px 18px 30px;
+
+    flex: 1;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* Sidebar scrollbar */
+
+.sidebar-nav::-webkit-scrollbar {
+    width: 7px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+
+/* =========================================================
+   NAVIGATION SECTION TITLE
+   ========================================================= */
+
+.nav-section-title {
+    color: #5DBAF1;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+    margin: 28px 17px 14px;
+}
+
+
+/* =========================================================
+   NAVIGATION ITEM
+   ========================================================= */
+
+.nav-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px 18px;
+
+    margin-bottom: 5px;
+
+    border-radius: 12px;
+
+    color: #EAF5FC;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition: 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: #1E5B83;
+
+    border-left: 3px solid #55C4F4;
+}
+
+
+/* =========================================================
+   NAVIGATION ICON
+   ========================================================= */
+
+.nav-icon {
+    width: 22px;
+
+    text-align: center;
+
+    color: #73C8F7;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   SIDEBAR USER / LOGOUT
+   SAME STYLE AS FINANCE OFFICER
+   ========================================================= */
+
+.sidebar-user {
+    width: 100%;
+
+    min-height: 92px;
+
+    padding: 16px 22px;
+
+    background: #103A5C;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR USER AVATAR
+   ========================================================= */
+
+.sidebar-user-avatar {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 50%;
+
+    background: #DFF2FC;
+
+    color: #1784C3;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SIDEBAR USER INFORMATION
+   ========================================================= */
+
+.sidebar-user-info {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.sidebar-user-info strong {
+    display: block;
+
+    color: #FFFFFF;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.sidebar-user-info span {
+    display: block;
+
+    color: #8DB5D0;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGOUT FORM
+   ========================================================= */
+
+.sidebar-logout-form {
+    margin: 0;
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGOUT BUTTON
+   ========================================================= */
+
+.sidebar-logout-btn {
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #8FD3F5;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.sidebar-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.10);
+
+    color: #FFFFFF;
+
+    transform: translateX(2px);
+}
+
+.sidebar-logout-btn:active {
+    transform: translateX(0);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+    margin-left: 320px;
+
+    width: calc(100% - 320px);
+
+    padding: 42px 55px 50px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.top-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 28px;
+
+    border-bottom: 1px solid #D8E4EC;
+}
+
+.header-label,
+.section-label {
+    color: #1585C6;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.top-header h2 {
+    margin-top: 10px;
+
+    color: #073B68;
+
+    font-size: 34px;
+}
+
+
+/* =========================================================
+   TOP PROFILE
+   ========================================================= */
+
+.profile-area {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+   ========================================================= */
+
+.notification {
+    position: relative;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 14px;
+
+    background: white;
+
+    border: 1px solid #D9E6EE;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+.notification span {
+    position: absolute;
+
+    top: -5px;
+    right: -4px;
+
+    background: #3C94C8;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+
+    padding: 4px 6px;
+}
+
+
+/* =========================================================
+   TOP PROFILE AVATAR
+   ========================================================= */
+
+.profile-avatar {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    background: #DFF2FC;
+
+    color: #1784C3;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   TOP PROFILE INFORMATION
+   ========================================================= */
+
+.profile-info strong {
+    display: block;
+
+    color: #153F65;
+}
+
+.profile-info small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #7890A2;
+}
+
+
+/* =========================================================
+   HIDE TOP LOGOUT
+   ========================================================= */
+
+/*
+   The logout is now located at the bottom
+   of the left sidebar, exactly like Finance Officer.
+*/
+
+.profile-area .logout-form {
+    display: none;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero-section {
+    margin-top: 40px;
+
+    padding: 38px 35px;
+
+    min-height: 165px;
+
+    border-radius: 22px;
+
+    border: 1px solid #CFE7F5;
+
+    background: linear-gradient(
+            120deg,
+            #E3F6FE,
+            #F4FAFD
+    );
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.hero-section h3 {
+    margin-top: 13px;
+
+    color: #073B68;
+
+    font-size: 28px;
+}
+
+.hero-section p {
+    margin-top: 12px;
+
+    color: #64809A;
+
+    font-size: 15px;
+}
+
+.hero-badge {
+    padding: 13px 22px;
+
+    background: white;
+
+    border-radius: 13px;
+
+    color: #247DB4;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    box-shadow:
+            0 7px 18px rgba(31, 58, 96, 0.08);
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin-top: 30px;
+}
+
+.summary-card {
+    background: white;
+
+    border: 1px solid #DCE7EE;
+
+    border-radius: 20px;
+
+    padding: 28px 24px;
+
+    display: flex;
+
+    gap: 18px;
+
+    align-items: center;
+
+    min-height: 145px;
+
+    box-shadow:
+            0 7px 20px rgba(31, 58, 96, 0.05);
+}
+
+.summary-icon {
+    width: 62px;
+    height: 62px;
+
+    min-width: 62px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    font-weight: bold;
+}
+
+.donation-icon {
+    background: #E4F5FC;
+
+    color: #238AC5;
+}
+
+.expense-icon {
+    background: #F7EAE7;
+
+    color: #A86858;
+}
+
+.budget-icon {
+    background: #EAEAF7;
+
+    color: #5770B1;
+}
+
+.pending-icon {
+    background: #FFF3D4;
+
+    color: #D79A00;
+}
+
+.summary-title {
+    display: block;
+
+    color: #70889C;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.summary-value {
+    display: block;
+
+    color: #073B68;
+
+    margin-top: 9px;
+
+    font-size: 22px;
+}
+
+.summary-card small {
+    display: block;
+
+    color: #8AA0B1;
+
+    margin-top: 7px;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.requirements-section,
+.status-section {
+    margin-top: 48px;
+}
+
+.section-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 18px;
+}
+
+.section-heading h3 {
+    margin-top: 8px;
+
+    color: #073B68;
+
+    font-size: 27px;
+}
+
+.view-link {
+    color: #7894A9;
+
+    text-decoration: none;
+
+    font-size: 13px;
+}
+
+.view-link:hover {
+    color: #1585C6;
+}
+
+
+/* =========================================================
+   REQUIREMENT
+   ========================================================= */
+
+.requirement-card {
+    background: white;
+
+    border: 1px solid #DCE7EE;
+
+    border-radius: 18px;
+
+    padding: 22px 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 12px;
+
+    box-shadow:
+            0 6px 18px rgba(31, 58, 96, 0.04);
+}
+
+.requirement-icon {
+    width: 60px;
+    height: 60px;
+
+    min-width: 60px;
+
+    border-radius: 15px;
+
+    background: #EAF5FA;
+
+    color: #2487C1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    font-size: 20px;
+}
+
+.requirement-details {
+    flex: 1;
+}
+
+.requirement-card strong {
+    color: #17446B;
+
+    font-size: 16px;
+}
+
+.requirement-card p {
+    margin-top: 6px;
+
+    color: #7790A4;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+.requirement-details > span {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #6F879A;
+
+    font-size: 12px;
+}
+
+.review-button {
+    padding: 11px 20px;
+
+    border-radius: 11px;
+
+    background: #E8F5FB;
+
+    color: #197DB7;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.review-button:hover {
+    background: #D6EDF8;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.status-card {
+    background: white;
+
+    border: 1px solid #DCE7EE;
+
+    border-radius: 17px;
+
+    padding: 22px 25px;
+
+    text-decoration: none;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.status-number {
+    color: #0A4A75;
+
+    font-size: 28px;
+
+    font-weight: bold;
+}
+
+.status-card > span:last-child {
+    color: #70899C;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   OLD LOGOUT SECTION
+   ========================================================= */
+
+.logout-section {
+    margin-top: 45px;
+
+    text-align: right;
+}
+
+.logout-button {
+    padding: 13px 30px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #173F68;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background: #246F9E;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    margin-top: 50px;
+
+    padding: 25px 0;
+
+    text-align: center;
+
+    color: #7890A2;
+
+    font-size: 12px;
+}
+
+footer span {
+    font-weight: bold;
+
+    color: #173F68;
+}
+
+footer p {
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1200px
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 850px
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        width: 230px;
+    }
+
+    .main-content {
+        margin-left: 230px;
+
+        width: calc(100% - 230px);
+
+        padding: 30px;
+    }
+
+    .top-header h2 {
+        font-size: 27px;
+    }
+
+    .hero-section {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 650px
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        position: static;
+
+        width: 100%;
+
+        min-height: auto;
+
+        display: flex;
+    }
+
+    .layout {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+
+        width: 100%;
+
+        padding: 25px 18px;
+    }
+
+    .top-header {
+        align-items: flex-start;
+
+        gap: 20px;
+
+        flex-direction: column;
+    }
+
+    .profile-area {
+        width: 100%;
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .requirement-card {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .review-button {
+        margin-left: 80px;
+    }
+
+    .sidebar-user {
+        min-height: 82px;
+
+        padding: 14px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    .sidebar-user-avatar {
+        width: 44px;
+        height: 44px;
+
+        min-width: 44px;
+    }
+
+    .sidebar-user-info strong {
+        font-size: 13px;
+    }
+
+    .sidebar-user-info span {
+        font-size: 11px;
+    }
+
+    .sidebar-logout-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relief Requirements</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/distribution.css}">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="requirements-section">
+
+        <div class="requirements-title-row">
+
+            <h1>Relief Requirements</h1>
+
+            <div class="requirements-header-actions">
+
+                <!-- Back to Dashboard -->
+
+                <a class="dashboard-icon-button"
+                   th:href="@{/distribution/dashboard}"
+                   title="Back to Dashboard"
+                   aria-label="Back to Dashboard">
+
+                    <svg viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+
+                        <path d="M3 10.5L12 3l9 7.5"></path>
+
+                        <path d="M5.5 9.5V21h13V9.5"></path>
+
+                        <path d="M9.5 21v-6h5v6"></path>
+
+                    </svg>
+
+                </a>
+
+
+                <!-- Receive New Requirement -->
+
+                <a class="receive-arrow"
+                   th:href="@{/distribution/requirements/new}"
+                   title="Receive New Requirement">
+                    →
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="requirements-count">
+            Total Requirements:
+            <span th:text="${requirements.size()}">0</span>
+        </div>
+
+        <table class="requirements-table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Recipient</th>
+                <th>Affected Area</th>
+                <th>Shelter</th>
+                <th>Delivery Address</th>
+                <th>Contact Number</th>
+                <th>Required Relief Items</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="requirement : ${requirements}">
+
+                <td th:text="${requirement.id}">1</td>
+
+                <td th:text="${requirement.recipientName ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.affectedArea ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.shelter ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.deliveryAddress ?: '-'}">
+                    -
+                </td>
+
+                <td th:text="${requirement.contactNumber ?: '-'}">
+                    -
+                </td>
+
+                <td>
+                    <div class="relief-items-list"
+                         th:each="item : ${requirement.items}">
+
+                        <strong th:text="${item.reliefItemName}">
+                            Rice
+                        </strong>
+
+                        -
+                        <span th:text="${item.quantity}">
+                            10
+                        </span>
+
+                        <span th:text="${item.unit}">
+                            kg
+                        </span>
+
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(requirements)}">
+
+                <td colspan="5" class="no-requirements">
+                    No relief requirements received yet.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #F4F8FB;
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.card {
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 40px;
+    width: 100%;
+    box-shadow: 0 12px 35px rgba(31, 58, 96, 0.12);
+    border: 1px solid #E0EAF1;
+}
+
+.card-small {
+    max-width: 430px;
+}
+
+.page-title {
+    text-align: center;
+    color: #1F3A60;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1F3A60;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #C9D8E3;
+    border-radius: 9px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: #3582B8;
+    box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
+}
+
+.btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #1F3A60, #3582B8);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(31, 58, 96, 0.22);
+}
+
+.alert-error {
+    background: #FDECEC;
+    color: #B42318;
+    border: 1px solid #F5C2C0;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alert-success {
+    background: #EAF7EF;
+    color: #217346;
+    border: 1px solid #B9E2C7;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+@media (max-width: 500px) {
+
+    .page-wrapper {
+        padding: 20px;
+    }
+
+    .card {
+        padding: 28px 22px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+}

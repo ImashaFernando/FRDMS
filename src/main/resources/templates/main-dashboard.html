@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>
+    FRDMS | Healthy Lanka Alliance for Development
+  </title>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet"
+        th:href="@{/css/main-dashboard.css}">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="main-header">
+
+  <div class="header-container">
+
+
+    <!-- LOGO -->
+
+    <a th:href="@{/}"
+       class="brand">
+
+      <div class="brand-logo">
+        FRDMS
+      </div>
+
+      <div class="brand-text">
+
+        <strong>
+          Healthy Lanka
+        </strong>
+
+        <span>
+                    Alliance for Development
+                </span>
+
+      </div>
+
+    </a>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="navigation">
+
+      <a href="#home">
+        Home
+      </a>
+
+      <a href="#about">
+        About Us
+      </a>
+
+      <a href="#purpose">
+        Our Purpose
+      </a>
+
+      <a href="#contact">
+        Contact
+      </a>
+
+      <!-- LOGIN -->
+
+      <a th:href="@{/login}"
+         class="login-button">
+
+        <i class="fa-solid fa-right-to-bracket"></i>
+
+        Login
+
+      </a>
+
+      <div class="register-dropdown">
+
+        <button type="button" class="register-btn">
+          <i class="fa-solid fa-user-plus"></i>
+          Register
+          <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+        </button>
+
+        <div class="register-menu">
+
+          <!-- Donor -->
+          <a th:href="@{/donors/register}">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            <span>Register as Donor</span>
+          </a>
+
+          <!-- Volunteer -->
+          <a th:href="@{/volunteer/register}">
+            <i class="fa-solid fa-people-group"></i>
+            <span>Register as Volunteer</span>
+          </a>
+
+          <!-- Victim -->
+          <a th:href="@{/victims/register}">
+            <i class="fa-solid fa-user"></i>
+            <span>Register as Victim</span>
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main>
+
+  <section id="home"
+           class="hero-section">
+
+
+    <div class="hero-container">
+
+
+      <!-- HERO CONTENT -->
+
+      <div class="hero-content">
+
+
+            <span class="hero-label">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+                FLOOD RELIEF & DISASTER MANAGEMENT
+
+            </span>
+
+
+        <h1>
+
+          Together for a
+
+          <span>
+                    Safer & Stronger
+                </span>
+
+          Sri Lanka
+
+        </h1>
+
+
+        <p>
+
+          A centralized platform supporting disaster
+          response, relief coordination, affected
+          communities, volunteers and essential resources.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+
+          <a th:href="@{/login}"
+             class="primary-button">
+
+            Access FRDMS
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+
+          <a href="#about"
+             class="secondary-button">
+
+            Learn More
+
+          </a>
+
+        </div>
+
+
+        <!-- HERO MINI STATS -->
+
+        <div class="hero-highlights">
+
+
+          <div class="hero-highlight">
+
+            <i class="fa-solid fa-people-group"></i>
+
+            <span>
+                        Community
+                    </span>
+
+          </div>
+
+
+          <div class="hero-highlight">
+
+            <i class="fa-solid fa-hand-holding-heart"></i>
+
+            <span>
+                        Support
+                    </span>
+
+          </div>
+
+
+          <div class="hero-highlight">
+
+            <i class="fa-solid fa-shield-heart"></i>
+
+            <span>
+                        Resilience
+                    </span>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
+      <!-- HERO 3D IMAGE -->
+
+      <div class="hero-visual">
+
+
+        <div class="hero-image-wrapper">
+
+
+          <img src="/images/relief-1.jpg"
+               alt="Volunteers supporting communities"
+               class="hero-image">
+
+
+          <!-- Floating Card -->
+
+          <div class="floating-card">
+
+
+            <div class="floating-icon">
+
+              <i class="fa-solid fa-heart"></i>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                Helping Communities
+              </strong>
+
+              <span>
+                            People • Support • Resilience
+                        </span>
+
+            </div>
+
+
+          </div>
+
+
+          <!-- Floating Badge -->
+
+          <div class="floating-badge">
+
+            <i class="fa-solid fa-hand-holding-heart"></i>
+
+            <span>
+                        Community Support
+                    </span>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- PHOTO DOTS -->
+
+        <div class="photo-indicators">
+
+          <span class="active"></span>
+
+          <span></span>
+
+          <span></span>
+
+          <span></span>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =====================================================
+       ABOUT NGO
+  ===================================================== -->
+
+  <section id="about"
+           class="about-section">
+
+
+    <div class="section-container">
+
+
+      <div class="section-heading centered">
+
+
+            <span class="section-label">
+                ABOUT US
+            </span>
+
+
+        <h2>
+
+          Healthy Lanka Alliance
+
+          <span>
+                    for Development
+                </span>
+
+        </h2>
+
+
+        <div class="heading-line"></div>
+
+
+        <p>
+
+          Supporting communities and strengthening
+          coordinated disaster response and relief.
+
+        </p>
+
+
+      </div>
+
+
+
+      <div class="about-grid">
+
+        <!-- ABOUT IMAGE - LEFT -->
+
+        <div class="about-visual">
+
+          <img src="/images/relief-2.jpg"
+               alt="Community relief activity">
+
+          <div class="image-badge">
+
+            <i class="fa-solid fa-people-group"></i>
+
+            <span>
+                Community First
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ABOUT TEXT - RIGHT -->
+
+        <div class="about-text">
+
+        <span class="about-small-title">
+            OUR COMMITMENT
+        </span>
+
+          <h3>
+            Connecting people,
+            resources and support.
+          </h3>
+
+          <p>
+            Healthy Lanka Alliance for Development
+            is committed to supporting communities
+            and strengthening coordinated responses
+            during challenging situations.
+          </p>
+
+          <p>
+            The Flood Relief and Disaster Management
+            System provides a centralized platform for
+            coordinating disaster relief activities,
+            community support and essential resources.
+          </p>
+
+          <a href="#purpose"
+             class="text-button">
+
+            Discover Our Purpose
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       VISION / MISSION / COMMUNITY / IMPACT
+  ===================================================== -->
+
+  <section id="purpose"
+           class="purpose-section">
+
+
+    <div class="section-container">
+
+
+      <div class="section-heading centered">
+
+
+            <span class="section-label">
+                OUR PURPOSE
+            </span>
+
+
+        <h2>
+
+          Building Stronger
+
+          <span>
+                    Communities Together
+                </span>
+
+        </h2>
+
+
+        <div class="heading-line"></div>
+
+
+        <p>
+
+          Our work focuses on preparedness,
+          coordinated relief, community support
+          and resilience.
+
+        </p>
+
+
+      </div>
+
+
+
+      <div class="purpose-grid">
+
+
+        <!-- VISION -->
+
+        <article class="purpose-card">
+
+
+          <div class="card-icon">
+
+            <i class="fa-solid fa-earth-asia"></i>
+
+          </div>
+
+
+          <span class="card-label">
+                    OUR VISION
+                </span>
+
+
+          <h3>
+            A Resilient Sri Lanka
+          </h3>
+
+
+          <p>
+
+            A resilient Sri Lankan society where
+            communities are prepared for disasters,
+            supported during emergencies and
+            empowered to recover stronger.
+
+          </p>
+
+
+          <span class="card-number">
+                    01
+                </span>
+
+
+        </article>
+
+
+
+        <!-- MISSION -->
+
+        <article class="purpose-card">
+
+
+          <div class="card-icon">
+
+            <i class="fa-solid fa-bullseye"></i>
+
+          </div>
+
+
+          <span class="card-label">
+                    OUR MISSION
+                </span>
+
+
+          <h3>
+            Coordinated Relief
+          </h3>
+
+
+          <p>
+
+            To strengthen disaster response and
+            relief coordination by connecting
+            communities, volunteers, resources
+            and essential services.
+
+          </p>
+
+
+          <span class="card-number">
+                    02
+                </span>
+
+
+        </article>
+
+
+
+        <!-- COMMUNITY -->
+
+        <article class="purpose-card">
+
+
+          <div class="card-icon">
+
+            <i class="fa-solid fa-people-group"></i>
+
+          </div>
+
+
+          <span class="card-label">
+                    COMMUNITY FOCUSED
+                </span>
+
+
+          <h3>
+            Together We Make a Difference
+          </h3>
+
+
+          <p>
+
+            Empowering communities, volunteers
+            and local leaders to work together
+            and build sustainable disaster
+            resilience.
+
+          </p>
+
+
+          <span class="card-number">
+                    03
+                </span>
+
+
+        </article>
+
+
+
+        <!-- IMPACT -->
+
+        <article class="purpose-card impact-card">
+
+
+          <div class="card-icon">
+
+            <i class="fa-solid fa-heart"></i>
+
+          </div>
+
+
+          <span class="card-label">
+                    OUR IMPACT
+                </span>
+
+
+          <h3>
+            People • Support • Resilience
+          </h3>
+
+
+          <p>
+
+            Bringing people, information and
+            resources together to provide
+            organized and timely support
+            during disasters.
+
+          </p>
+
+
+          <div class="impact-stats">
+
+
+            <div>
+
+              <strong>
+                01
+              </strong>
+
+              <small>
+                Platform
+              </small>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                08
+              </strong>
+
+              <small>
+                Key Areas
+              </small>
+
+            </div>
+
+
+            <div>
+
+              <strong>
+                ∞
+              </strong>
+
+              <small>
+                Community
+              </small>
+
+            </div>
+
+
+          </div>
+
+
+        </article>
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       OUR APPROACH
+  ===================================================== -->
+
+  <section class="approach-section">
+
+
+    <div class="section-container">
+
+
+      <div class="section-heading centered">
+
+
+            <span class="section-label">
+                OUR APPROACH
+            </span>
+
+
+        <h2>
+
+          Supporting Communities
+
+          <span>
+                    Through Every Stage
+                </span>
+
+        </h2>
+
+
+        <div class="heading-line"></div>
+
+
+      </div>
+
+
+
+      <div class="approach-grid">
+
+
+        <div class="approach-card">
+
+
+          <div class="approach-number">
+            01
+          </div>
+
+
+          <i class="fa-solid fa-shield-heart"></i>
+
+
+          <h3>
+            Preparedness
+          </h3>
+
+
+          <p>
+
+            Supporting organized preparation
+            and better disaster readiness.
+
+          </p>
+
+
+        </div>
+
+
+
+        <div class="approach-card">
+
+
+          <div class="approach-number">
+            02
+          </div>
+
+
+          <i class="fa-solid fa-truck-medical"></i>
+
+
+          <h3>
+            Relief & Response
+          </h3>
+
+
+          <p>
+
+            Coordinating timely assistance
+            for affected communities.
+
+          </p>
+
+
+        </div>
+
+
+
+        <div class="approach-card">
+
+
+          <div class="approach-number">
+            03
+          </div>
+
+
+          <i class="fa-solid fa-hands-holding-child"></i>
+
+
+          <h3>
+            Community Support
+          </h3>
+
+
+          <p>
+
+            Connecting volunteers, resources
+            and people who need support.
+
+          </p>
+
+
+        </div>
+
+
+
+        <div class="approach-card">
+
+
+          <div class="approach-number">
+            04
+          </div>
+
+
+          <i class="fa-solid fa-house-circle-check"></i>
+
+
+          <h3>
+            Recovery & Resilience
+          </h3>
+
+
+          <p>
+
+            Helping communities move forward
+            and build stronger futures.
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       PHOTO SHOWCASE
+  ===================================================== -->
+
+  <section class="showcase-section">
+
+
+    <div class="section-container">
+
+
+      <div class="section-heading centered">
+
+
+            <span class="section-label">
+                COMMUNITY IN ACTION
+            </span>
+
+
+        <h2>
+
+          Together,
+
+          <span>
+                    We Make a Difference
+                </span>
+
+        </h2>
+
+
+      </div>
+
+
+
+      <div class="photo-grid">
+
+
+        <div class="showcase-photo large-photo">
+
+          <img src="/images/relief-3.jpg"
+               alt="Community support">
+
+        </div>
+
+
+        <div class="showcase-photo">
+
+          <img src="/images/relief-4.jpg"
+               alt="Relief activity">
+
+        </div>
+
+
+        <div class="showcase-photo">
+
+          <img src="/images/relief-1.jpg"
+               alt="Volunteers">
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       LOGIN CTA
+  ===================================================== -->
+
+  <section class="login-cta">
+
+
+    <div class="login-cta-container">
+
+
+      <div>
+
+            <span class="section-label light-label">
+                FRDMS ACCESS
+            </span>
+
+
+        <h2>
+          Ready to access FRDMS?
+        </h2>
+
+
+        <p>
+
+          Login to access the services and
+          management functions available to you.
+
+        </p>
+
+      </div>
+
+
+      <a th:href="@{/login}"
+         class="cta-button">
+
+        Login to FRDMS
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </a>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =====================================================
+       CONTACT
+  ===================================================== -->
+
+  <section id="contact"
+           class="contact-section">
+
+
+    <div class="section-container">
+
+
+      <div class="section-heading centered">
+
+
+            <span class="section-label">
+                GET IN TOUCH
+            </span>
+
+
+        <h2>
+          Connect With Us
+        </h2>
+
+
+        <div class="heading-line"></div>
+
+
+        <p>
+
+          Contact Healthy Lanka Alliance for
+          Development for more information.
+
+        </p>
+
+
+      </div>
+
+
+
+      <div class="contact-grid">
+
+
+        <!-- ADDRESS -->
+
+        <div class="contact-card">
+
+
+          <div class="contact-icon">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+          </div>
+
+
+          <span>
+                    HEAD OFFICE
+                </span>
+
+
+          <h3>
+            Visit Us
+          </h3>
+
+
+          <p>
+
+            No.37/9, 2nd Lane,<br>
+            Koswatta, Nawala,<br>
+            Rajagiriya.
+
+          </p>
+
+
+        </div>
+
+
+
+        <!-- PHONE -->
+
+        <div class="contact-card">
+
+
+          <div class="contact-icon">
+
+            <i class="fa-solid fa-phone"></i>
+
+          </div>
+
+
+          <span>
+                    CALL US
+                </span>
+
+
+          <h3>
+            +94 11 288 4002
+          </h3>
+
+
+          <p>
+
+            Contact us directly
+            for more information.
+
+          </p>
+
+
+        </div>
+
+
+
+        <!-- EMAIL -->
+
+        <div class="contact-card">
+
+
+          <div class="contact-icon">
+
+            <i class="fa-solid fa-envelope"></i>
+
+          </div>
+
+
+          <span>
+                    EMAIL
+                </span>
+
+
+          <h3>
+            Get In Touch
+          </h3>
+
+
+          <p>
+
+            info@healthylanka.org
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="main-footer">
+
+
+  <div class="footer-container">
+
+
+    <div class="footer-brand">
+
+
+      <div class="footer-logo">
+        FRDMS
+      </div>
+
+
+      <p>
+
+        Flood Relief & Disaster
+        Management System
+
+      </p>
+
+
+    </div>
+
+
+    <div class="footer-links">
+
+
+      <a href="#home">
+        Home
+      </a>
+
+      <a href="#about">
+        About
+      </a>
+
+      <a href="#purpose">
+        Our Purpose
+      </a>
+
+      <a href="#contact">
+        Contact
+      </a>
+
+
+    </div>
+
+
+    <div class="footer-copy">
+
+      © 2026 Healthy Lanka Alliance
+      for Development.
+
+      <br>
+
+      People • Support • Resilience
+
+    </div>
+
+
+  </div>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     SIMPLE PHOTO CAROUSEL SCRIPT
+===================================================== -->
+
+<script>
+
+  const heroImages = [
+    "/images/relief-1.jpg",
+    "/images/relief-2.jpg",
+    "/images/relief-3.jpg",
+    "/images/relief-4.jpg"
+  ];
+
+  const heroImage =
+          document.querySelector(".hero-image");
+
+  const indicators =
+          document.querySelectorAll(".photo-indicators span");
+
+  let currentImage = 0;
+
+
+  function changeHeroImage() {
+
+    currentImage =
+            (currentImage + 1) % heroImages.length;
+
+    heroImage.style.opacity = "0";
+
+
+    setTimeout(() => {
+
+      heroImage.src =
+              heroImages[currentImage];
+
+      heroImage.style.opacity = "1";
+
+
+      indicators.forEach((indicator, index) => {
+
+        indicator.classList.toggle(
+                "active",
+                index === currentImage
+        );
+
+      });
+
+    }, 300);
+
+  }
+
+
+  setInterval(changeHeroImage, 4000);
+
+</script>
+
+
+</body>
+
+</html>

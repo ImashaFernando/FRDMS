@@ -1,0 +1,369 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+    min-height: 100vh;
+}
+
+/* ================= TOP BAR ================= */
+
+.topbar {
+    height: 76px;
+    background: #0b1f3a;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 42px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    background: #2f80ed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand h1 {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+}
+
+.brand span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 12px;
+    color: #b8c5d8;
+}
+
+.back-btn {
+    text-decoration: none;
+
+    color: white;
+
+    border: 1px solid #49617f;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #18385f;
+}
+
+
+/* ================= PAGE ================= */
+
+.page-container {
+    max-width: 950px;
+
+    margin: 45px auto;
+
+    padding: 0 25px;
+}
+
+.page-heading {
+    margin-bottom: 25px;
+}
+
+.eyebrow {
+    color: #2f80ed;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+}
+
+.page-heading h2 {
+    font-size: 30px;
+
+    margin: 7px 0;
+}
+
+.page-heading p {
+    color: #68758a;
+
+    font-size: 14px;
+}
+
+
+/* ================= FORM CARD ================= */
+
+.form-card {
+    background: white;
+
+    border-radius: 16px;
+
+    padding: 32px;
+
+    border: 1px solid #e4eaf2;
+
+    box-shadow: 0 8px 28px rgba(20, 45, 80, 0.08);
+}
+
+
+/* ================= RECORD ID ================= */
+
+.record-id {
+    background: #f5f8fc;
+
+    border: 1px solid #e6ebf2;
+
+    padding: 12px 15px;
+
+    border-radius: 8px;
+
+    color: #657287;
+
+    font-size: 13px;
+
+    margin-bottom: 25px;
+}
+
+.record-id strong {
+    color: #25334a;
+
+    margin-left: 4px;
+}
+
+
+/* ================= FORM GRID ================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 23px;
+}
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* ================= LABELS ================= */
+
+label {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: #27354b;
+}
+
+label span {
+    color: #e05252;
+}
+
+
+/* ================= INPUTS ================= */
+
+input,
+select {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d6deea;
+
+    border-radius: 9px;
+
+    background: #fbfcfe;
+
+    color: #263449;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+}
+
+input::placeholder {
+    color: #9aa6b6;
+}
+
+input:hover,
+select:hover {
+    border-color: #b9c6d7;
+}
+
+input:focus,
+select:focus {
+    border-color: #2f80ed;
+
+    background: white;
+
+    box-shadow:
+            0 0 0 3px rgba(47, 128, 237, 0.10);
+}
+
+
+/* ================= VALIDATION ================= */
+
+.error {
+    color: #d94b4b;
+
+    font-size: 12px;
+
+    margin-top: 6px;
+}
+
+
+/* ================= BUTTON AREA ================= */
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 32px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid #edf0f5;
+}
+
+
+/* CANCEL */
+
+.cancel-btn {
+    padding: 12px 22px;
+
+    border-radius: 9px;
+
+    background: #eef2f7;
+
+    color: #596579;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.cancel-btn:hover {
+    background: #e2e7ee;
+
+    color: #3f4b5d;
+}
+
+
+/* UPDATE */
+
+.update-btn {
+    padding: 12px 22px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #2f80ed;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.update-btn:hover {
+    background: #216dcc;
+
+    transform: translateY(-1px);
+}
+
+.update-btn:active {
+    transform: translateY(0);
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 700px) {
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .page-container {
+        margin: 30px auto;
+    }
+
+    .form-card {
+        padding: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .update-btn {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .page-heading h2 {
+        font-size: 25px;
+    }
+}

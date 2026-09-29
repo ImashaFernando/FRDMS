@@ -1,0 +1,289 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* HEADER */
+
+.topbar {
+    background: #101c3d;
+    color: white;
+    padding: 18px 42px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #3157d5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.brand p {
+    margin: 3px 0 0;
+    color: #b8c4dd;
+    font-size: 12px;
+}
+
+.dashboard-btn {
+    color: white;
+    text-decoration: none;
+    border: 1px solid #607099;
+    padding: 9px 17px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.dashboard-btn:hover {
+    background: #1c2b52;
+}
+
+
+/* CONTENT */
+
+.content {
+    width: 92%;
+    max-width: 1350px;
+    margin: 42px auto;
+    flex: 1;
+}
+
+.page-heading {
+    margin-bottom: 25px;
+}
+
+.label {
+    color: #3157d5;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.page-heading h2 {
+    margin: 6px 0;
+    font-size: 30px;
+}
+
+.page-heading p {
+    margin: 0;
+    color: #6d788c;
+    font-size: 14px;
+}
+
+
+/* SUMMARY */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+    padding: 22px;
+    border-radius: 13px;
+    box-shadow: 0 5px 20px rgba(20, 35, 70, 0.06);
+}
+
+.card-label {
+    display: block;
+    color: #7b8598;
+    font-size: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.summary-card strong {
+    font-size: 23px;
+    color: #1e2d50;
+}
+
+
+/* REPORT TABLE */
+
+.report-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(20, 35, 70, 0.08);
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 24px 27px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.card-header p {
+    margin: 6px 0 0;
+    color: #7a8498;
+    font-size: 13px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f7f8fb;
+}
+
+th {
+    padding: 15px 18px;
+    text-align: left;
+    color: #59657b;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+td {
+    padding: 16px 18px;
+    border-top: 1px solid #edf0f5;
+    font-size: 13px;
+}
+
+tr:hover td {
+    background: #fbfcff;
+}
+
+
+/* TYPE */
+
+.type {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.type.cash {
+    background: #e8efff;
+    color: #3157d5;
+}
+
+.type.goods {
+    background: #fff2dc;
+    color: #ad7200;
+}
+
+
+/* STATUS */
+
+.status {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: #fff2dc;
+    color: #ad7200;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+
+/* EMPTY */
+
+.empty-state {
+    text-align: center;
+    padding: 55px 20px;
+}
+
+.empty-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #3157d5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.empty-state h3 {
+    margin: 0;
+}
+
+.empty-state p {
+    color: #7b8598;
+    font-size: 13px;
+}
+
+
+/* FOOTER */
+
+footer {
+    padding: 20px;
+    text-align: center;
+    color: #8a94a7;
+    font-size: 12px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .topbar {
+        padding: 16px 20px;
+    }
+
+    .content {
+        width: 94%;
+        margin: 28px auto;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}

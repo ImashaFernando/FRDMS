@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Staff Dashboard - FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/chamya-theme.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <div class="card">
+
+    <h2 class="page-title">
+      Staff Dashboard
+    </h2>
+
+    <p class="page-subtitle">
+      Shelter Management
+    </p>
+
+    <div class="info-box">
+
+      Logged in as:
+
+      <strong th:text="${staffEmail}">
+        staff@example.com
+      </strong>
+
+    </div>
+
+    <form th:action="@{/staff/logout}"
+          method="post">
+
+      <button type="submit"
+              class="btn">
+
+        Logout
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+</body>
+</html>

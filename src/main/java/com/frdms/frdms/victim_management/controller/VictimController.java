@@ -91,7 +91,7 @@ public class VictimController {
             Long disasterId,
 
             Model model) {
-
+        System.out.println("🔥 VICTIM REGISTER POST REACHED");
         // -----------------------------------------------------
         // ALWAYS RELOAD DISASTER LIST
         // -----------------------------------------------------
@@ -192,7 +192,7 @@ public class VictimController {
         // REDIRECT TO LOGIN
         // -----------------------------------------------------
 
-        return "redirect:/victims/login";
+        return "redirect:/login";
     }
 
 

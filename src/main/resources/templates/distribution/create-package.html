@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Relief Package</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/distribution.css}">
+
+</head>
+
+
+<body>
+
+<div class="page-container">
+
+    <div class="create-package-section">
+
+
+        <!-- =========================
+             PAGE HEADER
+             ========================= -->
+
+        <div class="create-package-header">
+
+            <div>
+
+                <h1>Create Relief Package</h1>
+
+                <p>
+                    Create one relief package for a recipient
+                    with all required relief items.
+                </p>
+
+            </div>
+
+
+            <a class="back-button"
+               th:href="@{/distribution/packages}">
+
+                ← Back
+
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             MAIN FORM
+             ========================= -->
+
+        <form th:action="@{/distribution/packages/save}"
+              th:object="${reliefPackage}"
+              method="post">
+
+
+            <!-- =========================
+                 PACKAGE INFORMATION
+                 ========================= -->
+
+            <div class="package-form-card">
+
+                <h2>Package Information</h2>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Package ID -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Package ID
+                        </label>
+
+                        <input type="text"
+                               value="Automatically Generated"
+                               readonly
+                               class="readonly-input">
+
+                        <small>
+                            Package ID will be generated automatically.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Recipient Name -->
+
+                    <div class="form-group">
+
+                        <label for="recipientName">
+                            Recipient Name
+                            <span>*</span>
+                        </label>
+
+                        <input type="text"
+                               id="recipientName"
+                               th:field="*{recipientName}"
+                               placeholder="Enter recipient name">
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('recipientName')}"
+                             th:errors="*{recipientName}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Affected Area -->
+
+                    <div class="form-group">
+
+                        <label for="affectedArea">
+                            Affected Area
+                            <span>*</span>
+                        </label>
+
+                        <input type="text"
+                               id="affectedArea"
+                               th:field="*{affectedArea}"
+                               placeholder="Enter affected area">
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('affectedArea')}"
+                             th:errors="*{affectedArea}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Shelter -->
+
+                    <div class="form-group">
+
+                        <label for="shelter">
+                            Shelter
+                        </label>
+
+                        <input type="text"
+                               id="shelter"
+                               th:field="*{shelter}"
+                               placeholder="Enter shelter name">
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('shelter')}"
+                             th:errors="*{shelter}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Delivery Address -->
+
+                    <div class="form-group full-width">
+
+                        <label for="deliveryAddress">
+                            Delivery Address
+                            <span>*</span>
+                        </label>
+
+                        <textarea id="deliveryAddress"
+                                  th:field="*{deliveryAddress}"
+                                  rows="3"
+                                  placeholder="Enter delivery address"></textarea>
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('deliveryAddress')}"
+                             th:errors="*{deliveryAddress}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Contact Number -->
+
+                    <div class="form-group">
+
+                        <label for="contactNumber">
+                            Contact Number
+                        </label>
+
+                        <input type="text"
+                               id="contactNumber"
+                               th:field="*{contactNumber}"
+                               placeholder="Enter contact number">
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('contactNumber')}"
+                             th:errors="*{contactNumber}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="form-group">
+
+                        <label for="status">
+                            Package Status
+                            <span>*</span>
+                        </label>
+
+                        <select id="status"
+                                th:field="*{status}">
+
+                            <option th:each="status : ${T(com.frdms.frdms.distribution_management.entity.PackageStatus).values()}"
+                                    th:value="${status}"
+                                    th:text="${status}">
+                            </option>
+
+                        </select>
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('status')}"
+                             th:errors="*{status}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Vehicle Number -->
+
+                    <div class="form-group">
+
+                        <label for="vehicleNumber">
+                            Vehicle Number
+                        </label>
+
+                        <input type="text"
+                               id="vehicleNumber"
+                               th:field="*{vehicleNumber}"
+                               placeholder="Enter vehicle number">
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('vehicleNumber')}"
+                             th:errors="*{vehicleNumber}">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Driver Name -->
+
+                    <div class="form-group">
+
+                        <label for="driverName">
+                            Driver Name
+                        </label>
+
+                        <input type="text"
+                               id="driverName"
+                               th:field="*{driverName}"
+                               placeholder="Enter driver name">
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('driverName')}"
+                             th:errors="*{driverName}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RELIEF ITEMS
+                 ========================= -->
+
+            <div class="package-form-card">
+
+
+                <div class="items-header">
+
+                    <div>
+
+                        <h2>Relief Items</h2>
+
+                        <p>
+                            Add all relief items required for this recipient.
+                        </p>
+
+                    </div>
+
+
+                    <button type="button"
+                            class="add-item-button"
+                            onclick="addItem()">
+
+                        + Add Item
+
+                    </button>
+
+                </div>
+
+
+                <div id="itemsContainer">
+
+
+                    <!-- First Item -->
+
+                    <div class="package-item-row">
+
+                        <div class="item-number">
+                            1
+                        </div>
+
+
+                        <!-- Item Name -->
+
+                        <div class="item-field">
+
+                            <label>
+                                Relief Item
+                            </label>
+
+                            <input type="text"
+                                   name="items[0].reliefItemName"
+                                   placeholder="e.g. Rice"
+                                   required>
+
+                        </div>
+
+
+                        <!-- Quantity -->
+
+                        <div class="item-field">
+
+                            <label>
+                                Quantity
+                            </label>
+
+                            <input type="number"
+                                   name="items[0].quantity"
+                                   placeholder="e.g. 20"
+                                   min="0.01"
+                                   step="0.01"
+                                   required>
+
+                        </div>
+
+
+                        <!-- Unit -->
+
+                        <div class="item-field">
+
+                            <label>
+                                Unit
+                            </label>
+
+                            <input type="text"
+                                   name="items[0].unit"
+                                   placeholder="e.g. kg"
+                                   required>
+
+                        </div>
+
+
+                        <!-- Remove -->
+
+                        <button type="button"
+                                class="remove-item-button"
+                                onclick="removeItem(this)"
+                                disabled>
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Items Validation -->
+
+                <div class="items-error"
+                     th:if="${#fields.hasErrors('items')}">
+
+                    <span th:errors="*{items}">
+                    </span>
+
+                </div>
+
+
+                <!-- =========================
+                     BUTTONS
+                     ========================= -->
+
+                <div class="package-form-actions">
+
+
+                    <a class="cancel-button"
+                       th:href="@{/distribution/packages}">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="create-package-button">
+
+                        📦 Create Package
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+     ========================= -->
+
+<script>
+
+    let itemIndex = 1;
+
+
+    function addItem() {
+
+        const container =
+            document.getElementById("itemsContainer");
+
+
+        const row =
+            document.createElement("div");
+
+        row.className = "package-item-row";
+
+
+        row.innerHTML = `
+
+            <div class="item-number">
+                ${itemIndex + 1}
+            </div>
+
+
+            <div class="item-field">
+
+                <label>
+                    Relief Item
+                </label>
+
+                <input type="text"
+                       name="items[${itemIndex}].reliefItemName"
+                       placeholder="e.g. Rice"
+                       required>
+
+            </div>
+
+
+            <div class="item-field">
+
+                <label>
+                    Quantity
+                </label>
+
+                <input type="number"
+                       name="items[${itemIndex}].quantity"
+                       placeholder="e.g. 20"
+                       min="0.01"
+                       step="0.01"
+                       required>
+
+            </div>
+
+
+            <div class="item-field">
+
+                <label>
+                    Unit
+                </label>
+
+                <input type="text"
+                       name="items[${itemIndex}].unit"
+                       placeholder="e.g. kg"
+                       required>
+
+            </div>
+
+
+            <button type="button"
+                    class="remove-item-button"
+                    onclick="removeItem(this)">
+
+                ×
+
+            </button>
+
+        `;
+
+
+        container.appendChild(row);
+
+        itemIndex++;
+
+        updateItemNumbers();
+
+    }
+
+
+    function removeItem(button) {
+
+        const row =
+            button.closest(".package-item-row");
+
+        row.remove();
+
+        updateItemNumbers();
+
+    }
+
+
+    function updateItemNumbers() {
+
+        const rows =
+            document.querySelectorAll(
+                ".package-item-row"
+            );
+
+
+        rows.forEach((row, index) => {
+
+            row.querySelector(".item-number")
+                .textContent = index + 1;
+
+        });
+
+
+        const removeButtons =
+            document.querySelectorAll(
+                ".remove-item-button"
+            );
+
+
+        if (removeButtons.length === 1) {
+
+            removeButtons[0].disabled = true;
+
+        } else {
+
+            removeButtons.forEach(button => {
+
+                button.disabled = false;
+
+            });
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

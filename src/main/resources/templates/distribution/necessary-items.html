@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Necessary Relief Items</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/distribution.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="requirements-section">
+
+        <div class="requirements-title-row">
+
+            <h1>Necessary Relief Items</h1>
+
+            <a class="dashboard-icon-button"
+               th:href="@{/distribution/dashboard}"
+               title="Back to Dashboard"
+               aria-label="Back to Dashboard">
+
+                <svg viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+
+                    <path d="M3 10.5L12 3l9 7.5"></path>
+
+                    <path d="M5.5 9.5V21h13V9.5"></path>
+
+                    <path d="M9.5 21v-6h5v6"></path>
+
+                </svg>
+
+            </a>
+
+        </div>
+
+        <div class="requirements-count">
+
+            Total Item Types:
+            <span th:text="${necessaryItems.size()}">0</span>
+
+        </div>
+
+        <table class="requirements-table">
+
+            <thead>
+
+            <tr>
+
+                <th>Relief Item</th>
+
+                <th>Total Required</th>
+
+                <th>Unit</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="item : ${necessaryItems}">
+
+                <td th:text="${item.itemName}">
+                    Rice
+                </td>
+
+                <td th:text="${item.totalRequired}">
+                    100
+                </td>
+
+                <td th:text="${item.unit}">
+                    kg
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(necessaryItems)}">
+
+                <td colspan="3"
+                    class="no-requirements">
+
+                    No necessary relief items found.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

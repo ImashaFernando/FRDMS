@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Donor Dashboard | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/donor-dashboard.css}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+
+    <!-- ========================================= -->
+    <!-- SIDEBAR                                   -->
+    <!-- ========================================= -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="logo-section">
+
+            <div class="logo">
+                FRDMS
+            </div>
+
+            <div class="logo-subtitle">
+                FLOOD RELIEF &amp; DISASTER<br>
+                MANAGEMENT SYSTEM
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-section">
+
+            <div class="profile-icon">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="profile-info">
+
+                <span class="profile-role">
+                    DONOR
+                </span>
+
+                <strong th:text="${donor.fullName}">
+                    Imash Fernando
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <!-- DASHBOARD -->
+
+            <a th:href="@{/donor/dashboard}"
+               class="nav-item active">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- SUBMIT DONATION -->
+
+            <a th:href="@{/donations/submit}"
+               class="nav-item">
+
+                <i class="fa-solid fa-hand-holding-heart"></i>
+
+                <span>
+                    Submit Donation
+                </span>
+
+            </a>
+
+
+            <!-- MY DONATIONS -->
+
+            <a th:href="@{/donations/my}"
+               class="nav-item">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                <span>
+                    My Donations
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- ========================================= -->
+        <!-- LOGOUT                                   -->
+        <!-- ========================================= -->
+
+        <div class="sidebar-logout-section">
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="sidebar-logout-form">
+
+                <button type="submit"
+                        class="sidebar-logout-btn"
+                        title="Logout">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span>Logout</span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- ========================================= -->
+    <!-- MAIN CONTENT                              -->
+    <!-- ========================================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <span class="page-label">
+                    DONOR PORTAL
+                </span>
+
+                <h1>
+                    Donor Dashboard
+                </h1>
+
+            </div>
+
+
+            <div class="user-badge">
+
+                <div class="small-user-icon">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong th:text="${donor.fullName}">
+                        Imash Fernando
+                    </strong>
+
+                    <span th:text="${donor.username}">
+                        imash
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ========================================= -->
+        <!-- WELCOME                                   -->
+        <!-- ========================================= -->
+
+        <section class="welcome-card">
+
+            <div class="welcome-text">
+
+                <span>
+                    Welcome back 👋
+                </span>
+
+                <h2 th:text="${donor.fullName}">
+                    Imash Fernando
+                </h2>
+
+                <p>
+                    Thank you for supporting flood relief
+                    and disaster recovery efforts.
+                </p>
+
+            </div>
+
+
+            <div class="welcome-icon">
+
+                <i class="fa-solid fa-hand-holding-heart"></i>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================= -->
+        <!-- SECTION TITLE                             -->
+        <!-- ========================================= -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>
+                    Donation Management
+                </h2>
+
+                <p>
+                    Manage your contributions and donation history.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- ACTION CARDS                              -->
+        <!-- ========================================= -->
+
+        <section class="action-grid">
+
+
+            <!-- SUBMIT DONATION -->
+
+            <a th:href="@{/donations/submit}"
+               class="action-card">
+
+                <div class="action-icon donation-icon">
+
+                    <i class="fa-solid fa-heart-circle-plus"></i>
+
+                </div>
+
+
+                <div class="action-content">
+
+                    <h3>
+                        Submit Donation
+                    </h3>
+
+                    <p>
+                        Make a new cash or goods donation
+                        to support relief activities.
+                    </p>
+
+                    <span class="card-link">
+
+                        Make Donation
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- MY DONATIONS -->
+
+            <a th:href="@{/donations/my}"
+               class="action-card">
+
+                <div class="action-icon history-icon">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                </div>
+
+
+                <div class="action-content">
+
+                    <h3>
+                        My Donations
+                    </h3>
+
+                    <p>
+                        View your submitted donations and
+                        manage eligible records.
+                    </p>
+
+                    <span class="card-link">
+
+                        View Donations
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- DONATION POLICY -->
+
+            <div class="action-card information-card">
+
+                <div class="action-icon info-icon">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                </div>
+
+
+                <div class="action-content">
+
+                    <h3>
+                        Donation Policy
+                    </h3>
+
+                    <p>
+                        You can edit or delete your own
+                        donation within 2 days of submission.
+                    </p>
+
+                    <span class="policy-note">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                        Secure donor access
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ========================================= -->
+        <!-- INFORMATION SECTION                       -->
+        <!-- ========================================= -->
+
+        <section class="info-section">
+
+
+            <div class="info-item">
+
+                <div class="info-icon-small">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        2-Day Management Period
+                    </strong>
+
+                    <p>
+                        Edit or delete your own donation
+                        within 2 days of submission.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <div class="info-icon-small">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Your Donations Only
+                    </strong>
+
+                    <p>
+                        Your dashboard displays only
+                        donations submitted by your account.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ========================================= -->
+        <!-- FOOTER                                   -->
+        <!-- ========================================= -->
+
+        <footer>
+
+            <p>
+                © 2026 FRDMS — Flood Relief &amp; Disaster
+                Management System
+            </p>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

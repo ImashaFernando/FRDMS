@@ -49,7 +49,7 @@ public class AffectedFamilyInformationController {
 
         // Victim must be logged in
         if (victimId == null) {
-            return "redirect:/victims/login";
+            return "redirect:/login";
         }
 
         // =====================================================
@@ -62,7 +62,7 @@ public class AffectedFamilyInformationController {
         // Victim not found
         if (victim == null) {
             session.invalidate();
-            return "redirect:/victims/login";
+            return "redirect:/login";
         }
 
 
@@ -151,7 +151,7 @@ public class AffectedFamilyInformationController {
         // =====================================================
 
         if (victimId == null) {
-            return "redirect:/victims/login";
+            return "redirect:/login";
         }
 
 
@@ -168,7 +168,7 @@ public class AffectedFamilyInformationController {
 
             session.invalidate();
 
-            return "redirect:/victims/login";
+            return "redirect:/login";
         }
 
 

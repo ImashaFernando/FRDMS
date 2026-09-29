@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Drivers - Distribution Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 22px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.85;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #3582B8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #286d9d;
+        }
+        .btn-edit {
+            background: #85B6D6;
+            color: #1F3A60;
+        }
+
+        .btn-edit:hover {
+            background: #6fa5c9;
+        }
+
+        .btn-delete {
+            background: #d9534f;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c43f3a;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #dce5ea;
+        }
+
+        .actions form {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top-section h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .driver-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .driver-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(31, 58, 96, 0.10);
+        }
+
+        .driver-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3582B8;
+            margin-bottom: 18px;
+        }
+
+        .info {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #1F3A60;
+        }
+
+        .empty {
+            background: white;
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(31, 58, 96, 0.10);
+        }
+
+        .empty h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+        /* Dashboard Home Button */
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-icon-button {
+            width: 44px;
+            height: 44px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ffffff;
+            color: #1F3A60;
+
+            border: 1px solid #85B6D6;
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
+        }
+
+        .dashboard-icon-button:hover {
+            background: #EDF3F6;
+            color: #3582B8;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-icon-button svg {
+            width: 21px !important;
+            height: 21px !important;
+
+            display: block !important;
+
+            stroke: currentColor !important;
+            stroke-width: 2 !important;
+
+            fill: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <div>
+
+        <h1>Independent Drivers</h1>
+
+        <p>Drivers registered without a vehicle</p>
+
+    </div>
+
+    <div class="header-actions">
+
+        <!-- Back to Distribution Dashboard -->
+        <a class="dashboard-icon-button"
+           th:href="@{/distribution/dashboard}"
+           title="Back to Dashboard"
+           aria-label="Back to Dashboard">
+
+            <svg viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+
+                <path d="M3 10.5L12 3l9 7.5"></path>
+
+                <path d="M5.5 9.5V21h13V9.5"></path>
+
+                <path d="M9.5 21v-6h5v6"></path>
+
+            </svg>
+
+        </a>
+
+        <!-- Register Driver -->
+        <a th:href="@{/distribution/drivers/new}"
+           class="btn btn-primary">
+
+            + Register Driver
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+    <div class="top-section">
+
+        <h2>Registered Drivers</h2>
+
+    </div>
+
+
+    <!-- Driver List -->
+
+    <div class="driver-grid"
+         th:if="${not #lists.isEmpty(drivers)}">
+
+        <div class="driver-card"
+             th:each="driver : ${drivers}">
+
+
+            <div class="driver-name"
+                 th:text="${driver.driverName}">
+                Driver Name
+            </div>
+
+
+            <div class="info">
+
+                <span class="label">
+                    Phone:
+                </span>
+
+                <span th:text="${driver.driverPhoneNumber}">
+                    0771234567
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <span class="label">
+                    License Number:
+                </span>
+
+                <span th:text="${driver.driverLicenseNumber}">
+                    B1234567
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <span class="label">
+                    Available Area:
+                </span>
+
+                <span th:text="${driver.availableArea}">
+                    Colombo
+                </span>
+
+            </div>
+
+
+            <div class="info"
+                 th:if="${driver.driverDescription != null and !driver.driverDescription.isEmpty()}">
+
+                <span class="label">
+                    Special Notes:
+                </span>
+
+                <span th:text="${driver.driverDescription}">
+                    Driver notes
+                </span>
+
+            </div>
+            <div class="actions">
+
+                <a th:href="@{/distribution/drivers/edit/{id}(id=${driver.id})}"
+                   class="btn btn-edit">
+                    Edit
+                </a>
+
+                <form th:action="@{/distribution/drivers/delete/{id}(id=${driver.id})}"
+                      method="post"
+                      onsubmit="return confirm('Are you sure you want to permanently delete this driver?');">
+
+                    <button type="submit"
+                            class="btn btn-delete">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- No Drivers -->
+
+    <div class="empty"
+         th:if="${#lists.isEmpty(drivers)}">
+
+        <h3>No Independent Drivers Registered Yet</h3>
+
+        <p>
+            Register a driver who does not provide a vehicle.
+        </p>
+
+        <a th:href="@{/distribution/drivers/new}"
+           class="btn btn-primary">
+
+            Register First Driver
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

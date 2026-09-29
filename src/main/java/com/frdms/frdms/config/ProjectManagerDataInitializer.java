@@ -2,49 +2,46 @@ package com.frdms.frdms.config;
 
 import com.frdms.frdms.common.entity.ProjectManagerAccount;
 import com.frdms.frdms.common.repository.ProjectManagerRepository;
-
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
-@Configuration
-public class ProjectManagerDataInitializer {
+@Component
+public class ProjectManagerDataInitializer implements CommandLineRunner {
 
-    @Bean
-    CommandLineRunner createProjectManager(
+    private final ProjectManagerRepository projectManagerRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public ProjectManagerDataInitializer(
             ProjectManagerRepository projectManagerRepository,
-            PasswordEncoder passwordEncoder
-    ) {
+            PasswordEncoder passwordEncoder) {
 
-        return args -> {
+        this.projectManagerRepository = projectManagerRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-            String email = "manager@frdms.com";
+    @Override
+    public void run(String... args) {
 
-            if (!projectManagerRepository.existsByEmail(email)) {
+        String email = "manager@frdms.com";
 
-                ProjectManagerAccount account =
-                        new ProjectManagerAccount();
+        if (!projectManagerRepository.existsByEmail(email)) {
 
-                account.setFullName("Project Manager");
-                account.setEmail(email);
+            ProjectManagerAccount account =
+                    new ProjectManagerAccount();
 
-                account.setPassword(
-                        passwordEncoder.encode("Admin123")
-                );
+            account.setFullName("Project Manager");
+            account.setEmail(email);
 
-                projectManagerRepository.save(account);
+            account.setPassword(
+                    passwordEncoder.encode("Admin123")
+            );
 
-                System.out.println(
-                        "Project Manager account created successfully."
-                );
+            projectManagerRepository.save(account);
 
-            } else {
-
-                System.out.println(
-                        "Project Manager account already exists."
-                );
-            }
-        };
+            System.out.println(
+                    "Project Manager account created successfully."
+            );
+        }
     }
 }

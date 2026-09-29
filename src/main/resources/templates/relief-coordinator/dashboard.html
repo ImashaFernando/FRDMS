@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -512,7 +513,6 @@
 
 <body>
 
-
 <!-- =========================================================
      HEADER
 ========================================================= -->
@@ -540,13 +540,19 @@
     </div>
 
 
-    <a
-            th:href="@{/relief-coordinator/logout}"
-            class="logout-btn">
+    <!-- MERGED LOGOUT -->
+    <form th:action="@{/logout}"
+          method="post"
+          style="display:inline;">
 
-        Logout
+        <button type="submit"
+                class="logout-btn">
 
-    </a>
+            Logout
+
+        </button>
+
+    </form>
 
 </header>
 
@@ -723,6 +729,7 @@
 
         <div class="section-header">
 
+
             <div class="section-title-area">
 
                 <h2>
@@ -793,8 +800,9 @@
 
                     <!-- ID -->
 
-                    <td class="id-cell"
-                        th:text="${assessment.id}">
+                    <td
+                            class="id-cell"
+                            th:text="${assessment.id}">
 
                         1
 
@@ -966,7 +974,9 @@
 <footer class="footer">
 
     Flood Relief &amp; Disaster Management System
+
     &nbsp;•&nbsp;
+
     Relief Coordinator Module
 
 </footer>
