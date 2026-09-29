@@ -259,15 +259,26 @@ public class SecurityConfig {
                         // -------------------------------------------------
                         // VICTIM LOGIN
                         // -------------------------------------------------
+                        //
+                        // IMPORTANT:
+                        // VictimLoginController uses:
+                        //
+                        // /victims/login
+                        //
+                        // Therefore this URL must be public.
+                        // -------------------------------------------------
 
                         .requestMatchers(
                                 "/victim-login",
-                                "/victim-login/**"
+                                "/victim-login/**",
+                                "/victims/login",
+                                "/victims/login/**",
+                                "/victims/logout"
                         ).permitAll()
 
 
                         // -------------------------------------------------
-                        // VICTIM DASHBOARD / SESSION-BASED FUNCTIONS
+                        // VICTIM DASHBOARD / SESSION FUNCTIONS
                         // -------------------------------------------------
 
                         .requestMatchers(
@@ -278,10 +289,6 @@ public class SecurityConfig {
                         // -------------------------------------------------
                         // NEEDS ASSESSMENT - VICTIM SIDE
                         // -------------------------------------------------
-                        //
-                        // These are protected by the victimId session
-                        // inside NeedsAssessmentController.
-                        //
 
                         .requestMatchers(
                                 "/needs-assessment/form",
@@ -325,6 +332,7 @@ public class SecurityConfig {
                         .anyRequest()
                         .authenticated()
                 );
+
 
         return http.build();
     }

@@ -415,19 +415,27 @@
     @media (max-width: 600px) {
 
       body {
+
         padding: 18px;
       }
 
+
       .login-container {
+
         padding: 30px 24px;
+
         border-radius: 20px;
       }
 
+
       .logo h1 {
+
         font-size: 26px;
       }
 
+
       .title {
+
         font-size: 22px;
       }
     }
@@ -491,6 +499,18 @@
   <form
           th:action="@{/victims/login}"
           method="post">
+
+
+    <!-- =================================================
+         IMPORTANT:
+         SPRING SECURITY CSRF TOKEN
+         ================================================= -->
+
+    <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+    >
 
 
     <!-- =================================================

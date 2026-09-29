@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -10,6 +11,7 @@
 
     <title>Needs Assessments | FRDMS</title>
 
+
     <style>
 
         * {
@@ -18,288 +20,835 @@
             padding: 0;
         }
 
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f7f9;
-            color: #333;
+
+            font-family:
+                    Arial,
+                    sans-serif;
+
+            background:
+                    #f4f7f9;
+
+            color:
+                    #333;
         }
 
-        /* ================= HEADER ================= */
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
 
         .header {
-            background: #0C1721;
-            color: white;
 
-            padding: 20px 40px;
+            background:
+                    #0C1721;
 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color:
+                    white;
+
+            padding:
+                    20px 40px;
+
+            display:
+                    flex;
+
+            justify-content:
+                    space-between;
+
+            align-items:
+                    center;
+
         }
+
 
         .header h1 {
-            font-size: 24px;
+
+            font-size:
+                    24px;
+
         }
+
 
         .header p {
-            margin-top: 5px;
-            color: #CFE8F7;
-            font-size: 14px;
+
+            margin-top:
+                    5px;
+
+            color:
+                    #CFE8F7;
+
+            font-size:
+                    14px;
+
         }
+
 
         .header-actions {
-            display: flex;
-            gap: 10px;
+
+            display:
+                    flex;
+
+            gap:
+                    10px;
+
         }
+
 
         .header-btn {
-            text-decoration: none;
-            color: white;
 
-            background: #248BE0;
+            text-decoration:
+                    none;
 
-            padding: 10px 17px;
+            color:
+                    white;
 
-            border-radius: 6px;
+            background:
+                    #248BE0;
 
-            font-size: 14px;
+            padding:
+                    10px 17px;
 
-            font-weight: bold;
+            border-radius:
+                    6px;
+
+            font-size:
+                    14px;
+
+            font-weight:
+                    bold;
+
+            border:
+                    none;
+
+            cursor:
+                    pointer;
+
         }
+
 
         .header-btn:hover {
-            background: #1c72b9;
+
+            background:
+                    #1c72b9;
+
         }
+
 
         .logout-btn {
-            background: #d9534f;
+
+            background:
+                    #d9534f;
+
         }
+
 
         .logout-btn:hover {
-            background: #c9302c;
+
+            background:
+                    #c9302c;
+
         }
 
 
-        /* ================= CONTAINER ================= */
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
 
         .container {
-            max-width: 1200px;
 
-            margin: 35px auto;
+            max-width:
+                    1250px;
 
-            padding: 0 20px;
+            margin:
+                    35px auto;
+
+            padding:
+                    0 20px;
+
         }
 
 
-        /* ================= PAGE TITLE ================= */
+        /* =====================================================
+           PAGE TITLE
+        ===================================================== */
 
         .page-title {
-            margin-bottom: 25px;
+
+            margin-bottom:
+                    25px;
+
         }
+
 
         .page-title h2 {
-            color: #0B2A4A;
 
-            font-size: 28px;
+            color:
+                    #0B2A4A;
 
-            margin-bottom: 8px;
+            font-size:
+                    30px;
+
+            margin-bottom:
+                    8px;
+
         }
+
 
         .page-title p {
-            color: #666;
 
-            font-size: 14px;
+            color:
+                    #66778a;
+
+            font-size:
+                    15px;
+
+            line-height:
+                    1.6;
+
         }
 
 
-        /* ================= CARD ================= */
-
-        .card {
-            background: white;
-
-            border-radius: 10px;
-
-            padding: 25px;
-
-            box-shadow:
-                    0 3px 12px rgba(0, 0, 0, 0.08);
-        }
-
-
-        /* ================= TABLE ================= */
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #0B2A4A;
-
-            color: white;
-
-            padding: 14px;
-
-            text-align: left;
-
-            font-size: 14px;
-        }
-
-        td {
-            padding: 14px;
-
-            border-bottom: 1px solid #e6e8e9;
-
-            font-size: 14px;
-        }
-
-        tbody tr:hover {
-            background: #f7fbfd;
-        }
-
-
-        /* ================= STATUS ================= */
-
-        .status {
-            display: inline-block;
-
-            padding: 6px 11px;
-
-            border-radius: 20px;
-
-            font-size: 12px;
-
-            font-weight: bold;
-        }
-
-        .submitted {
-            background: #fff3cd;
-
-            color: #856404;
-        }
-
-        .updated {
-            background: #CFE8F7;
-
-            color: #155b8a;
-        }
-
-        .assessed {
-            background: #d4edda;
-
-            color: #155724;
-        }
-
-        .other {
-            background: #e6e8e9;
-
-            color: #444;
-        }
-
-
-        /* ================= PRIORITY ================= */
-
-        .priority {
-            font-weight: bold;
-        }
-
-        .priority-urgent {
-            color: #b42318;
-        }
-
-        .priority-high {
-            color: #d97706;
-        }
-
-        .priority-medium {
-            color: #856404;
-        }
-
-        .priority-low {
-            color: #216e39;
-        }
-
-
-        /* ================= VIEW BUTTON ================= */
-
-        .view-btn {
-            display: inline-block;
-
-            background: #248BE0;
-
-            color: white;
-
-            text-decoration: none;
-
-            padding: 8px 14px;
-
-            border-radius: 6px;
-
-            font-size: 13px;
-
-            font-weight: bold;
-        }
-
-        .view-btn:hover {
-            background: #1c72b9;
-        }
-
-
-        /* ================= EMPTY ================= */
-
-        .empty-message {
-            text-align: center;
-
-            padding: 35px;
-
-            color: #777;
-        }
-
-
-        /* ================= INFO ================= */
+        /* =====================================================
+           INFORMATION BOX
+        ===================================================== */
 
         .info-box {
-            background: #CFE8F7;
 
-            border-left: 5px solid #248BE0;
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eaf6fd,
+                            #f2f9fd
+                    );
 
-            padding: 15px;
+            border-left:
+                    5px solid #248BE0;
 
-            border-radius: 6px;
+            padding:
+                    17px 20px;
 
-            margin-bottom: 20px;
+            border-radius:
+                    9px;
 
-            font-size: 13px;
+            margin-bottom:
+                    22px;
 
-            line-height: 1.5;
+            font-size:
+                    14px;
+
+            line-height:
+                    1.7;
+
+            color:
+                    #45637d;
+
+            box-shadow:
+                    0 4px 12px
+                    rgba(
+                            35,
+                            90,
+                            130,
+                            0.05
+                    );
+
         }
 
 
-        /* ================= RESPONSIVE ================= */
+        .info-box strong {
 
-        @media (max-width: 800px) {
+            color:
+                    #0B2A4A;
+
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .card {
+
+            background:
+                    white;
+
+            border-radius:
+                    15px;
+
+            padding:
+                    25px;
+
+            box-shadow:
+                    0 6px 20px
+                    rgba(
+                            0,
+                            0,
+                            0,
+                            0.07
+                    );
+
+            border:
+                    1px solid #e3eaf1;
+
+        }
+
+
+        /* =====================================================
+           TABLE CONTAINER
+        ===================================================== */
+
+        .table-container {
+
+            overflow-x:
+                    auto;
+
+            border-radius:
+                    10px;
+
+        }
+
+
+        table {
+
+            width:
+                    100%;
+
+            border-collapse:
+                    separate;
+
+            border-spacing:
+                    0;
+
+            min-width:
+                    900px;
+
+        }
+
+
+        /* =====================================================
+           TABLE HEADER
+        ===================================================== */
+
+        th {
+
+            background:
+                    #0B2A4A;
+
+            color:
+                    white;
+
+            padding:
+                    16px 15px;
+
+            text-align:
+                    left;
+
+            font-size:
+                    14px;
+
+            font-weight:
+                    700;
+
+            white-space:
+                    nowrap;
+
+        }
+
+
+        th:first-child {
+
+            border-top-left-radius:
+                    10px;
+
+        }
+
+
+        th:last-child {
+
+            border-top-right-radius:
+                    10px;
+
+        }
+
+
+        /* =====================================================
+           TABLE BODY
+        ===================================================== */
+
+        td {
+
+            padding:
+                    17px 15px;
+
+            border-bottom:
+                    1px solid #e7edf2;
+
+            font-size:
+                    14px;
+
+            vertical-align:
+                    middle;
+
+        }
+
+
+        tbody tr {
+
+            transition:
+                    all 0.2s ease;
+
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                    #f7fbfe;
+
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom:
+                    none;
+
+        }
+
+
+        /* =====================================================
+           ID BADGE
+        ===================================================== */
+
+        .id-badge {
+
+            display:
+                    inline-flex;
+
+            align-items:
+                    center;
+
+            justify-content:
+                    center;
+
+            min-width:
+                    38px;
+
+            height:
+                    38px;
+
+            padding:
+                    0 10px;
+
+            border-radius:
+                    10px;
+
+            background:
+                    #edf5fb;
+
+            color:
+                    #28618e;
+
+            font-weight:
+                    bold;
+
+        }
+
+
+        /* =====================================================
+           VICTIM
+        ===================================================== */
+
+        .victim-name {
+
+            display:
+                    block;
+
+            color:
+                    #233e62;
+
+            font-weight:
+                    700;
+
+            font-size:
+                    15px;
+
+        }
+
+
+        .victim-role {
+
+            display:
+                    block;
+
+            margin-top:
+                    4px;
+
+            color:
+                    #9aa8b7;
+
+            font-size:
+                    12px;
+
+        }
+
+
+        /* =====================================================
+           CURRENT SITUATION
+        ===================================================== */
+
+        .situation {
+
+            display:
+                    block;
+
+            max-width:
+                    300px;
+
+            color:
+                    #63758a;
+
+            line-height:
+                    1.55;
+
+        }
+
+
+        /* =====================================================
+           IDENTIFIED NEEDS
+        ===================================================== */
+
+        .needs-list {
+
+            display:
+                    flex;
+
+            flex-wrap:
+                    wrap;
+
+            gap:
+                    7px;
+
+            max-width:
+                    380px;
+
+        }
+
+
+        .need-badge {
+
+            display:
+                    inline-flex;
+
+            align-items:
+                    center;
+
+            gap:
+                    5px;
+
+            padding:
+                    7px 10px;
+
+            border-radius:
+                    20px;
+
+            background:
+                    #eef5ff;
+
+            border:
+                    1px solid #d8e6fa;
+
+            color:
+                    #315c8b;
+
+            font-size:
+                    12px;
+
+            font-weight:
+                    700;
+
+            white-space:
+                    nowrap;
+
+        }
+
+
+        .need-other {
+
+            background:
+                    #f4f1ff;
+
+            border-color:
+                    #e2dafa;
+
+            color:
+                    #67509a;
+
+        }
+
+
+        .no-needs {
+
+            color:
+                    #98a4b1;
+
+            font-size:
+                    13px;
+
+            font-style:
+                    italic;
+
+        }
+
+
+        /* =====================================================
+           REVIEW BUTTON
+        ===================================================== */
+
+        .view-btn {
+
+            display:
+                    inline-flex;
+
+            align-items:
+                    center;
+
+            justify-content:
+                    center;
+
+            gap:
+                    7px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #248BE0,
+                            #3d8ed3
+                    );
+
+            color:
+                    white;
+
+            text-decoration:
+                    none;
+
+            padding:
+                    11px 17px;
+
+            border-radius:
+                    9px;
+
+            font-size:
+                    13px;
+
+            font-weight:
+                    bold;
+
+            white-space:
+                    nowrap;
+
+            box-shadow:
+                    0 5px 12px
+                    rgba(
+                            36,
+                            139,
+                            224,
+                            0.18
+                    );
+
+            transition:
+                    all 0.2s ease;
+
+        }
+
+
+        .view-btn:hover {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #1c72b9,
+                            #2f78b5
+                    );
+
+            transform:
+                    translateY(-2px);
+
+            box-shadow:
+                    0 8px 16px
+                    rgba(
+                            36,
+                            139,
+                            224,
+                            0.25
+                    );
+
+        }
+
+
+        /* =====================================================
+           WORKFLOW NOTE
+        ===================================================== */
+
+        .workflow-note {
+
+            margin-top:
+                    20px;
+
+            padding:
+                    16px 18px;
+
+            background:
+                    #f5f8fc;
+
+            border:
+                    1px solid #e0e7ef;
+
+            border-radius:
+                    9px;
+
+            color:
+                    #66788b;
+
+            font-size:
+                    13px;
+
+            line-height:
+                    1.7;
+
+        }
+
+
+        .workflow-note strong {
+
+            color:
+                    #284d73;
+
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-message {
+
+            text-align:
+                    center;
+
+            padding:
+                    55px 25px;
+
+            color:
+                    #777;
+
+        }
+
+
+        .empty-icon {
+
+            font-size:
+                    38px;
+
+            margin-bottom:
+                    10px;
+
+        }
+
+
+        .empty-title {
+
+            font-size:
+                    18px;
+
+            font-weight:
+                    bold;
+
+            color:
+                    #4c5d6e;
+
+            margin-bottom:
+                    6px;
+
+        }
+
+
+        .empty-text {
+
+            font-size:
+                    14px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 850px) {
 
             .header {
-                padding: 20px;
 
-                flex-direction: column;
+                padding:
+                        20px;
 
-                align-items: flex-start;
+                flex-direction:
+                        column;
 
-                gap: 15px;
+                align-items:
+                        flex-start;
+
+                gap:
+                        15px;
+
             }
+
 
             .header-actions {
-                flex-wrap: wrap;
+
+                flex-wrap:
+                        wrap;
+
             }
 
+
+            .container {
+
+                margin:
+                        25px auto;
+
+                padding:
+                        0 12px;
+
+            }
+
+
             .page-title h2 {
-                font-size: 23px;
+
+                font-size:
+                        25px;
+
+            }
+
+
+            .card {
+
+                padding:
+                        15px;
+
+            }
+
+
+            th,
+            td {
+
+                padding:
+                        12px 10px;
+
             }
 
         }
@@ -312,15 +861,19 @@
 <body>
 
 
-<!-- ================= HEADER ================= -->
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header class="header">
+
 
     <div>
 
         <h1>
             Flood Relief & Disaster Management System
         </h1>
+
 
         <p>
             Relief Coordinator – Needs Assessments
@@ -330,6 +883,7 @@
 
 
     <div class="header-actions">
+
 
         <a
                 th:href="@{/relief-coordinator/dashboard}"
@@ -355,98 +909,163 @@
 
         </form>
 
+
     </div>
 
 </header>
 
 
-<!-- ================= MAIN ================= -->
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
 
 <main class="container">
 
 
-    <!-- PAGE TITLE -->
+    <!-- =====================================================
+         PAGE TITLE
+    ====================================================== -->
 
     <div class="page-title">
+
 
         <h2>
             Victim Needs Assessments
         </h2>
 
+
         <p>
-            Review the needs assessments submitted and updated
-            by victims.
+
+            Review the needs submitted by victims and proceed
+            directly to the combined relief requirement decision.
+
         </p>
+
 
     </div>
 
 
-    <!-- ================= INFORMATION ================= -->
+
+    <!-- =====================================================
+         INFORMATION
+    ====================================================== -->
 
     <div class="info-box">
 
-        <strong>Relief Coordinator Action:</strong>
+        <strong>
+            Relief Coordinator Action:
+        </strong>
 
-        Review each victim's needs assessment.
-        Updated assessments should be reviewed again because
-        the victim may have changed their current requirements.
+        Review the identified needs of each victim.
+        Select <strong>Review / View</strong> to open the
+        complete Needs Assessment together with the Relief
+        Assistance checklist. The relief decision can then
+        be recorded on the same page.
 
     </div>
 
 
-    <!-- ================= ASSESSMENTS ================= -->
+
+    <!-- =====================================================
+         ASSESSMENT TABLE
+    ====================================================== -->
 
     <section class="card">
 
+
         <div class="table-container">
+
 
             <table>
 
+
                 <thead>
+
 
                 <tr>
 
-                    <th>ID</th>
 
-                    <th>Victim</th>
+                    <!-- ID -->
 
-                    <th>Current Situation</th>
+                    <th>
+                        ID
+                    </th>
 
-                    <th>Status</th>
 
-                    <th>Priority</th>
+                    <!-- VICTIM -->
 
-                    <th>Action</th>
+                    <th>
+                        Victim
+                    </th>
+
+
+                    <!-- CURRENT SITUATION -->
+
+                    <th>
+                        Current Situation
+                    </th>
+
+
+                    <!-- IDENTIFIED NEEDS -->
+
+                    <th>
+                        Identified Needs
+                    </th>
+
+
+                    <!-- ACTION -->
+
+                    <th>
+                        Action
+                    </th>
+
 
                 </tr>
 
+
                 </thead>
+
 
 
                 <tbody>
 
 
-                <!-- ================= ASSESSMENT ROWS ================= -->
+                <!-- =================================================
+                     ASSESSMENT ROW
+                ================================================== -->
 
                 <tr
                         th:each="assessment : ${assessments}">
 
 
-                    <!-- ID -->
-
-                    <td
-                            th:text="${assessment.id}">
-
-                        1
-
-                    </td>
-
-
-                    <!-- VICTIM -->
+                    <!-- =================================================
+                         ID
+                    ================================================== -->
 
                     <td>
 
                         <span
+                                class="id-badge"
+                                th:text="${assessment.id}">
+
+                            1
+
+                        </span>
+
+                    </td>
+
+
+
+                    <!-- =================================================
+                         VICTIM
+                    ================================================== -->
+
+                    <td>
+
+
+                        <span
+                                class="victim-name"
                                 th:if="${assessment.victim != null}"
                                 th:text="${assessment.victim.fullName}">
 
@@ -454,118 +1073,174 @@
 
                         </span>
 
+
                         <span
+                                class="victim-role"
+                                th:if="${assessment.victim != null}">
+
+                            Registered Victim
+
+                        </span>
+
+
+                        <span
+                                class="victim-name"
                                 th:if="${assessment.victim == null}">
 
                             Unknown
 
                         </span>
 
+
                     </td>
 
 
-                    <!-- CURRENT SITUATION -->
+
+                    <!-- =================================================
+                         CURRENT SITUATION
+                    ================================================== -->
 
                     <td>
 
+
                         <span
-                                th:if="${assessment.currentSituation != null}"
+                                class="situation"
+                                th:if="${assessment.currentSituation != null and !#strings.isEmpty(assessment.currentSituation)}"
                                 th:text="${assessment.currentSituation}">
 
                             Current situation
 
                         </span>
 
+
                         <span
-                                th:if="${assessment.currentSituation == null}">
+                                class="situation"
+                                th:if="${assessment.currentSituation == null or #strings.isEmpty(assessment.currentSituation)}">
 
                             Not provided
 
                         </span>
 
-                    </td>
-
-
-                    <!-- STATUS -->
-
-                    <td>
-
-                        <span
-                                class="status submitted"
-                                th:if="${assessment.status == 'SUBMITTED'}">
-
-                            SUBMITTED
-
-                        </span>
-
-
-                        <span
-                                class="status updated"
-                                th:if="${assessment.status == 'UPDATED'}">
-
-                            UPDATED
-
-                        </span>
-
-
-                        <span
-                                class="status assessed"
-                                th:if="${assessment.status == 'ASSESSED'}">
-
-                            ASSESSED
-
-                        </span>
-
-
-                        <span
-                                class="status other"
-                                th:if="${assessment.status != 'SUBMITTED'
-                                        and assessment.status != 'UPDATED'
-                                        and assessment.status != 'ASSESSED'}"
-                                th:text="${assessment.status}">
-
-                            STATUS
-
-                        </span>
 
                     </td>
 
 
-                    <!-- PRIORITY -->
+
+                    <!-- =================================================
+                         IDENTIFIED NEEDS
+                    ================================================== -->
 
                     <td>
 
-                        <span
-                                th:if="${assessment.priority == null}">
 
-                            Not Assessed
-
-                        </span>
+                        <div class="needs-list">
 
 
-                        <span
-                                th:if="${assessment.priority != null}"
-                                class="priority"
-                                th:text="${assessment.priority}">
+                            <!-- FOOD -->
 
-                            HIGH
+                            <span
+                                    class="need-badge"
+                                    th:if="${assessment.foodRequired == true}">
 
-                        </span>
+                                🍚 Food
+
+                            </span>
+
+
+                            <!-- WATER -->
+
+                            <span
+                                    class="need-badge"
+                                    th:if="${assessment.waterRequired == true}">
+
+                                💧 Water
+
+                            </span>
+
+
+                            <!-- MEDICAL -->
+
+                            <span
+                                    class="need-badge"
+                                    th:if="${assessment.medicalAssistanceRequired == true}">
+
+                                💊 Medical
+
+                            </span>
+
+
+                            <!-- CLOTHING -->
+
+                            <span
+                                    class="need-badge"
+                                    th:if="${assessment.clothingRequired == true}">
+
+                                👕 Clothing
+
+                            </span>
+
+
+                            <!-- HYGIENE -->
+
+                            <span
+                                    class="need-badge"
+                                    th:if="${assessment.hygieneItemsRequired == true}">
+
+                                🧼 Hygiene
+
+                            </span>
+
+
+                            <!-- OTHER NEEDS -->
+
+                            <span
+                                    class="need-badge need-other"
+                                    th:if="${assessment.otherNeeds != null and !#strings.isEmpty(assessment.otherNeeds)}"
+                                    th:text="'📦 ' + assessment.otherNeeds">
+
+                                📦 Other
+
+                            </span>
+
+
+                            <!-- NO NEEDS -->
+
+                            <span
+                                    class="no-needs"
+                                    th:if="${assessment.foodRequired != true
+                                            and assessment.waterRequired != true
+                                            and assessment.medicalAssistanceRequired != true
+                                            and assessment.clothingRequired != true
+                                            and assessment.hygieneItemsRequired != true
+                                            and (assessment.otherNeeds == null or #strings.isEmpty(assessment.otherNeeds))}">
+
+                                No additional needs specified
+
+                            </span>
+
+
+                        </div>
+
 
                     </td>
 
 
-                    <!-- ACTION -->
+
+                    <!-- =================================================
+                         ONLY ACTION
+                    ================================================== -->
 
                     <td>
+
 
                         <a
-                                th:href="@{/relief-coordinator/needs-assessments/{id}(id=${assessment.id})}"
+                                th:href="@{/relief-requirements/new/{id}(id=${assessment.id})}"
                                 class="view-btn">
 
-                            Review / View
+                            👁 Review / View →
 
                         </a>
+
 
                     </td>
 
@@ -573,28 +1248,77 @@
                 </tr>
 
 
-                <!-- ================= EMPTY ================= -->
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
 
                 <tr
                         th:if="${#lists.isEmpty(assessments)}">
 
+
                     <td
-                            colspan="6"
+                            colspan="5"
                             class="empty-message">
 
-                        No victim needs assessments are currently
-                        available.
+
+                        <div class="empty-icon">
+                            📋
+                        </div>
+
+
+                        <div class="empty-title">
+
+                            No Needs Assessments Available
+
+                        </div>
+
+
+                        <div class="empty-text">
+
+                            No victim needs assessments are currently
+                            available for review.
+
+                        </div>
+
 
                     </td>
+
 
                 </tr>
 
 
                 </tbody>
 
+
             </table>
 
+
         </div>
+
+
+
+        <!-- =====================================================
+             WORKFLOW NOTE
+        ===================================================== -->
+
+        <div class="workflow-note">
+
+            <strong>
+                Next step:
+            </strong>
+
+            Select <strong>Review / View</strong> for a victim.
+            The system will open one combined page containing
+            the victim's submitted Needs Assessment and the
+            Relief Assistance checklist.
+
+            The Relief Coordinator can use the submitted needs
+            to decide what additional assistance should be
+            provided.
+
+        </div>
+
 
     </section>
 

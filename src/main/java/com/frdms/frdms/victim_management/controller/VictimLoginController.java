@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 public class VictimLoginController {
 
+
     private final VictimService victimService;
+
     private final PasswordEncoder passwordEncoder;
+
 
     // =========================================================
     // CONSTRUCTOR
@@ -27,8 +31,10 @@ public class VictimLoginController {
             PasswordEncoder passwordEncoder) {
 
         this.victimService = victimService;
+
         this.passwordEncoder = passwordEncoder;
     }
+
 
     // =========================================================
     // SHOW VICTIM LOGIN PAGE
@@ -40,22 +46,31 @@ public class VictimLoginController {
         return "victim/login";
     }
 
+
     // =========================================================
     // PROCESS VICTIM LOGIN
     // =========================================================
 
     @PostMapping("/victims/login")
     public String loginVictim(
-            @RequestParam("nicNumber") String nicNumber,
-            @RequestParam("password") String password,
+
+            @RequestParam("nicNumber")
+            String nicNumber,
+
+            @RequestParam("password")
+            String password,
+
             HttpSession session,
+
             Model model) {
+
 
         // -----------------------------------------------------
         // CHECK NIC
         // -----------------------------------------------------
 
-        if (nicNumber == null || nicNumber.trim().isEmpty()) {
+        if (nicNumber == null
+                || nicNumber.trim().isEmpty()) {
 
             model.addAttribute(
                     "loginError",
@@ -65,11 +80,13 @@ public class VictimLoginController {
             return "victim/login";
         }
 
+
         // -----------------------------------------------------
         // CHECK PASSWORD
         // -----------------------------------------------------
 
-        if (password == null || password.isEmpty()) {
+        if (password == null
+                || password.isEmpty()) {
 
             model.addAttribute(
                     "loginError",
@@ -79,17 +96,22 @@ public class VictimLoginController {
             return "victim/login";
         }
 
+
         // -----------------------------------------------------
         // CLEAN NIC
         // -----------------------------------------------------
 
-        String cleanNic = nicNumber.trim();
+        String cleanNic =
+                nicNumber.trim();
+
 
         // -----------------------------------------------------
         // FIND VICTIM USING NIC
         // -----------------------------------------------------
 
-        Victim victim = victimService.getVictimByNic(cleanNic);
+        Victim victim =
+                victimService.getVictimByNic(cleanNic);
+
 
         // -----------------------------------------------------
         // VICTIM NOT FOUND
@@ -105,29 +127,21 @@ public class VictimLoginController {
             return "victim/login";
         }
 
+
         // -----------------------------------------------------
         // CHECK PASSWORD USING BCRYPT
         // -----------------------------------------------------
-        //
-        // IMPORTANT:
-        // The password stored in the database is encrypted
-        // using BCrypt.
-        //
-        // Therefore, DO NOT use:
-        //
-        // storedPassword.equals(password)
-        //
-        // Instead use:
-        //
-        // passwordEncoder.matches(rawPassword, encodedPassword)
-        //
-        // -----------------------------------------------------
 
-        String storedPassword = victim.getPassword();
+        String storedPassword =
+                victim.getPassword();
+
 
         if (storedPassword == null
                 || storedPassword.trim().isEmpty()
-                || !passwordEncoder.matches(password, storedPassword)) {
+                || !passwordEncoder.matches(
+                password,
+                storedPassword
+        )) {
 
             model.addAttribute(
                     "loginError",
@@ -137,12 +151,14 @@ public class VictimLoginController {
             return "victim/login";
         }
 
+
         // =====================================================
         // LOGIN SUCCESSFUL
         // =====================================================
 
+
         // -----------------------------------------------------
-        // STORE VICTIM ID IN SESSION
+        // STORE VICTIM ID
         // -----------------------------------------------------
 
         session.setAttribute(
@@ -150,8 +166,9 @@ public class VictimLoginController {
                 victim.getId()
         );
 
+
         // -----------------------------------------------------
-        // STORE VICTIM NIC IN SESSION
+        // STORE VICTIM NIC
         // -----------------------------------------------------
 
         session.setAttribute(
@@ -159,14 +176,16 @@ public class VictimLoginController {
                 victim.getNicNumber()
         );
 
+
         // -----------------------------------------------------
-        // STORE VICTIM NAME IN SESSION
+        // STORE VICTIM NAME
         // -----------------------------------------------------
 
         session.setAttribute(
                 "victimName",
                 victim.getFullName()
         );
+
 
         // -----------------------------------------------------
         // STORE DISASTER ID
@@ -182,11 +201,14 @@ public class VictimLoginController {
 
         } else {
 
-            // Remove old disaster ID if the victim has
-            // no disaster assigned.
+            // Remove old disaster ID if the victim
+            // has no disaster assigned.
 
-            session.removeAttribute("victimDisasterId");
+            session.removeAttribute(
+                    "victimDisasterId"
+            );
         }
+
 
         // -----------------------------------------------------
         // GO TO VICTIM DASHBOARD
@@ -195,12 +217,14 @@ public class VictimLoginController {
         return "redirect:/victim/dashboard";
     }
 
+
     // =========================================================
     // VICTIM LOGOUT
     // =========================================================
 
     @GetMapping("/victims/logout")
-    public String logoutVictim(HttpSession session) {
+    public String logoutVictim(
+            HttpSession session) {
 
         session.invalidate();
 

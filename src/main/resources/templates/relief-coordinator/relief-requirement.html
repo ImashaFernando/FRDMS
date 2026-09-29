@@ -167,6 +167,308 @@
             font-size: 18px;
 
             font-weight: 700;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           NEEDS ASSESSMENT DETAILS
+        ===================================================== */
+
+        .needs-assessment-card {
+
+            margin-top: 30px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f7faff,
+                            #eef4ff
+                    );
+
+            border:
+                    1px solid #d9e5f5;
+
+            border-left:
+                    6px solid #567fd0;
+
+            border-radius:
+                    22px;
+
+            padding:
+                    28px;
+
+        }
+
+
+        .needs-assessment-header {
+
+            display:
+                    flex;
+
+            align-items:
+                    center;
+
+            gap:
+                    14px;
+
+            margin-bottom:
+                    9px;
+
+        }
+
+
+        .needs-assessment-icon {
+
+            width:
+                    48px;
+
+            height:
+                    48px;
+
+            display:
+                    flex;
+
+            align-items:
+                    center;
+
+            justify-content:
+                    center;
+
+            border-radius:
+                    15px;
+
+            background:
+                    #e6efff;
+
+            font-size:
+                    24px;
+
+            flex-shrink:
+                    0;
+
+        }
+
+
+        .needs-assessment-header h3 {
+
+            margin:
+                    0;
+
+            color:
+                    #203d70;
+
+            font-size:
+                    24px;
+
+        }
+
+
+        .needs-assessment-description {
+
+            margin:
+                    0 0 24px;
+
+            color:
+                    #7185a5;
+
+            font-size:
+                    15px;
+
+            line-height:
+                    1.6;
+
+        }
+
+
+        .assessment-status-row {
+
+            display:
+                    flex;
+
+            justify-content:
+                    space-between;
+
+            align-items:
+                    center;
+
+            gap:
+                    15px;
+
+            margin-bottom:
+                    20px;
+
+            padding:
+                    14px 16px;
+
+            border-radius:
+                    13px;
+
+            background:
+                    white;
+
+            border:
+                    1px solid #dce6f3;
+
+        }
+
+
+        .assessment-status-label {
+
+            color:
+                    #7185a0;
+
+            font-size:
+                    12px;
+
+            text-transform:
+                    uppercase;
+
+            letter-spacing:
+                    0.7px;
+
+            font-weight:
+                    800;
+
+        }
+
+
+        .assessment-status-value {
+
+            padding:
+                    7px 13px;
+
+            border-radius:
+                    30px;
+
+            background:
+                    #dcebf9;
+
+            color:
+                    #255987;
+
+            font-size:
+                    13px;
+
+            font-weight:
+                    800;
+
+        }
+
+
+        .assessment-details-grid {
+
+            display:
+                    grid;
+
+            grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            gap:
+                    15px;
+
+        }
+
+
+        .assessment-field {
+
+            background:
+                    rgba(255,255,255,0.92);
+
+            border:
+                    1px solid #dce6f2;
+
+            border-radius:
+                    15px;
+
+            padding:
+                    18px;
+
+            min-height:
+                    82px;
+
+        }
+
+
+        .assessment-field.full-width {
+
+            grid-column:
+                    1 / -1;
+
+        }
+
+
+        .assessment-label {
+
+            display:
+                    block;
+
+            margin-bottom:
+                    7px;
+
+            color:
+                    #7c8ea8;
+
+            font-size:
+                    12px;
+
+            font-weight:
+                    800;
+
+            text-transform:
+                    uppercase;
+
+            letter-spacing:
+                    0.6px;
+
+        }
+
+
+        .assessment-value {
+
+            display:
+                    block;
+
+            color:
+                    #244477;
+
+            font-size:
+                    15px;
+
+            font-weight:
+                    600;
+
+            line-height:
+                    1.6;
+
+            word-break:
+                    break-word;
+
+        }
+
+
+        .assessment-value.yes {
+
+            color:
+                    #248047;
+
+        }
+
+
+        .assessment-value.no {
+
+            color:
+                    #7f8da1;
+
+        }
+
+
+        .assessment-value.pending {
+
+            color:
+                    #9a7a28;
+
         }
 
 
@@ -645,6 +947,19 @@
                 grid-template-columns: 1fr;
             }
 
+            .assessment-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .assessment-field.full-width {
+                grid-column: auto;
+            }
+
+            .assessment-status-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
             .actions {
                 flex-direction: column;
             }
@@ -681,8 +996,9 @@
     </section>
 
 
+
     <!-- =====================================================
-         NEEDS ASSESSMENT REVIEW
+         VICTIM + NEEDS ASSESSMENT REVIEW
     ====================================================== -->
 
     <section class="review-card">
@@ -699,15 +1015,23 @@
 
         </div>
 
+
         <p>
             Review the victim's submitted needs assessment carefully
             before selecting additional relief assistance.
             Every victim receives the standard dried food package
             and 10 kg rice bag.
+            Additional assistance should be selected according to
+            the needs identified in the assessment.
         </p>
 
 
+        <!-- =================================================
+             VICTIM INFORMATION
+        ================================================== -->
+
         <div class="victim-info">
+
 
             <div class="info-box">
 
@@ -738,6 +1062,373 @@
 
         </div>
 
+
+
+        <!-- =================================================
+             COMPLETE NEEDS ASSESSMENT
+        ================================================== -->
+
+        <div class="needs-assessment-card">
+
+
+            <div class="needs-assessment-header">
+
+                <div class="needs-assessment-icon">
+                    📝
+                </div>
+
+                <h3>
+                    Submitted Needs Assessment
+                </h3>
+
+            </div>
+
+
+            <p class="needs-assessment-description">
+
+                Use the information below to determine which
+                additional relief assistance should be provided
+                to this victim.
+
+            </p>
+
+
+            <!-- =================================================
+                 ASSESSMENT STATUS
+            ================================================== -->
+
+            <div class="assessment-status-row">
+
+                <span class="assessment-status-label">
+                    Assessment Status
+                </span>
+
+                <span class="assessment-status-value"
+                      th:text="${needsAssessment.status}">
+                    STATUS
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 ASSESSMENT DETAILS
+            ================================================== -->
+
+            <div class="assessment-details-grid">
+
+
+                <!-- CURRENT SITUATION -->
+
+                <div class="assessment-field full-width">
+
+                    <span class="assessment-label">
+                        Current Situation
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.currentSituation != null and !#strings.isEmpty(needsAssessment.currentSituation)}"
+                          th:text="${needsAssessment.currentSituation}">
+
+                        Current situation
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.currentSituation == null or #strings.isEmpty(needsAssessment.currentSituation)}">
+
+                        No current situation provided.
+
+                    </span>
+
+                </div>
+
+
+                <!-- FOOD -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        🍚 Food Required
+                    </span>
+
+                    <span class="assessment-value yes"
+                          th:if="${needsAssessment.foodRequired == true}">
+
+                        Yes
+
+                    </span>
+
+                    <span class="assessment-value no"
+                          th:if="${needsAssessment.foodRequired != true}">
+
+                        No
+
+                    </span>
+
+                </div>
+
+
+                <!-- WATER -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        💧 Water Required
+                    </span>
+
+                    <span class="assessment-value yes"
+                          th:if="${needsAssessment.waterRequired == true}">
+
+                        Yes
+
+                    </span>
+
+                    <span class="assessment-value no"
+                          th:if="${needsAssessment.waterRequired != true}">
+
+                        No
+
+                    </span>
+
+                </div>
+
+
+                <!-- MEDICAL -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        💊 Medical Assistance Required
+                    </span>
+
+                    <span class="assessment-value yes"
+                          th:if="${needsAssessment.medicalAssistanceRequired == true}">
+
+                        Yes
+
+                    </span>
+
+                    <span class="assessment-value no"
+                          th:if="${needsAssessment.medicalAssistanceRequired != true}">
+
+                        No
+
+                    </span>
+
+                </div>
+
+
+                <!-- CLOTHING -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        👕 Clothing Required
+                    </span>
+
+                    <span class="assessment-value yes"
+                          th:if="${needsAssessment.clothingRequired == true}">
+
+                        Yes
+
+                    </span>
+
+                    <span class="assessment-value no"
+                          th:if="${needsAssessment.clothingRequired != true}">
+
+                        No
+
+                    </span>
+
+                </div>
+
+
+                <!-- HYGIENE -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        🧼 Hygiene Items Required
+                    </span>
+
+                    <span class="assessment-value yes"
+                          th:if="${needsAssessment.hygieneItemsRequired == true}">
+
+                        Yes
+
+                    </span>
+
+                    <span class="assessment-value no"
+                          th:if="${needsAssessment.hygieneItemsRequired != true}">
+
+                        No
+
+                    </span>
+
+                </div>
+
+
+                <!-- OTHER NEEDS -->
+
+                <div class="assessment-field full-width">
+
+                    <span class="assessment-label">
+                        📦 Other Needs
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.otherNeeds != null and !#strings.isEmpty(needsAssessment.otherNeeds)}"
+                          th:text="${needsAssessment.otherNeeds}">
+
+                        Other needs
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.otherNeeds == null or #strings.isEmpty(needsAssessment.otherNeeds)}">
+
+                        No other needs specified.
+
+                    </span>
+
+                </div>
+
+
+                <!-- ADDITIONAL INFORMATION -->
+
+                <div class="assessment-field full-width">
+
+                    <span class="assessment-label">
+                        📝 Additional Information
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.additionalInformation != null and !#strings.isEmpty(needsAssessment.additionalInformation)}"
+                          th:text="${needsAssessment.additionalInformation}">
+
+                        Additional information
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.additionalInformation == null or #strings.isEmpty(needsAssessment.additionalInformation)}">
+
+                        No additional information provided.
+
+                    </span>
+
+                </div>
+
+
+                <!-- PRIORITY -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        🚨 Priority
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.priority != null and !#strings.isEmpty(needsAssessment.priority)}"
+                          th:text="${needsAssessment.priority}">
+
+                        Priority
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.priority == null or #strings.isEmpty(needsAssessment.priority)}">
+
+                        Not assessed yet.
+
+                    </span>
+
+                </div>
+
+
+                <!-- ASSESSED BY -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        👤 Assessed By
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.assessedBy != null and !#strings.isEmpty(needsAssessment.assessedBy)}"
+                          th:text="${needsAssessment.assessedBy}">
+
+                        Relief Coordinator
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.assessedBy == null or #strings.isEmpty(needsAssessment.assessedBy)}">
+
+                        Not available.
+
+                    </span>
+
+                </div>
+
+
+                <!-- ASSESSMENT DATE -->
+
+                <div class="assessment-field">
+
+                    <span class="assessment-label">
+                        📅 Assessment Date
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.assessmentDate != null}"
+                          th:text="${#temporals.format(needsAssessment.assessmentDate, 'dd/MM/yyyy HH:mm')}">
+
+                        Date
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.assessmentDate == null}">
+
+                        Not available.
+
+                    </span>
+
+                </div>
+
+
+                <!-- ASSESSMENT REMARKS -->
+
+                <div class="assessment-field full-width">
+
+                    <span class="assessment-label">
+                        💬 Assessment Remarks
+                    </span>
+
+                    <span class="assessment-value"
+                          th:if="${needsAssessment.assessmentRemarks != null and !#strings.isEmpty(needsAssessment.assessmentRemarks)}"
+                          th:text="${needsAssessment.assessmentRemarks}">
+
+                        Assessment remarks
+
+                    </span>
+
+                    <span class="assessment-value pending"
+                          th:if="${needsAssessment.assessmentRemarks == null or #strings.isEmpty(needsAssessment.assessmentRemarks)}">
+
+                        No assessment remarks provided.
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
     </section>
 
 
@@ -752,9 +1443,6 @@
 
         <!-- =================================================
              SPRING SECURITY CSRF TOKEN
-
-             This is important because your previous
-             POST /save request returned HTTP 403.
         ================================================== -->
 
         <input type="hidden"
@@ -763,9 +1451,9 @@
                th:value="${_csrf.token}">
 
 
-        <!-- ================================================
+        <!-- =================================================
              NEEDS ASSESSMENT ID
-        ================================================= -->
+        ================================================== -->
 
         <input type="hidden"
                name="needsAssessmentId"
@@ -779,6 +1467,7 @@
 
         <section class="form-card">
 
+
             <div class="section-heading">
 
                 <div class="section-icon">
@@ -790,6 +1479,7 @@
                 </h2>
 
             </div>
+
 
             <p class="section-description">
 
@@ -859,8 +1549,8 @@
 
 
                 <!--
-                    Hidden fields make sure these mandatory
-                    items are always submitted to the controller.
+                    These hidden fields preserve the existing
+                    Relief Requirement submission functionality.
                 -->
 
                 <input type="hidden"
@@ -885,6 +1575,7 @@
 
             </h3>
 
+
             <p class="additional-description">
 
                 Select only the items required according to
@@ -896,7 +1587,9 @@
             <div class="items-grid">
 
 
-                <!-- DRINKING WATER -->
+                <!-- =========================================
+                     DRINKING WATER
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -905,9 +1598,11 @@
                            value="Drinking Water"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Drinking Water')}">
 
+
                     <div class="item-icon">
                         💧
                     </div>
+
 
                     <div class="item-content">
 
@@ -925,7 +1620,9 @@
 
 
 
-                <!-- MEDICINE -->
+                <!-- =========================================
+                     MEDICINE
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -934,9 +1631,11 @@
                            value="Medicine / Medical Supplies"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Medicine / Medical Supplies')}">
 
+
                     <div class="item-icon">
                         💊
                     </div>
+
 
                     <div class="item-content">
 
@@ -954,7 +1653,9 @@
 
 
 
-                <!-- CLOTHING -->
+                <!-- =========================================
+                     CLOTHING
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -963,9 +1664,11 @@
                            value="Clothing"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Clothing')}">
 
+
                     <div class="item-icon">
                         👕
                     </div>
+
 
                     <div class="item-content">
 
@@ -983,7 +1686,9 @@
 
 
 
-                <!-- HYGIENE -->
+                <!-- =========================================
+                     HYGIENE
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -992,9 +1697,11 @@
                            value="Hygiene Kit"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Hygiene Kit')}">
 
+
                     <div class="item-icon">
                         🧼
                     </div>
+
 
                     <div class="item-content">
 
@@ -1012,7 +1719,9 @@
 
 
 
-                <!-- BABY CARE -->
+                <!-- =========================================
+                     BABY CARE
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -1021,9 +1730,11 @@
                            value="Baby Care Items"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Baby Care Items')}">
 
+
                     <div class="item-icon">
                         👶
                     </div>
+
 
                     <div class="item-content">
 
@@ -1041,7 +1752,9 @@
 
 
 
-                <!-- BLANKETS -->
+                <!-- =========================================
+                     BLANKETS
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -1050,9 +1763,11 @@
                            value="Blankets / Bedding"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Blankets / Bedding')}">
 
+
                     <div class="item-icon">
                         🛏️
                     </div>
+
 
                     <div class="item-content">
 
@@ -1070,7 +1785,9 @@
 
 
 
-                <!-- TORCH -->
+                <!-- =========================================
+                     TORCH
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -1079,9 +1796,11 @@
                            value="Torch / Emergency Light"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Torch / Emergency Light')}">
 
+
                     <div class="item-icon">
                         🔦
                     </div>
+
 
                     <div class="item-content">
 
@@ -1099,7 +1818,9 @@
 
 
 
-                <!-- COOKING -->
+                <!-- =========================================
+                     COOKING
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -1108,9 +1829,11 @@
                            value="Cooking Equipment"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cooking Equipment')}">
 
+
                     <div class="item-icon">
                         🍳
                     </div>
+
 
                     <div class="item-content">
 
@@ -1128,7 +1851,9 @@
 
 
 
-                <!-- CLEANING -->
+                <!-- =========================================
+                     CLEANING
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -1137,9 +1862,11 @@
                            value="Cleaning Supplies"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cleaning Supplies')}">
 
+
                     <div class="item-icon">
                         🧹
                     </div>
+
 
                     <div class="item-content">
 
@@ -1157,7 +1884,9 @@
 
 
 
-                <!-- SPECIAL NEEDS -->
+                <!-- =========================================
+                     SPECIAL NEEDS
+                ========================================== -->
 
                 <label class="item-card">
 
@@ -1166,9 +1895,11 @@
                            value="Special Needs Assistance"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Special Needs Assistance')}">
 
+
                     <div class="item-icon">
                         ❤️
                     </div>
+
 
                     <div class="item-content">
 
@@ -1202,6 +1933,7 @@
 
                 </label>
 
+
                 <textarea id="victimMessage"
                           name="victimMessage"
                           placeholder="Enter any message, instructions or information that should be communicated to the victim..."
@@ -1214,7 +1946,7 @@
 
             <!-- =================================================
                  STATUS
-            ================================================== -->
+            ================================================= -->
 
             <div class="status-section">
 
@@ -1225,28 +1957,42 @@
 
                 </label>
 
+
                 <select id="status"
                         name="status">
 
+
                     <option value="Pending"
                             th:selected="${reliefRequirement.status == null or reliefRequirement.status == 'Pending'}">
+
                         Pending
+
                     </option>
+
 
                     <option value="Approved"
                             th:selected="${reliefRequirement.status == 'Approved'}">
+
                         Approved
+
                     </option>
+
 
                     <option value="Ready for Distribution"
                             th:selected="${reliefRequirement.status == 'Ready for Distribution'}">
+
                         Ready for Distribution
+
                     </option>
+
 
                     <option value="Completed"
                             th:selected="${reliefRequirement.status == 'Completed'}">
+
                         Completed
+
                     </option>
+
 
                 </select>
 
@@ -1259,6 +2005,7 @@
             ================================================== -->
 
             <div class="actions">
+
 
                 <a href="/relief-coordinator/needs-assessments"
                    class="btn btn-secondary">
@@ -1274,6 +2021,7 @@
                     💾 Save Relief Requirement
 
                 </button>
+
 
             </div>
 
