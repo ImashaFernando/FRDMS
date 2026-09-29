@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Access Denied | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/access-denied.css}">
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="card">
+
+        <div class="icon">
+            🔒
+        </div>
+
+        <div class="code">
+            403
+        </div>
+
+        <h1>
+            Access Denied
+        </h1>
+
+        <p>
+            You do not have permission to access this page.
+        </p>
+
+        <p class="small-text">
+            Please use the dashboard assigned to your account.
+        </p>
+
+
+        <div class="buttons">
+
+            <a th:href="@{/}"
+               class="home-btn">
+                Back to FRDMS
+            </a>
+
+            <button onclick="history.back()"
+                    class="back-btn">
+                Go Back
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

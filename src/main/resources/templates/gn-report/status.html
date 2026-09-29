@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>GN Report Status - FRDMS</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      font-family: Arial, sans-serif;
+
+      background: #e6e8e9;
+
+      color: #1b3557;
+
+      min-height: 100vh;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header {
+
+      background: #0c1721;
+
+      color: white;
+
+      padding: 22px 60px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+    }
+
+
+    .header h1 {
+
+      margin: 0;
+
+      font-size: 30px;
+    }
+
+
+    .header span {
+
+      color: #9bc5ff;
+
+      font-size: 18px;
+    }
+
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+
+      max-width: 900px;
+
+      margin: 55px auto;
+
+      padding: 0 25px;
+    }
+
+
+    /* ================= CARD ================= */
+
+    .card {
+
+      background: white;
+
+      border-radius: 20px;
+
+      padding: 45px;
+
+      box-shadow:
+              0 12px 35px
+              rgba(0, 0, 0, 0.10);
+
+      border-top: 6px solid #28888f;
+
+      text-align: center;
+    }
+
+
+    /* ================= SUCCESS ICON ================= */
+
+    .success-icon {
+
+      width: 100px;
+
+      height: 100px;
+
+      margin: 0 auto 25px;
+
+      border-radius: 50%;
+
+      background: #dff3ee;
+
+      border: 6px solid #28888f;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: #28888f;
+
+      font-size: 52px;
+
+      font-weight: bold;
+    }
+
+
+    /* ================= TITLE ================= */
+
+    h2 {
+
+      margin: 0;
+
+      color: #173457;
+
+      font-size: 32px;
+    }
+
+
+    .subtitle {
+
+      margin-top: 10px;
+
+      color: #557080;
+
+      font-size: 17px;
+    }
+
+
+    /* ================= REPORT INFORMATION ================= */
+
+    .report-info {
+
+      margin-top: 35px;
+
+      background: #f7f9fa;
+
+      border: 1px solid #dce2e6;
+
+      border-radius: 14px;
+
+      padding: 25px;
+
+      text-align: left;
+    }
+
+
+    .report-info h3 {
+
+      margin-top: 0;
+
+      color: #173457;
+
+      font-size: 21px;
+    }
+
+
+    .info-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding: 13px 0;
+
+      border-bottom: 1px solid #e0e5e8;
+    }
+
+
+    .info-row:last-child {
+
+      border-bottom: none;
+    }
+
+
+    .info-label {
+
+      color: #557080;
+
+      font-weight: bold;
+    }
+
+
+    .info-value {
+
+      color: #173457;
+
+      font-weight: 600;
+
+      text-align: right;
+    }
+
+
+    /* ================= STATUS ================= */
+
+    .status-section {
+
+      margin-top: 30px;
+
+      padding: 28px;
+
+      border-radius: 14px;
+
+      background: #f2f8fa;
+
+      border: 1px solid #d4e7ea;
+    }
+
+
+    .status-title {
+
+      color: #557080;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      text-transform: uppercase;
+
+      margin-bottom: 12px;
+    }
+
+
+    .status {
+
+      display: inline-block;
+
+      padding: 11px 25px;
+
+      border-radius: 30px;
+
+      font-size: 18px;
+
+      font-weight: bold;
+    }
+
+
+    /* PENDING */
+
+    .pending {
+
+      background: #fff1cf;
+
+      color: #9a6b00;
+    }
+
+
+    /* APPROVED */
+
+    .approved {
+
+      background: #dff3ee;
+
+      color: #26736c;
+    }
+
+
+    /* REJECTED */
+
+    .rejected {
+
+      background: #fde3e1;
+
+      color: #a33b32;
+    }
+
+
+    .status-message {
+
+      margin-top: 15px;
+
+      color: #557080;
+
+      line-height: 1.6;
+
+      font-size: 15px;
+    }
+
+
+    /* ================= BUTTON ================= */
+
+    .dashboard-btn {
+
+      display: inline-block;
+
+      margin-top: 30px;
+
+      padding: 14px 28px;
+
+      background: #248be0;
+
+      color: white;
+
+      text-decoration: none;
+
+      border-radius: 9px;
+
+      font-size: 16px;
+
+      font-weight: bold;
+    }
+
+
+    .dashboard-btn:hover {
+
+      background: #176fba;
+    }
+
+
+    /* ================= NO REPORT ================= */
+
+    .no-report {
+
+      padding: 35px;
+
+      background: #f7f9fa;
+
+      border-radius: 14px;
+
+      color: #557080;
+    }
+
+
+    .no-report h3 {
+
+      color: #173457;
+
+      margin-bottom: 8px;
+    }
+
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 700px) {
+
+      .header {
+
+        padding: 20px;
+      }
+
+
+      .header h1 {
+
+        font-size: 22px;
+      }
+
+
+      .header span {
+
+        display: none;
+      }
+
+
+      .container {
+
+        margin: 30px auto;
+      }
+
+
+      .card {
+
+        padding: 30px 20px;
+      }
+
+
+      h2 {
+
+        font-size: 26px;
+      }
+
+
+      .info-row {
+
+        flex-direction: column;
+
+        gap: 5px;
+      }
+
+
+      .info-value {
+
+        text-align: left;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+  <h1>
+    Flood Disaster Relief System
+  </h1>
+
+  <span>
+        Victim Management Module
+    </span>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+  <div class="card">
+
+
+    <!-- =========================================
+         REPORT EXISTS
+    ========================================== -->
+
+    <div th:if="${gnReport != null}">
+
+
+      <!-- SUCCESS ICON -->
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+
+      <!-- TITLE -->
+
+      <h2>
+        GN Report Successfully Submitted
+      </h2>
+
+
+      <p class="subtitle">
+
+        Your report has been submitted
+        successfully and is being processed.
+
+      </p>
+
+
+      <!-- =====================================
+           REPORT INFORMATION
+      ====================================== -->
+
+      <div class="report-info">
+
+        <h3>
+          Report Information
+        </h3>
+
+
+        <div class="info-row">
+
+                    <span class="info-label">
+                        Report Number
+                    </span>
+
+          <span
+                  class="info-value"
+                  th:text="${gnReport.reportNumber}">
+                        -
+                    </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+                    <span class="info-label">
+                        GN Officer
+                    </span>
+
+          <span
+                  class="info-value"
+                  th:text="${gnReport.gnOfficerName}">
+                        -
+                    </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+                    <span class="info-label">
+                        GN Division
+                    </span>
+
+          <span
+                  class="info-value"
+                  th:text="${gnReport.gnDivision}">
+                        -
+                    </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+                    <span class="info-label">
+                        Submitted Date
+                    </span>
+
+          <span
+                  class="info-value"
+                  th:text="${#temporals.format(gnReport.submittedDate, 'dd MMM yyyy HH:mm')}">
+                        -
+                    </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           STATUS
+      ====================================== -->
+
+      <div class="status-section">
+
+
+        <div class="status-title">
+          Current Verification Status
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div
+                th:if="${gnReport.verificationStatus == 'PENDING'}">
+
+                    <span class="status pending">
+                        🟡 PENDING
+                    </span>
+
+          <p class="status-message">
+
+            Your GN report has been successfully
+            submitted and is currently waiting for
+            verification by the Project Manager.
+
+          </p>
+
+        </div>
+
+
+        <!-- APPROVED -->
+
+        <div
+                th:if="${gnReport.verificationStatus == 'APPROVED'}">
+
+                    <span class="status approved">
+                        ✓ APPROVED
+                    </span>
+
+          <p class="status-message">
+
+            Your GN report has been reviewed and
+            approved by the Project Manager.
+
+          </p>
+
+        </div>
+
+
+        <!-- REJECTED -->
+
+        <div
+                th:if="${gnReport.verificationStatus == 'REJECTED'}">
+
+                    <span class="status rejected">
+                        ✕ REJECTED
+                    </span>
+
+          <p class="status-message">
+
+            Your GN report has been reviewed and
+            rejected by the Project Manager.
+            Please contact the relevant authority
+            for further information.
+
+          </p>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- BACK TO DASHBOARD -->
+
+      <a
+              th:href="@{/victim/dashboard}"
+              class="dashboard-btn">
+
+        ← Back to My Dashboard
+
+      </a>
+
+
+    </div>
+
+
+    <!-- =========================================
+         NO REPORT
+    ========================================== -->
+
+    <div th:if="${gnReport == null}"
+         class="no-report">
+
+      <h3>
+        No GN Report Found
+      </h3>
+
+      <p>
+        You have not submitted a GN report yet.
+      </p>
+
+      <a
+              th:href="@{/victim/dashboard}"
+              class="dashboard-btn">
+
+        ← Back to My Dashboard
+
+      </a>
+
+    </div>
+
+
+  </div>
+
+</main>
+
+
+</body>
+
+</html>

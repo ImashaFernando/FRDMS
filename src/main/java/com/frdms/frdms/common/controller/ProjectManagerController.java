@@ -34,13 +34,12 @@ public class ProjectManagerController {
             );
         }
 
-        return "project-manager/project-manager-login";
+        return "login";
     }
 
-
-    // =========================
-    // TEMPORARY DASHBOARD
-    // =========================
+    // ================================
+    // PROJECT MANAGER MAIN DASHBOARD
+    // ================================
 
     @GetMapping("/project-manager/dashboard")
     public String showProjectManagerDashboard(
@@ -48,10 +47,12 @@ public class ProjectManagerController {
             Model model
     ) {
 
-        model.addAttribute(
-                "projectManagerEmail",
-                authentication.getName()
-        );
+        if (authentication != null) {
+            model.addAttribute(
+                    "projectManagerEmail",
+                    authentication.getName()
+            );
+        }
 
         return "project-manager/project-manager-dashboard";
     }

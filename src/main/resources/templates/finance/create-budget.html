@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Budget Requirement | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/create-budget.css}">
+
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <header class="page-header">
+
+        <div class="brand">FRDMS</div>
+
+        <span class="badge">
+            FINANCE MANAGEMENT
+        </span>
+
+        <h1>Create Budget Requirement</h1>
+
+        <p>
+            Prepare a budget requirement for
+            Project Manager review.
+        </p>
+
+    </header>
+
+
+    <main class="budget-card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Budget Requirement</h2>
+
+                <p>
+                    Complete the information below and submit
+                    the requirement for review.
+                </p>
+            </div>
+
+            <a th:href="@{/finance/dashboard}"
+               class="dashboard-button">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+
+        <form th:action="@{/finance/budgets/create}"
+              th:object="${budget}"
+              method="post">
+
+
+            <!-- Activity -->
+
+            <div class="form-group">
+
+                <label for="activity">
+                    Relief Activity
+                </label>
+
+                <input type="text"
+                       id="activity"
+                       th:field="*{activity}"
+                       placeholder="e.g. Emergency Food Distribution">
+
+                <div class="error"
+                     th:if="${#fields.hasErrors('activity')}"
+                     th:errors="*{activity}">
+                </div>
+
+            </div>
+
+
+            <!-- Amount -->
+
+            <div class="form-group">
+
+                <label for="requestedAmount">
+                    Requested Amount (Rs.)
+                </label>
+
+                <input type="number"
+                       id="requestedAmount"
+                       th:field="*{requestedAmount}"
+                       min="0.01"
+                       step="0.01"
+                       placeholder="e.g. 500000">
+
+                <div class="error"
+                     th:if="${#fields.hasErrors('requestedAmount')}"
+                     th:errors="*{requestedAmount}">
+                </div>
+
+            </div>
+
+
+            <!-- Reason -->
+
+            <div class="form-group">
+
+                <label for="reason">
+                    Reason / Requirement
+                </label>
+
+                <textarea id="reason"
+                          th:field="*{reason}"
+                          rows="5"
+                          placeholder="Explain why this budget is required..."></textarea>
+
+                <div class="error"
+                     th:if="${#fields.hasErrors('reason')}"
+                     th:errors="*{reason}">
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <strong>Review Process</strong>
+
+                <p>
+                    After submission, this budget requirement
+                    will be sent to the Project Manager for review.
+                </p>
+
+                <span>
+                    Status: PENDING
+                </span>
+
+            </div>
+
+
+            <button type="submit">
+                Submit Budget Requirement
+            </button>
+
+        </form>
+
+    </main>
+
+</div>
+
+</body>
+</html>

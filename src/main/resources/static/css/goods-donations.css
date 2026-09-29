@@ -1,0 +1,361 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #EDF3F6;
+    color: #1F3A60;
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    padding: 45px 20px;
+}
+
+.page-header {
+    max-width: 1100px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.brand {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: #85B6D6;
+    color: #1F3A60;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #687b8c;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.donation-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(31, 58, 96, 0.12);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card-header h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.card-header p {
+    color: #718392;
+    font-size: 13px;
+}
+
+.switch-button {
+    text-decoration: none;
+    background: #3582B8;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.switch-button:hover {
+    background: #1F3A60;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #1F3A60;
+    color: white;
+}
+
+th,
+td {
+    padding: 14px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e3e9ed;
+    font-size: 14px;
+}
+
+th {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+tbody tr:hover {
+    background: #f5f9fb;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #FFF4C9;
+    color: #6d5700;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #EDF3F6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.empty-state h3 {
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #718392;
+    font-size: 14px;
+}
+
+.footer {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: #718392;
+    font-size: 13px;
+}
+
+.yellow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #F7CF59;
+}
+
+@media (max-width: 700px) {
+
+    .page-wrapper {
+        padding: 30px 15px;
+    }
+
+    .donation-card {
+        padding: 20px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .switch-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+}
+/* =========================
+   HEADER ACTIONS
+   ========================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   BACK TO DASHBOARD
+   ========================= */
+
+.dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background: #12355B;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.dashboard-button:hover {
+    background: #0D2947;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   VIEW CASH DONATIONS
+   ========================= */
+
+.switch-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    background: #3582B8;
+    color: #FFFFFF !important;
+
+    text-decoration: none !important;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.switch-button:hover {
+    background: #1F3A60;
+    color: #FFFFFF !important;
+
+    transform: translateY(-1px);
+}
+/* =========================================================
+   ACCEPT / REJECT ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Common button style */
+.action-buttons form {
+    margin: 0;
+}
+
+.accept-button,
+.reject-button {
+    border: none;
+    border-radius: 7px;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 75px;
+}
+
+/* Accept */
+.accept-button {
+    background: #dff3df;
+    color: #216e39;
+    border: 1px solid #a8d5a8;
+}
+
+.accept-button:hover {
+    background: #c8e8c8;
+    transform: translateY(-1px);
+}
+
+/* Reject */
+.reject-button {
+    background: #fde2e2;
+    color: #a83232;
+    border: 1px solid #efb0b0;
+}
+
+.reject-button:hover {
+    background: #f8caca;
+    transform: translateY(-1px);
+}
+
+/* Click effect */
+.accept-button:active,
+.reject-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   PROCESSED TEXT
+   ========================================================= */
+
+.processed-text {
+    color: #6b7f95;
+    font-size: 14px;
+    font-weight: 600;
+}

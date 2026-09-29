@@ -30,7 +30,7 @@ public class StaffController {
             );
         }
 
-        return "shelter/staff-login";
+        return "login";
     }
 
     @GetMapping("/staff/dashboard")

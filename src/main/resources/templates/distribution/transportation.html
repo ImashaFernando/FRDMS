@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Transportation Management</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #EDF3F6;
+
+            color: #1F3A60;
+        }
+
+
+        /* =========================================
+           HEADER
+           ========================================= */
+
+        .header {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #E7F4FB 0%,
+                            #D9EEF8 45%,
+                            #FDF3DF 100%
+                    );
+
+            padding: 25px 40px 18px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-bottom: 1px solid #D6E7EF;
+        }
+
+
+        .header-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+
+            font-size: 40px;
+
+            color: #17365D;
+        }
+
+
+        .header p {
+
+            margin: 12px 0 0;
+
+            font-size: 18px;
+
+            color: #4F6F8F;
+        }
+
+
+        /* =========================================
+           BACK BUTTON
+           ========================================= */
+
+        .dashboard-button {
+
+            position: absolute;
+
+            top: 30px;
+
+            right: 45px;
+
+            z-index: 5;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px 18px;
+
+            background: white;
+
+            color: #1F3A60;
+
+            border-radius: 10px;
+
+            border: 1px solid #D5E2EA;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            box-shadow:
+                    0 5px 15px
+                    rgba(31, 58, 96, 0.10);
+
+            transition: 0.2s ease;
+        }
+
+
+        .dashboard-button:hover {
+
+            transform: translateY(-2px);
+
+            color: #3582B8;
+
+            box-shadow:
+                    0 8px 20px
+                    rgba(31, 58, 96, 0.15);
+        }
+
+
+        .dashboard-button svg {
+
+            width: 20px;
+
+            height: 20px;
+
+            stroke: currentColor;
+
+            stroke-width: 2;
+
+            fill: none;
+        }
+
+
+        /* =========================================
+           BACKGROUND ILLUSTRATION
+           ========================================= */
+
+        .landscape {
+
+            position: relative;
+
+            height: 110px;
+
+            margin-top: 25px;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            background:
+                    linear-gradient(
+                            to bottom,
+                            #BEE4F7 0%,
+                            #DDF1FA 55%,
+                            #D9EFC7 56%,
+                            #9ACF76 100%
+                    );
+        }
+
+
+        .sun {
+
+            position: absolute;
+
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 50%;
+
+            background: #F7CF59;
+
+            right: 210px;
+
+            top: 25px;
+        }
+
+
+        .mountain {
+
+            position: absolute;
+
+            bottom: 55px;
+
+            width: 0;
+
+            height: 0;
+
+            border-left: 120px solid transparent;
+
+            border-right: 120px solid transparent;
+
+            border-bottom: 110px solid #A9CEE5;
+        }
+
+
+        .mountain.one {
+
+            left: 100px;
+        }
+
+
+        .mountain.two {
+
+            left: 300px;
+
+            transform: scale(1.3);
+        }
+
+
+        .mountain.three {
+
+            right: 180px;
+
+            transform: scale(1.1);
+        }
+
+
+        .grass {
+
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 65px;
+
+            background:
+                    linear-gradient(
+                            to top,
+                            #77B85A,
+                            #A8D779
+                    );
+
+            border-radius: 50% 50% 0 0;
+        }
+
+
+        /* =========================================
+           TRUCK ILLUSTRATION
+           ========================================= */
+
+        .truck {
+
+            position: absolute;
+
+            right: 90px;
+
+            bottom: 35px;
+
+            z-index: 3;
+
+            width: 190px;
+
+            height: 75px;
+
+            background: white;
+
+            border-radius: 8px;
+
+            border: 3px solid #3582B8;
+
+            box-shadow:
+                    0 5px 10px
+                    rgba(31, 58, 96, 0.15);
+        }
+
+
+        .truck-cab {
+
+            position: absolute;
+
+            left: -55px;
+
+            bottom: 0;
+
+            width: 58px;
+
+            height: 55px;
+
+            background: #3582B8;
+
+            border-radius: 10px 3px 3px 10px;
+        }
+
+
+        .truck-window {
+
+            position: absolute;
+
+            left: 8px;
+
+            top: 8px;
+
+            width: 35px;
+
+            height: 22px;
+
+            background: #BFE3F3;
+
+            border-radius: 4px;
+        }
+
+
+        .wheel {
+
+            position: absolute;
+
+            bottom: -18px;
+
+            width: 35px;
+
+            height: 35px;
+
+            background: #1F3A60;
+
+            border-radius: 50%;
+
+            border: 7px solid #C9D4DE;
+        }
+
+
+        .wheel.one {
+
+            left: -35px;
+        }
+
+
+        .wheel.two {
+
+            right: 20px;
+        }
+
+
+        /* =========================================
+           MAIN CONTENT
+           ========================================= */
+
+        .container {
+
+            max-width: 1150px;
+
+            margin: 0 auto;
+
+            padding: 28px 25px;
+        }
+
+
+        .section-heading {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .section-heading h2 {
+
+            margin: 0;
+
+            font-size: 28px;
+
+            color: #17365D;
+        }
+
+
+        .section-heading p {
+
+            margin: 8px 0 0;
+
+            color: #60758A;
+        }
+
+
+        /* =========================================
+           CARDS
+           ========================================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 24px;
+        }
+
+
+        .card {
+
+            background: rgba(255,255,255,0.94);
+
+            border-radius: 20px;
+
+            padding: 30px 25px;
+
+            text-align: center;
+
+            border: 1px solid #DDE8EF;
+
+            box-shadow:
+                    0 8px 25px
+                    rgba(31,58,96,0.10);
+
+            transition: 0.25s ease;
+        }
+
+
+        .card:hover {
+
+            transform: translateY(-6px);
+
+            box-shadow:
+                    0 14px 30px
+                    rgba(31,58,96,0.16);
+        }
+
+
+        .card-icon {
+
+            width: 90px;
+
+            height: 90px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 24px;
+
+            font-size: 42px;
+        }
+
+
+        .vehicle-icon {
+
+            background: #DDEFFD;
+        }
+
+
+        .driver-icon {
+
+            background: #DDF7EA;
+        }
+
+
+        .availability-icon {
+
+            background: #FCE8D6;
+        }
+
+
+        .card h3 {
+
+            margin: 0 0 12px;
+
+            font-size: 24px;
+
+            color: #17365D;
+        }
+
+
+        .card p {
+
+            min-height: 65px;
+
+            margin: 0 0 25px;
+
+            line-height: 1.5;
+
+            color: #60758A;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================================
+           CARD BUTTONS
+           ========================================= */
+
+        .card-button {
+
+            display: block;
+
+            padding: 13px 18px;
+
+            border-radius: 9px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.2s ease;
+        }
+
+
+        .vehicle-button {
+
+            background: #3582B8;
+        }
+
+
+        .vehicle-button:hover {
+
+            background: #286D9D;
+        }
+
+
+        .driver-button {
+
+            background: #27AE68;
+        }
+
+
+        .driver-button:hover {
+
+            background: #208D54;
+        }
+
+
+        .availability-button {
+
+            background: #F07828;
+        }
+
+
+        .availability-button:hover {
+
+            background: #D86118;
+        }
+
+
+        /* =========================================
+           BOTTOM MESSAGE
+           ========================================= */
+
+        .message {
+
+            margin-top: 30px;
+
+            padding: 22px 30px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            border: 1px solid #DDE8EF;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            box-shadow:
+                    0 5px 18px
+                    rgba(31,58,96,0.07);
+        }
+
+
+        .message-icon {
+
+            font-size: 38px;
+        }
+
+
+        .message h3 {
+
+            margin: 0 0 5px;
+
+            color: #17365D;
+        }
+
+
+        .message p {
+
+            margin: 0;
+
+            color: #60758A;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+
+        @media (max-width: 850px) {
+
+            .cards {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .header {
+
+                padding: 35px 25px 25px;
+            }
+
+
+            .header h1 {
+
+                font-size: 30px;
+            }
+
+
+            .dashboard-button {
+
+                position: relative;
+
+                top: auto;
+
+                right: auto;
+
+                margin-top: 20px;
+            }
+
+
+            .truck {
+
+                right: 40px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+     ========================================= -->
+
+<div class="header">
+
+
+    <a class="dashboard-button"
+       th:href="@{/distribution/dashboard}"
+       title="Back to Dashboard">
+
+        <svg viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg">
+
+            <path d="M3 10.5L12 3l9 7.5"></path>
+
+            <path d="M5.5 9.5V21h13V9.5"></path>
+
+            <path d="M9.5 21v-6h5v6"></path>
+
+        </svg>
+
+        Back to Dashboard
+
+    </a>
+
+
+    <div class="header-content">
+
+        <h1>
+            Transportation Management
+        </h1>
+
+        <p>
+            Manage vehicles, drivers and transport availability
+            for relief distribution.
+        </p>
+
+
+        <!-- Illustration -->
+
+        <div class="landscape">
+
+            <div class="sun"></div>
+
+            <div class="mountain one"></div>
+
+            <div class="mountain two"></div>
+
+            <div class="mountain three"></div>
+
+            <div class="grass"></div>
+
+
+            <div class="truck">
+
+                <div class="truck-cab">
+
+                    <div class="truck-window"></div>
+
+                </div>
+
+                <div class="wheel one"></div>
+
+                <div class="wheel two"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     MAIN CONTENT
+     ========================================= -->
+
+<div class="container">
+
+
+    <div class="section-heading">
+
+        <h2>
+            Transportation Resources
+        </h2>
+
+        <p>
+            Select an option to manage transportation resources.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+
+        <!-- =================================
+             VEHICLES
+             ================================= -->
+
+        <div class="card">
+
+            <div class="card-icon vehicle-icon">
+                🚚
+            </div>
+
+            <h3>
+                Vehicles
+            </h3>
+
+            <p>
+                View and manage registered vehicles
+                available for relief distribution.
+            </p>
+
+            <a class="card-button vehicle-button"
+               th:href="@{/distribution/transport}">
+
+                View Vehicles →
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             DRIVERS
+             ================================= -->
+
+        <div class="card">
+
+            <div class="card-icon driver-icon">
+                👨‍✈️
+            </div>
+
+            <h3>
+                Drivers
+            </h3>
+
+            <p>
+                View and manage independent drivers
+                registered without a vehicle.
+            </p>
+
+            <a class="card-button driver-button"
+               th:href="@{/distribution/drivers}">
+
+                View Drivers →
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             AVAILABILITY
+             ================================= -->
+
+        <div class="card">
+
+            <div class="card-icon availability-icon">
+                ✓
+            </div>
+
+            <h3>
+                Availability
+            </h3>
+
+            <p>
+                Check which vehicles and drivers
+                are currently available for assignment.
+            </p>
+
+            <a class="card-button availability-button"
+               th:href="@{/distribution/transport/availability}">
+
+                Check Availability →
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================
+         MESSAGE
+         ================================= -->
+
+    <div class="message">
+
+        <div class="message-icon">
+            🌿
+        </div>
+
+        <div>
+
+            <h3>
+                Efficient transportation.
+                Stronger communities.
+            </h3>
+
+            <p>
+                Ensuring timely delivery of relief
+                to those who need it most.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

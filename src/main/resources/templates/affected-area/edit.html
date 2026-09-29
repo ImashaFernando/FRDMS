@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Affected Area | FRDMS</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #E6E8E9;
+            color: #0C1721;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        h1 {
+            color: #0B2A4A;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #28888F;
+            margin-bottom: 30px;
+        }
+
+        .event-box {
+            background: #CFE8F7;
+            padding: 18px;
+            border-left: 5px solid #248BE0;
+            border-radius: 7px;
+            margin-bottom: 30px;
+        }
+
+        .event-label {
+            font-size: 14px;
+            color: #52616b;
+        }
+
+        .event-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0B2A4A;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #0B2A4A;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #B9BEC1;
+            border-radius: 7px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #248BE0;
+        }
+
+        .error {
+            color: #b42318;
+            margin-top: 6px;
+            font-size: 13px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button,
+        .cancel {
+            padding: 12px 22px;
+            border-radius: 7px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button {
+            background: #248BE0;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background: #0B2A4A;
+        }
+
+        .cancel {
+            background: #E6E8E9;
+            color: #0B2A4A;
+            border: 1px solid #B9BEC1;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Edit Affected Area</h1>
+
+    <p class="subtitle">
+        Update the affected area information for this flood event.
+    </p>
+
+
+    <!-- RELATED FLOOD EVENT -->
+
+    <div class="event-box">
+
+        <div class="event-label">
+            Related Flood Event
+        </div>
+
+        <div class="event-name"
+             th:text="${disaster.eventName}">
+        </div>
+
+    </div>
+
+
+    <!-- EDIT FORM -->
+
+    <form th:action="@{/affected-areas/update/{id}(id=${affectedArea.id})}"
+          th:object="${affectedArea}"
+          method="post">
+
+
+        <!-- AREA NAME -->
+
+        <div class="form-group">
+
+            <label for="areaName">
+                Area Name
+            </label>
+
+            <input type="text"
+                   id="areaName"
+                   th:field="*{areaName}">
+
+            <div class="error"
+                 th:if="${#fields.hasErrors('areaName')}"
+                 th:errors="*{areaName}">
+            </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+                Area Description
+            </label>
+
+            <textarea id="description"
+                      th:field="*{description}">
+            </textarea>
+
+            <div class="error"
+                 th:if="${#fields.hasErrors('description')}"
+                 th:errors="*{description}">
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button type="submit">
+                Save Changes
+            </button>
+
+            <a class="cancel"
+               th:href="@{/disasters/details/{id}(id=${disaster.id})}">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

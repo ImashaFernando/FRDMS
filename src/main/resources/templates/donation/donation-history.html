@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Donation History | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/donation-history.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="page-header">
+
+        <div class="brand">FRDMS</div>
+
+        <span class="badge">
+            DONATION MANAGEMENT
+        </span>
+
+        <h1>Donation History</h1>
+
+        <p>
+            View previous donation records for a donor.
+        </p>
+
+    </header>
+
+
+    <main class="history-card">
+
+        <!-- Search Header -->
+        <div class="card-header">
+
+            <div>
+                <h2>Donation History</h2>
+
+                <p>
+                    Enter a Donor ID to view their previous donations.
+                </p>
+            </div>
+
+            <a th:href="@{/donors/details}"
+               class="back-button">
+                Donor Details
+            </a>
+
+        </div>
+
+
+        <!-- Donor Search -->
+        <div class="search-section">
+
+            <form th:action="@{/donations/history}"
+                  method="get"
+                  class="search-form">
+
+                <input type="number"
+                       name="donorId"
+                       th:value="${donorId}"
+                       placeholder="Enter Donor ID"
+                       min="1"
+                       required>
+
+                <button type="submit">
+                    🔍 View History
+                </button>
+
+                <a th:href="@{/donations/history}"
+                   class="clear-button">
+                    Clear
+                </a>
+
+            </form>
+
+        </div>
+
+
+        <!-- No Donor Selected -->
+        <div class="info-state"
+             th:if="${donorId == null}">
+
+            <div class="info-icon">
+                📋
+            </div>
+
+            <h3>View Donation History</h3>
+
+            <p>
+                Enter a Donor ID above to view their previous donation records.
+            </p>
+
+        </div>
+
+
+        <!-- No Donations Found -->
+        <div class="empty-state"
+             th:if="${donorId != null && #lists.isEmpty(donations)}">
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+            <h3>No Donation History Found</h3>
+
+            <p>
+                No previous donations were found for Donor ID
+                <strong th:text="${donorId}">1</strong>.
+            </p>
+
+        </div>
+
+
+        <!-- Donation History Table -->
+        <div class="table-container"
+             th:if="${donations != null && !#lists.isEmpty(donations)}">
+
+            <div class="result-heading">
+
+                <h3>
+                    Previous Donations
+                </h3>
+
+                <span>
+                    Donor ID:
+                    <strong th:text="${donorId}">1</strong>
+                </span>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Donation ID</th>
+                    <th>Type</th>
+                    <th>Cash Amount</th>
+                    <th>Goods Description</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="donation : ${donations}">
+
+                    <td th:text="${donation.id}">
+                        1
+                    </td>
+
+                    <td>
+                        <span class="type-badge"
+                              th:text="${donation.donationType}">
+                            CASH
+                        </span>
+                    </td>
+
+                    <td th:text="${donation.cashAmount != null
+                                  ? 'LKR ' + #numbers.formatDecimal(donation.cashAmount, 1, 2)
+                                  : '-'}">
+                        LKR 12,000.00
+                    </td>
+
+                    <td th:text="${donation.goodsDescription != null
+                                  ? donation.goodsDescription
+                                  : '-'}">
+                        Rice
+                    </td>
+
+                    <td th:text="${donation.goodsQuantity != null
+                                  ? donation.goodsQuantity
+                                  : '-'}">
+                        10 kg
+                    </td>
+
+                    <td>
+                        <span class="status-badge"
+                              th:text="${donation.status}">
+                            PENDING
+                        </span>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="footer">
+
+            <span class="yellow-dot"></span>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

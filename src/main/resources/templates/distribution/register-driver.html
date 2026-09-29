@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register Driver - Distribution Management</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            opacity: 0.85;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 15px rgba(31, 58, 96, 0.10);
+        }
+
+        .section-title {
+            margin-top: 0;
+            margin-bottom: 22px;
+            font-size: 20px;
+            color: #1F3A60;
+            border-bottom: 2px solid #85B6D6;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #1F3A60;
+        }
+
+        .required {
+            color: #d9534f;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #c7d6df;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #3582B8;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .error {
+            color: #d9534f;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #dce5ea;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #3582B8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #286d9d;
+        }
+
+        .btn-secondary {
+            background: #e4ebef;
+            color: #1F3A60;
+        }
+
+        .btn-secondary:hover {
+            background: #d5e0e6;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Register Driver</h1>
+
+    <p>
+        Register an independent driver for relief distribution
+    </p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="form-card">
+
+        <form th:action="@{/distribution/drivers/save}"
+              th:object="${driver}"
+              method="post">
+
+
+            <h2 class="section-title">
+                Driver Information
+            </h2>
+
+
+            <div class="form-grid">
+
+
+                <!-- Driver Name -->
+                <div class="form-group">
+
+                    <label>
+                        Driver Name <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{driverName}"
+                           placeholder="Enter driver name"
+                           required>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('driverName')}"
+                         th:errors="*{driverName}">
+                    </div>
+
+                </div>
+
+
+                <!-- Driver Phone -->
+                <div class="form-group">
+
+                    <label>
+                        Driver Phone Number <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{driverPhoneNumber}"
+                           placeholder="e.g. 0771234567"
+                           required>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('driverPhoneNumber')}"
+                         th:errors="*{driverPhoneNumber}">
+                    </div>
+
+                </div>
+
+
+                <!-- License Number -->
+                <div class="form-group">
+
+                    <label>
+                        Driver License Number <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{driverLicenseNumber}"
+                           placeholder="Enter license number"
+                           required>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('driverLicenseNumber')}"
+                         th:errors="*{driverLicenseNumber}">
+                    </div>
+
+                </div>
+
+
+                <!-- Available Area -->
+                <div class="form-group">
+
+                    <label>
+                        Available Area <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           th:field="*{availableArea}"
+                           placeholder="e.g. Colombo"
+                           required>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('availableArea')}"
+                         th:errors="*{availableArea}">
+                    </div>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="form-group full">
+
+                    <label>
+                        Driver Description / Special Notes
+                    </label>
+
+                    <textarea th:field="*{driverDescription}"
+                              placeholder="Enter any additional driver information...">
+                    </textarea>
+
+                    <div class="error"
+                         th:if="${#fields.hasErrors('driverDescription')}"
+                         th:errors="*{driverDescription}">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="buttons">
+
+                <a th:href="@{/distribution/drivers}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Register Driver
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

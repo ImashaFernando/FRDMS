@@ -333,7 +333,7 @@
          th:if="${volunteerProfile.registrationStatus.name() == 'PENDING'}">
 
       <!-- Logout -->
-      <form th:action="@{/volunteer/logout}"
+      <form th:action="@{/logout}"
             method="post">
 
         <button type="submit"
@@ -358,7 +358,7 @@
     <div class="logout-only"
          th:if="${volunteerProfile.registrationStatus.name() != 'PENDING'}">
 
-      <form th:action="@{/volunteer/logout}"
+      <form th:action="@{/logout}"
             method="post">
 
         <button type="submit"

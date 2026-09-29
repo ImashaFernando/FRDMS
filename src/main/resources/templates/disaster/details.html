@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Flood Event Details | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #eef3f8;
+            color: #172b4d;
+        }
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .top-header {
+            background: #101923;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: #6388d8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 29px;
+        }
+
+        .brand-name {
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            color: #b8d2ff;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 12px;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .navigation a:hover,
+        .navigation .active {
+            background: #6688d6;
+        }
+
+
+        /* =====================================================
+           PAGE
+           ===================================================== */
+
+        .page {
+            width: 92%;
+            max-width: 1450px;
+            margin: 35px auto 70px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .heading-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .heading-icon {
+            width: 65px;
+            height: 65px;
+            background: #6688d6;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 8px 20px rgba(50,80,150,0.18);
+        }
+
+        .heading-left h1 {
+            margin: 0;
+            font-size: 34px;
+            color: #173463;
+        }
+
+        .heading-left p {
+            margin: 6px 0 0;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .record-id {
+            background: white;
+            padding: 14px 22px;
+            border-radius: 12px;
+            border: 1px solid #dbe3ee;
+            box-shadow: 0 4px 15px rgba(30,60,100,0.05);
+            color: #64748b;
+        }
+
+        .record-id strong {
+            color: #173463;
+            font-size: 18px;
+        }
+
+
+        /* =====================================================
+           MAIN EVENT CARD
+           ===================================================== */
+
+        .event-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(30,60,100,0.10);
+            border: 1px solid #dce5ef;
+        }
+
+        .event-banner {
+            padding: 35px 45px;
+            background: linear-gradient(135deg, #33499a, #4865b5);
+            color: white;
+        }
+
+        .event-banner small {
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .event-banner h2 {
+            margin: 0;
+            font-size: 35px;
+            font-weight: 800;
+        }
+
+        .event-banner p {
+            margin: 8px 0 0;
+            opacity: 0.88;
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           EVENT INFORMATION
+           ===================================================== */
+
+        .content {
+            padding: 40px 45px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 22px;
+            color: #173463;
+            font-size: 24px;
+        }
+
+        .section-number {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: #edf3ff;
+            color: #496ac0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .info-card {
+            padding: 23px;
+            background: #f8fafc;
+            border: 1px solid #dce5ef;
+            border-radius: 16px;
+            min-height: 120px;
+        }
+
+        .info-card.full {
+            grid-column: 1 / -1;
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            margin-bottom: 12px;
+        }
+
+        .info-value {
+            color: #173463;
+            font-size: 20px;
+            font-weight: 750;
+        }
+
+        .description {
+            line-height: 1.7;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+
+        /* =====================================================
+           SEVERITY
+           ===================================================== */
+
+        .severity-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 17px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .severity-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .severity-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .severity-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .severity-critical {
+            background: #991b1b;
+            color: white;
+        }
+
+
+        /* =====================================================
+           SEVERITY NOTE
+           ===================================================== */
+
+        .severity-note {
+            margin-top: 25px;
+            padding: 20px 22px;
+            background: linear-gradient(135deg, #f8fafc, #eff6ff);
+            border: 1px solid #dbeafe;
+            border-radius: 15px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .severity-note strong {
+            color: #173463;
+        }
+
+
+        /* =====================================================
+           AFFECTED AREAS
+           ===================================================== */
+
+        .section {
+            margin-top: 45px;
+            padding-top: 35px;
+            border-top: 1px solid #e5eaf0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: #173463;
+            font-size: 25px;
+        }
+
+        .count-badge {
+            background: #edf3ff;
+            color: #496ac0;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+           ===================================================== */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 17px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 750;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-add {
+            background: #496ac0;
+            color: white;
+            box-shadow: 0 5px 12px rgba(73,106,192,0.20);
+        }
+
+        .btn-edit {
+            background: #eef4ff;
+            color: #3659ad;
+        }
+
+        .btn-delete {
+            background: #fff0f1;
+            color: #c62838;
+        }
+
+
+        /* =====================================================
+           AFFECTED AREA CARDS
+           ===================================================== */
+
+        .area-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .area-card {
+            background: #f8fafc;
+            border: 1px solid #dce5ef;
+            border-radius: 17px;
+            padding: 22px;
+            transition: 0.2s;
+        }
+
+        .area-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(30,60,100,0.08);
+        }
+
+        .area-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .area-number {
+            background: #e9efff;
+            color: #496ac0;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .area-name {
+            color: #173463;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .area-description {
+            color: #64748b;
+            line-height: 1.6;
+            min-height: 45px;
+            margin-bottom: 18px;
+        }
+
+        .area-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .area-actions form {
+            margin: 0;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+           ===================================================== */
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            border: 2px dashed #d9e2ec;
+            border-radius: 16px;
+            background: #fafcff;
+        }
+
+        .empty-icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            margin: 5px 0;
+            color: #334155;
+        }
+
+        .empty-state p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+
+        /* =====================================================
+           AFFECTED FAMILY SUMMARY
+           ===================================================== */
+
+        .family-section {
+            margin-top: 45px;
+            padding-top: 35px;
+            border-top: 1px solid #e5eaf0;
+        }
+
+        .family-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            border-radius: 17px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f8fafc, #eef4ff);
+            border: 1px solid #dce5ef;
+        }
+
+        .summary-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .summary-number {
+            font-size: 31px;
+            font-weight: 850;
+            color: #173463;
+        }
+
+        .summary-label {
+            margin-top: 5px;
+            color: #64748b;
+            font-weight: 650;
+        }
+
+
+        /* =====================================================
+           FAMILY TABLE
+           ===================================================== */
+
+        .family-table-container {
+            overflow-x: auto;
+            border: 1px solid #dce5ef;
+            border-radius: 17px;
+        }
+
+        .family-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .family-table th {
+            background: #f1f5f9;
+            color: #475569;
+            text-align: left;
+            padding: 15px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .family-table td {
+            padding: 17px 15px;
+            border-top: 1px solid #e8edf3;
+            color: #475569;
+            vertical-align: middle;
+        }
+
+        .family-table tr:hover td {
+            background: #fafcff;
+        }
+
+        .victim-name {
+            color: #173463;
+            font-weight: 800;
+        }
+
+        .shelter-yes,
+        .shelter-no {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .shelter-yes {
+            background: #fff0f1;
+            color: #c62838;
+        }
+
+        .shelter-no {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+
+        /* =====================================================
+           ACTION AREA
+           ===================================================== */
+
+        .actions {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e5eaf0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-right {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-update {
+            background: #496ac0;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b02a37;
+        }
+
+
+        /* =====================================================
+           DELETE WARNING
+           ===================================================== */
+
+        .delete-warning {
+            margin-top: 18px;
+            padding: 13px 16px;
+            border-radius: 11px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #9a3412;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .event-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .area-list {
+                grid-template-columns: 1fr;
+            }
+
+            .family-summary {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .top-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navigation {
+                width: 100%;
+            }
+
+            .navigation a {
+                flex: 1;
+                text-align: center;
+            }
+
+            .page {
+                width: 95%;
+                margin-top: 20px;
+            }
+
+            .page-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .record-id {
+                width: 100%;
+            }
+
+            .event-banner {
+                padding: 28px 24px;
+            }
+
+            .event-banner h2 {
+                font-size: 27px;
+            }
+
+            .content {
+                padding: 28px 20px;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card.full {
+                grid-column: auto;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-right {
+                flex-direction: column;
+            }
+
+            .action-right .btn,
+            .actions > .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="top-header">
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            🌊
+        </div>
+
+        <div>
+
+            <div class="brand-name">
+                FRDMS
+            </div>
+
+            <div class="brand-subtitle">
+                Flood Disaster Relief Management System
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav class="navigation">
+
+        <a th:href="@{/disasters}"
+           class="active">
+            🌊 Flood Events
+        </a>
+
+        <a th:href="@{/victims}">
+            👤 Victims
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE
+     ===================================================== -->
+
+<main class="page">
+
+
+    <!-- =================================================
+         PAGE HEADING
+         ================================================= -->
+
+    <div class="page-heading">
+
+        <div class="heading-left">
+
+            <div class="heading-icon">
+                🌊
+            </div>
+
+            <div>
+
+                <h1>
+                    Flood Event Details
+                </h1>
+
+                <p>
+                    Review disaster information, affected areas,
+                    and affected families.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="record-id">
+
+            Event ID:
+
+            <strong th:text="${disaster.id}">
+                1
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MAIN EVENT CARD
+         ================================================= -->
+
+    <section class="event-card">
+
+
+        <!-- =================================================
+             EVENT BANNER
+             ================================================= -->
+
+        <div class="event-banner">
+
+            <small>
+                Registered Flood Event
+            </small>
+
+            <h2 th:text="${disaster.eventName}">
+                Flood Event
+            </h2>
+
+            <p>
+                Flood disaster information and response details
+            </p>
+
+        </div>
+
+
+
+        <div class="content">
+
+
+            <!-- =================================================
+                 EVENT INFORMATION
+                 ================================================= -->
+
+            <section>
+
+                <h2 class="section-title">
+
+                    <span class="section-number">
+                        1
+                    </span>
+
+                    Event Information
+
+                </h2>
+
+
+                <div class="event-grid">
+
+
+                    <!-- EVENT DATE -->
+
+                    <div class="info-card">
+
+                        <div class="info-label">
+                            📅 Event Date
+                        </div>
+
+                        <div class="info-value"
+                             th:text="${#temporals.format(disaster.eventDate, 'dd MMMM yyyy')}">
+                            02 September 2026
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DISASTER ID -->
+
+                    <div class="info-card">
+
+                        <div class="info-label">
+                            🆔 Disaster ID
+                        </div>
+
+                        <div class="info-value"
+                             th:text="${disaster.id}">
+                            7
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SEVERITY -->
+
+                    <div class="info-card">
+
+                        <div class="info-label">
+                            ⚠️ Severity Level
+                        </div>
+
+
+                        <!-- LOW -->
+
+                        <span class="severity-badge severity-low"
+                              th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'LOW')}">
+
+                            🟢
+
+                            <span th:text="${disaster.severityLevel}">
+                                LOW
+                            </span>
+
+                        </span>
+
+
+                        <!-- MEDIUM -->
+
+                        <span class="severity-badge severity-medium"
+                              th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'MEDIUM')}">
+
+                            🟡
+
+                            <span th:text="${disaster.severityLevel}">
+                                MEDIUM
+                            </span>
+
+                        </span>
+
+
+                        <!-- HIGH -->
+
+                        <span class="severity-badge severity-high"
+                              th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'HIGH')}">
+
+                            🟠
+
+                            <span th:text="${disaster.severityLevel}">
+                                HIGH
+                            </span>
+
+                        </span>
+
+
+                        <!-- CRITICAL -->
+
+                        <span class="severity-badge severity-critical"
+                              th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'CRITICAL')}">
+
+                            🔴
+
+                            <span th:text="${disaster.severityLevel}">
+                                CRITICAL
+                            </span>
+
+                        </span>
+
+
+                        <!-- FALLBACK -->
+
+                        <span class="severity-badge severity-medium"
+                              th:if="${disaster.severityLevel == null}">
+
+                            ⚠️
+                            Not Recorded
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="info-card full">
+
+                        <div class="info-label">
+                            📝 Description
+                        </div>
+
+                        <div class="info-value description"
+                             th:text="${disaster.description}">
+                            Flood event description.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SEVERITY NOTE -->
+
+                <div class="severity-note">
+
+                    <strong>
+                        ⚠️ Disaster Severity Assessment
+                    </strong>
+
+                    <br>
+
+                    The recorded severity level indicates the
+                    seriousness of this flood event and can support
+                    disaster response and relief planning.
+
+                    <br><br>
+
+                    Current recorded level:
+
+                    <strong th:text="${disaster.severityLevel}">
+                        HIGH
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 AFFECTED AREAS
+                 ================================================= -->
+
+            <section class="section">
+
+
+                <div class="section-header">
+
+                    <div class="section-header-left">
+
+                        <span class="section-number">
+                            2
+                        </span>
+
+                        <div>
+
+                            <h2>
+                                📍 Affected Areas
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="count-badge"
+                         th:text="${affectedAreas != null ? #lists.size(affectedAreas) : 0} + ' area(s) recorded'">
+
+                        0 area(s) recorded
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ADD AFFECTED AREA -->
+
+                <div style="margin-bottom:20px;">
+
+                    <a th:href="@{/affected-areas/new/{id}(id=${disaster.id})}"
+                       class="btn btn-add">
+
+                        + Add Affected Area
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- AREAS EXIST -->
+
+                <div class="area-list"
+                     th:if="${affectedAreas != null and !#lists.isEmpty(affectedAreas)}">
+
+
+                    <div class="area-card"
+                         th:each="area, stat : ${affectedAreas}">
+
+
+                        <div class="area-top">
+
+                            <div class="area-name"
+                                 th:text="${area.areaName}">
+
+                                Area Name
+
+                            </div>
+
+                            <div class="area-number"
+                                 th:text="'Area ' + stat.count">
+
+                                Area 1
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="area-description"
+                             th:text="${area.description}">
+
+                            Area description.
+
+                        </div>
+
+
+                        <!-- AREA ACTIONS -->
+
+                        <div class="area-actions">
+
+
+                            <!-- EDIT AREA -->
+
+                            <a th:href="@{/affected-areas/edit/{id}(id=${area.id})}"
+                               class="btn btn-edit">
+
+                                ✏️ Edit
+
+                            </a>
+
+
+
+                            <!-- DELETE AREA -->
+
+                            <form th:action="@{/affected-areas/delete/{id}(id=${area.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this affected area?');">
+
+                                <button type="submit"
+                                        class="btn btn-delete">
+
+                                    🗑️ Delete
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- NO AREAS -->
+
+                <div class="empty-state"
+                     th:if="${affectedAreas == null or #lists.isEmpty(affectedAreas)}">
+
+                    <div class="empty-icon">
+                        📍
+                    </div>
+
+                    <h3>
+                        No Affected Areas Recorded
+                    </h3>
+
+                    <p>
+                        No affected areas have been added
+                        to this flood event yet.
+                    </p>
+
+                    <a th:href="@{/affected-areas/new/{id}(id=${disaster.id})}"
+                       class="btn btn-add">
+
+                        + Add First Affected Area
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 AFFECTED FAMILIES
+                 ================================================= -->
+
+            <section class="family-section">
+
+
+                <div class="section-header">
+
+                    <div class="section-header-left">
+
+                        <span class="section-number">
+                            3
+                        </span>
+
+                        <div>
+
+                            <h2>
+                                👨‍👩‍👧 Affected Families
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="count-badge"
+                         th:text="${affectedFamilyCount} + ' family/families'">
+
+                        0 families
+
+                    </div>
+
+                </div>
+
+
+
+                <p style="color:#64748b; margin-top:-10px; margin-bottom:25px;">
+
+                    Families registered as affected by this
+                    flood event.
+
+                </p>
+
+
+
+                <!-- =================================================
+                     SUMMARY CARDS
+                     ================================================= -->
+
+                <div class="family-summary">
+
+
+                    <!-- AFFECTED FAMILIES -->
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon">
+                            👨‍👩‍👧
+                        </div>
+
+                        <div class="summary-number"
+                             th:text="${affectedFamilyCount}">
+                            0
+                        </div>
+
+                        <div class="summary-label">
+                            Affected Families
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TOTAL MEMBERS -->
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon">
+                            👥
+                        </div>
+
+                        <div class="summary-number"
+                             th:text="${totalFamilyMembers}">
+                            0
+                        </div>
+
+                        <div class="summary-label">
+                            Total Family Members
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SHELTER -->
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon">
+                            🏠
+                        </div>
+
+                        <div class="summary-number"
+                             th:text="${familiesRequiringShelter}">
+                            0
+                        </div>
+
+                        <div class="summary-label">
+                            Families Requiring Shelter
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FAMILY TABLE
+                     ================================================= -->
+
+                <div class="family-table-container"
+                     th:if="${affectedFamilies != null and !#lists.isEmpty(affectedFamilies)}">
+
+
+                    <table class="family-table">
+
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Victim
+                            </th>
+
+                            <th>
+                                Family Members
+                            </th>
+
+                            <th>
+                                Children Below 12
+                            </th>
+
+                            <th>
+                                Male
+                            </th>
+
+                            <th>
+                                Female
+                            </th>
+
+                            <th>
+                                Shelter Required
+                            </th>
+
+                            <th>
+                                Affected Situation
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+
+                        <tbody>
+
+
+                        <tr th:each="family : ${affectedFamilies}">
+
+
+                            <!-- VICTIM -->
+
+                            <td>
+
+                                <strong class="victim-name"
+                                        th:text="${family.victim != null ? family.victim.fullName : 'Unknown Victim'}">
+
+                                    Victim Name
+
+                                </strong>
+
+                            </td>
+
+
+
+                            <!-- FAMILY MEMBERS -->
+
+                            <td th:text="${family.totalFamilyMembers}">
+                                0
+                            </td>
+
+
+
+                            <!-- CHILDREN -->
+
+                            <td th:text="${family.childrenBelow12}">
+                                0
+                            </td>
+
+
+
+                            <!-- MALE -->
+
+                            <td th:text="${family.maleMembers}">
+                                0
+                            </td>
+
+
+
+                            <!-- FEMALE -->
+
+                            <td th:text="${family.femaleMembers}">
+                                0
+                            </td>
+
+
+
+                            <!-- SHELTER -->
+
+                            <td>
+
+                                <span class="shelter-yes"
+                                      th:if="${family.shelterRequired}">
+
+                                    YES
+
+                                </span>
+
+
+                                <span class="shelter-no"
+                                      th:unless="${family.shelterRequired}">
+
+                                    NO
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- SITUATION -->
+
+                            <td th:text="${family.affectedSituation != null ? family.affectedSituation : 'No information'}">
+
+                                No information
+
+                            </td>
+
+
+                        </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <!-- NO FAMILIES -->
+
+                <div class="empty-state"
+                     th:if="${affectedFamilies == null or #lists.isEmpty(affectedFamilies)}">
+
+                    <div class="empty-icon">
+                        👨‍👩‍👧
+                    </div>
+
+                    <h3>
+                        No Affected Families Registered
+                    </h3>
+
+                    <p>
+                        No victims have submitted family and
+                        affected information for this flood event yet.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+                 ================================================= -->
+
+            <div class="actions">
+
+
+                <!-- BACK -->
+
+                <a th:href="@{/disasters}"
+                   class="btn btn-back">
+
+                    ← Back to Flood Events
+
+                </a>
+
+
+
+                <div class="action-right">
+
+
+                    <!-- ADD AREA -->
+
+                    <a th:href="@{/affected-areas/new/{id}(id=${disaster.id})}"
+                       class="btn btn-add">
+
+                        + Add Affected Area
+
+                    </a>
+
+
+
+                    <!-- UPDATE DISASTER -->
+
+                    <a th:href="@{/disasters/edit/{id}(id=${disaster.id})}"
+                       class="btn btn-update">
+
+                        ✏️ Update Flood Event
+
+                    </a>
+
+
+
+                    <!-- DELETE DISASTER -->
+
+                    <form th:action="@{/disasters/delete/{id}(id=${disaster.id})}"
+                          method="post"
+                          style="margin:0;"
+                          onsubmit="return confirmDelete(this);"
+                          th:attr="data-event-name=${disaster.eventName}">
+
+                        <button type="submit"
+                                class="btn btn-danger">
+
+                            🗑️ Delete Flood Event
+
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DELETE WARNING
+                 ================================================= -->
+
+            <div class="delete-warning">
+
+                ⚠️
+
+                Deleting this flood event is permanent
+                and cannot be undone.
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- =====================================================
+     DELETE CONFIRMATION
+     ===================================================== -->
+
+<script>
+
+    function confirmDelete(form) {
+
+        const eventName =
+            form.getAttribute("data-event-name");
+
+        const message =
+            "Are you sure you want to delete this flood event?\n\n" +
+            "Flood Event: " + eventName + "\n\n" +
+            "This action cannot be undone.";
+
+        return confirm(message);
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

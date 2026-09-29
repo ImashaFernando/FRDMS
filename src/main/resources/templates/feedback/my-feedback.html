@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Feedback</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 28px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #D9E8F2;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-submit {
+            background: #3582B8;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #2c6e9c;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 35px 25px;
+        }
+
+        .intro {
+            margin-bottom: 25px;
+        }
+
+        .intro h2 {
+            margin: 0 0 8px;
+            color: #1F3A60;
+        }
+
+        .intro p {
+            margin: 0;
+            color: #64748B;
+        }
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .feedback-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+            border: 1px solid #DCE8EF;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .type {
+            font-size: 13px;
+            font-weight: 700;
+            color: #3582B8;
+            margin-bottom: 5px;
+        }
+
+        .name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1F3A60;
+        }
+
+        .rating {
+            color: #F7CF59;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #F5F9FB;
+            border-radius: 8px;
+            padding: 11px;
+        }
+
+        .label {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F3A60;
+        }
+
+        .section {
+            margin-top: 15px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #3582B8;
+            margin-bottom: 5px;
+        }
+
+        .section-text {
+            color: #4A5568;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .edit-btn {
+            background: #3582B8;
+            color: white;
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-weight: 600;
+        }
+
+        .edit-btn:hover {
+            background: #2c6e9c;
+        }
+
+        .delete-btn {
+            background: #FEE2E2;
+            color: #B91C1C;
+            border: 1px solid #FECACA;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #FECACA;
+        }
+
+        .empty {
+            background: white;
+            border-radius: 14px;
+            padding: 55px 25px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #64748B;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 800px) {
+
+            .header {
+                padding: 22px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .feedback-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div>
+        <h1>My Feedback</h1>
+        <p>View and manage the feedback you have submitted</p>
+    </div>
+
+    <div class="header-actions">
+
+        <a th:href="@{/feedback/submit}"
+           class="btn btn-submit">
+            + Submit Feedback
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="intro">
+
+        <h2>Your Submitted Feedback</h2>
+
+        <p>
+            Only feedback submitted by your account is shown here.
+        </p>
+
+    </div>
+
+
+    <!-- Feedback available -->
+
+    <div class="feedback-grid"
+         th:if="${feedbackList != null and !feedbackList.isEmpty()}">
+
+        <div class="feedback-card"
+             th:each="feedback : ${feedbackList}">
+
+            <div class="card-top">
+
+                <div>
+
+                    <!-- Friendly feedback type -->
+
+                    <div class="type"
+                         th:if="${feedback.feedbackType == 'VICTIM'}">
+                        Victim / Affected Family
+                    </div>
+
+                    <div class="type"
+                         th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
+                        Community Member
+                    </div>
+
+                    <div class="type"
+                         th:if="${feedback.feedbackType == 'VOLUNTEER'}">
+                        Volunteer
+                    </div>
+
+                    <div class="name"
+                         th:text="${feedback.name}">
+                        Name
+                    </div>
+
+                </div>
+
+
+                <div class="rating">
+
+                    <span th:each="i : ${#numbers.sequence(1,5)}"
+                          th:text="${i <= feedback.rating ? '★' : '☆'}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Service / Activity
+                    </div>
+
+                    <div class="value"
+                         th:text="${feedback.service}">
+                        Service
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="label">
+                        Feedback Date
+                    </div>
+
+                    <div class="value"
+                         th:text="${feedback.feedbackDate}">
+                        Date
+                    </div>
+
+                </div>
+
+
+                <!-- Victim area -->
+
+                <div class="info-box"
+                     th:if="${feedback.affectedArea != null and !feedback.affectedArea.isEmpty()}">
+
+                    <div class="label">
+                        Affected Area
+                    </div>
+
+                    <div class="value"
+                         th:text="${feedback.affectedArea}">
+                        Area
+                    </div>
+
+                </div>
+
+
+                <!-- Community area -->
+
+                <div class="info-box"
+                     th:if="${feedback.communityArea != null and !feedback.communityArea.isEmpty()}">
+
+                    <div class="label">
+                        Community / Area
+                    </div>
+
+                    <div class="value"
+                         th:text="${feedback.communityArea}">
+                        Area
+                    </div>
+
+                </div>
+
+
+                <!-- Volunteer area -->
+
+                <div class="info-box"
+                     th:if="${feedback.serviceArea != null and !feedback.serviceArea.isEmpty()}">
+
+                    <div class="label">
+                        Service Area
+                    </div>
+
+                    <div class="value"
+                         th:text="${feedback.serviceArea}">
+                        Area
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    Your Feedback
+                </div>
+
+                <div class="section-text"
+                     th:text="${feedback.comments}">
+                    Feedback
+                </div>
+
+            </div>
+
+
+            <div class="section"
+                 th:if="${feedback.suggestions != null and !feedback.suggestions.isEmpty()}">
+
+                <div class="section-title">
+                    Suggestions
+                </div>
+
+                <div class="section-text"
+                     th:text="${feedback.suggestions}">
+                    Suggestions
+                </div>
+
+            </div>
+
+
+            <!-- FM-US3 + FM-US4 -->
+
+            <div class="actions">
+
+                <a class="edit-btn"
+                   th:href="@{/feedback/edit/{id}(id=${feedback.id})}">
+                    ✏ Edit
+                </a>
+
+
+                <form th:action="@{/feedback/delete/{id}(id=${feedback.id})}"
+                      method="post"
+                      style="display: inline;"
+                      onsubmit="return confirm('Are you sure you want to delete this feedback?');">
+
+                    <button type="submit"
+                            class="delete-btn">
+                        🗑 Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- No feedback -->
+
+    <div class="empty"
+         th:if="${feedbackList == null or feedbackList.isEmpty()}">
+
+        <h2>No Feedback Yet</h2>
+
+        <p>
+            You have not submitted any feedback yet.
+        </p>
+
+        <a th:href="@{/feedback/submit}"
+           class="btn btn-submit">
+            Submit Your First Feedback
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

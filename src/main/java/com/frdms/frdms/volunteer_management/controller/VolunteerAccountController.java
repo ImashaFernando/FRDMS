@@ -44,10 +44,12 @@ public class VolunteerAccountController {
             Model model
     ) {
 
+        // Validation errors
         if (bindingResult.hasErrors()) {
             return "volunteer/account-register";
         }
 
+        // Password confirmation
         if (!volunteerAccount.getPassword().equals(confirmPassword)) {
 
             model.addAttribute(
@@ -58,7 +60,9 @@ public class VolunteerAccountController {
             return "volunteer/account-register";
         }
 
-        if (volunteerAccountService.emailExists(volunteerAccount.getEmail())) {
+        // Check duplicate email
+        if (volunteerAccountService.emailExists(
+                volunteerAccount.getEmail())) {
 
             model.addAttribute(
                     "emailError",
@@ -70,20 +74,12 @@ public class VolunteerAccountController {
 
         try {
 
+            // Create volunteer account
             volunteerAccountService
                     .registerVolunteerAccount(volunteerAccount);
 
-            model.addAttribute(
-                    "successMessage",
-                    "Account created successfully. You can now login."
-            );
-
-            model.addAttribute(
-                    "volunteerAccount",
-                    new VolunteerAccount()
-            );
-
-            return "volunteer/account-register";
+            // SUCCESS → COMMON LOGIN PAGE
+            return "redirect:/login?registered=true";
 
         } catch (IllegalArgumentException exception) {
 
@@ -94,35 +90,5 @@ public class VolunteerAccountController {
 
             return "volunteer/account-register";
         }
-    }
-
-    // =========================
-    // VOLUNTEER LOGIN PAGE
-    // =========================
-
-    @GetMapping("/volunteer/login")
-    public String showLoginPage(
-            @RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout,
-            Model model
-    ) {
-
-        if (error != null) {
-
-            model.addAttribute(
-                    "loginError",
-                    "Invalid email or password."
-            );
-        }
-
-        if (logout != null) {
-
-            model.addAttribute(
-                    "logoutMessage",
-                    "You have been logged out successfully."
-            );
-        }
-
-        return "volunteer/account-login";
     }
 }

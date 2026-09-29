@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Pending Budget Requests | FRDMS</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/pm-budget-requirements.css}">
+  <link rel="stylesheet"
+        th:href="@{/css/confirmation.css}">
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="brand">
+
+    <div class="brand-icon">
+      FR
+    </div>
+
+    <div>
+      <h1>FRDMS</h1>
+      <p>Project Management</p>
+    </div>
+
+  </div>
+
+  <a th:href="@{/pm/dashboard}"
+     class="dashboard-btn">
+    ← Back to Dashboard
+  </a>
+
+</header>
+
+
+<main class="page-container">
+
+  <div class="page-heading"
+       style="
+        display:flex !important;
+        align-items:flex-start !important;
+        justify-content:space-between !important;
+        width:100% !important;
+        gap:30px !important;
+     ">
+
+    <div style="flex:1 !important;">
+
+        <span class="eyebrow">
+            PROJECT MANAGER
+        </span>
+
+      <h2>
+        Pending Budget Requests
+      </h2>
+
+      <p>
+        Review budget requests submitted by the Finance Officer for disaster-relief activities.
+      </p>
+
+    </div>
+
+    <a th:href="@{/finance/budgets/trash}"
+       class="trash-btn"
+       style="
+          display:inline-flex !important;
+          align-items:center !important;
+          justify-content:center !important;
+          flex-shrink:0 !important;
+          margin-top:45px !important;
+          padding:12px 20px !important;
+          background:#c0392b !important;
+          color:#ffffff !important;
+          border:none !important;
+          border-radius:8px !important;
+          text-decoration:none !important;
+          font-size:14px !important;
+          font-weight:700 !important;
+          white-space:nowrap !important;
+          cursor:pointer !important;
+       ">
+
+      🗑 Trash Bin
+
+    </a>
+
+  </div>
+
+
+  <section class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Pending Requests
+        </h3>
+
+        <p>
+          Review each request and approve or reject it.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>ID</th>
+          <th>Activity</th>
+          <th>Requested Amount</th>
+          <th>Reason</th>
+          <th>Status</th>
+          <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="budget : ${budgets}">
+
+          <td th:text="${budget.id}">
+            1
+          </td>
+
+
+          <td class="activity"
+              th:text="${budget.activity}">
+
+            Food Distribution
+
+          </td>
+
+
+          <td class="amount">
+
+            LKR
+
+            <span th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
+                            150,000.00
+                        </span>
+
+          </td>
+
+
+          <td class="reason"
+              th:text="${budget.reason}">
+
+            Required for emergency relief.
+
+          </td>
+
+
+          <td>
+
+                        <span class="status">
+                            PENDING
+                        </span>
+
+          </td>
+
+
+          <td>
+
+            <div class="actions">
+
+              <!-- APPROVE -->
+              <form th:action="@{/pm/budgets/approve/{id}(id=${budget.id})}"
+                    method="post"
+                    th:id="'approveForm-' + ${budget.id}">
+
+                <button type="button"
+                        class="approve-btn"
+                        onclick="confirmBudgetAction(this.form.id, 'approve')">
+
+                  Approve
+
+                </button>
+
+              </form>
+
+
+              <!-- REJECT -->
+              <form th:action="@{/pm/budgets/reject/{id}(id=${budget.id})}"
+                    method="post"
+                    th:id="'rejectForm-' + ${budget.id}">
+
+                <button type="button"
+                        class="reject-btn"
+                        onclick="confirmBudgetAction(this.form.id, 'reject')">
+
+                  Reject
+
+                </button>
+
+              </form>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+
+        <!-- NO PENDING REQUESTS -->
+
+        <tr th:if="${#lists.isEmpty(budgets)}">
+
+          <td colspan="6"
+              class="empty-state">
+
+            <div class="empty-icon">
+              ✓
+            </div>
+
+            <h3>
+              No Pending Budget Requests
+            </h3>
+
+            <p>
+              There are currently no budget requests
+              waiting for Project Manager review.
+            </p>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
+<div id="confirmationModal" class="confirm-overlay">
+
+  <div class="confirm-modal">
+
+    <div id="confirmIcon" class="confirm-icon">
+      ⚠
+    </div>
+
+    <h3 id="confirmTitle" class="confirm-title">
+      Confirmation
+    </h3>
+
+    <p id="confirmMessage" class="confirm-message">
+      Are you sure?
+    </p>
+
+    <div class="confirm-actions">
+
+      <button type="button"
+              id="confirmCancel"
+              class="confirm-btn confirm-cancel">
+        Cancel
+      </button>
+
+      <button type="button"
+              id="confirmOk"
+              class="confirm-btn confirm-ok">
+        Confirm
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script th:src="@{/js/confirmation.js}"></script>
+</body>
+
+</html>
