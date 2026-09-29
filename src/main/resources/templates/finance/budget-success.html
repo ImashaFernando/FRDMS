@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Budget Submitted | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/budget-success.css}">
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="success-card">
+
+        <!-- Brand -->
+
+        <div class="brand">
+            FRDMS
+        </div>
+
+        <div class="section-name">
+            FINANCE MANAGEMENT
+        </div>
+
+
+        <!-- Success Icon -->
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <!-- Heading -->
+
+        <h1>
+            Budget Requirement Submitted
+        </h1>
+
+        <p class="description">
+            Your budget requirement has been successfully
+            submitted to the Project Manager for review.
+        </p>
+
+
+        <!-- Status -->
+
+        <div class="status-card">
+
+            <div class="status-info">
+
+                <span class="status-title">
+                    REQUEST STATUS
+                </span>
+
+                <span class="status-description">
+                    Waiting for Project Manager review
+                </span>
+
+            </div>
+
+            <span class="status">
+                PENDING
+            </span>
+
+        </div>
+
+
+        <!-- Back to Dashboard -->
+
+        <a th:href="@{/finance/dashboard}"
+           class="dashboard-button">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <!-- Create Another Requirement -->
+
+        <a th:href="@{/finance/budgets/create}"
+           class="primary-button">
+
+            Create Another Requirement
+
+            <span class="arrow">→</span>
+
+        </a>
+
+
+        <!-- Footer -->
+
+        <div class="footer">
+
+            <span class="footer-line"></span>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+            <span class="footer-line"></span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Needs Assessment | FRDMS</title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+
+      background: #f4f7fa;
+
+      color: #0C1721;
+    }
+
+
+    /* ================= HEADER ================= */
+
+    .header {
+
+      background: #0C1721;
+
+      color: white;
+
+      padding: 22px 45px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+    }
+
+
+    .header h1 {
+      font-size: 24px;
+    }
+
+
+    .header p {
+      margin-top: 5px;
+
+      color: #CFE8F7;
+
+      font-size: 14px;
+    }
+
+
+    .back-btn {
+
+      text-decoration: none;
+
+      color: white;
+
+      background: #248BE0;
+
+      padding: 10px 18px;
+
+      border-radius: 7px;
+
+      font-size: 14px;
+    }
+
+
+    .back-btn:hover {
+      background: #1c72b9;
+    }
+
+
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+
+      width: 90%;
+
+      max-width: 1000px;
+
+      margin: 35px auto;
+    }
+
+
+    .page-title {
+      margin-bottom: 25px;
+    }
+
+
+    .page-title h2 {
+
+      font-size: 28px;
+
+      margin-bottom: 8px;
+    }
+
+
+    .page-title p {
+
+      color: #666;
+
+      font-size: 15px;
+
+      line-height: 1.5;
+    }
+
+
+
+    /* ================= VICTIM CARD ================= */
+
+    .victim-card {
+
+      background: white;
+
+      padding: 25px;
+
+      border-radius: 12px;
+
+      margin-bottom: 25px;
+
+      box-shadow:
+              0 3px 12px
+              rgba(0, 0, 0, 0.08);
+    }
+
+
+    .victim-card h3 {
+
+      color: #0B2A4A;
+
+      margin-bottom: 18px;
+    }
+
+
+    .victim-grid {
+
+      display: grid;
+
+      grid-template-columns:
+                    repeat(2, 1fr);
+
+      gap: 15px;
+    }
+
+
+    .victim-item {
+
+      background: #f4f7fa;
+
+      padding: 14px;
+
+      border-radius: 8px;
+    }
+
+
+    .victim-item strong {
+
+      display: block;
+
+      color: #555;
+
+      font-size: 13px;
+
+      margin-bottom: 5px;
+    }
+
+
+    .victim-item span {
+
+      font-size: 14px;
+    }
+
+
+
+    /* ================= FORM CARD ================= */
+
+    .form-card {
+
+      background: white;
+
+      padding: 30px;
+
+      border-radius: 12px;
+
+      box-shadow:
+              0 3px 12px
+              rgba(0, 0, 0, 0.08);
+    }
+
+
+    .form-card h3 {
+
+      color: #0B2A4A;
+
+      margin-bottom: 8px;
+    }
+
+
+    .form-description {
+
+      color: #666;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+
+      margin-bottom: 25px;
+    }
+
+
+
+    /* ================= FORM GROUP ================= */
+
+    .form-group {
+
+      margin-bottom: 24px;
+    }
+
+
+    label {
+
+      display: block;
+
+      font-weight: bold;
+
+      margin-bottom: 8px;
+
+      color: #333;
+    }
+
+
+    textarea {
+
+      width: 100%;
+
+      min-height: 120px;
+
+      padding: 13px;
+
+      border: 1px solid #ccd4da;
+
+      border-radius: 7px;
+
+      resize: vertical;
+
+      font-family: Arial, sans-serif;
+
+      font-size: 14px;
+    }
+
+
+    textarea:focus {
+
+      outline: none;
+
+      border-color: #248BE0;
+
+      box-shadow:
+              0 0 0 2px
+              rgba(36, 139, 224, 0.12);
+    }
+
+
+
+    /* ================= NEEDS ================= */
+
+    .needs-grid {
+
+      display: grid;
+
+      grid-template-columns:
+                    repeat(2, 1fr);
+
+      gap: 12px;
+
+      margin-top: 10px;
+    }
+
+
+    .need-option {
+
+      border: 1px solid #d8dee3;
+
+      padding: 15px;
+
+      border-radius: 8px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      background: #fafbfc;
+
+      cursor: pointer;
+    }
+
+
+    .need-option:hover {
+
+      background: #f0f6fa;
+    }
+
+
+    .need-option input {
+
+      width: 18px;
+
+      height: 18px;
+
+      cursor: pointer;
+    }
+
+
+    .need-option label {
+
+      margin: 0;
+
+      font-weight: normal;
+
+      cursor: pointer;
+    }
+
+
+
+    /* ================= ERRORS ================= */
+
+    .error {
+
+      color: #c0392b;
+
+      font-size: 13px;
+
+      margin-top: 6px;
+    }
+
+
+
+    /* ================= EXISTING MESSAGE ================= */
+
+    .existing-message {
+
+      background: #fff8e1;
+
+      border-left: 5px solid #f0ad4e;
+
+      padding: 15px;
+
+      border-radius: 6px;
+
+      margin-bottom: 25px;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+
+    .existing-message strong {
+
+      color: #7a5700;
+    }
+
+
+
+    /* ================= UPDATED MESSAGE ================= */
+
+    .updated-message {
+
+      background: #fff3cd;
+
+      border-left: 5px solid #f0ad4e;
+
+      padding: 15px;
+
+      border-radius: 6px;
+
+      margin-bottom: 25px;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+
+    .updated-message strong {
+
+      color: #8a5a00;
+    }
+
+
+
+    /* ================= ACTIONS ================= */
+
+    .actions {
+
+      margin-top: 30px;
+
+      display: flex;
+
+      gap: 12px;
+
+      flex-wrap: wrap;
+    }
+
+
+    .btn {
+
+      text-decoration: none;
+
+      border: none;
+
+      padding: 13px 24px;
+
+      border-radius: 7px;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      display: inline-block;
+    }
+
+
+    .btn-primary {
+
+      background: #248BE0;
+
+      color: white;
+    }
+
+
+    .btn-primary:hover {
+
+      background: #1c72b9;
+    }
+
+
+    .btn-secondary {
+
+      background: #e6e8e9;
+
+      color: #333;
+    }
+
+
+    .btn-secondary:hover {
+
+      background: #d4d7d9;
+    }
+
+
+
+    /* ================= INFORMATION BOX ================= */
+
+    .info-box {
+
+      margin-top: 25px;
+
+      background: #CFE8F7;
+
+      border-left: 5px solid #248BE0;
+
+      padding: 15px;
+
+      border-radius: 6px;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 700px) {
+
+      .header {
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        align-items: flex-start;
+      }
+
+
+      .container {
+
+        width: 94%;
+      }
+
+
+      .victim-grid,
+      .needs-grid {
+
+        grid-template-columns: 1fr;
+      }
+
+
+      .form-card {
+
+        padding: 20px;
+      }
+
+
+      .actions {
+
+        flex-direction: column;
+      }
+
+
+      .btn {
+
+        width: 100%;
+
+        text-align: center;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="header">
+
+  <div>
+
+    <h1>
+      Flood Relief & Disaster Management System
+    </h1>
+
+    <p>
+      Victim Management
+    </p>
+
+  </div>
+
+
+  <a
+          th:href="@{/victim/dashboard}"
+          class="back-btn">
+
+    ← Dashboard
+
+  </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<main class="container">
+
+
+  <!-- ================= PAGE TITLE ================= -->
+
+  <div class="page-title">
+
+    <h2
+            th:text="${needsAssessment.id == null}
+                         ? 'Needs Assessment'
+                         : 'Update Needs Assessment'">
+
+      Needs Assessment
+
+    </h2>
+
+
+    <p>
+
+      Provide information about your current situation
+      and the assistance you may require.
+
+    </p>
+
+  </div>
+
+
+
+  <!-- =================================================
+       EXISTING ASSESSMENT MESSAGE
+       ================================================= -->
+
+  <div
+          class="existing-message"
+
+          th:if="${needsAssessment.id != null
+                    and needsAssessment.status != 'UPDATED'}">
+
+    <strong>
+      Existing Needs Assessment
+    </strong>
+
+    <br>
+
+    You already have a submitted needs assessment.
+    You can update the information below if your
+    situation or requirements have changed.
+
+  </div>
+
+
+
+  <!-- =================================================
+       UPDATED MESSAGE
+       ================================================= -->
+
+  <div
+          class="updated-message"
+
+          th:if="${needsAssessment.status == 'UPDATED'}">
+
+    <strong>
+      Previous Assessment Updated
+    </strong>
+
+    <br>
+
+    You are updating your existing needs assessment.
+    After saving your changes, the Relief Coordinator
+    will review the updated information again.
+
+  </div>
+
+
+
+  <!-- =================================================
+       VICTIM INFORMATION
+       ================================================= -->
+
+  <div class="victim-card">
+
+    <h3>
+      Victim Information
+    </h3>
+
+
+    <div class="victim-grid">
+
+
+      <div class="victim-item">
+
+        <strong>
+          Full Name
+        </strong>
+
+        <span
+                th:text="${victim.fullName}">
+
+                    Victim Name
+
+                </span>
+
+      </div>
+
+
+
+      <div class="victim-item">
+
+        <strong>
+          NIC Number
+        </strong>
+
+        <span
+                th:text="${victim.nicNumber}">
+
+                    NIC
+
+                </span>
+
+      </div>
+
+
+
+      <div class="victim-item">
+
+        <strong>
+          Phone Number
+        </strong>
+
+        <span
+                th:text="${victim.phoneNumber}">
+
+                    Phone
+
+                </span>
+
+      </div>
+
+
+
+      <div class="victim-item">
+
+        <strong>
+          Address
+        </strong>
+
+        <span
+                th:text="${victim.address}">
+
+                    Address
+
+                </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =================================================
+       FORM
+       ================================================= -->
+
+  <div class="form-card">
+
+
+    <h3
+            th:text="${needsAssessment.id == null}
+                         ? 'Submit Your Needs'
+                         : 'Update Your Needs'">
+
+      Submit Your Needs
+
+    </h3>
+
+
+    <p class="form-description">
+
+      Please provide accurate information about
+      your current situation and the assistance
+      you require.
+
+    </p>
+
+
+
+    <form
+
+            th:action="@{/needs-assessment/submit}"
+
+            th:object="${needsAssessment}"
+
+            method="post">
+
+
+      <!-- =================================================
+           HIDDEN ID
+           ================================================= -->
+
+      <input
+              type="hidden"
+              th:field="*{id}">
+
+
+
+      <!-- =================================================
+           CURRENT SITUATION
+           ================================================= -->
+
+      <div class="form-group">
+
+        <label for="currentSituation">
+
+          Current Situation
+
+        </label>
+
+
+        <textarea
+
+                id="currentSituation"
+
+                th:field="*{currentSituation}"
+
+                placeholder="Describe your current situation and how the disaster has affected you and your family..."
+
+                required>
+
+                </textarea>
+
+
+        <div
+
+                class="error"
+
+                th:if="${#fields.hasErrors('currentSituation')}"
+
+                th:errors="*{currentSituation}">
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           REQUIRED ASSISTANCE
+           ================================================= -->
+
+      <div class="form-group">
+
+        <label>
+
+          Required Assistance
+
+        </label>
+
+
+        <div class="needs-grid">
+
+
+          <!-- FOOD -->
+
+          <div class="need-option">
+
+            <input
+
+                    type="checkbox"
+
+                    id="food"
+
+                    th:field="*{foodRequired}">
+
+
+            <label for="food">
+
+              Food
+
+            </label>
+
+          </div>
+
+
+
+          <!-- WATER -->
+
+          <div class="need-option">
+
+            <input
+
+                    type="checkbox"
+
+                    id="water"
+
+                    th:field="*{waterRequired}">
+
+
+            <label for="water">
+
+              Drinking Water
+
+            </label>
+
+          </div>
+
+
+
+          <!-- MEDICAL -->
+
+          <div class="need-option">
+
+            <input
+
+                    type="checkbox"
+
+                    id="medical"
+
+                    th:field="*{medicalAssistanceRequired}">
+
+
+            <label for="medical">
+
+              Medical Assistance
+
+            </label>
+
+          </div>
+
+
+
+          <!-- CLOTHING -->
+
+          <div class="need-option">
+
+            <input
+
+                    type="checkbox"
+
+                    id="clothing"
+
+                    th:field="*{clothingRequired}">
+
+
+            <label for="clothing">
+
+              Clothing
+
+            </label>
+
+          </div>
+
+
+
+          <!-- HYGIENE -->
+
+          <div class="need-option">
+
+            <input
+
+                    type="checkbox"
+
+                    id="hygiene"
+
+                    th:field="*{hygieneItemsRequired}">
+
+
+            <label for="hygiene">
+
+              Hygiene Items
+
+            </label>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           OTHER NEEDS
+           ================================================= -->
+
+      <div class="form-group">
+
+        <label for="otherNeeds">
+
+          Other Needs
+
+        </label>
+
+
+        <textarea
+
+                id="otherNeeds"
+
+                th:field="*{otherNeeds}"
+
+                placeholder="Mention any other assistance you may require...">
+
+                </textarea>
+
+      </div>
+
+
+
+      <!-- =================================================
+           ADDITIONAL INFORMATION
+           ================================================= -->
+
+      <div class="form-group">
+
+        <label for="additionalInformation">
+
+          Additional Information
+
+        </label>
+
+
+        <textarea
+
+                id="additionalInformation"
+
+                th:field="*{additionalInformation}"
+
+                placeholder="Provide any additional information that may help the Relief Coordinator...">
+
+                </textarea>
+
+      </div>
+
+
+
+      <!-- =================================================
+           BUTTONS
+           ================================================= -->
+
+      <div class="actions">
+
+
+        <!-- SUBMIT / UPDATE -->
+
+        <button
+
+                type="submit"
+
+                class="btn btn-primary"
+
+                th:text="${needsAssessment.id == null}
+                                 ? 'Submit Needs Assessment'
+                                 : 'Update Needs Assessment'">
+
+          Submit Needs Assessment
+
+        </button>
+
+
+
+        <!-- CANCEL -->
+
+        <a
+
+                th:href="@{/victim/dashboard}"
+
+                class="btn btn-secondary">
+
+          Cancel
+
+        </a>
+
+      </div>
+
+
+    </form>
+
+
+
+    <!-- =================================================
+         INFORMATION
+         ================================================= -->
+
+    <div class="info-box">
+
+      <strong>
+        Important:
+      </strong>
+
+      Your needs assessment is reviewed by the
+      <strong>Relief Coordinator</strong>.
+
+      If your situation or requirements change,
+      update this existing assessment instead of
+      creating another one.
+
+    </div>
+
+  </div>
+
+</main>
+
+
+</body>
+
+</html>

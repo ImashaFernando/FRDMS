@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Needs Assessments | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0C1721;
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #CFE8F7;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-btn {
+            text-decoration: none;
+            color: white;
+
+            background: #248BE0;
+
+            padding: 10px 17px;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .header-btn:hover {
+            background: #1c72b9;
+        }
+
+        .logout-btn {
+            background: #d9534f;
+        }
+
+        .logout-btn:hover {
+            background: #c9302c;
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1200px;
+
+            margin: 35px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* ================= PAGE TITLE ================= */
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            color: #0B2A4A;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            box-shadow:
+                    0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0B2A4A;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #e6e8e9;
+
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #f7fbfd;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .submitted {
+            background: #fff3cd;
+
+            color: #856404;
+        }
+
+        .updated {
+            background: #CFE8F7;
+
+            color: #155b8a;
+        }
+
+        .assessed {
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+        .other {
+            background: #e6e8e9;
+
+            color: #444;
+        }
+
+
+        /* ================= PRIORITY ================= */
+
+        .priority {
+            font-weight: bold;
+        }
+
+        .priority-urgent {
+            color: #b42318;
+        }
+
+        .priority-high {
+            color: #d97706;
+        }
+
+        .priority-medium {
+            color: #856404;
+        }
+
+        .priority-low {
+            color: #216e39;
+        }
+
+
+        /* ================= VIEW BUTTON ================= */
+
+        .view-btn {
+            display: inline-block;
+
+            background: #248BE0;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 8px 14px;
+
+            border-radius: 6px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            background: #1c72b9;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 35px;
+
+            color: #777;
+        }
+
+
+        /* ================= INFO ================= */
+
+        .info-box {
+            background: #CFE8F7;
+
+            border-left: 5px solid #248BE0;
+
+            padding: 15px;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .header {
+                padding: 20px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+            }
+
+            .page-title h2 {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div>
+
+        <h1>
+            Flood Relief & Disaster Management System
+        </h1>
+
+        <p>
+            Relief Coordinator – Needs Assessments
+        </p>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <a
+                th:href="@{/relief-coordinator/dashboard}"
+                class="header-btn">
+
+            ← Dashboard
+
+        </a>
+
+
+        <form
+                th:action="@{/relief-coordinator/logout}"
+                method="post"
+                style="display:inline;">
+
+            <button
+                    type="submit"
+                    class="header-btn logout-btn">
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h2>
+            Victim Needs Assessments
+        </h2>
+
+        <p>
+            Review the needs assessments submitted and updated
+            by victims.
+        </p>
+
+    </div>
+
+
+    <!-- ================= INFORMATION ================= -->
+
+    <div class="info-box">
+
+        <strong>Relief Coordinator Action:</strong>
+
+        Review each victim's needs assessment.
+        Updated assessments should be reviewed again because
+        the victim may have changed their current requirements.
+
+    </div>
+
+
+    <!-- ================= ASSESSMENTS ================= -->
+
+    <section class="card">
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Victim</th>
+
+                    <th>Current Situation</th>
+
+                    <th>Status</th>
+
+                    <th>Priority</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <!-- ================= ASSESSMENT ROWS ================= -->
+
+                <tr
+                        th:each="assessment : ${assessments}">
+
+
+                    <!-- ID -->
+
+                    <td
+                            th:text="${assessment.id}">
+
+                        1
+
+                    </td>
+
+
+                    <!-- VICTIM -->
+
+                    <td>
+
+                        <span
+                                th:if="${assessment.victim != null}"
+                                th:text="${assessment.victim.fullName}">
+
+                            Victim Name
+
+                        </span>
+
+                        <span
+                                th:if="${assessment.victim == null}">
+
+                            Unknown
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- CURRENT SITUATION -->
+
+                    <td>
+
+                        <span
+                                th:if="${assessment.currentSituation != null}"
+                                th:text="${assessment.currentSituation}">
+
+                            Current situation
+
+                        </span>
+
+                        <span
+                                th:if="${assessment.currentSituation == null}">
+
+                            Not provided
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                                class="status submitted"
+                                th:if="${assessment.status == 'SUBMITTED'}">
+
+                            SUBMITTED
+
+                        </span>
+
+
+                        <span
+                                class="status updated"
+                                th:if="${assessment.status == 'UPDATED'}">
+
+                            UPDATED
+
+                        </span>
+
+
+                        <span
+                                class="status assessed"
+                                th:if="${assessment.status == 'ASSESSED'}">
+
+                            ASSESSED
+
+                        </span>
+
+
+                        <span
+                                class="status other"
+                                th:if="${assessment.status != 'SUBMITTED'
+                                        and assessment.status != 'UPDATED'
+                                        and assessment.status != 'ASSESSED'}"
+                                th:text="${assessment.status}">
+
+                            STATUS
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- PRIORITY -->
+
+                    <td>
+
+                        <span
+                                th:if="${assessment.priority == null}">
+
+                            Not Assessed
+
+                        </span>
+
+
+                        <span
+                                th:if="${assessment.priority != null}"
+                                class="priority"
+                                th:text="${assessment.priority}">
+
+                            HIGH
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <a
+                                th:href="@{/relief-coordinator/needs-assessments/{id}(id=${assessment.id})}"
+                                class="view-btn">
+
+                            Review / View
+
+                        </a>
+
+                    </td>
+
+
+                </tr>
+
+
+                <!-- ================= EMPTY ================= -->
+
+                <tr
+                        th:if="${#lists.isEmpty(assessments)}">
+
+                    <td
+                            colspan="6"
+                            class="empty-message">
+
+                        No victim needs assessments are currently
+                        available.
+
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

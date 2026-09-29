@@ -1,0 +1,247 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f8fc;
+    color: #172b4d;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    padding: 35px 50px;
+}
+
+/* Header */
+.page-header {
+    max-width: 900px;
+    margin: 0 auto 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #102a43;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    color: #627d98;
+    font-size: 14px;
+}
+
+.back-btn {
+    text-decoration: none;
+    background: #e6f0f8;
+    color: #164e70;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #d4e7f5;
+}
+
+/* Form Container */
+.form-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px 40px;
+    box-shadow: 0 5px 20px rgba(16, 42, 67, 0.08);
+    border: 1px solid #e5edf5;
+}
+
+.form-title {
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e6edf3;
+}
+
+.form-title h2 {
+    color: #102a43;
+    font-size: 21px;
+    margin-bottom: 6px;
+}
+
+.form-title p {
+    color: #7b8794;
+    font-size: 14px;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #243b53;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group label span {
+    color: #829ab1;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: #243b53;
+    background: #fbfdff;
+    transition: 0.2s ease;
+}
+
+.form-group input {
+    height: 45px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #2f80a8;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(47, 128, 168, 0.10);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9fb3c8;
+}
+
+/* Validation */
+.error {
+    display: block;
+    margin-top: 6px;
+    color: #d64545;
+    font-size: 12px;
+}
+
+.helper-text {
+    margin-top: 6px;
+    color: #829ab1;
+    font-size: 12px;
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #e6edf3;
+}
+
+.cancel-btn,
+.update-btn {
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.cancel-btn {
+    background: #eef2f6;
+    color: #52606d;
+}
+
+.cancel-btn:hover {
+    background: #dfe6ed;
+}
+
+.update-btn {
+    border: none;
+    background: #176b87;
+    color: #ffffff;
+}
+
+.update-btn:hover {
+    background: #12566d;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+
+    .page-wrapper {
+        padding: 20px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .page-header h1 {
+        font-size: 23px;
+    }
+
+    .form-container {
+        padding: 25px 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .update-btn {
+        width: 100%;
+        text-align: center;
+    }
+    .password-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .password-wrapper input {
+        padding-right: 50px;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        border: none;
+        background: transparent;
+        cursor: pointer;
+
+        font-size: 18px;
+        color: #627d98;
+        padding: 5px;
+    }
+
+    .password-toggle:hover {
+        color: #176b87;
+    }
+}

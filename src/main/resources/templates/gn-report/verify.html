@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify GN Report</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            color: #1d2b36;
+        }
+
+        .header {
+            background: #0C1721;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            color: #cfe8f7;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #0B2A4A;
+            border-bottom: 2px solid #e6e8e9;
+            padding-bottom: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eef0f2;
+        }
+
+        .label {
+            width: 220px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            flex: 1;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .file-section {
+            margin-top: 20px;
+        }
+
+        .file-btn {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #248BE0;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            margin-top: 8px;
+        }
+
+        .file-btn:hover {
+            background: #176db5;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .approve-btn,
+        .reject-btn,
+        .back-btn {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .approve-btn {
+            background: #28888F;
+            color: white;
+        }
+
+        .approve-btn:hover {
+            background: #206d72;
+        }
+
+        .reject-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #b52a37;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background: #545b62;
+        }
+
+        .notice {
+            padding: 15px;
+            border-radius: 8px;
+            background: #e8f4fb;
+            color: #0B2A4A;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 700px) {
+
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .label {
+                width: 100%;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>GN Report Verification</h1>
+    <p>Review the submitted report before making a verification decision</p>
+</div>
+
+<div class="container">
+
+    <!-- Report Information -->
+    <div class="card">
+
+        <h2>GN Report Information</h2>
+
+        <div class="notice">
+            Please review all information and the uploaded document carefully
+            before approving or rejecting this report.
+        </div>
+
+        <div class="info-row">
+            <div class="label">Report Number</div>
+            <div class="value" th:text="${gnReport.reportNumber}"></div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">GN Officer</div>
+            <div class="value" th:text="${gnReport.gnOfficerName}"></div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">GN Division</div>
+            <div class="value" th:text="${gnReport.gnDivision}"></div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">Submitted Date</div>
+            <div class="value"
+                 th:text="${#temporals.format(gnReport.submittedDate, 'yyyy-MM-dd HH:mm')}">
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">Verification Status</div>
+
+            <div class="value">
+
+                <span class="status pending"
+                      th:if="${gnReport.verificationStatus == 'PENDING'}">
+                    PENDING
+                </span>
+
+                <span class="status approved"
+                      th:if="${gnReport.verificationStatus == 'APPROVED'}">
+                    APPROVED
+                </span>
+
+                <span class="status rejected"
+                      th:if="${gnReport.verificationStatus == 'REJECTED'}">
+                    REJECTED
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Victim Information -->
+    <div class="card">
+
+        <h2>Victim Information</h2>
+
+        <div class="info-row">
+            <div class="label">Full Name</div>
+            <div class="value"
+                 th:text="${gnReport.victim.fullName}">
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">NIC Number</div>
+            <div class="value"
+                 th:text="${gnReport.victim.nicNumber}">
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">Phone Number</div>
+            <div class="value"
+                 th:text="${gnReport.victim.phoneNumber}">
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="label">Address</div>
+            <div class="value"
+                 th:text="${gnReport.victim.address}">
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Report Description -->
+    <div class="card">
+
+        <h2>Report Description</h2>
+
+        <p th:text="${gnReport.reportDescription}"></p>
+
+    </div>
+
+
+    <!-- Uploaded Document -->
+    <div class="card">
+
+        <h2>Uploaded GN Report</h2>
+
+        <div class="file-section">
+
+            <p>
+                <strong>File:</strong>
+                <span th:text="${gnReport.fileName}"></span>
+            </p>
+
+            <a class="file-btn"
+               th:href="@{/gn-reports/file/{id}(id=${gnReport.id})}"
+               target="_blank">
+                View  Report
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Verification Actions -->
+    <div class="card">
+
+        <h2>Verification Decision</h2>
+
+        <div th:if="${gnReport.verificationStatus == 'PENDING'}">
+
+            <p>
+                After reviewing the report, select an appropriate action.
+            </p>
+
+            <div class="actions">
+
+                <form th:action="@{/gn-reports/approve/{id}(id=${gnReport.id})}"
+                      method="post">
+
+                    <button type="submit" class="approve-btn">
+                        ✓ Approve Report
+                    </button>
+
+                </form>
+
+
+                <form th:action="@{/gn-reports/reject/{id}(id=${gnReport.id})}"
+                      method="post">
+
+                    <button type="submit" class="reject-btn">
+                        ✕ Reject Report
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <div th:if="${gnReport.verificationStatus != 'PENDING'}">
+
+            <p>
+                This GN report has already been verified.
+            </p>
+
+        </div>
+
+        <br>
+
+        <a href="/gn-reports" class="back-btn">
+            ← Submitted GN Reports
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

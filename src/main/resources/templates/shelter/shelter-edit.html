@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Shelter - FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/chamya-theme.css}">
+
+    <style>
+        .edit-container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .edit-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 18px 45px rgba(31, 58, 96, 0.25);
+            border-top: 7px solid #F7CF59;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #3582B8;
+            font-weight: 700;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="edit-container">
+
+        <div class="edit-card">
+
+            <h2 class="page-title">
+                Edit Shelter Details
+            </h2>
+
+            <p class="page-subtitle">
+                Update shelter operational information.
+            </p>
+
+            <div class="alert-error"
+                 th:if="${errorMessage}"
+                 th:text="${errorMessage}">
+            </div>
+
+            <form th:action="@{/staff/shelters/{id}/update(id=${shelter.id})}"
+                  method="post"
+                  novalidate>
+
+                <div class="form-group">
+
+                    <label for="contactPerson">
+                        Contact Person
+                    </label>
+
+                    <input type="text"
+                           id="contactPerson"
+                           name="contactPerson"
+                           th:value="${submittedContactPerson != null ? submittedContactPerson : shelter.contactPerson}"
+                           required>
+
+                    <div class="field-error"
+                         th:if="${contactPersonError}"
+                         th:text="${contactPersonError}">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="contactNumber">
+                        Contact Number
+                    </label>
+
+                    <input type="text"
+                           id="contactNumber"
+                           name="contactNumber"
+                           th:value="${submittedContactNumber != null ? submittedContactNumber : shelter.contactNumber}"
+                           required>
+
+                    <div class="field-error"
+                         th:if="${contactNumberError}"
+                         th:text="${contactNumberError}">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="currentOccupancy">
+                        Current Occupancy
+                    </label>
+
+                    <input type="number"
+                           id="currentOccupancy"
+                           name="currentOccupancy"
+                           min="0"
+                           th:max="${shelter.maximumCapacity}"
+                           th:value="${submittedCurrentOccupancy != null ? submittedCurrentOccupancy : shelter.currentOccupancy}"
+                           required>
+
+                    <div class="field-error"
+                         th:if="${currentOccupancyError}"
+                         th:text="${currentOccupancyError}">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Shelter Status
+                    </label>
+
+                    <select id="status"
+                            name="status"
+                            required>
+
+                        <option value="AVAILABLE"
+                                th:selected="${submittedStatus != null ? submittedStatus.name() == 'AVAILABLE' : shelter.status.name() == 'AVAILABLE'}">
+                            AVAILABLE
+                        </option>
+
+                        <option value="FULL"
+                                th:selected="${submittedStatus != null ? submittedStatus.name() == 'FULL' : shelter.status.name() == 'FULL'}">
+                            FULL
+                        </option>
+
+                        <option value="CLOSED"
+                                th:selected="${submittedStatus != null ? submittedStatus.name() == 'CLOSED' : shelter.status.name() == 'CLOSED'}">
+                            CLOSED
+                        </option>
+
+                    </select>
+
+                    <div class="field-error"
+                         th:if="${statusError}"
+                         th:text="${statusError}">
+                    </div>
+
+                </div>
+
+                <button type="submit"
+                        class="btn">
+                    Update Shelter Details
+                </button>
+
+            </form>
+
+            <a th:href="@{/staff/shelters/{id}(id=${shelter.id})}"
+               class="back-link">
+                ← Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

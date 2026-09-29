@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Review Budget | FRDMS</title>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet"
+        th:href="@{/css/pm-budget-review.css}">
+
+</head>
+
+<body>
+
+<div class="review-container">
+
+
+  <a href="/pm/budgets/pending"
+     class="back-link">
+
+    <i class="fa-solid fa-arrow-left"></i>
+
+    Back to Requirements
+
+  </a>
+
+
+  <div class="review-header">
+
+        <span>
+            PROJECT MANAGEMENT
+        </span>
+
+    <h1>
+      Review Budget Requirement
+    </h1>
+
+    <p>
+      Review the requirement before making a decision.
+    </p>
+
+  </div>
+
+
+  <div class="review-card">
+
+
+    <div class="card-top">
+
+      <div class="requirement-icon">
+
+        <i class="fa-solid fa-wallet"></i>
+
+      </div>
+
+      <div>
+
+                <span class="small-label">
+                    BUDGET REQUIREMENT
+                </span>
+
+        <h2>
+          Requirement #
+          <span th:text="${budget.id}">
+                        1
+                    </span>
+        </h2>
+
+      </div>
+
+
+      <span class="status">
+                PENDING
+            </span>
+
+    </div>
+
+
+    <!-- DETAILS -->
+
+    <div class="details-grid">
+
+
+      <div class="detail">
+
+                <span>
+                    ACTIVITY
+                </span>
+
+        <strong
+                th:text="${budget.activity}">
+          Emergency Food Distribution
+        </strong>
+
+      </div>
+
+
+      <div class="detail">
+
+                <span>
+                    REQUESTED AMOUNT
+                </span>
+
+        <strong class="amount">
+
+          Rs.
+          <span
+                  th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
+                        50,000.00
+                    </span>
+
+        </strong>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="reason-box">
+
+            <span>
+                REASON FOR REQUEST
+            </span>
+
+      <p th:text="${budget.reason}">
+        Purchase emergency food supplies for flood victims.
+      </p>
+
+    </div>
+
+
+    <!-- DECISION -->
+
+    <div class="decision-section">
+
+      <h3>
+        Make a Decision
+      </h3>
+
+      <p>
+        Approving this requirement will allow the Finance Officer
+        to proceed with the budget allocation process.
+      </p>
+
+
+      <div class="decision-buttons">
+
+
+        <form
+                th:action="@{/pm/budgets/approve/{id}(id=${budget.id})}"
+                method="post">
+
+          <button
+                  type="submit"
+                  class="approve-button">
+
+            <i class="fa-solid fa-check"></i>
+
+            Approve Requirement
+
+          </button>
+
+        </form>
+
+
+        <form
+                th:action="@{/pm/budgets/reject/{id}(id=${budget.id})}"
+                method="post">
+
+          <button
+                  type="submit"
+                  class="reject-button">
+
+            <i class="fa-solid fa-xmark"></i>
+
+            Reject Requirement
+
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

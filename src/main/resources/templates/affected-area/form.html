@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Add Affected Area | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #E6E8E9;
+      color: #0C1721;
+    }
+
+    .header {
+      background: #0C1721;
+      color: white;
+      padding: 20px 40px;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .module {
+      color: #8DB5E8;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .page {
+      max-width: 850px;
+      margin: 45px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 35px 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(12, 23, 33, 0.12);
+      border-top: 5px solid #28888F;
+    }
+
+    h1 {
+      margin: 0;
+      color: #0B2A4A;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      color: #28888F;
+      margin: 8px 0 30px;
+      font-size: 15px;
+    }
+
+    .event-box {
+      background: #CFE8F7;
+      border-left: 5px solid #248BE0;
+      padding: 15px 18px;
+      border-radius: 7px;
+      margin-bottom: 30px;
+    }
+
+    .event-label {
+      font-size: 13px;
+      color: #52616b;
+      margin-bottom: 5px;
+    }
+
+    .event-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0B2A4A;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #CFE8F7;
+      color: #0B2A4A;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .section-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #28888F;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .form-group {
+      margin-bottom: 23px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #0B2A4A;
+      font-weight: bold;
+    }
+
+    .required {
+      color: #28888F;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #B9BEC1;
+      border-radius: 7px;
+      font-size: 15px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #248BE0;
+      box-shadow: 0 0 0 3px rgba(36, 139, 224, 0.15);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .help {
+      margin-top: 6px;
+      font-size: 13px;
+      color: #6b747a;
+    }
+
+    .error {
+      margin-top: 6px;
+      color: #b42318;
+      font-size: 13px;
+    }
+
+    .button-area {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #E6E8E9;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      border: none;
+      background: #248BE0;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0B2A4A;
+    }
+
+    .btn-secondary {
+      background: #E6E8E9;
+      color: #0B2A4A;
+      border: 1px solid #B9BEC1;
+    }
+
+    .btn-secondary:hover {
+      background: #CFE8F7;
+    }
+
+    @media (max-width: 650px) {
+
+      .header {
+        padding: 18px 20px;
+      }
+
+      .page {
+        margin: 25px auto;
+      }
+
+      .card {
+        padding: 25px 20px;
+      }
+
+      .button-area {
+        flex-direction: column;
+      }
+
+      .btn {
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="brand">
+    Flood Disaster Relief System
+  </div>
+
+  <div class="module">
+    Disaster Management Module
+  </div>
+
+</header>
+
+
+<main class="page">
+
+  <div class="card">
+
+    <h1>Add Affected Area</h1>
+
+    <p class="subtitle">
+      Provide information about an area affected by the selected flood event.
+    </p>
+
+
+    <!-- ================= RELATED FLOOD EVENT ================= -->
+
+    <div class="event-box">
+
+      <div class="event-label">
+        Related Flood Event
+      </div>
+
+      <div class="event-name"
+           th:text="${disaster.eventName}">
+      </div>
+
+    </div>
+
+
+    <!-- ================= FORM ================= -->
+
+    <form th:action="@{/affected-areas/save/{disasterId}(disasterId=${disaster.id})}"
+          th:object="${affectedArea}"
+          method="post">
+
+
+      <!-- ================= SECTION ================= -->
+
+      <div class="section-title">
+
+                <span class="section-number">
+                    1
+                </span>
+
+        Affected Area Information
+
+      </div>
+
+
+      <!-- ================= AREA NAME ================= -->
+
+      <div class="form-group">
+
+        <label for="areaName">
+
+          Area Name
+
+          <span class="required">*</span>
+
+        </label>
+
+        <input type="text"
+               id="areaName"
+               th:field="*{areaName}"
+               placeholder="Example: Kelaniya"
+               autocomplete="off">
+
+        <div class="error"
+             th:if="${#fields.hasErrors('areaName')}"
+             th:errors="*{areaName}">
+        </div>
+
+      </div>
+
+
+      <!-- ================= DESCRIPTION ================= -->
+
+      <div class="form-group">
+
+        <label for="description">
+
+          Area Description
+
+          <span class="required">*</span>
+
+        </label>
+
+        <textarea id="description"
+                  th:field="*{description}"
+                  placeholder="Describe the impact of flooding in this area..."></textarea>
+
+        <div class="help">
+
+          Include information such as the affected location,
+          flood impact, infrastructure damage, or other relevant details.
+
+        </div>
+
+        <div class="error"
+             th:if="${#fields.hasErrors('description')}"
+             th:errors="*{description}">
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           HIDDEN DISASTER ID
+           ===================================================== -->
+
+      <input type="hidden"
+             name="disasterId"
+             th:value="${disaster.id}">
+
+
+      <!-- ================= BUTTONS ================= -->
+
+      <div class="button-area">
+
+        <button type="submit"
+                class="btn btn-primary">
+
+          Save Affected Area
+
+        </button>
+
+        <a class="btn btn-secondary"
+           th:href="@{/disasters/details/{id}(id=${disaster.id})}">
+
+          Cancel
+
+        </a>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</main>
+
+</body>
+
+</html>

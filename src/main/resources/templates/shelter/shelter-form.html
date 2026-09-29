@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register Shelter - FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/chamya-theme.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <div class="card">
+
+        <h2 class="page-title">
+            Register Shelter
+        </h2>
+
+        <p class="page-subtitle">
+            Add shelter information and capacity details.
+        </p>
+
+        <div class="alert-success"
+             th:if="${successMessage}"
+             th:text="${successMessage}">
+        </div>
+
+        <form th:action="@{/staff/shelters/register}"
+              th:object="${shelter}"
+              method="post"
+              novalidate>
+
+            <div class="alert-error"
+                 th:if="${#fields.hasGlobalErrors()}">
+
+                <div th:each="error : ${#fields.globalErrors()}"
+                     th:text="${error}">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="shelterName">
+                    Shelter Name
+                </label>
+
+                <input type="text"
+                       id="shelterName"
+                       th:field="*{shelterName}"
+                       placeholder="Enter shelter name">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('shelterName')}"
+                     th:errors="*{shelterName}">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="location">
+                    Location
+                </label>
+
+                <input type="text"
+                       id="location"
+                       th:field="*{location}"
+                       placeholder="Enter shelter location">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('location')}"
+                     th:errors="*{location}">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="contactPerson">
+                    Contact Person
+                </label>
+
+                <input type="text"
+                       id="contactPerson"
+                       th:field="*{contactPerson}"
+                       placeholder="Enter contact person name">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('contactPerson')}"
+                     th:errors="*{contactPerson}">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="contactNumber">
+                    Contact Number
+                </label>
+
+                <input type="text"
+                       id="contactNumber"
+                       th:field="*{contactNumber}"
+                       placeholder="Enter contact number">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('contactNumber')}"
+                     th:errors="*{contactNumber}">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="maximumCapacity">
+                    Maximum Capacity
+                </label>
+
+                <input type="number"
+                       id="maximumCapacity"
+                       th:field="*{maximumCapacity}"
+                       min="1"
+                       placeholder="Enter maximum shelter capacity">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('maximumCapacity')}"
+                     th:errors="*{maximumCapacity}">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="currentOccupancy">
+                    Current Occupancy
+                </label>
+
+                <input type="number"
+                       id="currentOccupancy"
+                       th:field="*{currentOccupancy}"
+                       min="0"
+                       placeholder="Enter number of people currently staying">
+
+                <div class="field-error"
+                     th:if="${#fields.hasErrors('currentOccupancy')}"
+                     th:errors="*{currentOccupancy}">
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="status">
+                    Shelter Status
+                </label>
+
+                <select id="status"
+                        th:field="*{status}">
+
+                    <option value="AVAILABLE">
+                        Available
+                    </option>
+
+                    <option value="FULL">
+                        Full
+                    </option>
+
+                    <option value="CLOSED">
+                        Closed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn">
+
+                Register Shelter
+
+            </button>
+
+        </form>
+
+
+        <div class="link-text"
+             style="text-align: left;">
+
+            <a th:href="@{/staff/shelters}">
+                ← Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

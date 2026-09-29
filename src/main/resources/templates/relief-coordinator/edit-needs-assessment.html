@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Assessment | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0C1721;
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #CFE8F7;
+            font-size: 14px;
+        }
+
+        .header-btn {
+            background: #248BE0;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .header-btn:hover {
+            background: #1c72b9;
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 950px;
+
+            margin: 35px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* ================= TITLE ================= */
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            color: #0B2A4A;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 30px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                    0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h3 {
+            color: #0B2A4A;
+
+            margin-bottom: 20px;
+
+            font-size: 20px;
+        }
+
+
+        /* ================= VICTIM INFO ================= */
+
+        .victim-info {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f7fafc;
+
+            padding: 14px;
+
+            border-radius: 7px;
+
+            border-left: 4px solid #248BE0;
+        }
+
+        .info-label {
+            display: block;
+
+            color: #666;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #222;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #333;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        select,
+        textarea,
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccd4da;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        select:focus,
+        textarea:focus,
+        input:focus {
+            border-color: #248BE0;
+
+            box-shadow:
+                    0 0 0 2px rgba(36, 139, 224, 0.12);
+        }
+
+        textarea {
+            min-height: 140px;
+
+            resize: vertical;
+        }
+
+
+        /* ================= NOTE ================= */
+
+        .note {
+            background: #CFE8F7;
+
+            border-left: 5px solid #248BE0;
+
+            padding: 15px;
+
+            border-radius: 6px;
+
+            margin-bottom: 25px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 10px;
+        }
+
+        .save-btn {
+            background: #28888F;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #216f75;
+        }
+
+        .cancel-btn {
+            background: #e6e8e9;
+
+            color: #333;
+
+            text-decoration: none;
+
+            padding: 13px 24px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        .cancel-btn:hover {
+            background: #d5d8da;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 20px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .victim-info {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title h2 {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div>
+
+        <h1>
+            Flood Relief & Disaster Management System
+        </h1>
+
+        <p>
+            Relief Coordinator – Edit Assessment
+        </p>
+
+    </div>
+
+
+    <a
+            th:href="@{/relief-coordinator/dashboard}"
+            class="header-btn">
+
+        ← Dashboard
+
+    </a>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h2>
+            Update Relief Coordinator Assessment
+        </h2>
+
+        <p>
+            Modify the assessment information and save the
+            changes to the existing assessment.
+        </p>
+
+    </div>
+
+
+    <!-- ================= VICTIM INFORMATION ================= -->
+
+    <section class="card">
+
+        <h3>
+            Victim Information
+        </h3>
+
+
+        <div class="victim-info">
+
+
+            <div class="info-item">
+
+                <span class="info-label">
+                    Full Name
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.fullName}">
+                    Victim Name
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="info-label">
+                    NIC Number
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.nicNumber}">
+                    NIC
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="info-label">
+                    Phone Number
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.phoneNumber}">
+                    Phone
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <span class="info-label">
+                    Address
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.address}">
+                    Address
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= EDIT FORM ================= -->
+
+    <section class="card">
+
+        <h3>
+            Coordinator Assessment
+        </h3>
+
+
+        <div class="note">
+
+            <strong>Important:</strong>
+
+            You are updating the existing assessment.
+            The assessment ID will remain the same and
+            no new assessment record will be created.
+
+        </div>
+
+
+        <form
+                th:action="@{/relief-coordinator/needs-assessments/{id}/update(id=${assessment.id})}"
+                method="post">
+
+
+            <!-- ================= PRIORITY ================= -->
+
+            <div class="form-group">
+
+                <label for="priority">
+                    Priority Level
+                </label>
+
+
+                <select
+                        id="priority"
+                        name="priority"
+                        required>
+
+
+                    <option value="">
+                        -- Select Priority --
+                    </option>
+
+
+                    <option
+                            value="LOW"
+                            th:selected="${assessment.priority == 'LOW'}">
+
+                        Low
+
+                    </option>
+
+
+                    <option
+                            value="MEDIUM"
+                            th:selected="${assessment.priority == 'MEDIUM'}">
+
+                        Medium
+
+                    </option>
+
+
+                    <option
+                            value="HIGH"
+                            th:selected="${assessment.priority == 'HIGH'}">
+
+                        High
+
+                    </option>
+
+
+                    <option
+                            value="URGENT"
+                            th:selected="${assessment.priority == 'URGENT'}">
+
+                        Urgent
+
+                    </option>
+
+
+                </select>
+
+            </div>
+
+
+            <!-- ================= REMARKS ================= -->
+
+            <div class="form-group">
+
+                <label for="assessmentRemarks">
+                    Assessment Remarks
+                </label>
+
+
+                <textarea
+                        id="assessmentRemarks"
+                        name="assessmentRemarks"
+                        required
+                        th:text="${assessment.assessmentRemarks}"
+                        placeholder="Enter assessment remarks..."></textarea>
+
+            </div>
+
+
+            <!-- ================= ASSESSED BY ================= -->
+
+            <div class="form-group">
+
+                <label for="assessedBy">
+                    Assessed By
+                </label>
+
+
+                <input
+                        type="text"
+                        id="assessedBy"
+                        name="assessedBy"
+                        required
+                        th:value="${assessment.assessedBy}"
+                        placeholder="Enter Relief Coordinator name">
+
+            </div>
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="actions">
+
+
+                <button
+                        type="submit"
+                        class="save-btn">
+
+                    Save Changes
+
+                </button>
+
+
+                <a
+                        th:href="@{/relief-coordinator/needs-assessments/{id}(id=${assessment.id})}"
+                        class="cancel-btn">
+
+                    Cancel
+
+                </a>
+
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

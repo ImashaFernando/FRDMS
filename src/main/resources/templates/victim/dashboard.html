@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Victim Dashboard | FRDMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f7;
+            color: #0B2A4A;
+        }
+
+
+        /* ================================
+           HEADER
+           ================================ */
+
+        .header {
+            background: #0C1721;
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 25px;
+            margin-bottom: 4px;
+        }
+
+        .logo p {
+            font-size: 13px;
+            color: #CFE8F7;
+        }
+
+        .logout-btn {
+            background: #28888F;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #206f75;
+        }
+
+
+        /* ================================
+           MAIN CONTAINER
+           ================================ */
+
+        .container {
+            max-width: 1100px;
+
+            margin: 35px auto;
+
+            padding: 0 20px;
+        }
+
+
+        /* ================================
+           WELCOME SECTION
+           ================================ */
+
+        .welcome {
+            background: linear-gradient(
+                    135deg,
+                    #0B2A4A,
+                    #248BE0
+            );
+
+            color: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                    0 5px 20px
+                    rgba(0, 0, 0, 0.12);
+        }
+
+        .welcome h2 {
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #E8F5FC;
+
+            font-size: 15px;
+        }
+
+
+        /* ================================
+           PROFILE CARD
+           ================================ */
+
+        .profile-card {
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 30px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                    0 4px 15px
+                    rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-title {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .profile-title h3 {
+            font-size: 21px;
+
+            color: #0B2A4A;
+        }
+
+        .profile-badge {
+            background: #CFE8F7;
+
+            color: #0B2A4A;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================================
+           PROFILE INFORMATION
+           ================================ */
+
+        .profile-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .info-box {
+            background: #f7f9fa;
+
+            border: 1px solid #E6E8E9;
+
+            border-radius: 10px;
+
+            padding: 18px;
+        }
+
+        .info-label {
+            display: block;
+
+            font-size: 12px;
+
+            color: #557080;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 16px;
+
+            color: #0B2A4A;
+
+            word-break: break-word;
+        }
+
+
+        /* ================================
+           ACTION SECTION
+           ================================ */
+
+        .section-title {
+            margin-bottom: 18px;
+
+            font-size: 21px;
+
+            color: #0B2A4A;
+        }
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .action-card {
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            text-decoration: none;
+
+            border: 1px solid #E6E8E9;
+
+            box-shadow:
+                    0 4px 12px
+                    rgba(0, 0, 0, 0.06);
+
+            transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                    0 8px 20px
+                    rgba(0, 0, 0, 0.10);
+        }
+
+        .action-icon {
+            font-size: 30px;
+
+            margin-bottom: 12px;
+        }
+
+        .action-card h4 {
+            color: #0B2A4A;
+
+            font-size: 17px;
+
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            color: #557080;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+           ================================ */
+
+        @media (max-width: 800px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .welcome h2 {
+                font-size: 23px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     HEADER
+     ===================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <h1>FRDMS</h1>
+
+        <p>
+            Flood Relief & Disaster Management System
+        </p>
+
+    </div>
+
+    <a th:href="@{/logout}" class="logout-btn">
+        Logout
+    </a>
+
+
+</header>
+
+
+
+<!-- =====================================
+     MAIN CONTENT
+     ===================================== -->
+
+<main class="container">
+
+
+    <!-- =================================
+         WELCOME
+         ================================= -->
+
+    <section class="welcome">
+
+        <h2>
+
+            Welcome,
+
+            <span th:text="${victim.fullName}">
+                Victim
+            </span>
+
+        </h2>
+
+        <p>
+
+            Welcome to your personal FRDMS dashboard.
+            You can manage your information and submit
+            disaster-related documents from here.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================
+         MY PROFILE
+         ================================= -->
+
+    <section class="profile-card">
+
+        <div class="profile-title">
+
+            <h3>
+                My Profile
+            </h3>
+
+            <span class="profile-badge">
+                Registered Victim
+            </span>
+
+        </div>
+
+
+        <div class="profile-grid">
+
+
+            <!-- Full Name -->
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Full Name
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.fullName}">
+
+                    -
+
+                </span>
+
+            </div>
+
+
+
+            <!-- NIC -->
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    NIC Number
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.nicNumber}">
+
+                    -
+
+                </span>
+
+            </div>
+
+
+
+            <!-- Phone -->
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Phone Number
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.phoneNumber}">
+
+                    -
+
+                </span>
+
+            </div>
+
+
+
+            <!-- Address -->
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Address
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${victim.address}">
+
+                    -
+
+                </span>
+
+            </div>
+
+
+
+            <!-- Registration Date -->
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Registration Date
+                </span>
+
+                <span
+                        class="info-value"
+                        th:text="${#temporals.format(victim.registrationDate, 'dd MMM yyyy')}">
+
+                    -
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================
+         AVAILABLE ACTIONS
+         ================================= -->
+
+    <h3 class="section-title">
+
+        What would you like to do?
+
+    </h3>
+
+
+    <section class="actions">
+
+
+        <!-- =================================
+             FAMILY & AFFECTED INFORMATION
+             ================================= -->
+
+        <a
+                th:href="@{/victim/family-information}"
+                class="action-card">
+
+            <div class="action-icon">
+                👨‍👩‍👧
+            </div>
+
+            <h4>
+                Family & Affected Information
+            </h4>
+
+            <p>
+                Provide a summary of your affected family,
+                including family size, children below 12,
+                male and female members, and shelter
+                requirements.
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================
+             GN REPORT
+             ================================= -->
+
+        <!--
+             If the victim has NOT submitted
+             a GN report, show Submit GN Report.
+        -->
+
+        <a
+                th:if="${gnReport == null}"
+                th:href="@{/gn-reports/submit/{id}(id=${victim.id})}"
+                class="action-card">
+
+            <div class="action-icon">
+                📄
+            </div>
+
+            <h4>
+                Submit GN Report
+            </h4>
+
+            <p>
+                Upload your GN report and provide
+                the required GN officer and division
+                information.
+            </p>
+
+        </a>
+
+
+        <!--
+             If the victim HAS already submitted
+             a GN report, show View GN Report Status.
+        -->
+
+        <a
+                th:if="${gnReport != null}"
+                th:href="@{/gn-reports/status/{id}(id=${victim.id})}"
+                class="action-card">
+
+            <div class="action-icon">
+                📄
+            </div>
+
+            <h4>
+                View GN Report Status
+            </h4>
+
+            <p>
+                View the verification status of your
+                submitted GN report.
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================
+             NEEDS ASSESSMENT
+             ================================= -->
+
+        <a
+                th:href="@{/needs-assessment/form}"
+                class="action-card">
+
+            <div class="action-icon">
+                📋
+            </div>
+
+            <h4>
+                Needs Assessment
+            </h4>
+
+            <p>
+                Provide information about your current
+                situation and the assistance you may require.
+                Your information will be reviewed by the
+                Relief Coordinator.
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================
+             MY INFORMATION
+             ================================= -->
+
+        <a
+                href="#"
+                class="action-card">
+
+            <div class="action-icon">
+                👤
+            </div>
+
+            <h4>
+                My Information
+            </h4>
+
+            <p>
+                Review the personal information
+                registered in the system.
+            </p>
+
+        </a>
+
+
+
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

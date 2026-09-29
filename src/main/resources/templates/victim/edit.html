@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Record Victim Information - FRDMS</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #e6e8e9;
+
+            color: #1b3557;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            background: #0c1721;
+
+            color: white;
+
+            padding: 22px 60px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+
+            font-size: 30px;
+        }
+
+
+        .header span {
+
+            color: #9bc5ff;
+
+            font-size: 18px;
+        }
+
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .container {
+
+            max-width: 950px;
+
+            margin: 55px auto;
+
+            padding: 0 25px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 40px;
+
+            box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.10);
+
+            border-top: 6px solid #558ee0;
+        }
+
+
+        /* ================= TITLE ================= */
+
+        .title-section {
+
+            margin-bottom: 30px;
+        }
+
+
+        .title-section h2 {
+
+            margin: 0;
+
+            font-size: 32px;
+
+            color: #173457;
+        }
+
+
+        .title-section p {
+
+            margin-top: 8px;
+
+            color: #47758a;
+
+            font-size: 17px;
+        }
+
+
+        /* ================= VM-02 NOTE ================= */
+
+        .info-note {
+
+            margin-bottom: 30px;
+
+            padding: 16px 20px;
+
+            background: #cfe8f7;
+
+            border-left: 5px solid #558eaa;
+
+            border-radius: 8px;
+
+            color: #28536b;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .form-group.full {
+
+            grid-column: span 2;
+        }
+
+
+        label {
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #29445e;
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #ccd5dc;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            font-family: Arial, sans-serif;
+
+            outline: none;
+
+            background: white;
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: #558ee0;
+
+            box-shadow:
+                    0 0 0 3px rgba(85, 142, 224, 0.12);
+        }
+
+
+        textarea {
+
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+
+        /* ================= READ ONLY ================= */
+
+        .readonly {
+
+            background: #f1f3f5;
+
+            color: #5c6d79;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 15px;
+
+            margin-top: 35px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e0e4e7;
+        }
+
+
+        .btn {
+
+            text-decoration: none;
+
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 9px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: inline-block;
+        }
+
+
+        .btn-save {
+
+            background: #558ee0;
+
+            color: white;
+        }
+
+
+        .btn-save:hover {
+
+            background: #3977cc;
+        }
+
+
+        .btn-cancel {
+
+            background: #e6e8e9;
+
+            color: #29445e;
+        }
+
+
+        .btn-cancel:hover {
+
+            background: #d5dadd;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                padding: 20px;
+            }
+
+
+            .header h1 {
+
+                font-size: 22px;
+            }
+
+
+            .header span {
+
+                display: none;
+            }
+
+
+            .container {
+
+                margin: 30px auto;
+            }
+
+
+            .card {
+
+                padding: 25px;
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .form-group.full {
+
+                grid-column: span 1;
+            }
+
+
+            .actions {
+
+                flex-direction: column;
+            }
+
+
+            .btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <h1>Flood Disaster Relief System</h1>
+
+    <span>Victim Management Module</span>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <div class="card">
+
+
+        <!-- ================= TITLE ================= -->
+
+        <div class="title-section">
+
+            <h2>Record Victim Information</h2>
+
+            <p>
+                Project Manager - Review and update victim information.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= VM-02 DESCRIPTION ================= -->
+
+        <div class="info-note">
+
+            <strong>VM-02:</strong>
+
+            Record accurate victim information so that affected
+            individuals can be properly identified and considered
+            for disaster relief.
+
+        </div>
+
+
+
+        <!-- ================= FORM ================= -->
+
+        <form th:action="@{/victims/update/{id}(id=${victim.id})}"
+              method="post">
+
+
+            <div class="form-grid">
+
+
+                <!-- ================= FULL NAME ================= -->
+
+                <div class="form-group">
+
+                    <label for="fullName">
+                        Full Name
+                    </label>
+
+                    <input type="text"
+                           id="fullName"
+                           name="fullName"
+                           th:value="${victim.fullName}"
+                           placeholder="Enter full name"
+                           required>
+
+                </div>
+
+
+
+                <!-- ================= NIC NUMBER ================= -->
+
+                <div class="form-group">
+
+                    <label for="nicNumber">
+                        NIC Number
+                    </label>
+
+                    <input type="text"
+                           id="nicNumber"
+                           name="nicNumber"
+                           th:value="${victim.nicNumber}"
+                           placeholder="Enter NIC number"
+                           required>
+
+                </div>
+
+
+
+                <!-- ================= PHONE NUMBER ================= -->
+
+                <div class="form-group">
+
+                    <label for="phoneNumber">
+                        Phone Number
+                    </label>
+
+                    <input type="text"
+                           id="phoneNumber"
+                           name="phoneNumber"
+                           th:value="${victim.phoneNumber}"
+                           placeholder="Enter 10-digit phone number"
+                           maxlength="10"
+                           required>
+
+                </div>
+
+
+
+                <!-- ================= REGISTRATION DATE ================= -->
+
+                <div class="form-group">
+
+                    <label for="registrationDate">
+                        Registration Date
+                    </label>
+
+                    <input type="text"
+                           id="registrationDate"
+                           th:value="${#temporals.format(victim.registrationDate, 'dd MMM yyyy')}"
+                           class="readonly"
+                           readonly>
+
+                </div>
+
+
+
+                <!-- ================= ADDRESS ================= -->
+
+                <div class="form-group full">
+
+                    <label for="address">
+                        Address
+                    </label>
+
+                    <textarea id="address"
+                              name="address"
+                              th:text="${victim.address}"
+                              placeholder="Enter complete address"
+                              required></textarea>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="actions">
+
+
+                <a th:href="@{/victims/{id}(id=${victim.id})}"
+                   class="btn btn-cancel">
+
+                    ← Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="btn btn-save">
+
+                    Save Victim Information
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cash Donations | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/cash-donations.css}">
+
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <header class="page-header">
+
+        <div class="brand">
+            FRDMS
+        </div>
+
+        <span class="badge">
+            DONATION MANAGEMENT
+        </span>
+
+        <h1>
+            Cash Donations
+        </h1>
+
+        <p>
+            View cash contributions submitted by donors
+            for flood relief and disaster recovery activities.
+        </p>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="donation-card">
+
+
+        <!-- =========================
+             CARD HEADER
+        ========================== -->
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    Recorded Cash Donations
+                </h2>
+
+                <p>
+                    Cash donations submitted through the
+                    donor donation form.
+                </p>
+
+            </div>
+
+
+            <!-- HEADER ACTIONS -->
+
+            <div class="header-actions">
+
+                <a th:href="@{/finance/dashboard}"
+                   class="dashboard-button">
+
+                    ← Back to Dashboard
+
+                </a>
+
+
+                <a th:href="@{/donations/goods}"
+                   class="switch-button">
+
+                    View Goods Donations
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             EMPTY STATE
+        ========================== -->
+
+        <div class="empty-state"
+             th:if="${#lists.isEmpty(cashDonations)}">
+
+            <div class="empty-icon">
+                ₹
+            </div>
+
+            <h3>
+                No Cash Donations
+            </h3>
+
+            <p>
+                No cash donations have been submitted yet.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             CASH DONATION TABLE
+        ========================== -->
+
+        <div class="table-container"
+             th:unless="${#lists.isEmpty(cashDonations)}">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Donor ID
+                    </th>
+
+                    <th>
+                        Cash Amount
+                    </th>
+
+                    <th>
+                        Description
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="donation : ${cashDonations}">
+
+
+                    <!-- =========================
+                         DONATION ID
+                    ========================== -->
+
+                    <td th:text="${donation.id}">
+                        1
+                    </td>
+
+
+                    <!-- =========================
+                         DONOR ID
+                    ========================== -->
+
+                    <td th:text="${donation.donorId}">
+                        2
+                    </td>
+
+
+                    <!-- =========================
+                         CASH AMOUNT
+                    ========================== -->
+
+                    <td class="amount"
+                        th:text="${donation.cashAmount != null
+                                  ? 'Rs. ' + #numbers.formatDecimal(donation.cashAmount, 1, 2)
+                                  : 'Rs. 0.00'}">
+
+                        Rs. 15,000.00
+
+                    </td>
+
+
+                    <!-- =========================
+                         DESCRIPTION
+                    ========================== -->
+
+                    <td th:text="${donation.description != null && !donation.description.isBlank()
+                                  ? donation.description
+                                  : 'No description'}">
+
+                        Flood relief support
+
+                    </td>
+
+
+                    <!-- =========================
+                         STATUS
+                    ========================== -->
+
+                    <td>
+
+                        <span class="status"
+                              th:text="${donation.status != null
+                                        ? donation.status
+                                        : 'PENDING'}">
+
+                            PENDING
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- =========================
+                         ACTIONS
+                    ========================== -->
+
+                    <td>
+
+                        <!--
+                            ACCEPT / REJECT BUTTONS
+                            ONLY FOR PENDING DONATIONS
+                        -->
+
+                        <div th:if="${donation.status == 'PENDING'}"
+                             class="action-buttons">
+
+
+                            <!-- =========================
+                                 ACCEPT
+                            ========================== -->
+
+                            <form th:action="@{/donations/accept/{id}(id=${donation.id})}"
+                                  method="post">
+
+                                <input type="hidden"
+                                       name="type"
+                                       value="CASH">
+
+                                <button type="submit"
+                                        class="accept-button">
+
+                                    Accept
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- =========================
+                                 REJECT
+                            ========================== -->
+
+                            <form th:action="@{/donations/reject/{id}(id=${donation.id})}"
+                                  method="post">
+
+                                <input type="hidden"
+                                       name="type"
+                                       value="CASH">
+
+                                <button type="submit"
+                                        class="reject-button">
+
+                                    Reject
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <!-- =========================
+                             PROCESSED
+                        ========================== -->
+
+                        <span th:if="${donation.status != 'PENDING'}"
+                              class="processed-text">
+
+                            Processed
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <div class="footer">
+
+            <span class="yellow-dot"></span>
+
+            <span>
+                People • Support • Resilience
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

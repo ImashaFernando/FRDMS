@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Update Flood Event | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/edit.css}">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header class="edit-header">
+
+    <div class="brand-area">
+
+        <div class="brand-logo">
+            🌊
+        </div>
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                FRDMS
+            </div>
+
+            <div class="brand-subtitle">
+                Flood Relief & Disaster Management System
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <nav class="header-navigation">
+
+        <a th:href="@{/disasters}"
+           class="nav-link active">
+
+            🌊 Flood Events
+
+        </a>
+
+
+        <a th:href="@{/victims}"
+           class="nav-link">
+
+            👤 Victims
+
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN PAGE
+     ========================================================= -->
+
+<main class="page-container">
+
+
+    <!-- =====================================================
+         BREADCRUMB
+         ===================================================== -->
+
+    <div class="breadcrumb">
+
+        <a th:href="@{/disasters}">
+            Flood Events
+        </a>
+
+        <span>›</span>
+
+        <span>Update Event</span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         HERO SECTION
+         ===================================================== -->
+
+    <section class="hero-section">
+
+
+        <div class="hero-icon">
+            ✏️
+        </div>
+
+
+        <div class="hero-content">
+
+            <div class="hero-label">
+                DISASTER MANAGEMENT
+            </div>
+
+            <h1>
+                Update Flood Event
+            </h1>
+
+            <p>
+                Review and update the recorded information
+                for this flood disaster event.
+            </p>
+
+        </div>
+
+
+        <div class="event-id-card">
+
+            <span>
+                EVENT ID
+            </span>
+
+            <strong th:text="${disaster.id}">
+                1
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MAIN EDIT CARD
+         ===================================================== -->
+
+    <section class="edit-card">
+
+
+        <!-- =================================================
+             CARD HEADER
+             ================================================= -->
+
+        <div class="card-header">
+
+            <div>
+
+                <div class="card-header-title">
+                    Disaster Information
+                </div>
+
+                <div class="card-header-subtitle">
+                    Update the information that has changed.
+                </div>
+
+            </div>
+
+
+            <div class="status-badge">
+                ● EDITING RECORD
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATION NOTICE
+             ================================================= -->
+
+        <div class="information-notice">
+
+            <div class="notice-icon">
+                🔒
+            </div>
+
+            <div class="notice-content">
+
+                <strong>
+                    Existing event information
+                </strong>
+
+                <p>
+                    The event date belongs to the original
+                    flood event and is retained automatically.
+                    You only need to update the information
+                    that has changed.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORM
+             ================================================= -->
+
+        <form th:action="@{/disasters/update/{id}(id=${disaster.id})}"
+              th:object="${disaster}"
+              method="post"
+              class="disaster-form">
+
+
+            <!-- =================================================
+                 SECTION TITLE
+                 ================================================= -->
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <div>
+
+                    <h2>
+                        Flood Event Details
+                    </h2>
+
+                    <p>
+                        Basic information about this disaster.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FORM GRID
+                 ================================================= -->
+
+            <div class="form-grid">
+
+
+                <!-- =================================================
+                     EVENT NAME
+                     ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="eventName">
+
+                        Flood Event Name
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🌊
+                        </span>
+
+                        <input type="text"
+                               id="eventName"
+                               th:field="*{eventName}"
+                               placeholder="Enter flood event name"
+                               autocomplete="off">
+
+                    </div>
+
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('eventName')}"
+                         th:errors="*{eventName}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     EVENT DATE
+                     ================================================= -->
+
+                <div class="form-group">
+
+                    <label for="eventDate">
+
+                        Event Date
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="input-wrapper date-wrapper">
+
+                        <span class="input-icon">
+                            📅
+                        </span>
+
+                        <input type="date"
+                               id="eventDate"
+                               th:field="*{eventDate}"
+                               readonly
+                               aria-readonly="true">
+
+                        <span class="locked-icon">
+                            🔒
+                        </span>
+
+                    </div>
+
+
+                    <div class="field-help">
+
+                        🔒 Original event date is retained.
+
+                    </div>
+
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('eventDate')}"
+                         th:errors="*{eventDate}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SEVERITY
+                     ================================================= -->
+
+                <div class="form-group full-width">
+
+                    <label for="severityLevel">
+
+                        Severity Level
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+                        <span class="input-icon">
+                            ⚠️
+                        </span>
+
+                        <select id="severityLevel"
+                                th:field="*{severityLevel}">
+
+                            <option value="">
+                                Select severity level
+                            </option>
+
+                            <option value="LOW">
+                                🟢 LOW
+                            </option>
+
+                            <option value="MEDIUM">
+                                🟡 MEDIUM
+                            </option>
+
+                            <option value="HIGH">
+                                🟠 HIGH
+                            </option>
+
+                            <option value="CRITICAL">
+                                🔴 CRITICAL
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('severityLevel')}"
+                         th:errors="*{severityLevel}">
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                     ================================================= -->
+
+                <div class="form-group full-width">
+
+                    <label for="description">
+
+                        Flood Event Description
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="textarea-wrapper">
+
+                        <textarea id="description"
+                                  th:field="*{description}"
+                                  placeholder="Describe the flood event, affected situation, damage or other important information..."
+                                  rows="6">
+                        </textarea>
+
+                    </div>
+
+
+                    <div class="field-help">
+                        Provide clear and useful information
+                        about the current disaster situation.
+                    </div>
+
+
+                    <div class="field-error"
+                         th:if="${#fields.hasErrors('description')}"
+                         th:errors="*{description}">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 UPDATE ACTIONS
+                 ================================================= -->
+
+            <div class="action-area">
+
+
+                <a th:href="@{/disasters/details/{id}(id=${disaster.id})}"
+                   class="cancel-button">
+
+                    ← Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="update-button">
+
+                    <span>
+                        ✓
+                    </span>
+
+                    Update Flood Event
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             WORKFLOW
+             ================================================= -->
+
+        <div class="workflow-section">
+
+
+            <div class="workflow-heading">
+
+                <div class="workflow-icon">
+                    🔄
+                </div>
+
+                <div>
+
+                    <h3>
+                        Disaster Management Workflow
+                    </h3>
+
+                    <p>
+                        Current stage of the disaster management process.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="workflow-steps">
+
+
+                <!-- STEP 1 -->
+
+                <div class="workflow-step completed">
+
+                    <div class="step-number">
+                        ✓
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Flood Event
+                        </strong>
+
+                        <span>
+                            Event registered
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 2 -->
+
+                <div class="workflow-step current">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Update Information
+                        </strong>
+
+                        <span>
+                            Current stage
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 3 -->
+
+                <div class="workflow-step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Review Families
+                        </strong>
+
+                        <span>
+                            Registered victims
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 4 -->
+
+                <div class="workflow-step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div class="step-content">
+
+                        <strong>
+                            Relief Coordination
+                        </strong>
+
+                        <span>
+                            Coordinate assistance
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

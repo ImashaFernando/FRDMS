@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Update Donor Information</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/edit-donor.css}">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <header class="page-header">
+    <div>
+      <h1>Update Donor Information</h1>
+      <p>Update your donor profile details</p>
+    </div>
+
+    <a th:href="@{/donors/details}" class="back-btn">
+      ← Back
+    </a>
+  </header>
+
+
+  <!-- Main Card -->
+  <main class="form-container">
+
+    <div class="form-title">
+      <h2>Donor Details</h2>
+      <p>Please update the information you want to change.</p>
+    </div>
+
+
+    <form th:action="@{/donors/update/{id}(id=${donor.id})}"
+          th:object="${donor}"
+          method="post">
+
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">
+          Username
+        </label>
+
+        <input type="text"
+               id="username"
+               th:field="*{username}"
+               placeholder="Enter username"
+               required>
+
+        <small class="error"
+               th:if="${#fields.hasErrors('username')}"
+               th:errors="*{username}">
+        </small>
+      </div>
+
+
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="fullName">
+          Full Name
+        </label>
+
+        <input type="text"
+               id="fullName"
+               th:field="*{fullName}"
+               placeholder="Enter full name"
+               required>
+
+        <small class="error"
+               th:if="${#fields.hasErrors('fullName')}"
+               th:errors="*{fullName}">
+        </small>
+      </div>
+
+
+      <!-- Contact Number -->
+      <div class="form-group">
+        <label for="contactNumber">
+          Contact Number
+        </label>
+
+        <input type="text"
+               id="contactNumber"
+               th:field="*{contactNumber}"
+               placeholder="Enter contact number"
+               required>
+
+        <small class="error"
+               th:if="${#fields.hasErrors('contactNumber')}"
+               th:errors="*{contactNumber}">
+        </small>
+      </div>
+
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">
+          Email Address
+        </label>
+
+        <input type="email"
+               id="email"
+               th:field="*{email}"
+               placeholder="Enter email address"
+               required>
+
+        <small class="error"
+               th:if="${#fields.hasErrors('email')}"
+               th:errors="*{email}">
+        </small>
+      </div>
+
+
+      <!-- Address -->
+      <div class="form-group">
+        <label for="address">
+          Address
+        </label>
+
+        <textarea id="address"
+                  th:field="*{address}"
+                  placeholder="Enter your address"
+                  rows="4">
+                </textarea>
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+
+        <a th:href="@{/donors/details}"
+           class="cancel-btn">
+          Cancel
+        </a>
+
+        <button type="submit"
+                class="update-btn">
+          Update Details
+        </button>
+
+      </div>
+
+    </form>
+
+  </main>
+
+</div>
+
+</body>
+</html>
