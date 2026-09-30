@@ -35,6 +35,23 @@
             font-weight: 700;
             text-decoration: none;
         }
+
+        /* Disaster dropdown */
+        #disasterName {
+            color: #000000;
+        }
+
+        #disasterName option {
+            color: #000000;
+        }
+
+        #disasterName option[value=""] {
+            color: #6c757d;
+        }
+
+        #disasterName:has(option[value=""]:checked) {
+            color: #6c757d;
+        }
     </style>
 </head>
 
@@ -82,6 +99,7 @@
 
                 </div>
 
+
                 <div class="form-group">
 
                     <label for="contactNumber">
@@ -100,6 +118,38 @@
                     </div>
 
                 </div>
+
+
+                <!-- Disaster Name -->
+                <div class="form-group">
+
+                    <label for="disasterName">
+                        Disaster Name
+                    </label>
+
+                    <select id="disasterName"
+                            name="disasterName"
+                            required>
+
+                        <option value="">
+                            Select Disaster
+                        </option>
+
+                        <option th:each="disaster : ${disasters}"
+                                th:value="${disaster.eventName}"
+                                th:text="${disaster.eventName}"
+                                th:selected="${shelter.disasterName == disaster.eventName}">
+                        </option>
+
+                    </select>
+
+                    <div class="field-error"
+                         th:if="${disasterNameError}"
+                         th:text="${disasterNameError}">
+                    </div>
+
+                </div>
+
 
                 <div class="form-group">
 
@@ -121,6 +171,7 @@
                     </div>
 
                 </div>
+
 
                 <div class="form-group">
 
@@ -156,12 +207,14 @@
 
                 </div>
 
+
                 <button type="submit"
                         class="btn">
                     Update Shelter Details
                 </button>
 
             </form>
+
 
             <a th:href="@{/staff/shelters/{id}(id=${shelter.id})}"
                class="back-link">

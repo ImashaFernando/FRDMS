@@ -1,5 +1,6 @@
 package com.frdms.frdms.shelter_management.controller;
 
+import com.frdms.frdms.disaster_management.service.DisasterService;
 import com.frdms.frdms.shelter_management.entity.Shelter;
 import com.frdms.frdms.shelter_management.service.ShelterService;
 import jakarta.validation.Valid;
@@ -16,17 +17,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ShelterController {
 
     private final ShelterService shelterService;
+    private final DisasterService disasterService;
 
     public ShelterController(
-            ShelterService shelterService
+            ShelterService shelterService,
+            DisasterService disasterService
     ) {
         this.shelterService = shelterService;
+        this.disasterService = disasterService;
     }
-
-    // =========================
-    // SM-US1
-    // SHOW REGISTER SHELTER FORM
-    // =========================
 
     @GetMapping("/staff/shelters/register")
     public String showRegisterShelterForm(Model model) {
@@ -36,23 +35,31 @@ public class ShelterController {
                 new Shelter()
         );
 
+        // Load disasters created from Disaster Management
+        model.addAttribute(
+                "disasters",
+                disasterService.getAllDisasters()
+        );
+
         return "shelter/shelter-form";
     }
-
-
-    // =========================
-    // SM-US1
-    // REGISTER SHELTER
-    // =========================
 
     @PostMapping("/staff/shelters/register")
     public String registerShelter(
             @Valid Shelter shelter,
             BindingResult bindingResult,
+            Model model,
             RedirectAttributes redirectAttributes
     ) {
 
         if (bindingResult.hasErrors()) {
+
+            // Reload disasters if validation fails
+            model.addAttribute(
+                    "disasters",
+                    disasterService.getAllDisasters()
+            );
+
             return "shelter/shelter-form";
         }
 
@@ -74,14 +81,15 @@ public class ShelterController {
                     exception.getMessage()
             );
 
+            // Reload disasters if registration fails
+            model.addAttribute(
+                    "disasters",
+                    disasterService.getAllDisasters()
+            );
+
             return "shelter/shelter-form";
         }
     }
-
-
-    // =========================
-    // VIEW ONE SHELTER
-    // =========================
 
     @GetMapping("/staff/shelters/{id}")
     public String viewShelterDetails(
@@ -100,12 +108,6 @@ public class ShelterController {
         return "shelter/shelter-view";
     }
 
-
-    // =========================
-    // SM-US4
-    // VIEW ALL SHELTERS
-    // =========================
-
     @GetMapping("/staff/shelters")
     public String viewShelters(Model model) {
 
@@ -116,11 +118,6 @@ public class ShelterController {
 
         return "shelter/shelter-list";
     }
-
-
-    // =========================
-    // SHOW EDIT SHELTER FORM
-    // =========================
 
     @GetMapping("/staff/shelters/{id}/edit")
     public String showEditShelterForm(
@@ -136,186 +133,68 @@ public class ShelterController {
                 shelter
         );
 
+        // Load disasters created from Disaster Management
+        model.addAttribute(
+                "disasters",
+                disasterService.getAllDisasters()
+        );
+
         return "shelter/shelter-edit";
     }
-
-
-    // =========================
-    // SM-US5 / SM-US10
-    // UPDATE SHELTER DETAILS
-    // Contact Person
-    // Contact Number
-    // Current Occupancy
-    // Status
-    // =========================
 
     @PostMapping("/staff/shelters/{id}/update")
     public String updateShelterDetails(
             @PathVariable("id") Long id,
-            @RequestParam("contactPerson") String contactPerson,
-            @RequestParam("contactNumber") String contactNumber,
-            @RequestParam(value = "currentOccupancy", required = false) Integer currentOccupancy,
-            @RequestParam("status") Shelter.ShelterStatus status,
+
+            @RequestParam("contactPerson")
+            String contactPerson,
+
+            @RequestParam("contactNumber")
+            String contactNumber,
+
+            @RequestParam("disasterName")
+            String disasterName,
+
+            @RequestParam(
+                    value = "currentOccupancy",
+                    required = false
+            )
+            Integer currentOccupancy,
+
+            @RequestParam("status")
+            Shelter.ShelterStatus status,
+
             RedirectAttributes redirectAttributes
     ) {
 
-        boolean hasErrors = false;
+        try {
 
-        if (contactPerson == null || contactPerson.trim().isEmpty()) {
-
-            redirectAttributes.addFlashAttribute(
-                    "contactPersonError",
-                    "Contact person cannot be empty."
-            );
-
-            hasErrors = true;
-        }
-
-        if (contactNumber == null || contactNumber.trim().isEmpty()) {
-
-            redirectAttributes.addFlashAttribute(
-                    "contactNumberError",
-                    "Contact number cannot be empty."
-            );
-
-            hasErrors = true;
-
-        } else if (!contactNumber.matches("^0\\d{9}$")) {
-
-            redirectAttributes.addFlashAttribute(
-                    "contactNumberError",
-                    "Contact number must be a valid 10-digit number starting with 0."
-            );
-
-            hasErrors = true;
-        }
-
-        if (currentOccupancy == null) {
-
-            redirectAttributes.addFlashAttribute(
-                    "currentOccupancyError",
-                    "Current occupancy is required."
-            );
-
-            hasErrors = true;
-
-        } else if (currentOccupancy < 0) {
-
-            redirectAttributes.addFlashAttribute(
-                    "currentOccupancyError",
-                    "Current occupancy cannot be negative."
-            );
-
-            hasErrors = true;
-        }
-
-        if (hasErrors) {
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedContactPerson",
-                    contactPerson
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedContactNumber",
-                    contactNumber
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedCurrentOccupancy",
-                    currentOccupancy
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedStatus",
+            shelterService.updateShelterDetails(
+                    id,
+                    contactPerson,
+                    contactNumber,
+                    disasterName,
+                    currentOccupancy,
                     status
             );
 
-            return "redirect:/staff/shelters/" + id + "/edit";
-        }
-
-        try {
-
-            Shelter updatedShelter =
-                    shelterService.updateShelterDetails(
-                            id,
-                            contactPerson,
-                            contactNumber,
-                            currentOccupancy,
-                            status
-                    );
-
-            if (updatedShelter.getStatus() != status) {
-
-                redirectAttributes.addFlashAttribute(
-                        "warningMessage",
-                        "Shelter details updated, but status was automatically set to FULL because current occupancy has reached maximum capacity."
-                );
-
-            } else {
-
-                redirectAttributes.addFlashAttribute(
-                        "successMessage",
-                        "Shelter details updated successfully."
-                );
-            }
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Shelter details updated successfully."
+            );
 
             return "redirect:/staff/shelters/" + id;
 
         } catch (IllegalArgumentException exception) {
 
-            String errorMessage = exception.getMessage();
-
             redirectAttributes.addFlashAttribute(
-                    "submittedContactPerson",
-                    contactPerson
+                    "errorMessage",
+                    exception.getMessage()
             );
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedContactNumber",
-                    contactNumber
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedCurrentOccupancy",
-                    currentOccupancy
-            );
-
-            redirectAttributes.addFlashAttribute(
-                    "submittedStatus",
-                    status
-            );
-
-            if (errorMessage.toLowerCase().contains("occupancy")) {
-
-                redirectAttributes.addFlashAttribute(
-                        "currentOccupancyError",
-                        errorMessage
-                );
-
-            } else if (errorMessage.toLowerCase().contains("status")) {
-
-                redirectAttributes.addFlashAttribute(
-                        "statusError",
-                        errorMessage
-                );
-
-            } else {
-
-                redirectAttributes.addFlashAttribute(
-                        "errorMessage",
-                        errorMessage
-                );
-            }
 
             return "redirect:/staff/shelters/" + id + "/edit";
         }
     }
-
-
-    // =========================
-    // DELETE SHELTER
-    // =========================
 
     @PostMapping("/staff/shelters/{id}/delete")
     public String deleteShelter(

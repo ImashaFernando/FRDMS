@@ -12,6 +12,24 @@
 
     <link rel="stylesheet"
           th:href="@{/css/chamya-theme.css}">
+
+    <style>
+        #disasterName {
+            color: #000000;
+        }
+
+        #disasterName option {
+            color: #000000;
+        }
+
+        #disasterName option[value=""] {
+            color: #6c757d;
+        }
+
+        #disasterName:has(option[value=""]:checked) {
+            color: #6c757d;
+        }
+    </style>
 </head>
 
 <body>
@@ -88,18 +106,27 @@
             <!-- Disaster Name -->
             <div class="form-group">
 
-                <label for="disasterName">
-                    Disaster Name
-                </label>
+                <div class="form-group">
+                    <label for="disasterName">Disaster Name</label>
 
-                <select id="disasterName"
-                        th:field="*{disasterName}">
+                    <select id="disasterName"
+                            name="disasterName"
+                            th:field="*{disasterName}">
 
-                    <option value="">
-                        Select Disaster
-                    </option>
+                        <option value="">Select Disaster</option>
 
-                </select>
+                        <option th:each="disaster : ${disasters}"
+                                th:value="${disaster.eventName}"
+                                th:text="${disaster.eventName}">
+                        </option>
+
+                    </select>
+
+                    <div class="error-message"
+                         th:if="${#fields.hasErrors('disasterName')}"
+                         th:errors="*{disasterName}">
+                    </div>
+                </div>
 
                 <div class="field-error"
                      th:if="${#fields.hasErrors('disasterName')}"

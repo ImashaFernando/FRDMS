@@ -630,7 +630,7 @@ public class SecurityConfig {
                                     else if (isStaff) {
 
                                         response.sendRedirect(
-                                                "/staff/shelters"
+                                                "/staff/dashboard"
                                         );
 
                                     }
