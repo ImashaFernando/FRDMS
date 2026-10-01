@@ -168,7 +168,7 @@ public class VolunteerProfileService {
 
     public List<VolunteerProfile> getAllVolunteerProfiles() {
 
-        return volunteerProfileRepository.findAll();
+        return volunteerProfileRepository.findAllByOrderByIdDesc();
     }
 
 

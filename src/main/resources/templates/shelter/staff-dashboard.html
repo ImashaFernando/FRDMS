@@ -487,6 +487,9 @@
       <!-- =========================
            ELIGIBLE FAMILIES
       ========================= -->
+      <!-- =========================
+           ELIGIBLE FAMILIES
+      ========================= -->
 
       <div class="module-card">
 
@@ -494,9 +497,9 @@
 
           <h3>
 
-                        <span class="module-icon">
-                            👨‍👩‍👧
-                        </span>
+            <span class="module-icon">
+                👨‍👩‍👧
+            </span>
 
             Eligible Families
 
@@ -512,13 +515,15 @@
         </div>
 
 
-        <span class="module-button-disabled">
+        <a th:href="@{/staff/eligible-families}"
+           class="module-button">
 
-                    View Families
+          View Families
 
-                </span>
+        </a>
 
       </div>
+
 
 
 
@@ -550,11 +555,10 @@
         </div>
 
 
-        <span class="module-button-disabled">
-
-                    Allocations
-
-                </span>
+        <a th:href="@{/staff/allocations}"
+           class="module-button">
+          Allocations
+        </a>
 
       </div>
 

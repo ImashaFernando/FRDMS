@@ -4,6 +4,7 @@ import com.frdms.frdms.volunteer_management.entity.VolunteerAccount;
 import com.frdms.frdms.volunteer_management.entity.VolunteerProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface VolunteerProfileRepository
@@ -16,4 +17,6 @@ public interface VolunteerProfileRepository
     boolean existsByVolunteerAccount(
             VolunteerAccount volunteerAccount
     );
+
+    List<VolunteerProfile> findAllByOrderByIdDesc();
 }

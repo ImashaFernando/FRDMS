@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Allocations - Shelter Management</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dbeafe;
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            background: linear-gradient(135deg, #0b1f3a, #163d70);
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+           ========================= */
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+
+            margin: 30px auto;
+        }
+
+
+        /* =========================
+           PAGE TITLE
+           ========================= */
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #0b1f3a;
+
+            margin-bottom: 6px;
+        }
+
+        .page-title p {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           ALLOCATION COUNT
+           ========================= */
+
+        .allocation-count {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 10px 18px;
+
+            background-color: #0b1f3a;
+
+            color: white;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .allocation-count span {
+            margin-left: 6px;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           TABLE CONTAINER
+           ========================= */
+
+        .table-container {
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+
+        /* =========================
+           TABLE
+           ========================= */
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1000px;
+        }
+
+        thead {
+            background-color: #0b1f3a;
+
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e5e5e5;
+
+            vertical-align: middle;
+        }
+
+        th {
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            text-align: left;
+        }
+
+        td {
+            font-size: 14px;
+
+            text-align: left;
+        }
+
+        tbody tr:hover {
+            background-color: #f7f9fc;
+        }
+
+
+        /* =========================
+           CENTERED COLUMNS
+           ========================= */
+
+        .center {
+            text-align: center !important;
+        }
+
+
+        /* =========================
+           EMPTY MESSAGE
+           ========================= */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: #777;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           BOTTOM BACK LINK
+           ========================= */
+
+        .bottom-navigation {
+            margin-top: 25px;
+
+            padding-top: 25px;
+
+            text-align: left;
+        }
+
+        .back-link {
+            color: #000000;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+     ========================= -->
+
+<header class="header">
+
+    <h1>
+        Shelter Management
+    </h1>
+
+</header>
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         PAGE TITLE
+         ========================= -->
+
+    <div class="page-title">
+
+        <h2>
+            Shelter Allocations
+        </h2>
+
+        <p>
+            View affected families currently allocated to shelters.
+        </p>
+
+
+        <!-- =========================
+             ALLOCATION COUNT
+             ========================= -->
+
+        <div class="allocation-count">
+
+            Total Allocations:
+
+            <span th:text="${#lists.size(allocations)}">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ALLOCATION TABLE
+         ========================= -->
+
+    <div class="table-container">
+
+
+        <!-- Allocations available -->
+
+        <table th:if="${!#lists.isEmpty(allocations)}">
+
+            <thead>
+
+            <tr>
+
+                <th>
+                    Family / Victim Name
+                </th>
+
+                <th>
+                    NIC Number
+                </th>
+
+                <th>
+                    Disaster
+                </th>
+
+                <th class="center">
+                    Family Members
+                </th>
+
+                <th>
+                    Shelter Name
+                </th>
+
+                <th>
+                    Location
+                </th>
+
+                <th class="center">
+                    Shelter Capacity
+                </th>
+
+                <th class="center">
+                    Current Occupancy
+                </th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="allocation : ${allocations}">
+
+
+                <!-- =========================
+                     FAMILY NAME
+                     ========================= -->
+
+                <td th:text="${allocation.affectedFamily.victim.fullName}">
+
+                    Family Name
+
+                </td>
+
+
+                <!-- =========================
+                     NIC
+                     ========================= -->
+
+                <td th:text="${allocation.affectedFamily.victim.nicNumber}">
+
+                    NIC Number
+
+                </td>
+
+
+                <!-- =========================
+                     DISASTER
+                     ========================= -->
+
+                <td th:text="${allocation.affectedFamily.victim.disaster.eventName}">
+
+                    Disaster
+
+                </td>
+
+
+                <!-- =========================
+                     FAMILY SIZE
+                     ========================= -->
+
+                <td class="center"
+                    th:text="${allocation.affectedFamily.totalFamilyMembers}">
+
+                    0
+
+                </td>
+
+
+                <!-- =========================
+                     SHELTER NAME
+                     ========================= -->
+
+                <td th:text="${allocation.shelter.shelterName}">
+
+                    Shelter Name
+
+                </td>
+
+
+                <!-- =========================
+                     LOCATION
+                     ========================= -->
+
+                <td th:text="${allocation.shelter.location}">
+
+                    Location
+
+                </td>
+
+
+                <!-- =========================
+                     SHELTER CAPACITY
+                     ========================= -->
+
+                <td class="center"
+                    th:text="${allocation.shelter.maximumCapacity}">
+
+                    0
+
+                </td>
+
+
+                <!-- =========================
+                     CURRENT OCCUPANCY
+                     ========================= -->
+
+                <td class="center"
+                    th:text="${allocation.shelter.currentOccupancy}">
+
+                    0
+
+                </td>
+
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <!-- =========================
+             NO ALLOCATIONS
+             ========================= -->
+
+        <div class="empty-message"
+             th:if="${#lists.isEmpty(allocations)}">
+
+            No families have been allocated to shelters yet.
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         BOTTOM BACK LINK
+         ========================= -->
+
+    <div class="bottom-navigation">
+
+        <a th:href="@{/staff/dashboard}"
+           class="back-link">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
