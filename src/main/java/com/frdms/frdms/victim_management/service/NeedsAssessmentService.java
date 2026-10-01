@@ -60,6 +60,21 @@ public class NeedsAssessmentService {
 
 
     // =========================================================
+    // GET NEEDS ASSESSMENT BY ID
+    // =========================================================
+    // This method is added for the Relief Requirement workflow.
+    // It uses the existing getAssessmentById() method.
+    //
+    // Existing functionality is NOT changed.
+    // =========================================================
+
+    public NeedsAssessment getNeedsAssessmentById(Long id) {
+
+        return getAssessmentById(id);
+    }
+
+
+    // =========================================================
     // GET ALL ASSESSMENTS
     // =========================================================
 

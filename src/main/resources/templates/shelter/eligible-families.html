@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Eligible Families - Shelter Management</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dbeafe;
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            background: linear-gradient(135deg, #0b1f3a, #163d70);
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+
+        /* =========================
+           PAGE CONTAINER
+           ========================= */
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+
+            margin: 30px auto;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h2 {
+            color: #0b1f3a;
+
+            margin-bottom: 6px;
+        }
+
+        .page-title p {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FAMILY COUNT
+           ========================= */
+
+        .family-count {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 10px 18px;
+
+            background-color: #0b1f3a;
+
+            color: white;
+
+            border-radius: 6px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .family-count span {
+            margin-left: 6px;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           TABLE CONTAINER
+           ========================= */
+
+        .table-container {
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+
+        /* =========================
+           TABLE
+           ========================= */
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1200px;
+        }
+
+        thead {
+            background-color: #0b1f3a;
+
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e5e5e5;
+
+            vertical-align: middle;
+        }
+
+        th {
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            text-align: left;
+        }
+
+        td {
+            font-size: 14px;
+
+            text-align: left;
+        }
+
+        tbody tr:hover {
+            background-color: #f7f9fc;
+        }
+
+
+        /* =========================
+           NUMERIC COLUMNS
+           ========================= */
+
+        .number-header {
+            text-align: center !important;
+        }
+
+        .number-cell {
+            text-align: center !important;
+
+            font-variant-numeric: tabular-nums;
+        }
+
+
+        /* =========================
+           ALLOCATE BUTTON
+           ========================= */
+
+        .allocate-button {
+            display: inline-block;
+
+            background-color: #198754;
+
+            color: white;
+
+            padding: 8px 15px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+        .allocate-button:hover {
+            background-color: #146c43;
+        }
+
+
+        /* =========================
+           ALLOCATED BUTTON
+           ========================= */
+
+        .allocated-button {
+            display: inline-block;
+
+            background-color: #4f6ff5;
+
+            color: white;
+
+            padding: 8px 15px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        .allocated-button:hover {
+            background-color: #3f5edb;
+        }
+
+
+        /* =========================
+           EMPTY MESSAGE
+           ========================= */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: #777;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           BOTTOM BACK LINK
+           ========================= */
+
+        .bottom-navigation {
+            margin-top: 25px;
+
+            padding-top: 25px;
+
+            text-align: left;
+        }
+
+        .back-link {
+            color: #000000;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+     ========================= -->
+
+<header class="header">
+
+    <h1>
+        Shelter Management
+    </h1>
+
+</header>
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         PAGE TITLE
+         ========================= -->
+
+    <div class="page-title">
+
+        <h2>
+            Eligible Affected Families
+        </h2>
+
+        <p>
+            Affected families identified as requiring shelter accommodation.
+        </p>
+
+
+        <!-- =========================
+             FAMILY COUNT
+             ========================= -->
+
+        <div class="family-count">
+
+            Total Eligible Families:
+
+            <span th:text="${#lists.size(eligibleFamilies)}">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FAMILY TABLE
+         ========================= -->
+
+    <div class="table-container">
+
+
+        <!-- Families available -->
+
+        <table th:if="${!#lists.isEmpty(eligibleFamilies)}">
+
+            <thead>
+
+            <tr>
+
+                <th>
+                    Family / Victim Name
+                </th>
+
+                <th>
+                    NIC Number
+                </th>
+
+                <th>
+                    Disaster
+                </th>
+
+                <th class="number-header">
+                    Total Members
+                </th>
+
+                <th class="number-header">
+                    Children Below 12
+                </th>
+
+                <th class="number-header">
+                    Male Members
+                </th>
+
+                <th class="number-header">
+                    Female Members
+                </th>
+
+                <th>
+                    Affected Situation
+                </th>
+
+                <th class="number-header">
+                    Action
+                </th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="family : ${eligibleFamilies}">
+
+
+                <!-- =========================
+                     FAMILY / VICTIM NAME
+                     ========================= -->
+
+                <td th:text="${family.victim.fullName}">
+
+                    Family Name
+
+                </td>
+
+
+                <!-- =========================
+                     NIC NUMBER
+                     ========================= -->
+
+                <td th:text="${family.victim.nicNumber}">
+
+                    NIC Number
+
+                </td>
+
+
+                <!-- =========================
+                     DISASTER
+                     ========================= -->
+
+                <td th:text="${family.victim.disaster.eventName}">
+
+                    Disaster
+
+                </td>
+
+
+                <!-- =========================
+                     TOTAL MEMBERS
+                     ========================= -->
+
+                <td class="number-cell"
+                    th:text="${family.totalFamilyMembers}">
+
+                    0
+
+                </td>
+
+
+                <!-- =========================
+                     CHILDREN BELOW 12
+                     ========================= -->
+
+                <td class="number-cell"
+                    th:text="${family.childrenBelow12}">
+
+                    0
+
+                </td>
+
+
+                <!-- =========================
+                     MALE MEMBERS
+                     ========================= -->
+
+                <td class="number-cell"
+                    th:text="${family.maleMembers}">
+
+                    0
+
+                </td>
+
+
+                <!-- =========================
+                     FEMALE MEMBERS
+                     ========================= -->
+
+                <td class="number-cell"
+                    th:text="${family.femaleMembers}">
+
+                    0
+
+                </td>
+
+
+                <!-- =========================
+                     AFFECTED SITUATION
+                     ========================= -->
+
+                <td th:text="${family.affectedSituation}">
+
+                    Affected Situation
+
+                </td>
+
+
+                <!-- =========================
+                     ACTION
+                     ========================= -->
+
+                <td class="number-cell">
+
+                    <!-- NOT ALLOCATED -->
+
+                    <a th:if="${!allocationStatus[family.id]}"
+                       th:href="@{/staff/eligible-families/{familyId}/allocate(familyId=${family.id})}"
+                       class="allocate-button">
+
+                        Allocate
+
+                    </a>
+
+
+                    <!-- ALREADY ALLOCATED -->
+
+                    <a th:if="${allocationStatus[family.id]}"
+                       th:href="@{/staff/eligible-families/{familyId}/allocation(familyId=${family.id})}"
+                       class="allocated-button">
+
+                        Allocated
+
+                    </a>
+
+                </td>
+
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <!-- =========================
+             NO FAMILIES MESSAGE
+             ========================= -->
+
+        <div class="empty-message"
+             th:if="${#lists.isEmpty(eligibleFamilies)}">
+
+            No affected families currently require
+            shelter accommodation.
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         BOTTOM BACK LINK
+         ========================= -->
+
+    <div class="bottom-navigation">
+
+        <a th:href="@{/staff/dashboard}"
+           class="back-link">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

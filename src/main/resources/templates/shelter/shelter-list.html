@@ -229,16 +229,18 @@
       vertical-align: middle;
     }
 
-    th:nth-child(3),
+    /* Center all columns except Shelter Name,
+       Location and Disaster Name */
     th:nth-child(4),
     th:nth-child(5),
     th:nth-child(6),
     th:nth-child(7),
-    td:nth-child(3),
+    th:nth-child(8),
     td:nth-child(4),
     td:nth-child(5),
     td:nth-child(6),
-    td:nth-child(7) {
+    td:nth-child(7),
+    td:nth-child(8) {
       text-align: center;
     }
 
@@ -391,11 +393,6 @@
 
         </div>
 
-        <a th:href="@{/staff/shelters/register}"
-           class="register-link">
-          Register Shelter
-        </a>
-
       </div>
 
 
@@ -539,6 +536,7 @@
 
             <th>Shelter Name</th>
             <th>Location</th>
+            <th>Disaster Name</th>
             <th>Maximum Capacity</th>
             <th>Current Occupancy</th>
             <th>Available Capacity</th>
@@ -565,6 +563,11 @@
 
             <td th:text="${shelter.location}">
               Location
+            </td>
+
+            <!-- Disaster Name -->
+            <td th:text="${shelter.disasterName}">
+              Disaster Name
             </td>
 
             <td th:text="${shelter.maximumCapacity}">
@@ -647,6 +650,17 @@
            th:if="${#lists.isEmpty(shelters)}">
 
         No shelters have been registered yet.
+
+      </div>
+
+
+      <!-- Back to Shelter Dashboard -->
+      <div class="link-text"
+           style="text-align: left; margin-top: 25px;">
+
+        <a th:href="@{/staff/dashboard}">
+          ← Back
+        </a>
 
       </div>
 
@@ -882,6 +896,4 @@
 </script>
 
 </body>
-
 </html>
-

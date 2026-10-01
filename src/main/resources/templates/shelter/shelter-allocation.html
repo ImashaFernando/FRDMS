@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Allocate Shelter - Shelter Management</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            background: linear-gradient(135deg, #0b1f3a, #163d70);
+
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+
+        /* =========================
+           CONTAINER
+           ========================= */
+
+        .container {
+            width: 94%;
+
+            max-width: 1400px;
+
+            margin: 30px auto;
+        }
+
+
+        /* =========================
+           PAGE TITLE
+           ========================= */
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            color: #0b1f3a;
+
+            margin-bottom: 6px;
+        }
+
+        .page-title p {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FAMILY INFORMATION
+           ========================= */
+
+        .family-card {
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                    0 3px 12px rgba(0, 0, 0, 0.08);
+
+            border-top: 4px solid #163d70;
+        }
+
+        .family-card h3 {
+            color: #0b1f3a;
+
+            margin-bottom: 18px;
+
+            font-size: 18px;
+        }
+
+        .family-details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+        .detail-item {
+            background-color: #f7f9fc;
+
+            padding: 12px;
+
+            border-radius: 6px;
+        }
+
+        .detail-label {
+            display: block;
+
+            color: #777;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #222;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           SHELTER SECTION
+           ========================= */
+
+        .shelter-section {
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 22px;
+
+            box-shadow:
+                    0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .shelter-section h3 {
+            color: #0b1f3a;
+
+            margin-bottom: 18px;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           TABLE
+           ========================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+        thead {
+            background-color: #0b1f3a;
+
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+
+            border-bottom: 1px solid #e5e5e5;
+
+            vertical-align: middle;
+        }
+
+        th {
+            font-size: 14px;
+
+            text-align: left;
+
+            white-space: nowrap;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background-color: #f7f9fc;
+        }
+
+
+        /* =========================
+           CENTER
+           ========================= */
+
+        .center {
+            text-align: center !important;
+        }
+
+
+        /* =========================
+           ALLOCATE BUTTON
+           ========================= */
+
+        .allocate-button {
+            border: none;
+
+            background-color: #198754;
+
+            color: white;
+
+            padding: 8px 15px;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .allocate-button:hover {
+            background-color: #146c43;
+        }
+
+
+        /* =========================
+           EMPTY MESSAGE
+           ========================= */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 40px 20px;
+
+            color: #777;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           BOTTOM BACK LINK
+           ========================= */
+
+        .bottom-navigation {
+            margin-top: 25px;
+
+            padding-top: 25px;
+
+            text-align: left;
+        }
+
+        .back-link {
+            color: #000000;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .family-details {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+     ========================= -->
+
+<header class="header">
+
+    <h1>
+        Shelter Management
+    </h1>
+
+</header>
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         PAGE TITLE
+         ========================= -->
+
+    <div class="page-title">
+
+        <h2>
+            Allocate Family to Shelter
+        </h2>
+
+        <p>
+            Select a suitable available shelter for this affected family.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         FAMILY INFORMATION
+         ========================= -->
+
+    <div class="family-card">
+
+        <h3>
+            Affected Family Information
+        </h3>
+
+
+        <div class="family-details">
+
+
+            <!-- FAMILY NAME -->
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Family / Victim Name
+                </span>
+
+                <span class="detail-value"
+                      th:text="${family.victim.fullName}">
+
+                    Family Name
+
+                </span>
+
+            </div>
+
+
+            <!-- NIC -->
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    NIC Number
+                </span>
+
+                <span class="detail-value"
+                      th:text="${family.victim.nicNumber}">
+
+                    NIC Number
+
+                </span>
+
+            </div>
+
+
+            <!-- DISASTER -->
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Disaster
+                </span>
+
+                <span class="detail-value"
+                      th:text="${family.victim.disaster.eventName}">
+
+                    Disaster
+
+                </span>
+
+            </div>
+
+
+            <!-- FAMILY MEMBERS -->
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Total Family Members
+                </span>
+
+                <span class="detail-value"
+                      th:text="${family.totalFamilyMembers}">
+
+                    0
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SUITABLE SHELTERS
+         ========================= -->
+
+    <div class="shelter-section">
+
+        <h3>
+            Suitable Available Shelters
+        </h3>
+
+
+        <div class="table-container">
+
+
+            <!-- =========================
+                 SHELTERS AVAILABLE
+                 ========================= -->
+
+            <table th:if="${not #lists.isEmpty(suitableShelters)}">
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Shelter Name
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Disaster
+                    </th>
+
+                    <th class="center">
+                        Maximum Capacity
+                    </th>
+
+                    <th class="center">
+                        Current Occupancy
+                    </th>
+
+                    <th class="center">
+                        Available Capacity
+                    </th>
+
+                    <th class="center">
+                        Action
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="shelter : ${suitableShelters}">
+
+
+                    <!-- SHELTER NAME -->
+
+                    <td th:text="${shelter.shelterName}">
+
+                        Shelter Name
+
+                    </td>
+
+
+                    <!-- LOCATION -->
+
+                    <td th:text="${shelter.location}">
+
+                        Location
+
+                    </td>
+
+
+                    <!-- DISASTER -->
+
+                    <td th:text="${shelter.disasterName}">
+
+                        Disaster
+
+                    </td>
+
+
+                    <!-- MAXIMUM CAPACITY -->
+
+                    <td class="center"
+                        th:text="${shelter.maximumCapacity}">
+
+                        0
+
+                    </td>
+
+
+                    <!-- CURRENT OCCUPANCY -->
+
+                    <td class="center"
+                        th:text="${shelter.currentOccupancy}">
+
+                        0
+
+                    </td>
+
+
+                    <!-- AVAILABLE CAPACITY -->
+
+                    <td class="center"
+                        th:text="${shelter.availableCapacity}">
+
+                        0
+
+                    </td>
+
+
+                    <!-- ALLOCATE -->
+
+                    <td class="center">
+
+                        <form th:action="@{'/staff/eligible-families/' + ${family.id} + '/allocate'}"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="shelterId"
+                                   th:value="${shelter.id}">
+
+                            <button type="submit"
+                                    class="allocate-button">
+
+                                Allocate
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <!-- =========================
+                 NO SUITABLE SHELTERS
+                 ========================= -->
+
+            <div class="empty-message"
+                 th:if="${#lists.isEmpty(suitableShelters)}">
+
+                No suitable available shelters are currently
+                available for this family.
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         BOTTOM BACK LINK
+         ========================= -->
+
+    <div class="bottom-navigation">
+
+        <a th:href="@{/staff/eligible-families}"
+           class="back-link">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
