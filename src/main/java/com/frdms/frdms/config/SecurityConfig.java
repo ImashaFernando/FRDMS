@@ -585,49 +585,37 @@ public class SecurityConfig {
                                                 "/project-manager/dashboard"
                                         );
 
-                                    }
-
-                                    else if (isFinance) {
+                                    } else if (isFinance) {
 
                                         response.sendRedirect(
                                                 "/finance/dashboard"
                                         );
 
-                                    }
-
-                                    else if (isDonor) {
+                                    } else if (isDonor) {
 
                                         response.sendRedirect(
                                                 "/donor/dashboard"
                                         );
 
-                                    }
-
-                                    else if (isVolunteer) {
+                                    } else if (isVolunteer) {
 
                                         response.sendRedirect(
                                                 "/volunteer/profile"
                                         );
 
-                                    }
-
-                                    else if (isReliefCoordinator) {
+                                    } else if (isReliefCoordinator) {
 
                                         response.sendRedirect(
                                                 "/relief-coordinator/dashboard"
                                         );
 
-                                    }
-
-                                    else if (isDistributionOfficer) {
+                                    } else if (isDistributionOfficer) {
 
                                         response.sendRedirect(
                                                 "/distribution/dashboard"
                                         );
 
-                                    }
-
-                                    else if (isStaff) {
+                                    } else if (isStaff) {
 
                                         response.sendRedirect(
                                                 "/staff/dashboard"
@@ -742,9 +730,7 @@ public class SecurityConfig {
                                         response.sendRedirect(
                                                 "/victim/dashboard"
                                         );
-                                    }
-
-                                    else {
+                                    } else {
 
                                         response.sendRedirect(
                                                 "/"
@@ -1301,6 +1287,27 @@ public class SecurityConfig {
                         .permitAll()
 
 
+                        // -------------------------------------------------
+                        // VICTIM LOGIN
+                        // -------------------------------------------------
+                        //
+                        // IMPORTANT:
+                        // VictimLoginController uses:
+                        //
+                        // /victims/login
+                        //
+                        // Therefore this URL must be public.
+                        // -------------------------------------------------
+
+                        .requestMatchers(
+                                "/victim-login",
+                                "/victim-login/**",
+                                "/victims/login",
+                                "/victims/login/**",
+                                "/victims/logout"
+                        ).permitAll()
+
+
                         // =========================================
                         // VOLUNTEER REGISTRATION
                         // =========================================
@@ -1368,6 +1375,7 @@ public class SecurityConfig {
                         .anyRequest()
                         .authenticated()
                 );
+
 
         return http.build();
     }
