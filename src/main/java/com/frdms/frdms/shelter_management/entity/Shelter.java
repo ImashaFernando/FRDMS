@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "shelters")
@@ -28,6 +29,12 @@ public class Shelter {
     @NotBlank(message = "Location is required")
     @Column(nullable = false, length = 255)
     private String location;
+
+    @NotBlank(message = "Disaster name is required")
+    @Size(min = 2, max = 150,
+            message = "Disaster name must be between 2 and 150 characters")
+    @Column(nullable = false, length = 150)
+    private String disasterName;
 
     @NotBlank(message = "Contact person is required")
     @Column(nullable = false, length = 150)
@@ -80,6 +87,14 @@ public class Shelter {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getDisasterName() {
+        return disasterName;
+    }
+
+    public void setDisasterName(String disasterName) {
+        this.disasterName = disasterName;
     }
 
     public String getContactPerson() {

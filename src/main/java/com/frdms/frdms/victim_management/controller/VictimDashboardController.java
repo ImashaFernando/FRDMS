@@ -1,9 +1,14 @@
 package com.frdms.frdms.victim_management.controller;
 
+import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
 import com.frdms.frdms.victim_management.entity.GNReport;
 import com.frdms.frdms.victim_management.entity.Victim;
+import com.frdms.frdms.victim_management.service.AffectedFamilyInformationService;
 import com.frdms.frdms.victim_management.service.GNReportService;
 import com.frdms.frdms.victim_management.service.VictimService;
+
+import com.frdms.frdms.shelter_management.entity.ShelterAllocation;
+import com.frdms.frdms.shelter_management.service.ShelterAllocationService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -16,6 +21,10 @@ public class VictimDashboardController {
 
     private final VictimService victimService;
     private final GNReportService gnReportService;
+    private final AffectedFamilyInformationService
+            affectedFamilyInformationService;
+    private final ShelterAllocationService
+            shelterAllocationService;
 
 
     // =========================================================
@@ -24,10 +33,18 @@ public class VictimDashboardController {
 
     public VictimDashboardController(
             VictimService victimService,
-            GNReportService gnReportService) {
+            GNReportService gnReportService,
+            AffectedFamilyInformationService
+                    affectedFamilyInformationService,
+            ShelterAllocationService
+                    shelterAllocationService) {
 
         this.victimService = victimService;
         this.gnReportService = gnReportService;
+        this.affectedFamilyInformationService =
+                affectedFamilyInformationService;
+        this.shelterAllocationService =
+                shelterAllocationService;
     }
 
 
@@ -82,6 +99,38 @@ public class VictimDashboardController {
 
 
         // =====================================================
+        // GET FAMILY INFORMATION
+        // =====================================================
+
+        AffectedFamilyInformation familyInformation =
+                affectedFamilyInformationService
+                        .getByVictim(victim)
+                        .orElse(null);
+
+
+        // =====================================================
+        // GET SHELTER ALLOCATION
+        // =====================================================
+
+        ShelterAllocation shelterAllocation = null;
+
+        if (familyInformation != null
+                && Boolean.TRUE.equals(
+                familyInformation.getShelterRequired())) {
+
+            if (shelterAllocationService.isFamilyAllocated(
+                    familyInformation.getId())) {
+
+                shelterAllocation =
+                        shelterAllocationService
+                                .getAllocationByFamilyId(
+                                        familyInformation.getId()
+                                );
+            }
+        }
+
+
+        // =====================================================
         // SEND VICTIM INFORMATION TO DASHBOARD
         // =====================================================
 
@@ -98,6 +147,26 @@ public class VictimDashboardController {
         model.addAttribute(
                 "gnReport",
                 gnReport
+        );
+
+
+        // =====================================================
+        // SEND FAMILY INFORMATION TO DASHBOARD
+        // =====================================================
+
+        model.addAttribute(
+                "familyInformation",
+                familyInformation
+        );
+
+
+        // =====================================================
+        // SEND SHELTER ALLOCATION TO DASHBOARD
+        // =====================================================
+
+        model.addAttribute(
+                "shelterAllocation",
+                shelterAllocation
         );
 
 

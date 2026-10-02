@@ -100,6 +100,7 @@ public class ShelterService {
     // UPDATE SHELTER DETAILS
     // Contact Person
     // Contact Number
+    // Disaster Name
     // Current Occupancy
     // Status
     // =========================
@@ -108,6 +109,7 @@ public class ShelterService {
             Long shelterId,
             String contactPerson,
             String contactNumber,
+            String disasterName,
             Integer currentOccupancy,
             Shelter.ShelterStatus status
     ) {
@@ -138,6 +140,12 @@ public class ShelterService {
             );
         }
 
+        if (disasterName == null || disasterName.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Disaster name is required."
+            );
+        }
+
         if (currentOccupancy == null) {
             throw new IllegalArgumentException(
                     "Current occupancy is required."
@@ -158,6 +166,7 @@ public class ShelterService {
 
         shelter.setContactPerson(contactPerson);
         shelter.setContactNumber(contactNumber);
+        shelter.setDisasterName(disasterName);
         shelter.setCurrentOccupancy(currentOccupancy);
 
         if (currentOccupancy.equals(shelter.getMaximumCapacity())) {
@@ -179,9 +188,11 @@ public class ShelterService {
 
         return shelterRepository.save(shelter);
     }
+
+
     // =========================
-// DELETE SHELTER
-// =========================
+    // DELETE SHELTER
+    // =========================
 
     public void deleteShelter(Long shelterId) {
 

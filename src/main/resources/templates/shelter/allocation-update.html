@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>Update Shelter Allocation</title>
+
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color:  #dbeafe;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .page-title {
+      color: #12355b;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-title {
+      color: #12355b;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .detail-item {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .detail-label {
+      display: block;
+      font-size: 13px;
+      color: #6c757d;
+      margin-bottom: 5px;
+    }
+
+    .detail-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: #212529;
+    }
+
+    .current-shelter {
+      border-left: 5px solid #0d6efd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th {
+      background-color: #12355b;
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .number-cell {
+      text-align: center;
+    }
+
+    .change-button {
+      display: inline-block;
+      background-color: #198754;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .change-button:hover {
+      background-color: #146c43;
+    }
+
+    .current-label {
+      display: inline-block;
+      background-color: #0d6efd;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .bottom-navigation {
+      margin-top: 25px;
+      padding-top: 25px;
+      text-align: left;
+    }
+
+    .back-link {
+      color: #000000;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 25px;
+      color: #6c757d;
+    }
+
+    @media (max-width: 768px) {
+
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        padding: 8px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1 class="page-title">
+    Update Shelter Allocation
+  </h1>
+
+
+  <!-- =====================================================
+       FAMILY DETAILS
+       ===================================================== -->
+
+  <div class="card">
+
+    <h2 class="card-title">
+      Family Details
+    </h2>
+
+    <div class="details-grid">
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Family / Victim Name
+                </span>
+
+        <div class="detail-value"
+             th:text="${family.victim.fullName}">
+          Family Name
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    NIC
+                </span>
+
+        <div class="detail-value"
+             th:text="${family.victim.nicNumber}">
+          NIC
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Disaster
+                </span>
+
+        <div class="detail-value"
+             th:text="${family.victim.disaster.eventName}">
+          Disaster
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Family Members
+                </span>
+
+        <div class="detail-value"
+             th:text="${family.totalFamilyMembers}">
+          0
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       CURRENT SHELTER
+       ===================================================== -->
+
+  <div class="card current-shelter">
+
+    <h2 class="card-title">
+      Current Shelter
+    </h2>
+
+    <div class="details-grid">
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Shelter Name
+                </span>
+
+        <div class="detail-value"
+             th:text="${allocation.shelter.shelterName}">
+          Shelter Name
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Location
+                </span>
+
+        <div class="detail-value"
+             th:text="${allocation.shelter.location}">
+          Location
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Maximum Capacity
+                </span>
+
+        <div class="detail-value"
+             th:text="${allocation.shelter.maximumCapacity}">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="detail-item">
+
+                <span class="detail-label">
+                    Current Occupancy
+                </span>
+
+        <div class="detail-value"
+             th:text="${allocation.shelter.currentOccupancy}">
+          0
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SUITABLE SHELTERS
+       ===================================================== -->
+
+  <div class="card">
+
+    <h2 class="card-title">
+      Available Suitable Shelters
+    </h2>
+
+    <div th:if="${#lists.isEmpty(suitableShelters)}"
+         class="empty-message">
+
+      No other suitable shelters are currently available
+      for this family.
+
+    </div>
+
+
+    <table th:unless="${#lists.isEmpty(suitableShelters)}">
+
+      <thead>
+
+      <tr>
+
+        <th>
+          Shelter Name
+        </th>
+
+        <th>
+          Location
+        </th>
+
+        <th class="number-cell">
+          Maximum Capacity
+        </th>
+
+        <th class="number-cell">
+          Current Occupancy
+        </th>
+
+        <th class="number-cell">
+          Available Capacity
+        </th>
+
+        <th class="number-cell">
+          Action
+        </th>
+
+      </tr>
+
+      </thead>
+
+
+      <tbody>
+
+      <tr th:each="shelter : ${suitableShelters}">
+
+        <td th:text="${shelter.shelterName}">
+          Shelter Name
+        </td>
+
+        <td th:text="${shelter.location}">
+          Location
+        </td>
+
+        <td class="number-cell"
+            th:text="${shelter.maximumCapacity}">
+          0
+        </td>
+
+        <td class="number-cell"
+            th:text="${shelter.currentOccupancy}">
+          0
+        </td>
+
+        <td class="number-cell"
+            th:text="${shelter.availableCapacity}">
+          0
+        </td>
+
+        <td class="number-cell">
+
+          <form th:action="@{/staff/eligible-families/{familyId}/allocation/update(
+                                      familyId=${family.id})}"
+                method="post">
+
+            <input type="hidden"
+                   name="shelterId"
+                   th:value="${shelter.id}">
+
+            <button type="submit"
+                    class="change-button">
+
+              Change Shelter
+
+            </button>
+
+          </form>
+
+        </td>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+  <div class="bottom-navigation">
+
+    <a th:href="@{/staff/eligible-families}"
+       class="back-link">
+
+      ← Back
+
+    </a>
+
+  </div>
+
+
+
+</div>
+
+</body>
+</html>

@@ -48,4 +48,9 @@ public interface AffectedFamilyInformationRepository
             Long disasterId,
             Boolean shelterRequired
     );
+    // =========================================================
+    // FIND FAMILIES REQUIRING SHELTER
+    // =========================================================
+
+    List<AffectedFamilyInformation> findByShelterRequiredTrueOrderByIdDesc();
 }

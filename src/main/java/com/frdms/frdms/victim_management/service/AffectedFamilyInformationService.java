@@ -164,4 +164,15 @@ public class AffectedFamilyInformationService {
                 existingInformation
         );
     }
-}
+    // =========================================================
+// GET FAMILIES REQUIRING SHELTER
+// SM-US7
+// =========================================================
+
+    public List<AffectedFamilyInformation>
+    getFamiliesRequiringShelter() {
+        return repository.findByShelterRequiredTrueOrderByIdDesc();
+    }
+        }
+
+
