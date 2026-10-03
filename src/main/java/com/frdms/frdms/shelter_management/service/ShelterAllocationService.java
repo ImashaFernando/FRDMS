@@ -150,6 +150,7 @@ public class ShelterAllocationService {
             );
         }
 
+
         String familyDisaster =
                 affectedFamily
                         .getVictim()
@@ -182,6 +183,13 @@ public class ShelterAllocationService {
         allocation.setShelter(
                 shelter
         );
+
+
+        // -----------------------------------------------------
+        // UPDATE VICTIM SHELTER
+        // -----------------------------------------------------
+
+        affectedFamily.getVictim().setShelter(shelter);
 
 
         // -----------------------------------------------------
@@ -527,6 +535,18 @@ public class ShelterAllocationService {
         // -----------------------------------------------------
 
         allocation.setShelter(newShelter);
+
+
+        // -----------------------------------------------------
+        // UPDATE VICTIM SHELTER
+        // -----------------------------------------------------
+
+        affectedFamily.getVictim().setShelter(newShelter);
+
+
+        // -----------------------------------------------------
+        // SAVE ALLOCATION
+        // -----------------------------------------------------
 
         return shelterAllocationRepository.save(
                 allocation

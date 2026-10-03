@@ -2,9 +2,12 @@ package com.frdms.frdms.victim_management.controller;
 
 import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
 import com.frdms.frdms.victim_management.entity.GNReport;
+import com.frdms.frdms.victim_management.entity.ReliefRequirement;
 import com.frdms.frdms.victim_management.entity.Victim;
+
 import com.frdms.frdms.victim_management.service.AffectedFamilyInformationService;
 import com.frdms.frdms.victim_management.service.GNReportService;
+import com.frdms.frdms.victim_management.service.ReliefRequirementService;
 import com.frdms.frdms.victim_management.service.VictimService;
 
 import com.frdms.frdms.shelter_management.entity.ShelterAllocation;
@@ -15,16 +18,27 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class VictimDashboardController {
 
     private final VictimService victimService;
+
     private final GNReportService gnReportService;
+
     private final AffectedFamilyInformationService
             affectedFamilyInformationService;
+
     private final ShelterAllocationService
             shelterAllocationService;
+
+    private final ReliefRequirementService
+            reliefRequirementService;
 
 
     // =========================================================
@@ -32,19 +46,34 @@ public class VictimDashboardController {
     // =========================================================
 
     public VictimDashboardController(
+
             VictimService victimService,
+
             GNReportService gnReportService,
+
             AffectedFamilyInformationService
                     affectedFamilyInformationService,
-            ShelterAllocationService
-                    shelterAllocationService) {
 
-        this.victimService = victimService;
-        this.gnReportService = gnReportService;
+            ShelterAllocationService
+                    shelterAllocationService,
+
+            ReliefRequirementService
+                    reliefRequirementService) {
+
+        this.victimService =
+                victimService;
+
+        this.gnReportService =
+                gnReportService;
+
         this.affectedFamilyInformationService =
                 affectedFamilyInformationService;
+
         this.shelterAllocationService =
                 shelterAllocationService;
+
+        this.reliefRequirementService =
+                reliefRequirementService;
     }
 
 
@@ -63,9 +92,13 @@ public class VictimDashboardController {
         // =====================================================
 
         Long victimId =
-                (Long) session.getAttribute("victimId");
+                (Long) session.getAttribute(
+                        "victimId"
+                );
+
 
         if (victimId == null) {
+
             return "redirect:/login";
         }
 
@@ -74,8 +107,21 @@ public class VictimDashboardController {
         // GET LOGGED-IN VICTIM
         // =====================================================
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim;
+
+        try {
+
+            victim =
+                    victimService.getVictimById(
+                            victimId
+                    );
+
+        } catch (Exception e) {
+
+            session.invalidate();
+
+            return "redirect:/login";
+        }
 
 
         // =====================================================
@@ -95,7 +141,10 @@ public class VictimDashboardController {
         // =====================================================
 
         GNReport gnReport =
-                gnReportService.getLatestGNReportByVictim(victim);
+                gnReportService
+                        .getLatestGNReportByVictim(
+                                victim
+                        );
 
 
         // =====================================================
@@ -112,14 +161,21 @@ public class VictimDashboardController {
         // GET SHELTER ALLOCATION
         // =====================================================
 
-        ShelterAllocation shelterAllocation = null;
+        ShelterAllocation shelterAllocation =
+                null;
+
 
         if (familyInformation != null
                 && Boolean.TRUE.equals(
-                familyInformation.getShelterRequired())) {
+                familyInformation
+                        .getShelterRequired())) {
 
-            if (shelterAllocationService.isFamilyAllocated(
-                    familyInformation.getId())) {
+
+            if (shelterAllocationService
+                    .isFamilyAllocated(
+                            familyInformation.getId()
+                    )) {
+
 
                 shelterAllocation =
                         shelterAllocationService
@@ -127,6 +183,38 @@ public class VictimDashboardController {
                                         familyInformation.getId()
                                 );
             }
+        }
+
+
+        // =====================================================
+        // GET RELIEF REQUIREMENTS
+        // =====================================================
+
+        /*
+         * Get all Relief Requirements belonging to
+         * the currently logged-in victim.
+         */
+
+        List<ReliefRequirement> reliefRequirements =
+                reliefRequirementService
+                        .getByVictim(victim);
+
+
+        // =====================================================
+        // GET LATEST RELIEF REQUIREMENT
+        // =====================================================
+
+        ReliefRequirement latestReliefRequirement =
+                null;
+
+
+        if (reliefRequirements != null
+                && !reliefRequirements.isEmpty()) {
+
+            latestReliefRequirement =
+                    reliefRequirements.get(
+                            reliefRequirements.size() - 1
+                    );
         }
 
 
@@ -141,7 +229,7 @@ public class VictimDashboardController {
 
 
         // =====================================================
-        // SEND GN REPORT INFORMATION TO DASHBOARD
+        // SEND GN REPORT INFORMATION
         // =====================================================
 
         model.addAttribute(
@@ -151,7 +239,7 @@ public class VictimDashboardController {
 
 
         // =====================================================
-        // SEND FAMILY INFORMATION TO DASHBOARD
+        // SEND FAMILY INFORMATION
         // =====================================================
 
         model.addAttribute(
@@ -161,7 +249,7 @@ public class VictimDashboardController {
 
 
         // =====================================================
-        // SEND SHELTER ALLOCATION TO DASHBOARD
+        // SEND SHELTER ALLOCATION
         // =====================================================
 
         model.addAttribute(
@@ -171,9 +259,177 @@ public class VictimDashboardController {
 
 
         // =====================================================
+        // SEND ALL RELIEF REQUIREMENTS
+        // =====================================================
+
+        model.addAttribute(
+                "reliefRequirements",
+                reliefRequirements
+        );
+
+
+        // =====================================================
+        // SEND LATEST RELIEF REQUIREMENT
+        // =====================================================
+
+        model.addAttribute(
+                "latestReliefRequirement",
+                latestReliefRequirement
+        );
+
+
+        // =====================================================
         // OPEN VICTIM DASHBOARD
         // =====================================================
 
         return "victim/dashboard";
+    }
+
+
+    // =========================================================
+    // UPDATE VICTIM PROFILE
+    // =========================================================
+
+    @PostMapping("/victim/dashboard/update-profile")
+    public String updateProfile(
+
+            @RequestParam String fullName,
+
+            @RequestParam String phoneNumber,
+
+            @RequestParam String address,
+
+            HttpSession session,
+
+            RedirectAttributes redirectAttributes) {
+
+
+        // =====================================================
+        // CHECK VICTIM LOGIN
+        // =====================================================
+
+        Long victimId =
+                (Long) session.getAttribute(
+                        "victimId"
+                );
+
+
+        if (victimId == null) {
+
+            return "redirect:/login";
+        }
+
+
+        // =====================================================
+        // GET LOGGED-IN VICTIM
+        // =====================================================
+
+        Victim victim;
+
+        try {
+
+            victim =
+                    victimService.getVictimById(
+                            victimId
+                    );
+
+        } catch (Exception e) {
+
+            session.invalidate();
+
+            return "redirect:/login";
+        }
+
+
+        // =====================================================
+        // CHECK VICTIM EXISTS
+        // =====================================================
+
+        if (victim == null) {
+
+            session.invalidate();
+
+            return "redirect:/login";
+        }
+
+
+        // =====================================================
+        // VALIDATE INPUT
+        // =====================================================
+
+        if (fullName == null
+                || fullName.trim().isEmpty()
+                || phoneNumber == null
+                || phoneNumber.trim().isEmpty()
+                || address == null
+                || address.trim().isEmpty()) {
+
+
+            redirectAttributes.addFlashAttribute(
+                    "profileError",
+                    "Full Name, Phone Number and Address are required."
+            );
+
+
+            return "redirect:/victim/dashboard";
+        }
+
+
+        // =====================================================
+        // CREATE UPDATED VICTIM
+        // =====================================================
+
+        Victim updatedVictim =
+                new Victim();
+
+
+        updatedVictim.setFullName(
+                fullName.trim()
+        );
+
+
+        updatedVictim.setPhoneNumber(
+                phoneNumber.trim()
+        );
+
+
+        updatedVictim.setAddress(
+                address.trim()
+        );
+
+
+        /*
+         * NIC is NOT editable.
+         *
+         * The existing NIC is kept because
+         * NIC is used as the victim's login username.
+         */
+
+        updatedVictim.setNicNumber(
+                victim.getNicNumber()
+        );
+
+
+        // =====================================================
+        // UPDATE DATABASE
+        // =====================================================
+
+        victimService.updateVictim(
+                victimId,
+                updatedVictim
+        );
+
+
+        // =====================================================
+        // SUCCESS MESSAGE
+        // =====================================================
+
+        redirectAttributes.addFlashAttribute(
+                "profileSuccess",
+                "Your profile has been updated successfully."
+        );
+
+
+        return "redirect:/victim/dashboard";
     }
 }

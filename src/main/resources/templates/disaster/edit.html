@@ -311,9 +311,21 @@
                             📅
                         </span>
 
+                        <!--
+                            IMPORTANT:
+                            The original event date is displayed directly
+                            from the Disaster object.
+
+                            It is READONLY so the user cannot change it.
+
+                            name="eventDate" ensures that the original
+                            value is still submitted with the form.
+                        -->
+
                         <input type="date"
                                id="eventDate"
-                               th:field="*{eventDate}"
+                               name="eventDate"
+                               th:value="${disaster.eventDate}"
                                readonly
                                aria-readonly="true">
 
@@ -326,7 +338,7 @@
 
                     <div class="field-help">
 
-                        🔒 Original event date is retained.
+                        🔒 Original event date is retained and cannot be changed.
 
                     </div>
 
@@ -422,15 +434,16 @@
                         <textarea id="description"
                                   th:field="*{description}"
                                   placeholder="Describe the flood event, affected situation, damage or other important information..."
-                                  rows="6">
-                        </textarea>
+                                  rows="6"></textarea>
 
                     </div>
 
 
                     <div class="field-help">
+
                         Provide clear and useful information
                         about the current disaster situation.
+
                     </div>
 
 

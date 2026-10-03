@@ -16,12 +16,14 @@
             padding: 0;
         }
 
+
         body {
             font-family: "Segoe UI", Arial, sans-serif;
             background: #f4f7fb;
             color: #1f2937;
             min-height: 100vh;
         }
+
 
         /* =====================================================
            HEADER
@@ -37,11 +39,13 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
         }
 
+
         .brand-area {
             display: flex;
             align-items: center;
             gap: 16px;
         }
+
 
         .brand-icon {
             width: 52px;
@@ -55,17 +59,20 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+
         .header h1 {
             font-size: 23px;
             font-weight: 700;
             letter-spacing: 0.2px;
         }
 
+
         .header p {
             margin-top: 5px;
             color: #d8e9f8;
             font-size: 14px;
         }
+
 
         .logout-btn {
             background: #ef5350;
@@ -78,6 +85,7 @@
             transition: 0.25s ease;
             box-shadow: 0 4px 10px rgba(239, 83, 80, 0.25);
         }
+
 
         .logout-btn:hover {
             background: #d84343;
@@ -108,6 +116,7 @@
             gap: 20px;
         }
 
+
         .welcome h2 {
             color: #102a43;
             font-size: 30px;
@@ -115,11 +124,13 @@
             font-weight: 750;
         }
 
+
         .welcome p {
             color: #64748b;
             font-size: 15px;
             line-height: 1.6;
         }
+
 
         .dashboard-badge {
             background: #e8f2ff;
@@ -143,6 +154,7 @@
             margin-bottom: 32px;
         }
 
+
         .stat-card {
             position: relative;
             overflow: hidden;
@@ -154,10 +166,12 @@
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
+
         .stat-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(31, 50, 75, 0.12);
         }
+
 
         .stat-card::after {
             content: "";
@@ -170,6 +184,7 @@
             background: rgba(36, 139, 224, 0.07);
         }
 
+
         .stat-top {
             display: flex;
             justify-content: space-between;
@@ -177,6 +192,7 @@
             position: relative;
             z-index: 1;
         }
+
 
         .stat-icon {
             width: 46px;
@@ -189,12 +205,14 @@
             background: #eaf4ff;
         }
 
+
         .stat-card h3 {
             color: #64748b;
             font-size: 14px;
             font-weight: 650;
             margin-bottom: 12px;
         }
+
 
         .stat-number {
             font-size: 34px;
@@ -203,6 +221,7 @@
             position: relative;
             z-index: 1;
         }
+
 
         .stat-description {
             margin-top: 8px;
@@ -225,6 +244,7 @@
             box-shadow: 0 8px 28px rgba(31, 50, 75, 0.07);
         }
 
+
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -233,16 +253,19 @@
             gap: 15px;
         }
 
+
         .section-title-area h2 {
             color: #102a43;
             font-size: 23px;
             margin-bottom: 5px;
         }
 
+
         .section-title-area p {
             color: #8a98a8;
             font-size: 13px;
         }
+
 
         .assessment-count {
             background: #f0f6ff;
@@ -264,11 +287,13 @@
             border-radius: 12px;
         }
 
+
         table {
             width: 100%;
             border-collapse: collapse;
             min-width: 850px;
         }
+
 
         th {
             background: #102a43;
@@ -280,13 +305,16 @@
             letter-spacing: 0.2px;
         }
 
+
         th:first-child {
             border-top-left-radius: 10px;
         }
 
+
         th:last-child {
             border-top-right-radius: 10px;
         }
+
 
         td {
             padding: 17px 16px;
@@ -296,40 +324,39 @@
             vertical-align: middle;
         }
 
+
         tbody tr {
             transition: background 0.2s ease;
         }
+
 
         tbody tr:hover {
             background: #f8fbff;
         }
 
+
         tbody tr:last-child td {
             border-bottom: none;
         }
+
 
         .id-cell {
             color: #64748b;
             font-weight: 700;
         }
 
+
         .victim-name {
             color: #183b5b;
             font-weight: 700;
         }
 
-        .situation {
-            max-width: 350px;
-            color: #64748b;
-            line-height: 1.5;
-        }
-
 
         /* =====================================================
-           STATUS BADGES
+           RELIEF STATUS
         ===================================================== */
 
-        .status {
+        .relief-status {
             display: inline-flex;
             align-items: center;
             gap: 7px;
@@ -338,9 +365,11 @@
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.3px;
+            white-space: nowrap;
         }
 
-        .status::before {
+
+        .relief-status::before {
             content: "";
             width: 7px;
             height: 7px;
@@ -348,22 +377,50 @@
             background: currentColor;
         }
 
-        .submitted {
+
+        /* PENDING */
+
+        .relief-pending {
             background: #fff6d9;
             color: #9a7200;
         }
 
-        .updated {
-            background: #e4f2ff;
-            color: #24699d;
-        }
 
-        .assessed {
+        /* APPROVED */
+
+        .relief-approved {
             background: #e3f5e8;
             color: #287342;
         }
 
-        .other-status {
+
+        /* READY FOR DISTRIBUTION */
+
+        .relief-ready {
+            background: #e4f2ff;
+            color: #24699d;
+        }
+
+
+        /* COMPLETED */
+
+        .relief-completed {
+            background: #dff4f2;
+            color: #14766f;
+        }
+
+
+        /* NOT ASSESSED */
+
+        .relief-not-assessed {
+            background: #eef1f4;
+            color: #5d6772;
+        }
+
+
+        /* OTHER STATUS */
+
+        .relief-other {
             background: #eef1f4;
             color: #5d6772;
         }
@@ -389,17 +446,20 @@
             white-space: nowrap;
         }
 
+
         .view-btn::after {
             content: "→";
             font-size: 15px;
             transition: transform 0.2s ease;
         }
 
+
         .view-btn:hover {
             background: #246bb1;
             transform: translateY(-1px);
             box-shadow: 0 5px 12px rgba(49, 130, 206, 0.25);
         }
+
 
         .view-btn:hover::after {
             transform: translateX(3px);
@@ -414,11 +474,13 @@
             padding: 55px 20px;
         }
 
+
         .empty-message {
             text-align: center;
             color: #94a3b8;
             font-size: 14px;
         }
+
 
         .empty-icon {
             width: 55px;
@@ -455,18 +517,22 @@
                 padding: 20px 25px;
             }
 
+
             .container {
                 padding: 30px 20px 50px;
             }
+
 
             .stats {
                 grid-template-columns: 1fr;
             }
 
+
             .welcome-section {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
 
             .section {
                 padding: 22px;
@@ -482,23 +548,28 @@
                 gap: 18px;
             }
 
+
             .header h1 {
                 font-size: 19px;
             }
+
 
             .logout-btn {
                 align-self: stretch;
                 text-align: center;
             }
 
+
             .welcome h2 {
                 font-size: 25px;
             }
+
 
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
 
             .brand-icon {
                 width: 45px;
@@ -512,6 +583,7 @@
 
 
 <body>
+
 
 <!-- =========================================================
      HEADER
@@ -540,7 +612,8 @@
     </div>
 
 
-    <!-- MERGED LOGOUT -->
+    <!-- LOGOUT -->
+
     <form th:action="@{/logout}"
           method="post"
           style="display:inline;">
@@ -595,7 +668,7 @@
 
     <!-- =====================================================
          STATISTICS
-    ====================================================== -->
+    ===================================================== -->
 
     <div class="stats">
 
@@ -771,11 +844,7 @@
                     </th>
 
                     <th>
-                        Current Situation
-                    </th>
-
-                    <th>
-                        Status
+                        Relief Status
                     </th>
 
                     <th>
@@ -833,64 +902,64 @@
                     </td>
 
 
-                    <!-- CURRENT SITUATION -->
-
-                    <td>
-
-                        <span
-                                class="situation"
-                                th:if="${assessment.currentSituation != null and !#strings.isEmpty(assessment.currentSituation)}"
-                                th:text="${assessment.currentSituation}">
-
-                            Current situation
-
-                        </span>
-
-
-                        <span
-                                th:if="${assessment.currentSituation == null or #strings.isEmpty(assessment.currentSituation)}">
-
-                            Not provided
-
-                        </span>
-
-                    </td>
-
-
-                    <!-- STATUS -->
+                    <!-- =================================================
+                         RELIEF STATUS
+                    ================================================== -->
 
                     <td>
 
 
-                        <!-- SUBMITTED -->
+                        <!-- PENDING -->
 
                         <span
-                                class="status submitted"
-                                th:if="${assessment.status == 'SUBMITTED'}">
+                                class="relief-status relief-pending"
+                                th:if="${reliefStatuses[assessment.id] == 'PENDING'}">
 
-                            SUBMITTED
+                            PENDING
 
                         </span>
 
 
-                        <!-- UPDATED -->
+                        <!-- APPROVED -->
 
                         <span
-                                class="status updated"
-                                th:if="${assessment.status == 'UPDATED'}">
+                                class="relief-status relief-approved"
+                                th:if="${reliefStatuses[assessment.id] == 'APPROVED'}">
 
-                            UPDATED
+                            APPROVED
 
                         </span>
 
 
-                        <!-- ASSESSED -->
+                        <!-- READY FOR DISTRIBUTION -->
 
                         <span
-                                class="status assessed"
-                                th:if="${assessment.status == 'ASSESSED'}">
+                                class="relief-status relief-ready"
+                                th:if="${reliefStatuses[assessment.id] == 'READY FOR DISTRIBUTION'}">
 
-                            ASSESSED
+                            READY FOR DISTRIBUTION
+
+                        </span>
+
+
+                        <!-- COMPLETED -->
+
+                        <span
+                                class="relief-status relief-completed"
+                                th:if="${reliefStatuses[assessment.id] == 'COMPLETED'}">
+
+                            COMPLETED
+
+                        </span>
+
+
+                        <!-- NOT ASSESSED -->
+
+                        <span
+                                class="relief-status relief-not-assessed"
+                                th:if="${reliefStatuses[assessment.id] == 'NOT ASSESSED'}">
+
+                            NOT ASSESSED
 
                         </span>
 
@@ -898,11 +967,15 @@
                         <!-- OTHER STATUS -->
 
                         <span
-                                class="status other-status"
-                                th:if="${assessment.status != 'SUBMITTED'
-                                        and assessment.status != 'UPDATED'
-                                        and assessment.status != 'ASSESSED'}"
-                                th:text="${assessment.status}">
+                                class="relief-status relief-other"
+
+                                th:if="${reliefStatuses[assessment.id] != 'PENDING'
+                                        and reliefStatuses[assessment.id] != 'APPROVED'
+                                        and reliefStatuses[assessment.id] != 'READY FOR DISTRIBUTION'
+                                        and reliefStatuses[assessment.id] != 'COMPLETED'
+                                        and reliefStatuses[assessment.id] != 'NOT ASSESSED'}"
+
+                                th:text="${reliefStatuses[assessment.id]}">
 
                             STATUS
 
@@ -912,12 +985,24 @@
                     </td>
 
 
-                    <!-- ACTION -->
+                    <!-- =================================================
+                         ACTION
+                    ================================================== -->
 
                     <td>
 
+                        <!--
+                            DIRECT FLOW:
+
+                            RC Dashboard
+                                ↓
+                            Relief Requirement Page
+
+                            The existing direct flow is preserved.
+                        -->
+
                         <a
-                                th:href="@{/relief-coordinator/needs-assessments/{id}(id=${assessment.id})}"
+                                th:href="@{/relief-requirements/new/{id}(id=${assessment.id})}"
                                 class="view-btn">
 
                             Review / View
@@ -939,7 +1024,7 @@
                         class="empty-row">
 
                     <td
-                            colspan="5"
+                            colspan="4"
                             class="empty-message">
 
                         <div class="empty-icon">

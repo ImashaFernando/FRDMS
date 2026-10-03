@@ -30,6 +30,7 @@ public class VictimController {
     private final AffectedFamilyInformationService informationService;
     private final DisasterService disasterService;
 
+
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
@@ -91,7 +92,10 @@ public class VictimController {
             Long disasterId,
 
             Model model) {
+
         System.out.println("🔥 VICTIM REGISTER POST REACHED");
+
+
         // -----------------------------------------------------
         // ALWAYS RELOAD DISASTER LIST
         // -----------------------------------------------------
@@ -629,6 +633,41 @@ public class VictimController {
 
         victim.setDisaster(
                 existingVictim.getDisaster()
+        );
+
+
+        // -----------------------------------------------------
+        // PRESERVE AFFECTED AREA
+        //
+        // The current Victim edit page does not yet edit
+        // affected-area information.
+        // Therefore, do not accidentally erase it.
+        // -----------------------------------------------------
+
+        victim.setAffectedArea(
+                existingVictim.getAffectedArea()
+        );
+
+
+        // -----------------------------------------------------
+        // PRESERVE SHELTER ASSIGNMENT
+        //
+        // The current Victim edit page does not yet edit
+        // shelter assignment.
+        // Therefore, do not accidentally erase it.
+        // -----------------------------------------------------
+
+        victim.setShelter(
+                existingVictim.getShelter()
+        );
+
+
+        // -----------------------------------------------------
+        // KEEP REGISTRATION DATE
+        // -----------------------------------------------------
+
+        victim.setRegistrationDate(
+                existingVictim.getRegistrationDate()
         );
 
 
