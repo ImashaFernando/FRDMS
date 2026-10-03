@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-  <title>Needs Assessment | FRDMS</title>
-
+  <title>Needs Assessment | Flood Relief & Disaster Management System</title>
 
   <style>
 
@@ -19,523 +16,662 @@
       padding: 0;
     }
 
-
     body {
-      font-family: Arial, sans-serif;
-
-      background: #f4f7fa;
-
-      color: #0C1721;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+              linear-gradient(135deg, #eef4fb 0%, #f8fbff 50%, #edf5f8 100%);
+      color: #1d3557;
+      min-height: 100vh;
     }
 
+    /* =========================================================
+       HEADER
+       ========================================================= */
 
-    /* ================= HEADER ================= */
-
-    .header {
-
-      background: #0C1721;
-
+    .top-header {
+      background: linear-gradient(135deg, #172b4d, #244a78);
       color: white;
-
       padding: 22px 45px;
+      box-shadow: 0 5px 20px rgba(25, 53, 87, 0.18);
+    }
 
+    .header-inner {
+      max-width: 1180px;
+      margin: auto;
       display: flex;
-
-      justify-content: space-between;
-
       align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-
-    .header h1 {
-      font-size: 24px;
-    }
-
-
-    .header p {
-      margin-top: 5px;
-
-      color: #CFE8F7;
-
-      font-size: 14px;
-    }
-
-
-    .back-btn {
-
-      text-decoration: none;
-
-      color: white;
-
-      background: #248BE0;
-
-      padding: 10px 18px;
-
-      border-radius: 7px;
-
-      font-size: 14px;
-    }
-
-
-    .back-btn:hover {
-      background: #1c72b9;
-    }
-
-
-
-    /* ================= CONTAINER ================= */
-
-    .container {
-
-      width: 90%;
-
-      max-width: 1000px;
-
-      margin: 35px auto;
-    }
-
-
-    .page-title {
-      margin-bottom: 25px;
-    }
-
-
-    .page-title h2 {
-
-      font-size: 28px;
-
-      margin-bottom: 8px;
-    }
-
-
-    .page-title p {
-
-      color: #666;
-
-      font-size: 15px;
-
-      line-height: 1.5;
-    }
-
-
-
-    /* ================= VICTIM CARD ================= */
-
-    .victim-card {
-
-      background: white;
-
-      padding: 25px;
-
-      border-radius: 12px;
-
-      margin-bottom: 25px;
-
-      box-shadow:
-              0 3px 12px
-              rgba(0, 0, 0, 0.08);
-    }
-
-
-    .victim-card h3 {
-
-      color: #0B2A4A;
-
-      margin-bottom: 18px;
-    }
-
-
-    .victim-grid {
-
-      display: grid;
-
-      grid-template-columns:
-                    repeat(2, 1fr);
-
+    .brand {
+      display: flex;
+      align-items: center;
       gap: 15px;
     }
 
-
-    .victim-item {
-
-      background: #f4f7fa;
-
-      padding: 14px;
-
-      border-radius: 8px;
+    .brand-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      border: 1px solid rgba(255,255,255,0.25);
     }
 
-
-    .victim-item strong {
-
-      display: block;
-
-      color: #555;
-
-      font-size: 13px;
-
-      margin-bottom: 5px;
+    .brand-text h1 {
+      font-size: 24px;
+      margin-bottom: 4px;
+      letter-spacing: 0.2px;
     }
 
-
-    .victim-item span {
-
+    .brand-text p {
       font-size: 14px;
+      opacity: 0.82;
+    }
+
+    .dashboard-link {
+      text-decoration: none;
+      color: #17385f;
+      background: #ffffff;
+      padding: 11px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.10);
+    }
+
+    .dashboard-link:hover {
+      transform: translateY(-2px);
+      background: #edf5ff;
     }
 
 
+    /* =========================================================
+       MAIN CONTAINER
+       ========================================================= */
 
-    /* ================= FORM CARD ================= */
+    .page-container {
+      width: 92%;
+      max-width: 1050px;
+      margin: 38px auto 60px;
+    }
+
+
+    /* =========================================================
+       PAGE INTRO
+       ========================================================= */
+
+    .intro-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px 36px;
+      margin-bottom: 25px;
+      border: 1px solid #dce7f4;
+      box-shadow: 0 12px 35px rgba(31, 62, 97, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(91, 141, 203, 0.07);
+      right: -55px;
+      top: -70px;
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #eaf3ff;
+      color: #3167a5;
+      border-radius: 30px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .intro-card h2 {
+      font-size: 32px;
+      color: #17385f;
+      margin-bottom: 10px;
+    }
+
+    .intro-card p {
+      font-size: 16px;
+      color: #667d99;
+      line-height: 1.7;
+      max-width: 760px;
+    }
+
+
+    /* =========================================================
+       PROGRESS
+       ========================================================= */
+
+    .progress-card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      border: 1px solid #dce7f4;
+      box-shadow: 0 8px 25px rgba(31, 62, 97, 0.06);
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 13px;
+    }
+
+    .progress-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #31557f;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      color: #7890aa;
+    }
+
+    .progress-bar {
+      height: 8px;
+      width: 100%;
+      background: #e8eff7;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 33%;
+      height: 100%;
+      background: linear-gradient(90deg, #4d83c4, #63a3df);
+      border-radius: 20px;
+    }
+
+
+    /* =========================================================
+       FORM CARD
+       ========================================================= */
 
     .form-card {
-
       background: white;
-
-      padding: 30px;
-
-      border-radius: 12px;
-
-      box-shadow:
-              0 3px 12px
-              rgba(0, 0, 0, 0.08);
+      border-radius: 25px;
+      border: 1px solid #dce7f4;
+      box-shadow: 0 15px 40px rgba(31, 62, 97, 0.08);
+      overflow: hidden;
     }
 
-
-    .form-card h3 {
-
-      color: #0B2A4A;
-
-      margin-bottom: 8px;
+    .form-header {
+      padding: 27px 35px;
+      background: linear-gradient(135deg, #f7faff, #edf5fd);
+      border-bottom: 1px solid #dce7f4;
     }
 
+    .form-header h3 {
+      color: #17385f;
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
 
-    .form-description {
-
-      color: #666;
-
+    .form-header p {
+      color: #7188a2;
       font-size: 14px;
+    }
 
+    .form-body {
+      padding: 35px;
+    }
+
+
+    /* =========================================================
+       SECTION
+       ========================================================= */
+
+    .form-section {
+      margin-bottom: 38px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      margin-bottom: 18px;
+    }
+
+    .section-number {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      border-radius: 12px;
+      background: #e9f2ff;
+      color: #3167a5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .section-heading h4 {
+      color: #1b3d65;
+      font-size: 19px;
+      margin-bottom: 4px;
+    }
+
+    .section-heading p {
+      color: #8093aa;
+      font-size: 13px;
       line-height: 1.5;
-
-      margin-bottom: 25px;
     }
 
 
+    /* =========================================================
+       CURRENT SITUATION
+       ========================================================= */
 
-    /* ================= FORM GROUP ================= */
-
-    .form-group {
-
-      margin-bottom: 24px;
-    }
-
-
-    label {
-
+    .field-label {
       display: block;
-
-      font-weight: bold;
-
-      margin-bottom: 8px;
-
-      color: #333;
+      color: #294c73;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 9px;
     }
 
+    .required {
+      color: #d95757;
+      margin-left: 3px;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      border: 1.5px solid #d5e0ed;
+      border-radius: 15px;
+      padding: 16px 17px;
+      font-size: 15px;
+      color: #294c73;
+      background: #fbfdff;
+      outline: none;
+      resize: vertical;
+      transition: 0.25s ease;
+      font-family: inherit;
+    }
 
     textarea {
+      min-height: 150px;
+      line-height: 1.6;
+    }
 
-      width: 100%;
+    textarea:focus,
+    input[type="text"]:focus {
+      border-color: #5791ca;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(87, 145, 202, 0.10);
+    }
 
-      min-height: 120px;
+    textarea::placeholder,
+    input::placeholder {
+      color: #9aaabc;
+    }
 
-      padding: 13px;
-
-      border: 1px solid #ccd4da;
-
-      border-radius: 7px;
-
-      resize: vertical;
-
-      font-family: Arial, sans-serif;
-
-      font-size: 14px;
+    .field-help {
+      margin-top: 8px;
+      color: #8a9bb0;
+      font-size: 12px;
     }
 
 
-    textarea:focus {
+    /* =========================================================
+       ASSISTANCE OPTIONS
+       ========================================================= */
 
-      outline: none;
-
-      border-color: #248BE0;
-
-      box-shadow:
-              0 0 0 2px
-              rgba(36, 139, 224, 0.12);
-    }
-
-
-
-    /* ================= NEEDS ================= */
-
-    .needs-grid {
-
+    .assistance-grid {
       display: grid;
-
-      grid-template-columns:
-                    repeat(2, 1fr);
-
-      gap: 12px;
-
-      margin-top: 10px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
 
-
-    .need-option {
-
-      border: 1px solid #d8dee3;
-
-      padding: 15px;
-
-      border-radius: 8px;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-
-      background: #fafbfc;
-
-      cursor: pointer;
+    .assistance-option {
+      position: relative;
     }
 
+    /*
+       IMPORTANT:
+       The checkbox itself is hidden visually but remains
+       clickable through its associated label.
+    */
 
-    .need-option:hover {
-
-      background: #f0f6fa;
-    }
-
-
-    .need-option input {
-
-      width: 18px;
-
-      height: 18px;
-
-      cursor: pointer;
-    }
-
-
-    .need-option label {
-
+    .assistance-option input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
       margin: 0;
-
-      font-weight: normal;
-
-      cursor: pointer;
     }
 
-
-
-    /* ================= ERRORS ================= */
-
-    .error {
-
-      color: #c0392b;
-
-      font-size: 13px;
-
-      margin-top: 6px;
-    }
-
-
-
-    /* ================= EXISTING MESSAGE ================= */
-
-    .existing-message {
-
-      background: #fff8e1;
-
-      border-left: 5px solid #f0ad4e;
-
-      padding: 15px;
-
-      border-radius: 6px;
-
-      margin-bottom: 25px;
-
-      font-size: 14px;
-
-      line-height: 1.5;
-    }
-
-
-    .existing-message strong {
-
-      color: #7a5700;
-    }
-
-
-
-    /* ================= UPDATED MESSAGE ================= */
-
-    .updated-message {
-
-      background: #fff3cd;
-
-      border-left: 5px solid #f0ad4e;
-
-      padding: 15px;
-
-      border-radius: 6px;
-
-      margin-bottom: 25px;
-
-      font-size: 14px;
-
-      line-height: 1.5;
-    }
-
-
-    .updated-message strong {
-
-      color: #8a5a00;
-    }
-
-
-
-    /* ================= ACTIONS ================= */
-
-    .actions {
-
-      margin-top: 30px;
-
+    .assistance-label {
       display: flex;
-
-      gap: 12px;
-
-      flex-wrap: wrap;
-    }
-
-
-    .btn {
-
-      text-decoration: none;
-
-      border: none;
-
-      padding: 13px 24px;
-
-      border-radius: 7px;
-
-      font-size: 14px;
-
-      font-weight: bold;
-
+      align-items: center;
+      gap: 14px;
+      min-height: 72px;
+      padding: 15px 18px;
+      border: 1.5px solid #dce5ef;
+      border-radius: 16px;
+      background: #fbfdff;
       cursor: pointer;
-
-      display: inline-block;
+      transition: 0.25s ease;
+      user-select: none;
     }
 
+    .assistance-label:hover {
+      border-color: #78a6d5;
+      background: #f4f9ff;
+      transform: translateY(-2px);
+      box-shadow: 0 7px 18px rgba(54, 96, 140, 0.08);
+    }
 
-    .btn-primary {
+    .check-box {
+      width: 23px;
+      height: 23px;
+      border: 2px solid #aebdcd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
 
-      background: #248BE0;
+    .option-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: #eef5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
 
+    .option-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .option-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #294c73;
+    }
+
+    .option-description {
+      font-size: 12px;
+      color: #8a9bb0;
+    }
+
+    /*
+       FIX:
+       Thymeleaf creates a hidden input together with a boolean
+       checkbox. Therefore "~" is used instead of "+".
+    */
+
+    .assistance-option input[type="checkbox"]:checked ~ .assistance-label {
+      border-color: #5289c3;
+      background: #eef6ff;
+      box-shadow: 0 6px 18px rgba(55, 105, 159, 0.10);
+    }
+
+    .assistance-option input[type="checkbox"]:checked ~ .assistance-label .check-box {
+      background: #4f86c2;
+      border-color: #4f86c2;
       color: white;
     }
 
+    .assistance-option input[type="checkbox"]:checked ~ .assistance-label .check-box::after {
+      content: "✓";
+    }
 
-    .btn-primary:hover {
+    /*
+       Keyboard accessibility
+    */
 
-      background: #1c72b9;
+    .assistance-option input[type="checkbox"]:focus-visible ~ .assistance-label {
+      border-color: #4f86c2;
+      box-shadow: 0 0 0 4px rgba(79, 134, 194, 0.15);
     }
 
 
-    .btn-secondary {
+    /* =========================================================
+       OTHER NEEDS
+       ========================================================= */
 
-      background: #e6e8e9;
-
-      color: #333;
+    .optional-badge {
+      display: inline-block;
+      margin-left: 7px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: #f1f4f8;
+      color: #7c8da1;
+      font-size: 10px;
+      font-weight: 700;
+      vertical-align: middle;
     }
 
 
-    .btn-secondary:hover {
-
-      background: #d4d7d9;
-    }
-
-
-
-    /* ================= INFORMATION BOX ================= */
+    /* =========================================================
+       INFORMATION BOX
+       ========================================================= */
 
     .info-box {
-
+      display: flex;
+      gap: 13px;
+      padding: 17px 18px;
+      background: #f1f7fd;
+      border: 1px solid #d7e7f6;
+      border-radius: 14px;
       margin-top: 25px;
+    }
 
-      background: #CFE8F7;
+    .info-icon {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      border-radius: 50%;
+      background: #dcecfb;
+      color: #3c75ad;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
 
-      border-left: 5px solid #248BE0;
-
-      padding: 15px;
-
-      border-radius: 6px;
-
-      font-size: 14px;
-
-      line-height: 1.5;
+    .info-box p {
+      color: #617b98;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
 
+    /* =========================================================
+       VALIDATION
+       ========================================================= */
 
-    /* ================= RESPONSIVE ================= */
+    .error-message {
+      margin-top: 8px;
+      color: #c94b4b;
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-    @media (max-width: 700px) {
+    .has-error {
+      border-color: #d76565 !important;
+    }
 
-      .header {
 
-        padding: 20px;
+    /* =========================================================
+       SUBMIT AREA
+       ========================================================= */
 
+    .submit-area {
+      border-top: 1px solid #e3ebf3;
+      margin-top: 10px;
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .submit-note {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #7b8da2;
+      font-size: 12px;
+      line-height: 1.5;
+      max-width: 500px;
+    }
+
+    .submit-note-icon {
+      color: #4e82bb;
+      font-size: 17px;
+    }
+
+    .submit-button {
+      border: none;
+      background: linear-gradient(135deg, #3f78b9, #315f99);
+      color: white;
+      padding: 15px 27px;
+      border-radius: 13px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(47, 94, 149, 0.25);
+      transition: 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 11px 25px rgba(47, 94, 149, 0.32);
+    }
+
+    .submit-button:active {
+      transform: translateY(0);
+    }
+
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .footer {
+      text-align: center;
+      color: #91a1b4;
+      font-size: 13px;
+      padding: 25px 0 5px;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 800px) {
+
+      .top-header {
+        padding: 18px 20px;
+      }
+
+      .header-inner {
         flex-direction: column;
-
-        gap: 15px;
-
         align-items: flex-start;
       }
 
-
-      .container {
-
-        width: 94%;
-      }
-
-
-      .victim-grid,
-      .needs-grid {
-
-        grid-template-columns: 1fr;
-      }
-
-
-      .form-card {
-
-        padding: 20px;
-      }
-
-
-      .actions {
-
-        flex-direction: column;
-      }
-
-
-      .btn {
-
-        width: 100%;
-
+      .dashboard-link {
+        align-self: stretch;
         text-align: center;
       }
 
+      .page-container {
+        width: 94%;
+        margin-top: 25px;
+      }
+
+      .intro-card {
+        padding: 25px;
+      }
+
+      .intro-card h2 {
+        font-size: 27px;
+      }
+
+      .form-body {
+        padding: 25px;
+      }
+
+      .assistance-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-area {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .submit-button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .brand-text h1 {
+        font-size: 19px;
+      }
+
+      .brand-text p {
+        font-size: 12px;
+      }
+
+      .brand-icon {
+        width: 45px;
+        height: 45px;
+      }
+
+      .intro-card h2 {
+        font-size: 24px;
+      }
+
+      .form-body {
+        padding: 20px;
+      }
+
+      .form-header {
+        padding: 22px;
+      }
     }
 
   </style>
@@ -546,539 +682,600 @@
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================================
      HEADER
-     ===================================================== -->
+     ========================================================= -->
 
-<header class="header">
+<header class="top-header">
 
-  <div>
+  <div class="header-inner">
 
-    <h1>
-      Flood Relief & Disaster Management System
-    </h1>
+    <div class="brand">
 
-    <p>
-      Victim Management
-    </p>
+      <div class="brand-icon">
+        🌊
+      </div>
+
+      <div class="brand-text">
+
+        <h1>
+          Flood Relief & Disaster Management System
+        </h1>
+
+        <p>
+          Victim Assistance Portal
+        </p>
+
+      </div>
+
+    </div>
+
+    <a th:href="@{/victim/dashboard}"
+       class="dashboard-link">
+      ← Back to Dashboard
+    </a>
 
   </div>
-
-
-  <a
-          th:href="@{/victim/dashboard}"
-          class="back-btn">
-
-    ← Dashboard
-
-  </a>
 
 </header>
 
 
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
 
-<!-- =====================================================
-     MAIN
-     ===================================================== -->
-
-<main class="container">
-
-
-  <!-- ================= PAGE TITLE ================= -->
-
-  <div class="page-title">
-
-    <h2
-            th:text="${needsAssessment.id == null}
-                         ? 'Needs Assessment'
-                         : 'Update Needs Assessment'">
-
-      Needs Assessment
-
-    </h2>
+<main class="page-container">
 
 
-    <p>
+  <!-- =====================================================
+       INTRODUCTION
+       ===================================================== -->
 
-      Provide information about your current situation
-      and the assistance you may require.
+  <section class="intro-card">
 
-    </p>
+    <div class="intro-content">
 
-  </div>
-
-
-
-  <!-- =================================================
-       EXISTING ASSESSMENT MESSAGE
-       ================================================= -->
-
-  <div
-          class="existing-message"
-
-          th:if="${needsAssessment.id != null
-                    and needsAssessment.status != 'UPDATED'}">
-
-    <strong>
-      Existing Needs Assessment
-    </strong>
-
-    <br>
-
-    You already have a submitted needs assessment.
-    You can update the information below if your
-    situation or requirements have changed.
-
-  </div>
-
-
-
-  <!-- =================================================
-       UPDATED MESSAGE
-       ================================================= -->
-
-  <div
-          class="updated-message"
-
-          th:if="${needsAssessment.status == 'UPDATED'}">
-
-    <strong>
-      Previous Assessment Updated
-    </strong>
-
-    <br>
-
-    You are updating your existing needs assessment.
-    After saving your changes, the Relief Coordinator
-    will review the updated information again.
-
-  </div>
-
-
-
-  <!-- =================================================
-       VICTIM INFORMATION
-       ================================================= -->
-
-  <div class="victim-card">
-
-    <h3>
-      Victim Information
-    </h3>
-
-
-    <div class="victim-grid">
-
-
-      <div class="victim-item">
-
-        <strong>
-          Full Name
-        </strong>
-
-        <span
-                th:text="${victim.fullName}">
-
-                    Victim Name
-
-                </span>
-
+      <div class="step-label">
+        📋 Needs Assessment
       </div>
 
+      <h2>
+        Tell Us What You Need
+      </h2>
 
-
-      <div class="victim-item">
-
-        <strong>
-          NIC Number
-        </strong>
-
-        <span
-                th:text="${victim.nicNumber}">
-
-                    NIC
-
-                </span>
-
-      </div>
-
-
-
-      <div class="victim-item">
-
-        <strong>
-          Phone Number
-        </strong>
-
-        <span
-                th:text="${victim.phoneNumber}">
-
-                    Phone
-
-                </span>
-
-      </div>
-
-
-
-      <div class="victim-item">
-
-        <strong>
-          Address
-        </strong>
-
-        <span
-                th:text="${victim.address}">
-
-                    Address
-
-                </span>
-
-      </div>
+      <p>
+        Please provide accurate information about your current
+        situation and the assistance required by you and your family.
+        Your information will be reviewed by the Relief Coordinator
+        to determine the appropriate relief support.
+      </p>
 
     </div>
 
-  </div>
+  </section>
 
 
+  <!-- =====================================================
+       PROGRESS
+       ===================================================== -->
 
-  <!-- =================================================
+  <section class="progress-card">
+
+    <div class="progress-top">
+
+      <span class="progress-title">
+        Assessment Progress
+      </span>
+
+      <span class="progress-text">
+        Step 1 of 3
+      </span>
+
+    </div>
+
+    <div class="progress-bar">
+
+      <div class="progress-fill"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
        FORM
-       ================================================= -->
+       ===================================================== -->
 
-  <div class="form-card">
-
-
-    <h3
-            th:text="${needsAssessment.id == null}
-                         ? 'Submit Your Needs'
-                         : 'Update Your Needs'">
-
-      Submit Your Needs
-
-    </h3>
+  <section class="form-card">
 
 
-    <p class="form-description">
+    <!-- FORM HEADER -->
 
-      Please provide accurate information about
-      your current situation and the assistance
-      you require.
+    <div class="form-header">
 
-    </p>
+      <h3>
+        📝 Your Needs Information
+      </h3>
+
+      <p>
+        Complete the sections below. Fields marked with
+        <span style="color:#d95757;">*</span>
+        are required.
+      </p>
+
+    </div>
 
 
+    <!-- FORM BODY -->
 
-    <form
+    <div class="form-body">
 
-            th:action="@{/needs-assessment/submit}"
-
+      <form th:action="@{/needs-assessment/submit}"
             th:object="${needsAssessment}"
-
             method="post">
 
 
-      <!-- =================================================
-           HIDDEN ID
-           ================================================= -->
+        <!-- =================================================
+             SECTION 1 - CURRENT SITUATION
+             ================================================= -->
 
-      <input
-              type="hidden"
-              th:field="*{id}">
+        <div class="form-section">
 
+          <div class="section-heading">
 
+            <div class="section-number">
+              1
+            </div>
 
-      <!-- =================================================
-           CURRENT SITUATION
-           ================================================= -->
+            <div>
 
-      <div class="form-group">
+              <h4>
+                🏠 Current Situation
+              </h4>
 
-        <label for="currentSituation">
+              <p>
+                Tell us what has happened and how the
+                disaster is currently affecting you.
+              </p>
 
-          Current Situation
-
-        </label>
-
-
-        <textarea
-
-                id="currentSituation"
-
-                th:field="*{currentSituation}"
-
-                placeholder="Describe your current situation and how the disaster has affected you and your family..."
-
-                required>
-
-                </textarea>
-
-
-        <div
-
-                class="error"
-
-                th:if="${#fields.hasErrors('currentSituation')}"
-
-                th:errors="*{currentSituation}">
-
-        </div>
-
-      </div>
-
-
-
-      <!-- =================================================
-           REQUIRED ASSISTANCE
-           ================================================= -->
-
-      <div class="form-group">
-
-        <label>
-
-          Required Assistance
-
-        </label>
-
-
-        <div class="needs-grid">
-
-
-          <!-- FOOD -->
-
-          <div class="need-option">
-
-            <input
-
-                    type="checkbox"
-
-                    id="food"
-
-                    th:field="*{foodRequired}">
-
-
-            <label for="food">
-
-              Food
-
-            </label>
+            </div>
 
           </div>
 
 
+          <label class="field-label"
+                 for="currentSituation">
 
-          <!-- WATER -->
+            Describe your current situation
 
-          <div class="need-option">
+            <span class="required">*</span>
 
-            <input
-
-                    type="checkbox"
-
-                    id="water"
-
-                    th:field="*{waterRequired}">
+          </label>
 
 
-            <label for="water">
+          <textarea
+                  id="currentSituation"
+                  th:field="*{currentSituation}"
+                  placeholder="For example: Our house was affected by flooding and we are currently staying at a temporary location. We have limited access to food and drinking water..."
+                  required></textarea>
 
-              Drinking Water
 
-            </label>
-
+          <div class="field-help">
+            Please provide enough information so the Relief
+            Coordinator can understand your situation.
           </div>
 
 
-
-          <!-- MEDICAL -->
-
-          <div class="need-option">
-
-            <input
-
-                    type="checkbox"
-
-                    id="medical"
-
-                    th:field="*{medicalAssistanceRequired}">
-
-
-            <label for="medical">
-
-              Medical Assistance
-
-            </label>
-
-          </div>
-
-
-
-          <!-- CLOTHING -->
-
-          <div class="need-option">
-
-            <input
-
-                    type="checkbox"
-
-                    id="clothing"
-
-                    th:field="*{clothingRequired}">
-
-
-            <label for="clothing">
-
-              Clothing
-
-            </label>
-
-          </div>
-
-
-
-          <!-- HYGIENE -->
-
-          <div class="need-option">
-
-            <input
-
-                    type="checkbox"
-
-                    id="hygiene"
-
-                    th:field="*{hygieneItemsRequired}">
-
-
-            <label for="hygiene">
-
-              Hygiene Items
-
-            </label>
-
+          <div class="error-message"
+               th:if="${#fields.hasErrors('currentSituation')}"
+               th:errors="*{currentSituation}">
           </div>
 
         </div>
 
-      </div>
+
+        <!-- =================================================
+             SECTION 2 - REQUIRED ASSISTANCE
+             ================================================= -->
+
+        <div class="form-section">
+
+          <div class="section-heading">
+
+            <div class="section-number">
+              2
+            </div>
+
+            <div>
+
+              <h4>
+                🎁 Required Assistance
+              </h4>
+
+              <p>
+                Select all types of assistance that
+                you currently need.
+              </p>
+
+            </div>
+
+          </div>
 
 
-
-      <!-- =================================================
-           OTHER NEEDS
-           ================================================= -->
-
-      <div class="form-group">
-
-        <label for="otherNeeds">
-
-          Other Needs
-
-        </label>
+          <div class="assistance-grid">
 
 
-        <textarea
+            <!-- FOOD -->
 
-                id="otherNeeds"
+            <div class="assistance-option">
 
-                th:field="*{otherNeeds}"
+              <input type="checkbox"
+                     id="foodRequired"
+                     th:field="*{foodRequired}">
 
-                placeholder="Mention any other assistance you may require...">
+              <label for="foodRequired"
+                     class="assistance-label">
 
-                </textarea>
+                <span class="check-box"></span>
 
-      </div>
+                <span class="option-icon">
+                  🍚
+                </span>
 
+                <span class="option-text">
 
+                  <span class="option-title">
+                    Food
+                  </span>
 
-      <!-- =================================================
-           ADDITIONAL INFORMATION
-           ================================================= -->
+                  <span class="option-description">
+                    Food and essential meals
+                  </span>
 
-      <div class="form-group">
+                </span>
 
-        <label for="additionalInformation">
+              </label>
 
-          Additional Information
-
-        </label>
-
-
-        <textarea
-
-                id="additionalInformation"
-
-                th:field="*{additionalInformation}"
-
-                placeholder="Provide any additional information that may help the Relief Coordinator...">
-
-                </textarea>
-
-      </div>
+            </div>
 
 
+            <!-- WATER -->
 
-      <!-- =================================================
-           BUTTONS
-           ================================================= -->
+            <div class="assistance-option">
 
-      <div class="actions">
+              <input type="checkbox"
+                     id="waterRequired"
+                     th:field="*{waterRequired}">
 
+              <label for="waterRequired"
+                     class="assistance-label">
 
-        <!-- SUBMIT / UPDATE -->
+                <span class="check-box"></span>
 
-        <button
+                <span class="option-icon">
+                  💧
+                </span>
 
-                type="submit"
+                <span class="option-text">
 
-                class="btn btn-primary"
+                  <span class="option-title">
+                    Drinking Water
+                  </span>
 
-                th:text="${needsAssessment.id == null}
-                                 ? 'Submit Needs Assessment'
-                                 : 'Update Needs Assessment'">
+                  <span class="option-description">
+                    Safe drinking water
+                  </span>
 
-          Submit Needs Assessment
+                </span>
 
-        </button>
+              </label>
 
-
-
-        <!-- CANCEL -->
-
-        <a
-
-                th:href="@{/victim/dashboard}"
-
-                class="btn btn-secondary">
-
-          Cancel
-
-        </a>
-
-      </div>
+            </div>
 
 
-    </form>
+            <!-- MEDICAL -->
+
+            <div class="assistance-option">
+
+              <input type="checkbox"
+                     id="medicalAssistanceRequired"
+                     th:field="*{medicalAssistanceRequired}">
+
+              <label for="medicalAssistanceRequired"
+                     class="assistance-label">
+
+                <span class="check-box"></span>
+
+                <span class="option-icon">
+                  🏥
+                </span>
+
+                <span class="option-text">
+
+                  <span class="option-title">
+                    Medical Assistance
+                  </span>
+
+                  <span class="option-description">
+                    Medicine or medical support
+                  </span>
+
+                </span>
+
+              </label>
+
+            </div>
 
 
+            <!-- CLOTHING -->
 
-    <!-- =================================================
-         INFORMATION
-         ================================================= -->
+            <div class="assistance-option">
 
-    <div class="info-box">
+              <input type="checkbox"
+                     id="clothingRequired"
+                     th:field="*{clothingRequired}">
 
-      <strong>
-        Important:
-      </strong>
+              <label for="clothingRequired"
+                     class="assistance-label">
 
-      Your needs assessment is reviewed by the
-      <strong>Relief Coordinator</strong>.
+                <span class="check-box"></span>
 
-      If your situation or requirements change,
-      update this existing assessment instead of
-      creating another one.
+                <span class="option-icon">
+                  👕
+                </span>
+
+                <span class="option-text">
+
+                  <span class="option-title">
+                    Clothing
+                  </span>
+
+                  <span class="option-description">
+                    Essential clothing items
+                  </span>
+
+                </span>
+
+              </label>
+
+            </div>
+
+
+            <!-- HYGIENE -->
+
+            <div class="assistance-option">
+
+              <input type="checkbox"
+                     id="hygieneItemsRequired"
+                     th:field="*{hygieneItemsRequired}">
+
+              <label for="hygieneItemsRequired"
+                     class="assistance-label">
+
+                <span class="check-box"></span>
+
+                <span class="option-icon">
+                  🧼
+                </span>
+
+                <span class="option-text">
+
+                  <span class="option-title">
+                    Hygiene Items
+                  </span>
+
+                  <span class="option-description">
+                    Personal hygiene essentials
+                  </span>
+
+                </span>
+
+              </label>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              i
+            </div>
+
+            <p>
+              You can select more than one option.
+              Please select every type of assistance
+              that your family currently requires.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SECTION 3 - OTHER NEEDS
+             ================================================= -->
+
+        <div class="form-section">
+
+          <div class="section-heading">
+
+            <div class="section-number">
+              3
+            </div>
+
+            <div>
+
+              <h4>
+                ✏️ Other Needs
+              </h4>
+
+              <p>
+                Tell us about any additional assistance
+                that was not listed above.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <label class="field-label"
+                 for="otherNeeds">
+
+            Other assistance
+
+            <span class="optional-badge">
+              OPTIONAL
+            </span>
+
+          </label>
+
+
+          <textarea
+                  id="otherNeeds"
+                  th:field="*{otherNeeds}"
+                  placeholder="For example: baby diapers, blankets, cooking equipment, special food requirements, or other urgent needs..."></textarea>
+
+
+          <div class="error-message"
+               th:if="${#fields.hasErrors('otherNeeds')}"
+               th:errors="*{otherNeeds}">
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SECTION 4 - ADDITIONAL INFORMATION
+             ================================================= -->
+
+        <div class="form-section">
+
+          <div class="section-heading">
+
+            <div class="section-number">
+              4
+            </div>
+
+            <div>
+
+              <h4>
+                💬 Additional Information
+              </h4>
+
+              <p>
+                Add anything else you think the Relief
+                Coordinator should know.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <label class="field-label"
+                 for="additionalInformation">
+
+            Additional information
+
+            <span class="optional-badge">
+              OPTIONAL
+            </span>
+
+          </label>
+
+
+          <textarea
+                  id="additionalInformation"
+                  th:field="*{additionalInformation}"
+                  placeholder="You can mention any important family circumstances, urgent concerns, accessibility requirements, or other information that may help us understand your needs..."></textarea>
+
+
+          <div class="error-message"
+               th:if="${#fields.hasErrors('additionalInformation')}"
+               th:errors="*{additionalInformation}">
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INFORMATION NOTICE
+             ================================================= -->
+
+        <div class="info-box">
+
+          <div class="info-icon">
+            ✓
+          </div>
+
+          <p>
+
+            <strong>Your information will be reviewed.</strong>
+
+            After you submit this assessment, the Relief
+            Coordinator will review your needs and determine
+            the appropriate relief assistance. Please provide
+            truthful and accurate information.
+
+          </p>
+
+        </div>
+
+
+        <!-- =================================================
+             SUBMIT
+             ================================================= -->
+
+        <div class="submit-area">
+
+          <div class="submit-note">
+
+            <span class="submit-note-icon">
+              🔒
+            </span>
+
+            <span>
+              Please check your information before submitting.
+              Once the Relief Coordinator creates a relief
+              requirement for your assessment, you will no
+              longer be able to modify this assessment.
+            </span>
+
+          </div>
+
+
+          <button type="submit"
+                  class="submit-button">
+
+            Submit Needs Assessment
+            &nbsp; →
+
+          </button>
+
+        </div>
+
+
+      </form>
 
     </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <div class="footer">
+
+    Flood Relief & Disaster Management System
+    &nbsp;•&nbsp;
+    Victim Assistance Module
 
   </div>
 
@@ -1086,5 +1283,4 @@
 
 
 </body>
-
 </html>

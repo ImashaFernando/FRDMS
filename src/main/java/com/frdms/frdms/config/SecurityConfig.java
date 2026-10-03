@@ -1331,18 +1331,25 @@ public class SecurityConfig {
                         )
 
 
-                        // =========================================
-                        // NEEDS ASSESSMENT - VICTIM
-                        // =========================================
+                                // =========================================
+// NEEDS ASSESSMENT
+// =========================================
+//
+// The NeedsAssessmentController performs the
+// victim session check using victimId.
+//
+// This avoids the 403 Forbidden problem when
+// the victim is already logged in through the
+// application's session-based victim login.
+//
+// The controller will redirect to /login if
+// there is no valid victimId in the session.
+//
 
-                        .requestMatchers(
-                                "/needs-assessment/form",
-                                "/needs-assessment/submit",
-                                "/needs-assessment/status"
-                        )
-                        .hasRole(
-                                "VICTIM"
-                        )
+                                .requestMatchers(
+                                        "/needs-assessment/**"
+                                )
+                                .authenticated()
 
 
                         // =========================================

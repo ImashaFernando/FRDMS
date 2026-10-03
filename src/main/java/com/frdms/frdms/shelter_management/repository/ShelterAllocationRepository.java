@@ -12,6 +12,9 @@ public interface ShelterAllocationRepository
     Optional<ShelterAllocation>
     findByAffectedFamily_Id(Long affectedFamilyId);
 
+    Optional<ShelterAllocation>
+    findByAffectedFamily_Victim_Id(Long victimId);
+
     boolean existsByAffectedFamily_Id(Long affectedFamilyId);
 
     List<ShelterAllocation>

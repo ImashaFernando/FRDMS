@@ -28,4 +28,19 @@ public interface ReliefRequirementRepository
      * Find relief requirements by status.
      */
     List<ReliefRequirement> findByStatus(String status);
+
+    /*
+     * Get approved relief requirements for Distribution Management.
+     *
+     * Newest requirements appear first.
+     */
+    List<ReliefRequirement> findByStatusOrderByCreatedAtDesc(
+            String status
+    );
+
+    /*
+     * Get all relief requirements ordered from newest
+     * to oldest.
+     */
+    List<ReliefRequirement> findAllByOrderByCreatedAtDesc();
 }

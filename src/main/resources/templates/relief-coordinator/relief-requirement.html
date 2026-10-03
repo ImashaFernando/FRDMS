@@ -20,18 +20,9 @@
         body {
             margin: 0;
             font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(
-                    135deg,
-                    #eef4ff,
-                    #f8faff
-            );
+            background: linear-gradient(135deg, #eef4ff, #f8faff);
             color: #19345f;
         }
-
-
-        /* =====================================================
-           MAIN CONTAINER
-        ===================================================== */
 
         .page-container {
             width: 92%;
@@ -39,769 +30,619 @@
             margin: 35px auto 70px;
         }
 
-
         /* =====================================================
-           HEADER
-        ===================================================== */
+           HERO
+        ====================================================== */
 
         .hero {
-            background: linear-gradient(
-                    135deg,
-                    #263f78,
-                    #5878c2
-            );
-
+            background: linear-gradient(135deg, #263f78, #5878c2);
             color: white;
-
             padding: 48px 55px;
-
             border-radius: 30px;
-
-            box-shadow:
-                    0 20px 45px rgba(38, 63, 120, 0.22);
-
+            box-shadow: 0 20px 45px rgba(38, 63, 120, 0.22);
             margin-bottom: 30px;
         }
 
         .hero h1 {
             margin: 0 0 12px;
-
             font-size: 46px;
-
             font-weight: 800;
-
             letter-spacing: -1px;
         }
 
         .hero p {
             margin: 0;
-
             font-size: 19px;
-
             opacity: 0.94;
-
             line-height: 1.6;
         }
 
-
         /* =====================================================
            REVIEW CARD
-        ===================================================== */
+        ====================================================== */
 
         .review-card {
             background: white;
-
             border-radius: 28px;
-
             padding: 38px;
-
             margin-bottom: 30px;
-
-            box-shadow:
-                    0 15px 40px rgba(40, 65, 110, 0.10);
-
+            box-shadow: 0 15px 40px rgba(40, 65, 110, 0.10);
             border-left: 7px solid #6389df;
         }
 
         .review-card h2 {
             margin-top: 0;
-
             font-size: 30px;
-
             color: #203d70;
         }
 
         .review-card p {
             color: #6b7f9f;
-
             font-size: 17px;
-
             line-height: 1.7;
         }
 
-
         /* =====================================================
-           VICTIM INFORMATION
-        ===================================================== */
-
-        .victim-info {
-            margin-top: 25px;
-
-            display: grid;
-
-            grid-template-columns:
-                    repeat(2, minmax(250px, 1fr));
-
-            gap: 18px;
-        }
-
-        .info-box {
-            background: #f3f7ff;
-
-            border: 1px solid #dce6f7;
-
-            border-radius: 18px;
-
-            padding: 20px 24px;
-        }
-
-        .info-label {
-            display: block;
-
-            color: #8295b5;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1px;
-
-            margin-bottom: 7px;
-        }
-
-        .info-value {
-            color: #203d70;
-
-            font-size: 18px;
-
-            font-weight: 700;
-
-            word-break: break-word;
-        }
-
-
-        /* =====================================================
-           NEEDS ASSESSMENT DETAILS
-        ===================================================== */
-
-        .needs-assessment-card {
-
-            margin-top: 30px;
-
-            background:
-                    linear-gradient(
-                            135deg,
-                            #f7faff,
-                            #eef4ff
-                    );
-
-            border:
-                    1px solid #d9e5f5;
-
-            border-left:
-                    6px solid #567fd0;
-
-            border-radius:
-                    22px;
-
-            padding:
-                    28px;
-
-        }
-
-
-        .needs-assessment-header {
-
-            display:
-                    flex;
-
-            align-items:
-                    center;
-
-            gap:
-                    14px;
-
-            margin-bottom:
-                    9px;
-
-        }
-
-
-        .needs-assessment-icon {
-
-            width:
-                    48px;
-
-            height:
-                    48px;
-
-            display:
-                    flex;
-
-            align-items:
-                    center;
-
-            justify-content:
-                    center;
-
-            border-radius:
-                    15px;
-
-            background:
-                    #e6efff;
-
-            font-size:
-                    24px;
-
-            flex-shrink:
-                    0;
-
-        }
-
-
-        .needs-assessment-header h3 {
-
-            margin:
-                    0;
-
-            color:
-                    #203d70;
-
-            font-size:
-                    24px;
-
-        }
-
-
-        .needs-assessment-description {
-
-            margin:
-                    0 0 24px;
-
-            color:
-                    #7185a5;
-
-            font-size:
-                    15px;
-
-            line-height:
-                    1.6;
-
-        }
-
-
-        .assessment-status-row {
-
-            display:
-                    flex;
-
-            justify-content:
-                    space-between;
-
-            align-items:
-                    center;
-
-            gap:
-                    15px;
-
-            margin-bottom:
-                    20px;
-
-            padding:
-                    14px 16px;
-
-            border-radius:
-                    13px;
-
-            background:
-                    white;
-
-            border:
-                    1px solid #dce6f3;
-
-        }
-
-
-        .assessment-status-label {
-
-            color:
-                    #7185a0;
-
-            font-size:
-                    12px;
-
-            text-transform:
-                    uppercase;
-
-            letter-spacing:
-                    0.7px;
-
-            font-weight:
-                    800;
-
-        }
-
-
-        .assessment-status-value {
-
-            padding:
-                    7px 13px;
-
-            border-radius:
-                    30px;
-
-            background:
-                    #dcebf9;
-
-            color:
-                    #255987;
-
-            font-size:
-                    13px;
-
-            font-weight:
-                    800;
-
-        }
-
-
-        .assessment-details-grid {
-
-            display:
-                    grid;
-
-            grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-
-            gap:
-                    15px;
-
-        }
-
-
-        .assessment-field {
-
-            background:
-                    rgba(255,255,255,0.92);
-
-            border:
-                    1px solid #dce6f2;
-
-            border-radius:
-                    15px;
-
-            padding:
-                    18px;
-
-            min-height:
-                    82px;
-
-        }
-
-
-        .assessment-field.full-width {
-
-            grid-column:
-                    1 / -1;
-
-        }
-
-
-        .assessment-label {
-
-            display:
-                    block;
-
-            margin-bottom:
-                    7px;
-
-            color:
-                    #7c8ea8;
-
-            font-size:
-                    12px;
-
-            font-weight:
-                    800;
-
-            text-transform:
-                    uppercase;
-
-            letter-spacing:
-                    0.6px;
-
-        }
-
-
-        .assessment-value {
-
-            display:
-                    block;
-
-            color:
-                    #244477;
-
-            font-size:
-                    15px;
-
-            font-weight:
-                    600;
-
-            line-height:
-                    1.6;
-
-            word-break:
-                    break-word;
-
-        }
-
-
-        .assessment-value.yes {
-
-            color:
-                    #248047;
-
-        }
-
-
-        .assessment-value.no {
-
-            color:
-                    #7f8da1;
-
-        }
-
-
-        .assessment-value.pending {
-
-            color:
-                    #9a7a28;
-
-        }
-
-
-        /* =====================================================
-           FORM CARD
-        ===================================================== */
-
-        .form-card {
-            background: white;
-
-            border-radius: 28px;
-
-            padding: 42px;
-
-            box-shadow:
-                    0 15px 40px rgba(40, 65, 110, 0.10);
-
-            margin-bottom: 30px;
-        }
+           SECTION HEADING
+        ====================================================== */
 
         .section-heading {
             display: flex;
-
             align-items: center;
-
             gap: 15px;
-
             margin-bottom: 8px;
         }
 
         .section-icon {
             width: 48px;
             height: 48px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             border-radius: 15px;
-
             background: #edf3ff;
-
             font-size: 24px;
         }
 
         .section-heading h2 {
             margin: 0;
-
             font-size: 29px;
-
             color: #203d70;
+        }
+
+        /* =====================================================
+           VICTIM INFORMATION
+        ====================================================== */
+
+        .victim-info {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(250px, 1fr));
+            gap: 18px;
+        }
+
+        .info-box {
+            background: #f3f7ff;
+            border: 1px solid #dce6f7;
+            border-radius: 18px;
+            padding: 20px 24px;
+        }
+
+        .info-label {
+            display: block;
+            color: #8295b5;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            color: #203d70;
+            font-size: 18px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .info-value.not-available {
+            color: #8a98aa;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           SHELTER DETAILS
+        ====================================================== */
+
+        .shelter-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f0f7ff, #f8fbff);
+            border: 1px solid #d7e4f7;
+            border-left: 6px solid #5a86d6;
+            border-radius: 20px;
+        }
+
+        .shelter-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 20px;
+        }
+
+        .shelter-icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #e5efff;
+            font-size: 23px;
+        }
+
+        .shelter-header h3 {
+            margin: 0;
+            color: #203d70;
+            font-size: 23px;
+        }
+
+        .shelter-header p {
+            margin: 3px 0 0;
+            color: #7a8ca7;
+            font-size: 14px;
+        }
+
+        .shelter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .shelter-field {
+            background: white;
+            border: 1px solid #dce6f3;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .shelter-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #7c8ea8;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .shelter-value {
+            display: block;
+            color: #244477;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .no-shelter-box {
+            margin-top: 25px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: #f6f8fb;
+            border: 1px solid #e1e6ee;
+            color: #718096;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           NEEDS ASSESSMENT
+        ====================================================== */
+
+        .needs-assessment-card {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #f7faff, #eef4ff);
+            border: 1px solid #d9e5f5;
+            border-left: 6px solid #567fd0;
+            border-radius: 22px;
+            padding: 28px;
+        }
+
+        .needs-assessment-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 9px;
+        }
+
+        .needs-assessment-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: #e6efff;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .needs-assessment-header h3 {
+            margin: 0;
+            color: #203d70;
+            font-size: 24px;
+        }
+
+        .needs-assessment-description {
+            margin: 0 0 24px;
+            color: #7185a5;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .assessment-status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 14px 16px;
+            border-radius: 13px;
+            background: white;
+            border: 1px solid #dce6f3;
+        }
+
+        .assessment-status-label {
+            color: #7185a0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            font-weight: 800;
+        }
+
+        .assessment-status-value {
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: #dcebf9;
+            color: #255987;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .assessment-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .assessment-field {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid #dce6f2;
+            border-radius: 15px;
+            padding: 18px;
+            min-height: 82px;
+        }
+
+        .assessment-field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .assessment-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #7c8ea8;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .assessment-value {
+            display: block;
+            color: #244477;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .assessment-value.yes {
+            color: #248047;
+        }
+
+        .assessment-value.no {
+            color: #7f8da1;
+        }
+
+        .assessment-value.pending {
+            color: #9a7a28;
+        }
+
+        /* =====================================================
+           FORM
+        ====================================================== */
+
+        .form-card {
+            background: white;
+            border-radius: 28px;
+            padding: 42px;
+            box-shadow: 0 15px 40px rgba(40, 65, 110, 0.10);
+            margin-bottom: 30px;
         }
 
         .section-description {
             color: #7185a5;
-
             font-size: 16px;
-
             margin: 0 0 28px;
         }
 
-
         /* =====================================================
            STANDARD ITEMS
-        ===================================================== */
+        ====================================================== */
 
         .standard-box {
-            background:
-                    linear-gradient(
-                            135deg,
-                            #f0f8f2,
-                            #f8fcf9
-                    );
-
+            background: linear-gradient(135deg, #f0f8f2, #f8fcf9);
             border: 2px solid #cde7d4;
-
             border-radius: 22px;
-
             padding: 25px;
-
             margin-bottom: 35px;
         }
 
         .standard-title {
             display: flex;
-
             align-items: center;
-
             gap: 10px;
-
             font-size: 20px;
-
             font-weight: 800;
-
             color: #28613a;
-
             margin-bottom: 18px;
         }
 
         .standard-item {
             display: flex;
-
             align-items: center;
-
             gap: 15px;
-
             background: white;
-
             border-radius: 15px;
-
             padding: 16px 20px;
-
             margin-top: 10px;
-
             border: 1px solid #dcecdf;
         }
 
         .standard-check {
             width: 28px;
             height: 28px;
-
             border-radius: 9px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             background: #4ca567;
-
             color: white;
-
             font-weight: 900;
-
             font-size: 17px;
         }
 
         .standard-item strong {
             color: #285f3a;
-
             font-size: 17px;
         }
 
         .standard-item span {
             color: #789083;
-
             font-size: 14px;
         }
 
-
         /* =====================================================
            ADDITIONAL ITEMS
-        ===================================================== */
+        ====================================================== */
 
         .additional-title {
             margin: 0 0 8px;
-
             color: #203d70;
-
             font-size: 24px;
         }
 
         .additional-description {
             color: #7b8ca8;
-
             margin-bottom: 20px;
         }
 
         .items-grid {
             display: grid;
-
-            grid-template-columns:
-                    repeat(2, minmax(300px, 1fr));
-
+            grid-template-columns: repeat(2, minmax(300px, 1fr));
             gap: 18px;
         }
 
         .item-card {
             position: relative;
-
             display: flex;
-
             align-items: center;
-
             gap: 17px;
-
             padding: 22px;
-
             background: white;
-
             border: 2px solid #e1e8f4;
-
             border-radius: 20px;
-
             cursor: pointer;
-
-            transition:
-                    0.25s ease;
-
+            transition: 0.25s ease;
             min-height: 105px;
         }
 
         .item-card:hover {
             transform: translateY(-3px);
-
             border-color: #7f9fe4;
-
-            box-shadow:
-                    0 10px 25px rgba(67, 102, 170, 0.12);
+            box-shadow: 0 10px 25px rgba(67, 102, 170, 0.12);
         }
 
         .item-card:has(input:checked) {
             border-color: #527fd6;
-
             background: #f4f7ff;
-
-            box-shadow:
-                    0 8px 24px rgba(82, 127, 214, 0.14);
+            box-shadow: 0 8px 24px rgba(82, 127, 214, 0.14);
         }
 
         .item-card input {
             width: 25px;
             height: 25px;
-
             accent-color: #4f7ed6;
-
             flex-shrink: 0;
-
             cursor: pointer;
         }
 
         .item-icon {
             width: 55px;
             height: 55px;
-
             display: flex;
-
             align-items: center;
             justify-content: center;
-
             background: #f0f4fc;
-
             border-radius: 16px;
-
             font-size: 28px;
-
             flex-shrink: 0;
         }
 
         .item-content strong {
             display: block;
-
             font-size: 18px;
-
             color: #274577;
-
             margin-bottom: 5px;
         }
 
         .item-content span {
             display: block;
-
             color: #8191aa;
-
             font-size: 14px;
-
             line-height: 1.4;
         }
 
-
         /* =====================================================
            MESSAGE
-        ===================================================== */
+        ====================================================== */
 
         .message-section {
             margin-top: 40px;
-
             padding-top: 35px;
-
             border-top: 1px solid #e6ebf3;
+        }
+
+        .message-heading {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            margin-bottom: 14px;
+        }
+
+        .message-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #edf3ff;
+            font-size: 23px;
+            flex-shrink: 0;
+        }
+
+        .message-heading .field-label {
+            margin-bottom: 4px;
+        }
+
+        .message-description {
+            margin: 0;
+            color: #7185a5;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .field-label {
             display: block;
-
             margin-bottom: 10px;
-
             color: #243f70;
-
             font-size: 18px;
-
             font-weight: 800;
         }
 
-        textarea {
+        .message-textarea {
             width: 100%;
-
-            min-height: 140px;
-
+            min-height: 220px;
             resize: vertical;
-
-            padding: 18px;
-
-            border: 2px solid #dce4f1;
-
-            border-radius: 17px;
-
+            padding: 20px;
+            border: 2px solid #7890d8;
+            border-radius: 20px;
+            background: white;
+            color: #334d70;
             font-family: inherit;
-
             font-size: 16px;
-
+            line-height: 1.7;
             outline: none;
-
-            transition: 0.2s;
         }
 
-        textarea:focus {
-            border-color: #6288dc;
-
-            box-shadow:
-                    0 0 0 4px rgba(
-                            98,
-                            136,
-                            220,
-                            0.10
-                    );
+        .message-textarea:focus {
+            border-color: #4d70d0;
+            box-shadow: 0 0 0 5px rgba(77, 112, 208, 0.10);
         }
 
+        .message-textarea::placeholder {
+            color: #8a98aa;
+        }
+
+        .message-ready {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 12px;
+            color: #28888f;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message-ready-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #28888f;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* =====================================================
+           DELIVERY LOCATION
+        ====================================================== */
+
+        .delivery-location-box {
+            margin-top: 15px;
+            padding: 17px 20px;
+            border-radius: 16px;
+            background: #f3f7ff;
+            border: 1px solid #dce6f7;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .delivery-location-label {
+            color: #8295b5;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .delivery-location-value {
+            color: #244477;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
 
         /* =====================================================
            STATUS
-        ===================================================== */
+        ====================================================== */
 
         .status-section {
             margin-top: 28px;
@@ -809,21 +650,13 @@
 
         select {
             width: 100%;
-
             padding: 17px;
-
             border-radius: 16px;
-
             border: 2px solid #dce4f1;
-
             background: white;
-
             font-size: 16px;
-
             color: #243f70;
-
             outline: none;
-
             cursor: pointer;
         }
 
@@ -831,52 +664,35 @@
             border-color: #6288dc;
         }
 
-
         /* =====================================================
-           BUTTONS
-        ===================================================== */
+           ACTION BUTTONS
+        ====================================================== */
 
         .actions {
             display: flex;
-
             justify-content: flex-end;
-
             gap: 15px;
-
             margin-top: 35px;
-
             padding-top: 25px;
-
             border-top: 1px solid #e6ebf3;
         }
 
         .btn {
             border: none;
-
             border-radius: 14px;
-
             padding: 15px 30px;
-
             font-size: 16px;
-
             font-weight: 700;
-
             cursor: pointer;
-
             text-decoration: none;
-
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
             transition: 0.25s;
         }
 
         .btn-secondary {
             background: #edf1f7;
-
             color: #51657f;
         }
 
@@ -885,40 +701,19 @@
         }
 
         .btn-primary {
-            background:
-                    linear-gradient(
-                            135deg,
-                            #4778d0,
-                            #638ddd
-                    );
-
+            background: linear-gradient(135deg, #4778d0, #638ddd);
             color: white;
-
-            box-shadow:
-                    0 8px 18px rgba(
-                            71,
-                            120,
-                            208,
-                            0.25
-                    );
+            box-shadow: 0 8px 18px rgba(71, 120, 208, 0.25);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-
-            box-shadow:
-                    0 12px 25px rgba(
-                            71,
-                            120,
-                            208,
-                            0.35
-                    );
+            box-shadow: 0 12px 25px rgba(71, 120, 208, 0.35);
         }
-
 
         /* =====================================================
            RESPONSIVE
-        ===================================================== */
+        ====================================================== */
 
         @media (max-width: 850px) {
 
@@ -944,6 +739,10 @@
             }
 
             .victim-info {
+                grid-template-columns: 1fr;
+            }
+
+            .shelter-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -976,7 +775,6 @@
 
 <body>
 
-
 <div class="page-container">
 
 
@@ -996,9 +794,8 @@
     </section>
 
 
-
     <!-- =====================================================
-         VICTIM + NEEDS ASSESSMENT REVIEW
+         NEEDS ASSESSMENT + VICTIM INFORMATION
     ====================================================== -->
 
     <section class="review-card">
@@ -1036,12 +833,73 @@
             <div class="info-box">
 
                 <span class="info-label">
-                    Victim
+                    Full Name
                 </span>
 
                 <span class="info-value"
                       th:text="${victim.fullName}">
                     Victim Name
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    NIC Number
+                </span>
+
+                <span class="info-value"
+                      th:text="${victim.nicNumber}">
+                    NIC
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Phone Number
+                </span>
+
+                <span class="info-value"
+                      th:text="${victim.phoneNumber}">
+                    Phone Number
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Address
+                </span>
+
+                <span class="info-value"
+                      th:text="${victim.address}">
+                    Address
+                </span>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <span class="info-label">
+                    Shelter Status
+                </span>
+
+                <span class="info-value"
+                      th:if="${victim.shelter != null}">
+                    Staying in Shelter
+                </span>
+
+                <span class="info-value not-available"
+                      th:if="${victim.shelter == null}">
+                    Not assigned to a shelter
                 </span>
 
             </div>
@@ -1063,13 +921,87 @@
         </div>
 
 
+        <!-- =================================================
+             SHELTER DETAILS
+        ================================================== -->
+
+        <div class="shelter-section"
+             th:if="${victim.shelter != null}">
+
+            <div class="shelter-header">
+
+                <div class="shelter-icon">
+                    🏠
+                </div>
+
+                <div>
+
+                    <h3>
+                        Shelter Details
+                    </h3>
+
+                    <p>
+                        Current shelter information for this victim
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="shelter-grid">
+
+
+                <div class="shelter-field">
+
+                    <span class="shelter-label">
+                        Shelter Name
+                    </span>
+
+                    <span class="shelter-value"
+                          th:text="${victim.shelter.shelterName}">
+                        Shelter Name
+                    </span>
+
+                </div>
+
+
+                <div class="shelter-field">
+
+                    <span class="shelter-label">
+                        Location
+                    </span>
+
+                    <span class="shelter-value"
+                          th:text="${victim.shelter.location}">
+                        Location
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             NO SHELTER
+        ================================================== -->
+
+        <div class="no-shelter-box"
+             th:if="${victim.shelter == null}">
+
+            🏠 This victim is currently not assigned to a shelter.
+
+        </div>
+
 
         <!-- =================================================
              COMPLETE NEEDS ASSESSMENT
         ================================================== -->
 
         <div class="needs-assessment-card">
-
 
             <div class="needs-assessment-header">
 
@@ -1093,9 +1025,7 @@
             </p>
 
 
-            <!-- =================================================
-                 ASSESSMENT STATUS
-            ================================================== -->
+            <!-- ASSESSMENT STATUS -->
 
             <div class="assessment-status-row">
 
@@ -1111,10 +1041,6 @@
             </div>
 
 
-            <!-- =================================================
-                 ASSESSMENT DETAILS
-            ================================================== -->
-
             <div class="assessment-details-grid">
 
 
@@ -1129,16 +1055,11 @@
                     <span class="assessment-value"
                           th:if="${needsAssessment.currentSituation != null and !#strings.isEmpty(needsAssessment.currentSituation)}"
                           th:text="${needsAssessment.currentSituation}">
-
-                        Current situation
-
                     </span>
 
                     <span class="assessment-value pending"
                           th:if="${needsAssessment.currentSituation == null or #strings.isEmpty(needsAssessment.currentSituation)}">
-
                         No current situation provided.
-
                     </span>
 
                 </div>
@@ -1154,16 +1075,12 @@
 
                     <span class="assessment-value yes"
                           th:if="${needsAssessment.foodRequired == true}">
-
                         Yes
-
                     </span>
 
                     <span class="assessment-value no"
                           th:if="${needsAssessment.foodRequired != true}">
-
                         No
-
                     </span>
 
                 </div>
@@ -1179,16 +1096,12 @@
 
                     <span class="assessment-value yes"
                           th:if="${needsAssessment.waterRequired == true}">
-
                         Yes
-
                     </span>
 
                     <span class="assessment-value no"
                           th:if="${needsAssessment.waterRequired != true}">
-
                         No
-
                     </span>
 
                 </div>
@@ -1204,16 +1117,12 @@
 
                     <span class="assessment-value yes"
                           th:if="${needsAssessment.medicalAssistanceRequired == true}">
-
                         Yes
-
                     </span>
 
                     <span class="assessment-value no"
                           th:if="${needsAssessment.medicalAssistanceRequired != true}">
-
                         No
-
                     </span>
 
                 </div>
@@ -1229,16 +1138,12 @@
 
                     <span class="assessment-value yes"
                           th:if="${needsAssessment.clothingRequired == true}">
-
                         Yes
-
                     </span>
 
                     <span class="assessment-value no"
                           th:if="${needsAssessment.clothingRequired != true}">
-
                         No
-
                     </span>
 
                 </div>
@@ -1254,16 +1159,12 @@
 
                     <span class="assessment-value yes"
                           th:if="${needsAssessment.hygieneItemsRequired == true}">
-
                         Yes
-
                     </span>
 
                     <span class="assessment-value no"
                           th:if="${needsAssessment.hygieneItemsRequired != true}">
-
                         No
-
                     </span>
 
                 </div>
@@ -1280,16 +1181,11 @@
                     <span class="assessment-value"
                           th:if="${needsAssessment.otherNeeds != null and !#strings.isEmpty(needsAssessment.otherNeeds)}"
                           th:text="${needsAssessment.otherNeeds}">
-
-                        Other needs
-
                     </span>
 
                     <span class="assessment-value pending"
                           th:if="${needsAssessment.otherNeeds == null or #strings.isEmpty(needsAssessment.otherNeeds)}">
-
                         No other needs specified.
-
                     </span>
 
                 </div>
@@ -1306,131 +1202,20 @@
                     <span class="assessment-value"
                           th:if="${needsAssessment.additionalInformation != null and !#strings.isEmpty(needsAssessment.additionalInformation)}"
                           th:text="${needsAssessment.additionalInformation}">
-
-                        Additional information
-
                     </span>
 
                     <span class="assessment-value pending"
                           th:if="${needsAssessment.additionalInformation == null or #strings.isEmpty(needsAssessment.additionalInformation)}">
-
                         No additional information provided.
-
                     </span>
 
                 </div>
-
-
-                <!-- PRIORITY -->
-
-                <div class="assessment-field">
-
-                    <span class="assessment-label">
-                        🚨 Priority
-                    </span>
-
-                    <span class="assessment-value"
-                          th:if="${needsAssessment.priority != null and !#strings.isEmpty(needsAssessment.priority)}"
-                          th:text="${needsAssessment.priority}">
-
-                        Priority
-
-                    </span>
-
-                    <span class="assessment-value pending"
-                          th:if="${needsAssessment.priority == null or #strings.isEmpty(needsAssessment.priority)}">
-
-                        Not assessed yet.
-
-                    </span>
-
-                </div>
-
-
-                <!-- ASSESSED BY -->
-
-                <div class="assessment-field">
-
-                    <span class="assessment-label">
-                        👤 Assessed By
-                    </span>
-
-                    <span class="assessment-value"
-                          th:if="${needsAssessment.assessedBy != null and !#strings.isEmpty(needsAssessment.assessedBy)}"
-                          th:text="${needsAssessment.assessedBy}">
-
-                        Relief Coordinator
-
-                    </span>
-
-                    <span class="assessment-value pending"
-                          th:if="${needsAssessment.assessedBy == null or #strings.isEmpty(needsAssessment.assessedBy)}">
-
-                        Not available.
-
-                    </span>
-
-                </div>
-
-
-                <!-- ASSESSMENT DATE -->
-
-                <div class="assessment-field">
-
-                    <span class="assessment-label">
-                        📅 Assessment Date
-                    </span>
-
-                    <span class="assessment-value"
-                          th:if="${needsAssessment.assessmentDate != null}"
-                          th:text="${#temporals.format(needsAssessment.assessmentDate, 'dd/MM/yyyy HH:mm')}">
-
-                        Date
-
-                    </span>
-
-                    <span class="assessment-value pending"
-                          th:if="${needsAssessment.assessmentDate == null}">
-
-                        Not available.
-
-                    </span>
-
-                </div>
-
-
-                <!-- ASSESSMENT REMARKS -->
-
-                <div class="assessment-field full-width">
-
-                    <span class="assessment-label">
-                        💬 Assessment Remarks
-                    </span>
-
-                    <span class="assessment-value"
-                          th:if="${needsAssessment.assessmentRemarks != null and !#strings.isEmpty(needsAssessment.assessmentRemarks)}"
-                          th:text="${needsAssessment.assessmentRemarks}">
-
-                        Assessment remarks
-
-                    </span>
-
-                    <span class="assessment-value pending"
-                          th:if="${needsAssessment.assessmentRemarks == null or #strings.isEmpty(needsAssessment.assessmentRemarks)}">
-
-                        No assessment remarks provided.
-
-                    </span>
-
-                </div>
-
 
             </div>
 
         </div>
 
     </section>
-
 
 
     <!-- =====================================================
@@ -1441,9 +1226,7 @@
           method="post">
 
 
-        <!-- =================================================
-             SPRING SECURITY CSRF TOKEN
-        ================================================== -->
+        <!-- CSRF -->
 
         <input type="hidden"
                th:if="${_csrf != null}"
@@ -1451,22 +1234,17 @@
                th:value="${_csrf.token}">
 
 
-        <!-- =================================================
-             NEEDS ASSESSMENT ID
-        ================================================== -->
+        <!-- NEEDS ASSESSMENT ID -->
 
         <input type="hidden"
                name="needsAssessmentId"
                th:value="${needsAssessment.id}">
 
 
-
-        <!-- =================================================
-             RELIEF ITEMS
-        ================================================== -->
-
         <section class="form-card">
 
+
+            <!-- RELIEF ASSISTANCE HEADER -->
 
             <div class="section-heading">
 
@@ -1489,9 +1267,9 @@
             </p>
 
 
-            <!-- =============================================
+            <!-- =================================================
                  STANDARD MANDATORY ITEMS
-            ============================================== -->
+            ================================================== -->
 
             <div class="standard-box">
 
@@ -1502,7 +1280,7 @@
                 </div>
 
 
-                <!-- Dried Food -->
+                <!-- DRIED FOOD -->
 
                 <div class="standard-item">
 
@@ -1525,7 +1303,7 @@
                 </div>
 
 
-                <!-- Rice -->
+                <!-- RICE -->
 
                 <div class="standard-item">
 
@@ -1548,14 +1326,10 @@
                 </div>
 
 
-                <!--
-                    These hidden fields preserve the existing
-                    Relief Requirement submission functionality.
-                -->
-
                 <input type="hidden"
                        name="reliefItems"
                        value="Dried Food Bag">
+
 
                 <input type="hidden"
                        name="reliefItems"
@@ -1564,17 +1338,13 @@
             </div>
 
 
-
-            <!-- =============================================
+            <!-- =================================================
                  ADDITIONAL ITEMS
-            ============================================== -->
+            ================================================== -->
 
             <h3 class="additional-title">
-
                 Additional Assistance
-
             </h3>
-
 
             <p class="additional-description">
 
@@ -1587,9 +1357,7 @@
             <div class="items-grid">
 
 
-                <!-- =========================================
-                     DRINKING WATER
-                ========================================== -->
+                <!-- DRINKING WATER -->
 
                 <label class="item-card">
 
@@ -1598,11 +1366,9 @@
                            value="Drinking Water"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Drinking Water')}">
 
-
                     <div class="item-icon">
                         💧
                     </div>
-
 
                     <div class="item-content">
 
@@ -1619,10 +1385,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     MEDICINE
-                ========================================== -->
+                <!-- MEDICINE -->
 
                 <label class="item-card">
 
@@ -1631,11 +1394,9 @@
                            value="Medicine / Medical Supplies"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Medicine / Medical Supplies')}">
 
-
                     <div class="item-icon">
                         💊
                     </div>
-
 
                     <div class="item-content">
 
@@ -1652,10 +1413,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     CLOTHING
-                ========================================== -->
+                <!-- CLOTHING -->
 
                 <label class="item-card">
 
@@ -1664,11 +1422,9 @@
                            value="Clothing"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Clothing')}">
 
-
                     <div class="item-icon">
                         👕
                     </div>
-
 
                     <div class="item-content">
 
@@ -1685,10 +1441,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     HYGIENE
-                ========================================== -->
+                <!-- HYGIENE -->
 
                 <label class="item-card">
 
@@ -1697,11 +1450,9 @@
                            value="Hygiene Kit"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Hygiene Kit')}">
 
-
                     <div class="item-icon">
                         🧼
                     </div>
-
 
                     <div class="item-content">
 
@@ -1718,10 +1469,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     BABY CARE
-                ========================================== -->
+                <!-- BABY CARE -->
 
                 <label class="item-card">
 
@@ -1730,11 +1478,9 @@
                            value="Baby Care Items"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Baby Care Items')}">
 
-
                     <div class="item-icon">
                         👶
                     </div>
-
 
                     <div class="item-content">
 
@@ -1751,10 +1497,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     BLANKETS
-                ========================================== -->
+                <!-- BLANKETS -->
 
                 <label class="item-card">
 
@@ -1763,11 +1506,9 @@
                            value="Blankets / Bedding"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Blankets / Bedding')}">
 
-
                     <div class="item-icon">
                         🛏️
                     </div>
-
 
                     <div class="item-content">
 
@@ -1784,10 +1525,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     TORCH
-                ========================================== -->
+                <!-- TORCH -->
 
                 <label class="item-card">
 
@@ -1796,11 +1534,9 @@
                            value="Torch / Emergency Light"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Torch / Emergency Light')}">
 
-
                     <div class="item-icon">
                         🔦
                     </div>
-
 
                     <div class="item-content">
 
@@ -1817,10 +1553,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     COOKING
-                ========================================== -->
+                <!-- COOKING EQUIPMENT -->
 
                 <label class="item-card">
 
@@ -1829,11 +1562,9 @@
                            value="Cooking Equipment"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cooking Equipment')}">
 
-
                     <div class="item-icon">
                         🍳
                     </div>
-
 
                     <div class="item-content">
 
@@ -1850,10 +1581,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     CLEANING
-                ========================================== -->
+                <!-- CLEANING -->
 
                 <label class="item-card">
 
@@ -1862,11 +1590,9 @@
                            value="Cleaning Supplies"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cleaning Supplies')}">
 
-
                     <div class="item-icon">
                         🧹
                     </div>
-
 
                     <div class="item-content">
 
@@ -1883,10 +1609,7 @@
                 </label>
 
 
-
-                <!-- =========================================
-                     SPECIAL NEEDS
-                ========================================== -->
+                <!-- SPECIAL NEEDS -->
 
                 <label class="item-card">
 
@@ -1895,11 +1618,9 @@
                            value="Special Needs Assistance"
                            th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Special Needs Assistance')}">
 
-
                     <div class="item-icon">
                         ❤️
                     </div>
-
 
                     <div class="item-content">
 
@@ -1915,38 +1636,100 @@
 
                 </label>
 
-
             </div>
 
 
-
             <!-- =================================================
-                 MESSAGE
+                 MESSAGE / INSTRUCTIONS
             ================================================== -->
 
             <div class="message-section">
 
-                <label class="field-label"
-                       for="victimMessage">
+                <div class="message-heading">
 
-                    💬 Message / Instructions for Victim
+                    <div class="message-icon">
+                        💬
+                    </div>
 
-                </label>
+                    <div>
 
+                        <label class="field-label"
+                               for="victimMessage">
+
+                            Message / Instructions for Victim
+
+                        </label>
+
+                        <p class="message-description">
+
+                            A message is automatically prepared based on
+                            the confirmed relief requirements and the
+                            victim's delivery location. You can review
+                            and edit the message before saving it.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATA USED BY JAVASCRIPT -->
+
+                <div id="victimMessageData"
+                     th:attr="
+                        data-victim-name=${victim.fullName},
+                        data-address=${victim.address},
+                        data-has-shelter=${victim.shelter != null},
+                        data-shelter-name=${victim.shelter != null ? victim.shelter.shelterName : ''},
+                        data-shelter-location=${victim.shelter != null ? victim.shelter.location : ''}
+                     ">
+                </div>
+
+
+                <!-- VICTIM MESSAGE -->
 
                 <textarea id="victimMessage"
                           name="victimMessage"
+                          class="message-textarea"
                           placeholder="Enter any message, instructions or information that should be communicated to the victim..."
-                          th:text="${reliefRequirement.victimMessage}">
-                </textarea>
+                          th:text="${reliefRequirement.victimMessage}"></textarea>
+
+
+                <div class="message-ready">
+
+                    <span class="message-ready-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        Message is automatically prepared and ready
+                        to send to the victim.
+                    </span>
+
+                </div>
+
+
+                <!-- DELIVERY LOCATION -->
+
+                <div class="delivery-location-box">
+
+                    <span class="delivery-location-label">
+                        📍 Delivery Location
+                    </span>
+
+                    <span class="delivery-location-value"
+                          id="deliveryLocationText">
+                    </span>
+
+                </div>
 
             </div>
 
 
-
             <!-- =================================================
-                 STATUS
-            ================================================= -->
+                 RELIEF STATUS
+            ================================================== -->
 
             <div class="status-section">
 
@@ -1958,80 +1741,524 @@
                 </label>
 
 
+                <!--
+                    IMPORTANT:
+
+                    This is the RELIEF COORDINATOR page.
+
+                    RC can ONLY select:
+
+                    1. Pending
+                    2. Approved
+
+                    Ready for Distribution and Completed are NOT
+                    available here.
+
+                    Those statuses must be controlled by the
+                    Distribution Officer.
+
+                    IMPORTANT:
+                    The values sent to Spring Boot are uppercase
+                    so they match the values stored in the database.
+                -->
+
                 <select id="status"
-                        name="status">
+                        name="status"
+                        required>
 
-
-                    <option value="Pending"
-                            th:selected="${reliefRequirement.status == null or reliefRequirement.status == 'Pending'}">
+                    <option value="PENDING"
+                            th:selected="${reliefRequirement.status == null or #strings.toUpperCase(reliefRequirement.status) == 'PENDING'}">
 
                         Pending
 
                     </option>
 
 
-                    <option value="Approved"
-                            th:selected="${reliefRequirement.status == 'Approved'}">
+                    <option value="APPROVED"
+                            th:selected="${reliefRequirement.status != null and #strings.toUpperCase(reliefRequirement.status) == 'APPROVED'}">
 
                         Approved
 
                     </option>
-
-
-                    <option value="Ready for Distribution"
-                            th:selected="${reliefRequirement.status == 'Ready for Distribution'}">
-
-                        Ready for Distribution
-
-                    </option>
-
-
-                    <option value="Completed"
-                            th:selected="${reliefRequirement.status == 'Completed'}">
-
-                        Completed
-
-                    </option>
-
 
                 </select>
 
             </div>
 
 
-
             <!-- =================================================
-                 BUTTONS
+                 ACTION BUTTONS
             ================================================== -->
 
             <div class="actions">
 
-
-                <a href="/relief-coordinator/needs-assessments"
+                <a href="/relief-coordinator/dashboard"
                    class="btn btn-secondary">
 
-                    ← Back to Assessments
+                    ← Back to Dashboard
 
                 </a>
 
 
                 <button type="submit"
+                        name="sendToDistribution"
+                        value="true"
                         class="btn btn-primary">
 
-                    💾 Save Relief Requirement
+                    📤 Save &amp; Send to Victim + Distribution
 
                 </button>
 
-
             </div>
-
 
         </section>
 
     </form>
 
-
 </div>
+
+
+<!-- =========================================================
+     AUTOMATIC VICTIM MESSAGE SCRIPT
+========================================================== -->
+
+<script>
+
+    let victimMessageManuallyEdited = false;
+
+
+    /* =========================================================
+       GET SELECTED RELIEF ITEMS
+    ========================================================== */
+
+    function getSelectedReliefItems() {
+
+        const selectedItems = [];
+
+        document
+            .querySelectorAll(
+                'input[name="reliefItems"]:checked'
+            )
+            .forEach(function (checkbox) {
+
+                const itemName = checkbox.value;
+
+                if (
+                    itemName &&
+                    !selectedItems.includes(itemName)
+                ) {
+
+                    selectedItems.push(itemName);
+
+                }
+
+            });
+
+        return selectedItems;
+    }
+
+
+    /* =========================================================
+       FORMAT RELIEF ITEMS
+    ========================================================== */
+
+    function formatReliefItems(items) {
+
+        if (items.length === 0) {
+
+            return "the confirmed relief items";
+
+        }
+
+        if (items.length === 1) {
+
+            return items[0];
+
+        }
+
+        if (items.length === 2) {
+
+            return items[0] +
+                " and " +
+                items[1];
+
+        }
+
+        return items
+                .slice(0, -1)
+                .join(", ") +
+            " and " +
+            items[items.length - 1];
+
+    }
+
+
+    /* =========================================================
+       UPDATE DELIVERY LOCATION
+    ========================================================== */
+
+    function updateDeliveryLocation(
+        data,
+        deliveryLocationText
+    ) {
+
+        if (
+            !data ||
+            !deliveryLocationText
+        ) {
+
+            return;
+
+        }
+
+
+        const hasShelter =
+            data.dataset.hasShelter === "true";
+
+
+        const shelterName =
+            data.dataset.shelterName || "";
+
+
+        const shelterLocation =
+            data.dataset.shelterLocation || "";
+
+
+        const address =
+            data.dataset.address ||
+            "the registered home address";
+
+
+        /*
+         * VICTIM IS IN SHELTER
+         */
+
+        if (hasShelter) {
+
+            let shelterDetails =
+                shelterName ||
+                "your assigned shelter";
+
+
+            if (shelterLocation) {
+
+                shelterDetails +=
+                    ", " +
+                    shelterLocation;
+
+            }
+
+
+            deliveryLocationText.textContent =
+                "Assigned shelter: " +
+                shelterDetails;
+
+        }
+
+
+        /*
+         * VICTIM IS AT HOME
+         */
+
+        else {
+
+            deliveryLocationText.textContent =
+                "Registered home address: " +
+                address;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       GENERATE AUTOMATIC VICTIM MESSAGE
+    ========================================================== */
+
+    function generateVictimMessage() {
+
+        const data =
+            document.getElementById(
+                "victimMessageData"
+            );
+
+
+        const messageBox =
+            document.getElementById(
+                "victimMessage"
+            );
+
+
+        const deliveryLocationText =
+            document.getElementById(
+                "deliveryLocationText"
+            );
+
+
+        if (
+            !data ||
+            !messageBox
+        ) {
+
+            return;
+
+        }
+
+
+        /* VICTIM INFORMATION */
+
+        const victimName =
+            data.dataset.victimName ||
+            "Victim";
+
+
+        const address =
+            data.dataset.address ||
+            "the registered home address";
+
+
+        /* SHELTER INFORMATION */
+
+        const hasShelter =
+            data.dataset.hasShelter === "true";
+
+
+        const shelterName =
+            data.dataset.shelterName ||
+            "";
+
+
+        const shelterLocation =
+            data.dataset.shelterLocation ||
+            "";
+
+
+        /* SELECTED RELIEF ITEMS */
+
+        const selectedItems =
+            getSelectedReliefItems();
+
+
+        const reliefText =
+            formatReliefItems(
+                selectedItems
+            );
+
+
+        let deliveryText;
+
+        let deliveryLocation;
+
+
+        /*
+         * VICTIM IS IN SHELTER
+         */
+
+        if (hasShelter) {
+
+            let shelterDetails =
+                shelterName ||
+                "your assigned shelter";
+
+
+            if (shelterLocation) {
+
+                shelterDetails +=
+                    ", " +
+                    shelterLocation;
+
+            }
+
+
+            deliveryText =
+                "The relief items will be delivered " +
+                "to your assigned shelter: " +
+                shelterDetails +
+                ".";
+
+
+            deliveryLocation =
+                shelterDetails;
+
+        }
+
+
+        /*
+         * VICTIM IS AT HOME
+         */
+
+        else {
+
+            deliveryText =
+                "The relief items will be delivered " +
+                "to your registered home address: " +
+                address +
+                ".";
+
+
+            deliveryLocation =
+                address;
+
+        }
+
+
+        /*
+         * FINAL MESSAGE
+         */
+
+        const message =
+
+            "Dear " +
+            victimName +
+            ",\n\n" +
+
+            "Your relief requirements have been confirmed. " +
+
+            "The following relief items have been allocated " +
+            "to you: " +
+            reliefText +
+            ".\n\n" +
+
+            deliveryText +
+            "\n\n" +
+
+            "Please be available at the delivery location " +
+            "to receive the relief items. " +
+
+            "Thank you.\n\n" +
+
+            "Flood Relief and Disaster Management System";
+
+
+        /*
+         * PUT MESSAGE INTO TEXTAREA
+         */
+
+        messageBox.value =
+            message;
+
+
+        /*
+         * UPDATE DELIVERY LOCATION
+         */
+
+        if (deliveryLocationText) {
+
+            deliveryLocationText.textContent =
+                deliveryLocation;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PAGE LOAD
+    ========================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const messageBox =
+                document.getElementById(
+                    "victimMessage"
+                );
+
+
+            const data =
+                document.getElementById(
+                    "victimMessageData"
+                );
+
+
+            const deliveryLocationText =
+                document.getElementById(
+                    "deliveryLocationText"
+                );
+
+
+            if (
+                !messageBox ||
+                !data
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+             * Generate message if no existing message exists.
+             */
+
+            if (
+                messageBox.value.trim() === ""
+            ) {
+
+                generateVictimMessage();
+
+            }
+
+            else {
+
+                updateDeliveryLocation(
+                    data,
+                    deliveryLocationText
+                );
+
+            }
+
+
+            /*
+             * Detect manual editing.
+             */
+
+            messageBox.addEventListener(
+                "input",
+                function () {
+
+                    victimMessageManuallyEdited =
+                        true;
+
+                }
+            );
+
+
+            /*
+             * Update automatic message whenever
+             * relief items are selected/unselected.
+             */
+
+            document
+                .querySelectorAll(
+                    'input[name="reliefItems"]'
+                )
+                .forEach(
+                    function (checkbox) {
+
+                        checkbox.addEventListener(
+                            "change",
+                            function () {
+
+                                if (
+                                    !victimMessageManuallyEdited
+                                ) {
+
+                                    generateVictimMessage();
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+</script>
 
 
 </body>
