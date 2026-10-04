@@ -702,6 +702,56 @@
 
 
         /* ================================
+           NEEDS ASSESSMENT SUBMITTED
+           ================================ */
+
+        .needs-submitted {
+
+            border: 2px solid #248BE0;
+
+            background: #F4F9FE;
+        }
+
+
+        .needs-submitted .action-icon {
+
+            color: #248BE0;
+        }
+
+
+        .needs-submitted h4 {
+
+            color: #0B2A4A;
+        }
+
+
+        .needs-submitted p {
+
+            color: #557080;
+        }
+
+
+        .assessment-status {
+
+            display: inline-block;
+
+            background: #FFF3CD;
+
+            color: #856404;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ================================
            RESPONSIVE
            ================================ */
 
@@ -1488,11 +1538,16 @@
 
 
         <!-- =================================
-             NEEDS ASSESSMENT - NOT RECEIVED
+             NEEDS ASSESSMENT - NOT YET SUBMITTED
              ================================= -->
 
         <a
-                th:if="${latestReliefRequirement == null}"
+                th:if="${needsAssessment == null
+                        and gnReport != null
+                        and #strings.equalsIgnoreCase(
+                            gnReport.verificationStatus,
+                            'APPROVED'
+                        )}"
                 th:href="@{/needs-assessment/form}"
                 class="action-card">
 
@@ -1522,7 +1577,53 @@
 
 
         <!-- =================================
-             NEEDS ASSESSMENT - RELIEF RECEIVED
+             NEEDS ASSESSMENT - SUBMITTED
+             ================================= -->
+
+        <a
+                th:if="${needsAssessment != null
+                        and latestReliefRequirement == null}"
+                th:href="@{/needs-assessment/status}"
+                class="action-card needs-submitted">
+
+            <div class="action-icon">
+
+                📋
+
+            </div>
+
+            <span class="assessment-status">
+
+                PENDING REVIEW
+
+            </span>
+
+            <h4>
+
+                View Submitted Needs Assessment
+
+            </h4>
+
+            <p>
+
+                Your Needs Assessment has been successfully
+                submitted.
+
+            </p>
+
+            <p>
+
+                Click here to view the information you
+                submitted and check its current review status.
+
+            </p>
+
+        </a>
+
+
+
+        <!-- =================================
+             RELIEF REQUIREMENT RECEIVED
              ================================= -->
 
         <a
@@ -1551,8 +1652,6 @@
             </p>
 
         </a>
-
-
 
 
 

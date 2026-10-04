@@ -20,10 +20,6 @@ public class ReliefRequirement {
     // NEEDS ASSESSMENT
     // =========================================================
 
-    /*
-     * The Needs Assessment that this relief decision belongs to.
-     */
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "needs_assessment_id",
@@ -35,10 +31,6 @@ public class ReliefRequirement {
     // =========================================================
     // VICTIM
     // =========================================================
-
-    /*
-     * Victim who will receive the relief.
-     */
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -52,15 +44,6 @@ public class ReliefRequirement {
     // RECIPIENT NAME
     // =========================================================
 
-    /*
-     * Name of the victim who will receive the relief package.
-     *
-     * This is automatically taken from the Victim record.
-     *
-     * Example:
-     * Kamal Perera
-     */
-
     @Column(
             name = "recipient_name",
             nullable = false
@@ -71,14 +54,6 @@ public class ReliefRequirement {
     // =========================================================
     // AFFECTED AREA
     // =========================================================
-
-    /*
-     * Area affected by the disaster.
-     *
-     * This information is passed to Distribution Management
-     * so that the package can be prepared and delivered
-     * to the correct area.
-     */
 
     @Column(
             name = "affected_area",
@@ -91,19 +66,7 @@ public class ReliefRequirement {
     // SHELTER
     // =========================================================
 
-    /*
-     * Shelter assigned to the victim.
-     *
-     * This is optional because a victim may not be staying
-     * in a shelter.
-     *
-     * Example:
-     * Kandy Central Relief Shelter
-     */
-
-    @Column(
-            name = "shelter"
-    )
+    @Column(name = "shelter")
     private String shelter;
 
 
@@ -112,21 +75,17 @@ public class ReliefRequirement {
     // =========================================================
 
     /*
-     * Relief items approved by the Relief Coordinator.
-     *
-     * The following two items are mandatory:
-     *
-     * 1. Dried Food Bag
-     * 2. 10 kg Rice Bag
-     *
-     * Other items may also be included.
+     * Stores the relief items approved by the
+     * Relief Coordinator.
      *
      * Example:
      *
-     * Dried Food Bag |
-     * 10 kg Rice Bag |
-     * Drinking Water |
+     * Dried Food Bag
+     * Drinking Water
+     * Medical Supplies
      * Hygiene Kit
+     * Baby Care Items
+     * Bedding
      */
 
     @Column(
@@ -134,6 +93,35 @@ public class ReliefRequirement {
             columnDefinition = "TEXT"
     )
     private String reliefItems;
+
+
+    // =========================================================
+    // QUANTITIES
+    // =========================================================
+
+    /*
+     * Quantities decided by the Relief Coordinator.
+     *
+     * Dried Food Bag is automatically included.
+     */
+
+    @Column(name = "dried_food_bag_quantity")
+    private Integer driedFoodBagQuantity = 1;
+
+    @Column(name = "drinking_water_quantity")
+    private Integer drinkingWaterQuantity = 0;
+
+    @Column(name = "medical_supplies_quantity")
+    private Integer medicalSuppliesQuantity = 0;
+
+    @Column(name = "hygiene_kit_quantity")
+    private Integer hygieneKitQuantity = 0;
+
+    @Column(name = "baby_care_items_quantity")
+    private Integer babyCareItemsQuantity = 0;
+
+    @Column(name = "bedding_quantity")
+    private Integer beddingQuantity = 0;
 
 
     // =========================================================
@@ -156,17 +144,6 @@ public class ReliefRequirement {
     // STATUS
     // =========================================================
 
-    /*
-     * Current status of the relief requirement.
-     *
-     * Possible values:
-     *
-     * PENDING
-     * APPROVED
-     * READY FOR DISTRIBUTION
-     * COMPLETED
-     */
-
     @Column(
             name = "status",
             nullable = false
@@ -178,11 +155,6 @@ public class ReliefRequirement {
     // CREATED DATE
     // =========================================================
 
-    /*
-     * Date/time when the Relief Coordinator
-     * recorded the relief requirement.
-     */
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -190,14 +162,6 @@ public class ReliefRequirement {
     // =========================================================
     // VICTIM NOTIFICATION
     // =========================================================
-
-    /*
-     * Indicates whether the confirmed relief requirement
-     * has been sent/confirmed to the victim.
-     *
-     * false = Not Sent
-     * true  = Sent to Victim
-     */
 
     @Column(
             name = "victim_notified",
@@ -308,6 +272,114 @@ public class ReliefRequirement {
 
 
     // =========================================================
+    // GETTER AND SETTER - DRIED FOOD BAG
+    // =========================================================
+
+    public Integer getDriedFoodBagQuantity() {
+        return driedFoodBagQuantity;
+    }
+
+    public void setDriedFoodBagQuantity(
+            Integer driedFoodBagQuantity) {
+
+        this.driedFoodBagQuantity =
+                driedFoodBagQuantity != null
+                        ? driedFoodBagQuantity
+                        : 0;
+    }
+
+
+    // =========================================================
+    // GETTER AND SETTER - DRINKING WATER
+    // =========================================================
+
+    public Integer getDrinkingWaterQuantity() {
+        return drinkingWaterQuantity;
+    }
+
+    public void setDrinkingWaterQuantity(
+            Integer drinkingWaterQuantity) {
+
+        this.drinkingWaterQuantity =
+                drinkingWaterQuantity != null
+                        ? drinkingWaterQuantity
+                        : 0;
+    }
+
+
+    // =========================================================
+    // GETTER AND SETTER - MEDICAL SUPPLIES
+    // =========================================================
+
+    public Integer getMedicalSuppliesQuantity() {
+        return medicalSuppliesQuantity;
+    }
+
+    public void setMedicalSuppliesQuantity(
+            Integer medicalSuppliesQuantity) {
+
+        this.medicalSuppliesQuantity =
+                medicalSuppliesQuantity != null
+                        ? medicalSuppliesQuantity
+                        : 0;
+    }
+
+
+    // =========================================================
+    // GETTER AND SETTER - HYGIENE KIT
+    // =========================================================
+
+    public Integer getHygieneKitQuantity() {
+        return hygieneKitQuantity;
+    }
+
+    public void setHygieneKitQuantity(
+            Integer hygieneKitQuantity) {
+
+        this.hygieneKitQuantity =
+                hygieneKitQuantity != null
+                        ? hygieneKitQuantity
+                        : 0;
+    }
+
+
+    // =========================================================
+    // GETTER AND SETTER - BABY CARE ITEMS
+    // =========================================================
+
+    public Integer getBabyCareItemsQuantity() {
+        return babyCareItemsQuantity;
+    }
+
+    public void setBabyCareItemsQuantity(
+            Integer babyCareItemsQuantity) {
+
+        this.babyCareItemsQuantity =
+                babyCareItemsQuantity != null
+                        ? babyCareItemsQuantity
+                        : 0;
+    }
+
+
+    // =========================================================
+    // GETTER AND SETTER - BEDDING
+    // =========================================================
+
+    public Integer getBeddingQuantity() {
+        return beddingQuantity;
+    }
+
+    public void setBeddingQuantity(
+            Integer beddingQuantity) {
+
+        this.beddingQuantity =
+                beddingQuantity != null
+                        ? beddingQuantity
+                        : 0;
+    }
+
+
+    // =========================================================
     // GETTER AND SETTER - VICTIM MESSAGE
     // =========================================================
 
@@ -350,7 +422,18 @@ public class ReliefRequirement {
     // GETTER AND SETTER - VICTIM NOTIFIED
     // =========================================================
 
+    /*
+     * Standard boolean getter.
+     */
     public boolean isVictimNotified() {
+        return victimNotified;
+    }
+
+    /*
+     * Additional getter so code using getVictimNotified()
+     * also works correctly.
+     */
+    public boolean getVictimNotified() {
         return victimNotified;
     }
 
@@ -368,17 +451,45 @@ public class ReliefRequirement {
     @PrePersist
     protected void beforeSave() {
 
-        // Automatically set creation date
         if (createdAt == null) {
-
             createdAt = LocalDateTime.now();
         }
 
-        // Automatically set default status
         if (status == null
                 || status.trim().isEmpty()) {
 
             status = "APPROVED";
+        }
+
+
+        /*
+         * Dried Food Bag is automatically included.
+         */
+        if (driedFoodBagQuantity == null
+                || driedFoodBagQuantity < 1) {
+
+            driedFoodBagQuantity = 1;
+        }
+
+
+        if (drinkingWaterQuantity == null) {
+            drinkingWaterQuantity = 0;
+        }
+
+        if (medicalSuppliesQuantity == null) {
+            medicalSuppliesQuantity = 0;
+        }
+
+        if (hygieneKitQuantity == null) {
+            hygieneKitQuantity = 0;
+        }
+
+        if (babyCareItemsQuantity == null) {
+            babyCareItemsQuantity = 0;
+        }
+
+        if (beddingQuantity == null) {
+            beddingQuantity = 0;
         }
     }
 }

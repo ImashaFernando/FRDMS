@@ -13,7 +13,6 @@
         Relief Requirement Details | FRDMS
     </title>
 
-
     <style>
 
         * {
@@ -22,9 +21,7 @@
             padding: 0;
         }
 
-
         body {
-
             font-family:
                     "Segoe UI",
                     Arial,
@@ -39,18 +36,14 @@
                     );
 
             color: #243b63;
-
             min-height: 100vh;
-
         }
-
 
         /* =====================================================
            HEADER
         ====================================================== */
 
         .header {
-
             background:
                     linear-gradient(
                             135deg,
@@ -59,154 +52,94 @@
                     );
 
             color: white;
-
             padding: 22px 55px;
 
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
 
             box-shadow:
-                    0 8px 25px rgba(
-                            23,
-                            43,
-                            77,
-                            0.18
-                    );
-
+                    0 8px 25px
+                    rgba(23, 43, 77, 0.18);
         }
-
 
         .brand-area {
-
             display: flex;
-
             align-items: center;
-
             gap: 16px;
-
         }
 
-
         .logo {
-
             width: 54px;
-
             height: 54px;
 
             border-radius: 16px;
 
             background:
-                    rgba(
-                            255,
-                            255,
-                            255,
-                            0.14
-                    );
+                    rgba(255, 255, 255, 0.14);
 
             border:
                     1px solid
-                    rgba(
-                            255,
-                            255,
-                            255,
-                            0.25
-                    );
+                    rgba(255, 255, 255, 0.25);
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             font-size: 28px;
-
         }
-
 
         .brand-title {
-
             font-size: 24px;
-
             font-weight: 800;
-
             letter-spacing: 0.3px;
-
         }
-
 
         .brand-subtitle {
-
             margin-top: 4px;
-
             font-size: 14px;
-
             opacity: 0.85;
-
         }
 
-
         .back-dashboard {
-
             text-decoration: none;
-
             color: #244b7f;
-
             background: #edf4ff;
 
             padding: 12px 20px;
-
             border-radius: 25px;
 
             font-weight: 700;
-
             transition: 0.25s;
-
         }
 
-
         .back-dashboard:hover {
-
             transform: translateY(-2px);
-
             background: white;
 
             box-shadow:
                     0 8px 20px
-                    rgba(
-                            0,
-                            0,
-                            0,
-                            0.15
-                    );
-
+                    rgba(0, 0, 0, 0.15);
         }
-
 
         /* =====================================================
            PAGE
         ====================================================== */
 
         .page-container {
-
             width: min(
                     1450px,
                     calc(100% - 70px)
             );
 
             margin: 35px auto 60px;
-
         }
-
 
         /* =====================================================
            HERO
         ====================================================== */
 
         .hero {
-
             background:
                     linear-gradient(
                             135deg,
@@ -214,693 +147,468 @@
                             #f1f6ff
                     );
 
-            border-radius: 25px;
-
-            padding: 32px 38px;
-
-            margin-bottom: 28px;
-
             border:
                     1px solid
-                    #dce7f8;
+                    #dce7f7;
+
+            border-radius: 28px;
+
+            padding: 42px 45px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 30px;
 
             box-shadow:
-                    0 15px 40px
-                    rgba(
-                            36,
-                            67,
-                            110,
-                            0.08
-                    );
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            gap: 25px;
-
+                    0 12px 35px
+                    rgba(47, 76, 120, 0.08);
         }
-
 
         .hero-left {
-
             display: flex;
-
             align-items: center;
-
-            gap: 20px;
-
+            gap: 24px;
         }
 
-
         .hero-icon {
+            width: 82px;
+            height: 82px;
 
-            width: 70px;
-
-            height: 70px;
-
-            border-radius: 20px;
+            border-radius: 24px;
 
             background:
                     linear-gradient(
                             135deg,
-                            #dceaff,
-                            #edf4ff
+                            #e4eeff,
+                            #f3f7ff
                     );
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
-            font-size: 34px;
+            font-size: 40px;
 
-            box-shadow:
-                    inset 0 0 0 1px
-                    #d4e2f6;
-
+            border:
+                    1px solid
+                    #d3e1f7;
         }
-
 
         .hero-label {
-
-            color: #6882a8;
-
-            font-size: 12px;
-
+            color: #6d84aa;
+            font-size: 13px;
             font-weight: 800;
 
-            letter-spacing: 1.3px;
-
-            text-transform: uppercase;
-
-            margin-bottom: 6px;
-
+            letter-spacing: 2px;
+            margin-bottom: 8px;
         }
-
 
         .hero h1 {
-
-            font-size: 32px;
-
-            color: #19345c;
-
-            margin-bottom: 7px;
-
+            color: #203d69;
+            font-size: 40px;
+            line-height: 1.15;
+            margin-bottom: 10px;
         }
-
 
         .hero p {
-
-            color: #7187a9;
-
-            font-size: 15px;
-
+            color: #7890b1;
+            font-size: 16px;
             line-height: 1.6;
-
+            max-width: 760px;
         }
 
-
         .status-badge {
+            flex-shrink: 0;
 
-            padding: 12px 20px;
+            background: #e9f7ec;
+            color: #39834d;
 
             border-radius: 30px;
 
-            background: #e8f6ec;
-
-            color: #31834b;
+            padding: 13px 24px;
 
             font-size: 14px;
+            font-weight: 900;
 
-            font-weight: 800;
-
-            white-space: nowrap;
-
+            letter-spacing: 0.5px;
         }
-
 
         /* =====================================================
            MAIN CARD
         ====================================================== */
 
         .main-card {
+            margin-top: 35px;
 
             background: white;
 
-            border-radius: 28px;
-
-            overflow: hidden;
-
             border:
                     1px solid
-                    #dce6f5;
+                    #dfe8f5;
+
+            border-radius: 28px;
+
+            padding: 38px;
 
             box-shadow:
-                    0 18px 45px
-                    rgba(
-                            36,
-                            67,
-                            110,
-                            0.09
-                    );
-
+                    0 15px 40px
+                    rgba(47, 76, 120, 0.08);
         }
 
-
-        /* =====================================================
-           SECTION
-        ====================================================== */
-
         .section {
-
-            padding: 32px 42px;
+            padding: 10px 0 36px;
 
             border-bottom:
                     1px solid
-                    #e8eef7;
+                    #e5ebf5;
 
+            margin-bottom: 36px;
         }
-
 
         .section:last-child {
-
             border-bottom: none;
-
+            margin-bottom: 0;
+            padding-bottom: 10px;
         }
-
 
         .section-title {
-
             display: flex;
-
             align-items: center;
+            gap: 14px;
 
-            gap: 12px;
-
-            margin-bottom: 22px;
-
+            margin-bottom: 10px;
         }
-
 
         .section-icon {
+            width: 48px;
+            height: 48px;
 
-            width: 42px;
+            border-radius: 15px;
 
-            height: 42px;
-
-            border-radius: 13px;
-
-            background: #edf4ff;
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eaf2ff,
+                            #f4f7ff
+                    );
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
-            font-size: 21px;
-
+            font-size: 23px;
         }
-
 
         .section-title h2 {
-
             color: #294d80;
-
-            font-size: 22px;
-
+            font-size: 27px;
             font-weight: 800;
-
         }
-
 
         .section-description {
-
-            color: #8194b1;
-
-            font-size: 14px;
-
-            margin-top: -12px;
-
-            margin-bottom: 22px;
-
+            color: #8295b2;
+            font-size: 15px;
             line-height: 1.6;
-
+            margin-bottom: 22px;
         }
-
 
         /* =====================================================
            REQUIREMENT SUMMARY
         ====================================================== */
 
-        .requirement-highlight {
-
-            background:
-                    linear-gradient(
-                            135deg,
-                            #f1f6ff,
-                            #f8fbff
-                    );
-
-            border:
-                    1px solid
-                    #dce8fa;
-
-            border-left:
-                    5px solid
-                    #587fca;
-
-            border-radius: 18px;
-
-            padding: 24px;
-
-            margin-bottom: 24px;
-
-        }
-
-
-        .highlight-label {
-
-            color: #7890b1;
-
-            font-size: 13px;
-
-            margin-bottom: 7px;
-
-        }
-
-
-        .highlight-value {
-
-            color: #294d80;
-
-            font-size: 20px;
-
-            font-weight: 800;
-
-        }
-
-
-        /* =====================================================
-           INFO GRID
-        ====================================================== */
-
-        .info-grid {
-
+        .summary-grid {
             display: grid;
 
             grid-template-columns:
                     repeat(
-                            2,
-                            minmax(
-                                    0,
-                                    1fr
-                            )
+                            4,
+                            minmax(0, 1fr)
                     );
 
-            gap: 17px;
-
+            gap: 16px;
         }
 
-
-        .info-box {
-
-            background: #f7f9fd;
+        .summary-box {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f7faff,
+                            #fbfcff
+                    );
 
             border:
                     1px solid
-                    #e3ebf7;
+                    #dfe8f5;
 
-            border-radius: 16px;
+            border-radius: 17px;
 
             padding: 20px;
 
             min-height: 92px;
-
         }
 
-
-        .info-label {
-
+        .summary-label {
             color: #8297b7;
-
-            font-size: 13px;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .info-value {
-
-            color: #29456f;
-
-            font-size: 16px;
-
-            font-weight: 750;
-
-            line-height: 1.5;
-
-            word-break: break-word;
-
-        }
-
-
-        .full-width {
-
-            grid-column:
-                    1 / -1;
-
-        }
-
-
-        /* =====================================================
-           RELIEF ITEMS
-        ====================================================== */
-
-        .relief-items-box {
-
-            background:
-                    linear-gradient(
-                            135deg,
-                            #eef5ff,
-                            #f7faff
-                    );
-
-            border:
-                    1px solid
-                    #d9e6fa;
-
-            border-radius: 20px;
-
-            padding: 26px;
-
-        }
-
-
-        .relief-items-header {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            color: #365c91;
-
-            font-size: 17px;
-
-            font-weight: 800;
-
-            margin-bottom: 17px;
-
-        }
-
-
-        .relief-items-list {
-
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 10px;
-
-        }
-
-
-        .relief-item {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            background: white;
-
-            border:
-                    1px solid
-                    #d5e3f6;
-
-            color: #36567f;
-
-            padding: 10px 15px;
-
-            border-radius: 30px;
-
-            font-size: 14px;
-
+            font-size: 12px;
             font-weight: 700;
-
+            margin-bottom: 8px;
         }
 
-
-        .no-items {
-
-            color: #8a9ab2;
-
-            font-size: 14px;
-
+        .summary-value {
+            color: #29456f;
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1.45;
+            word-break: break-word;
         }
 
+        .summary-value.status {
+            color: #39834d;
+        }
 
         /* =====================================================
-           VICTIM INFORMATION
+           RELIEF ITEMS & QUANTITIES
         ====================================================== */
 
-        .victim-banner {
+        .quantity-grid {
+            display: grid;
 
-            background:
-                    linear-gradient(
-                            135deg,
-                            #f6f2ff,
-                            #faf8ff
+            grid-template-columns:
+                    repeat(
+                            3,
+                            minmax(0, 1fr)
                     );
-
-            border:
-                    1px solid
-                    #e4dcfa;
-
-            border-radius: 20px;
-
-            padding: 22px;
-
-            display: flex;
-
-            align-items: center;
 
             gap: 18px;
-
-            margin-bottom: 20px;
-
         }
 
+        .quantity-card {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f6f9ff,
+                            #fbfcff
+                    );
 
-        .victim-avatar {
+            border:
+                    1px solid
+                    #dce7f6;
 
-            width: 58px;
+            border-radius: 20px;
 
-            height: 58px;
+            padding: 24px;
+
+            display: flex;
+            align-items: center;
+            gap: 17px;
+
+            min-height: 125px;
+
+            box-shadow:
+                    0 7px 20px
+                    rgba(45, 74, 120, 0.05);
+        }
+
+        .quantity-icon {
+            width: 55px;
+            height: 55px;
 
             flex-shrink: 0;
 
             border-radius: 17px;
 
-            background:
-                    linear-gradient(
-                            135deg,
-                            #e6dcff,
-                            #f4efff
-                    );
+            background: #e9f1ff;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
+            font-size: 27px;
+        }
+
+        .quantity-name {
+            color: #6f86aa;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .quantity-value {
+            color: #294d80;
             font-size: 28px;
-
+            font-weight: 900;
+            line-height: 1.1;
         }
 
-
-        .victim-name {
-
-            color: #3d3975;
-
-            font-size: 22px;
-
-            font-weight: 800;
-
-        }
-
-
-        .victim-role {
-
-            color: #8a84aa;
-
+        .quantity-unit {
+            color: #7f93b0;
             font-size: 13px;
-
-            margin-top: 4px;
-
+            font-weight: 700;
+            margin-left: 4px;
         }
 
+        .quantity-note {
+            margin-top: 20px;
 
-        /* =====================================================
-           NEEDS ASSESSMENT
-        ====================================================== */
+            padding: 15px 18px;
 
-        .assessment-card {
-
-            background: #fbfcff;
+            background: #f7faff;
 
             border:
                     1px solid
-                    #e0e8f5;
+                    #dfe9f7;
 
-            border-radius: 20px;
-
-            overflow: hidden;
-
-        }
-
-
-        .assessment-status {
-
-            padding: 17px 22px;
-
-            background: #f1f6ff;
-
-            border-bottom:
-                    1px solid
-                    #dfe8f5;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-        }
-
-
-        .assessment-status-label {
+            border-radius: 14px;
 
             color: #7187a8;
 
             font-size: 13px;
-
-            font-weight: 700;
-
+            line-height: 1.55;
         }
 
+        /* =====================================================
+           ADDITIONAL REQUIREMENTS
+        ====================================================== */
 
-        .assessment-status-value {
-
-            padding: 7px 14px;
-
-            border-radius: 20px;
-
-            background: #fff4d9;
-
-            color: #9b761b;
-
-            font-size: 12px;
-
-            font-weight: 800;
-
-        }
-
-
-        .assessment-grid {
-
+        .additional-requirements-box {
+            margin-top: 20px;
             padding: 22px;
+            background: #fff9ed;
+            border: 1px solid #ead39a;
+            border-left: 6px solid #d8a944;
+            border-radius: 17px;
+        }
 
+        .additional-requirements-title {
+            color: #77581f;
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .additional-requirements-content {
+            background: #ffffff;
+            border: 1px solid #eadfc4;
+            border-radius: 13px;
+            padding: 15px 17px;
+            color: #765f2d;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        /* =====================================================
+           RECIPIENT INFORMATION
+        ====================================================== */
+
+        .recipient-grid {
             display: grid;
 
             grid-template-columns:
                     repeat(
                             2,
-                            minmax(
-                                    0,
-                                    1fr
-                            )
+                            minmax(0, 1fr)
                     );
 
-            gap: 15px;
-
+            gap: 16px;
         }
 
-
-        .assessment-field {
-
-            background: white;
+        .recipient-box {
+            background: #f8faff;
 
             border:
                     1px solid
-                    #e5ebf5;
+                    #e0e8f5;
 
-            border-radius: 14px;
+            border-radius: 17px;
 
-            padding: 17px;
-
+            padding: 20px;
         }
 
-
-        .assessment-label {
-
-            display: block;
-
-            color: #8295b2;
-
+        .recipient-label {
+            color: #8297b7;
             font-size: 12px;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .assessment-value {
-
-            color: #304e78;
-
-            font-size: 15px;
-
             font-weight: 700;
 
-            line-height: 1.6;
-
+            margin-bottom: 8px;
         }
 
+        .recipient-value {
+            color: #29456f;
+            font-size: 16px;
+            font-weight: 800;
 
-        .yes {
-
-            color: #3a8a55;
-
+            line-height: 1.55;
+            word-break: break-word;
         }
 
-
-        .no {
-
-            color: #9a6d72;
-
+        .recipient-box.full-width {
+            grid-column: 1 / -1;
         }
-
 
         /* =====================================================
-           SHELTER
+           FAMILY INFORMATION
         ====================================================== */
 
-        .shelter-card {
+        .family-grid {
+            display: grid;
 
+            grid-template-columns:
+                    repeat(
+                            4,
+                            minmax(0, 1fr)
+                    );
+
+            gap: 16px;
+        }
+
+        .family-card {
+            background: #f8faff;
+
+            border:
+                    1px solid
+                    #dfe8f5;
+
+            border-radius: 18px;
+
+            padding: 22px 18px;
+
+            text-align: center;
+        }
+
+        .family-icon {
+            font-size: 27px;
+            margin-bottom: 9px;
+        }
+
+        .family-label {
+            color: #7187a8;
+            font-size: 12px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .family-value {
+            color: #244b7f;
+            font-size: 30px;
+            font-weight: 900;
+
+            margin-top: 7px;
+        }
+
+        /* =====================================================
+           DELIVERY INFORMATION
+        ====================================================== */
+
+        .delivery-card {
             background:
                     linear-gradient(
                             135deg,
-                            #f4f9ff,
+                            #f3f8ff,
                             #fbfdff
                     );
 
@@ -908,301 +616,273 @@
                     1px solid
                     #dce8f7;
 
-            border-radius: 20px;
+            border-radius: 22px;
 
-            padding: 25px;
-
+            padding: 26px;
         }
 
-
-        .shelter-grid {
-
+        .delivery-grid {
             display: grid;
 
             grid-template-columns:
                     repeat(
                             2,
-                            minmax(
-                                    0,
-                                    1fr
-                            )
+                            minmax(0, 1fr)
                     );
 
-            gap: 15px;
-
+            gap: 16px;
         }
 
-
-        .shelter-field {
-
+        .delivery-box {
             background: white;
 
             border:
                     1px solid
-                    #e1eaf6;
-
-            border-radius: 15px;
-
-            padding: 18px;
-
-        }
-
-
-        .shelter-label {
-
-            display: block;
-
-            color: #8498b6;
-
-            font-size: 12px;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .shelter-value {
-
-            color: #2f4d77;
-
-            font-size: 15px;
-
-            font-weight: 750;
-
-            line-height: 1.5;
-
-        }
-
-
-        .no-shelter {
-
-            background: #f7f9fc;
-
-            border:
-                    1px dashed
-                    #cfd9e8;
-
-            color: #7c8ea8;
+                    #e0e8f5;
 
             border-radius: 16px;
 
+            padding: 19px;
+        }
+
+        .delivery-label {
+            color: #8297b7;
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .delivery-value {
+            color: #294d80;
+            font-size: 16px;
+            font-weight: 800;
+
+            line-height: 1.55;
+            word-break: break-word;
+        }
+
+        .delivery-box.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .delivery-note {
+            margin-top: 18px;
+
+            padding: 15px 18px;
+
+            border-radius: 14px;
+
+            background: #fff9e9;
+
+            border:
+                    1px solid
+                    #f0dfae;
+
+            color: #866d31;
+
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        /* =====================================================
+           EMPTY / MISSING FAMILY INFORMATION
+        ====================================================== */
+
+        .not-available {
+            color: #8798b1;
+            font-weight: 600;
+        }
+
+        .empty-family {
             padding: 20px;
+
+            background: #f8faff;
+
+            border:
+                    1px dashed
+                    #cfdbea;
+
+            border-radius: 16px;
+
+            color: #7c8ea8;
 
             text-align: center;
 
+            line-height: 1.6;
         }
-
 
         /* =====================================================
            ACTIONS
         ====================================================== */
 
         .actions {
-
-            padding: 28px 42px;
-
-            background: #fbfcff;
-
             display: flex;
+            justify-content: flex-end;
 
-            justify-content: space-between;
-
-            align-items: center;
-
-            gap: 15px;
-
+            padding-top: 4px;
         }
 
-
         .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
             text-decoration: none;
 
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 8px;
+            border: none;
 
             padding: 13px 22px;
 
             border-radius: 13px;
 
-            font-weight: 750;
-
             font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
 
             transition: 0.25s;
-
         }
-
 
         .btn-back {
-
-            background: #edf2f8;
-
-            color: #4c6485;
-
+            background: #edf4ff;
+            color: #315a91;
         }
-
 
         .btn-back:hover {
-
-            background: #e2eaf4;
-
+            background: #dfeaff;
             transform: translateY(-2px);
-
         }
-
 
         /* =====================================================
            FOOTER
         ====================================================== */
 
         .page-footer {
-
             text-align: center;
 
-            color: #94a5bd;
+            color: #8b9bb4;
 
-            font-size: 13px;
+            font-size: 12px;
 
             margin-top: 25px;
-
         }
-
 
         /* =====================================================
            RESPONSIVE
         ====================================================== */
 
-        @media (max-width: 900px) {
-
-            .page-container {
-
-                width:
-                        calc(
-                                100% - 30px
-                        );
-
-            }
-
+        @media (max-width: 1050px) {
 
             .header {
-
-                padding:
-                        18px 25px;
-
+                padding: 20px 30px;
             }
 
-
-            .hero {
-
-                flex-direction: column;
-
-                align-items: flex-start;
-
+            .page-container {
+                width: calc(100% - 40px);
             }
 
-
-            .info-grid,
-            .assessment-grid,
-            .shelter-grid {
-
-                grid-template-columns: 1fr;
-
+            .summary-grid,
+            .family-grid {
+                grid-template-columns:
+                        repeat(
+                                2,
+                                minmax(0, 1fr)
+                        );
             }
 
-
-            .actions {
-
-                flex-direction: column;
-
-                align-items: stretch;
-
-            }
-
-
-            .btn {
-
-                width: 100%;
-
+            .quantity-grid {
+                grid-template-columns:
+                        repeat(
+                                2,
+                                minmax(0, 1fr)
+                        );
             }
 
         }
 
-
-        @media (max-width: 600px) {
-
-            .brand-title {
-
-                font-size: 18px;
-
-            }
-
-
-            .brand-subtitle {
-
-                display: none;
-
-            }
-
+        @media (max-width: 760px) {
 
             .header {
-
-                padding:
-                        16px 18px;
-
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
             }
-
 
             .back-dashboard {
-
-                padding:
-                        10px 13px;
-
-                font-size: 12px;
-
+                align-self: stretch;
+                text-align: center;
             }
-
-
-            .page-container {
-
-                margin-top: 20px;
-
-            }
-
 
             .hero {
-
-                padding:
-                        24px;
-
+                padding: 30px 25px;
+                flex-direction: column;
+                align-items: flex-start;
             }
 
+            .hero-left {
+                align-items: flex-start;
+            }
 
             .hero h1 {
-
-                font-size: 25px;
-
+                font-size: 32px;
             }
 
+            .main-card {
+                padding: 25px;
+            }
+
+            .summary-grid,
+            .quantity-grid,
+            .recipient-grid,
+            .family-grid,
+            .delivery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recipient-box.full-width,
+            .delivery-box.full-width {
+                grid-column: auto;
+            }
+
+        }
+
+        @media (max-width: 520px) {
+
+            .page-container {
+                width: calc(100% - 24px);
+                margin-top: 18px;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .brand-title {
+                font-size: 19px;
+            }
+
+            .hero-left {
+                flex-direction: column;
+            }
+
+            .hero-icon {
+                width: 68px;
+                height: 68px;
+            }
+
+            .main-card {
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .section-title h2 {
+                font-size: 22px;
+            }
 
             .section {
-
-                padding:
-                        25px 20px;
-
-            }
-
-
-            .actions {
-
-                padding:
-                        22px 20px;
-
+                margin-bottom: 28px;
+                padding-bottom: 28px;
             }
 
         }
@@ -1230,7 +910,7 @@
         <div>
 
             <div class="brand-title">
-                Flood Relief & Disaster Management System
+                Flood Relief &amp; Disaster Management System
             </div>
 
             <div class="brand-subtitle">
@@ -1250,7 +930,6 @@
     </a>
 
 </header>
-
 
 
 <!-- =====================================================
@@ -1275,7 +954,7 @@
             <div>
 
                 <div class="hero-label">
-                    RELIEF REQUIREMENT
+                    APPROVED RELIEF REQUIREMENT
                 </div>
 
                 <h1>
@@ -1283,9 +962,9 @@
                 </h1>
 
                 <p>
-                    Review the approved relief requirement and
-                    the victim information received from the
-                    Relief Coordinator.
+                    View the approved quantities, recipient information,
+                    family information, and delivery destination required
+                    for Distribution Management.
                 </p>
 
             </div>
@@ -1303,7 +982,6 @@
     </section>
 
 
-
     <!-- =================================================
          MAIN CARD
     ================================================== -->
@@ -1312,7 +990,7 @@
 
 
         <!-- =================================================
-             RELIEF REQUIREMENT INFORMATION
+             1. REQUIREMENT SUMMARY
         ================================================== -->
 
         <section class="section">
@@ -1324,64 +1002,54 @@
                 </div>
 
                 <h2>
-                    Relief Requirement Information
+                    Requirement Summary
                 </h2>
 
             </div>
 
-
             <p class="section-description">
-
-                This is the main relief requirement approved by
-                the Relief Coordinator and received by
-                Distribution Management.
-
+                Basic information needed to identify and process
+                this approved relief requirement.
             </p>
 
 
-            <!-- REQUIREMENT ID -->
-
-            <div class="requirement-highlight">
-
-                <div class="highlight-label">
-                    Requirement Number
-                </div>
-
-                <div class="highlight-value">
-
-                    #
-
-                    <span th:text="${requirement.id}">
-                        1
-                    </span>
-
-                </div>
-
-            </div>
+            <div class="summary-grid">
 
 
-            <!-- REQUIREMENT DETAILS -->
+                <div class="summary-box">
 
-            <div class="info-grid">
-
-
-                <!-- REQUIREMENT DATE -->
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        📅 Requirement Date
+                    <div class="summary-label">
+                        Requirement Number
                     </div>
 
-                    <div class="info-value"
+                    <div class="summary-value">
+
+                        #
+
+                        <span th:text="${requirement.id}">
+                            1
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-box">
+
+                    <div class="summary-label">
+                        Requirement Date
+                    </div>
+
+                    <div class="summary-value"
                          th:if="${requirement.createdAt != null}"
                          th:text="${#temporals.format(requirement.createdAt, 'dd MMM yyyy, hh:mm a')}">
 
-                        03 Oct 2026, 01:41 AM
+                        Date
 
                     </div>
 
-                    <div class="info-value"
+                    <div class="summary-value not-available"
                          th:if="${requirement.createdAt == null}">
 
                         Not available
@@ -1391,33 +1059,13 @@
                 </div>
 
 
-                <!-- RELIEF STATUS -->
+                <div class="summary-box">
 
-                <div class="info-box">
-
-                    <div class="info-label">
-                        📌 Relief Status
+                    <div class="summary-label">
+                        Recipient
                     </div>
 
-                    <div class="info-value"
-                         th:text="${requirement.status}">
-
-                        APPROVED
-
-                    </div>
-
-                </div>
-
-
-                <!-- RECIPIENT -->
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        👤 Recipient
-                    </div>
-
-                    <div class="info-value"
+                    <div class="summary-value"
                          th:text="${requirement.recipientName}">
 
                         Victim Name
@@ -1427,51 +1075,29 @@
                 </div>
 
 
-                <!-- AFFECTED AREA -->
+                <div class="summary-box">
 
-                <div class="info-box">
-
-                    <div class="info-label">
-                        📍 Affected Area
+                    <div class="summary-label">
+                        Status
                     </div>
 
-                    <div class="info-value"
-                         th:text="${requirement.affectedArea}">
+                    <div class="summary-value status"
+                         th:text="${requirement.status}">
 
-                        Affected Area
-
-                    </div>
-
-                </div>
-
-
-                <!-- DELIVERY SHELTER -->
-
-                <div class="info-box full-width">
-
-                    <div class="info-label">
-                        🏠 Delivery / Assigned Shelter
-                    </div>
-
-                    <div class="info-value"
-                         th:text="${requirement.shelter != null and !#strings.isEmpty(requirement.shelter)
-                                  ? requirement.shelter
-                                  : 'Not specified'}">
-
-                        Not specified
+                        APPROVED
 
                     </div>
 
                 </div>
+
 
             </div>
 
         </section>
 
 
-
         <!-- =================================================
-             APPROVED RELIEF ITEMS
+             2. APPROVED RELIEF ITEMS AND QUANTITIES
         ================================================== -->
 
         <section class="section">
@@ -1483,74 +1109,261 @@
                 </div>
 
                 <h2>
-                    Approved Relief Requirement
+                    Approved Relief Items &amp; Quantities
                 </h2>
 
             </div>
 
-
             <p class="section-description">
-
-                These are the relief items approved by the
-                Relief Coordinator for this victim.
-
+                These are the exact quantities approved by the
+                Relief Coordinator for package preparation.
+                Items with zero quantity are not displayed.
             </p>
 
 
-            <div class="relief-items-box">
-
-                <div class="relief-items-header">
-
-                    📦
-                    Required Relief Items
-
-                </div>
+            <div class="quantity-grid">
 
 
-                <div class="relief-items-list"
-                     th:if="${requirement.reliefItems != null
-                             and !#strings.isEmpty(requirement.reliefItems)}">
+                <!-- DRIED FOOD -->
 
+                <div class="quantity-card"
+                     th:if="${requirement.driedFoodBagQuantity != null
+                             and requirement.driedFoodBagQuantity > 0}">
 
-                    <!--
-                        The existing reliefItems value is stored
-                        as a pipe-separated string.
-                    -->
+                    <div class="quantity-icon">
+                        🍚
+                    </div>
 
-                    <th:block
-                            th:each="item : ${#strings.arraySplit(requirement.reliefItems, '|')}">
+                    <div>
 
-                        <span class="relief-item">
+                        <div class="quantity-name">
+                            Dried Food Bag
+                        </div>
 
-                            ✓
+                        <div>
 
-                            <span th:text="${#strings.trim(item)}">
-                                Relief Item
+                            <span class="quantity-value"
+                                  th:text="${requirement.driedFoodBagQuantity}">
+                                1
                             </span>
 
-                        </span>
+                            <span class="quantity-unit">
+                                bag(s)
+                            </span>
 
-                    </th:block>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DRINKING WATER -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.drinkingWaterQuantity != null
+                             and requirement.drinkingWaterQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        💧
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Drinking Water
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.drinkingWaterQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                unit(s)
+                            </span>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
 
-                <div class="no-items"
-                     th:if="${requirement.reliefItems == null
-                             or #strings.isEmpty(requirement.reliefItems)}">
+                <!-- MEDICAL SUPPLIES -->
 
-                    No relief items were specified.
+                <div class="quantity-card"
+                     th:if="${requirement.medicalSuppliesQuantity != null
+                             and requirement.medicalSuppliesQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        💊
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Medical Supplies
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.medicalSuppliesQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                unit(s)
+                            </span>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
+
+                <!-- HYGIENE KIT -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.hygieneKitQuantity != null
+                             and requirement.hygieneKitQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        🧼
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Hygiene Kit
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.hygieneKitQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                kit(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BABY CARE ITEMS -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.babyCareItemsQuantity != null
+                             and requirement.babyCareItemsQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        👶
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Baby Care Items
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.babyCareItemsQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                item(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BEDDING -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.beddingQuantity != null
+                             and requirement.beddingQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        🛏️
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Bedding
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.beddingQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                item(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ADDITIONAL REQUIREMENTS REQUESTED BY VICTIM
+            ================================================== -->
+
+            <div class="additional-requirements-box"
+                 th:if="${needsAssessment != null
+                         and needsAssessment.otherNeeds != null
+                         and !#strings.isEmpty(needsAssessment.otherNeeds)
+                         and !'no'.equalsIgnoreCase(#strings.trim(needsAssessment.otherNeeds))}">
+
+                <div class="additional-requirements-title">
+                    ⚠️ Additional Requirements Requested by Victim
+                </div>
+
+                <div class="additional-requirements-content"
+                     th:text="${needsAssessment.otherNeeds}">
+                    Additional requirements requested by the victim.
+                </div>
+
+            </div>
+
+
+            <div class="quantity-note">
+                📌 Only the quantities approved by the Relief Coordinator
+                are shown above. The Distribution Management team can use
+                these quantities directly when preparing the relief package.
             </div>
 
         </section>
 
 
-
         <!-- =================================================
-             VICTIM INFORMATION
+             3. RECIPIENT INFORMATION
         ================================================== -->
 
         <section class="section">
@@ -1562,63 +1375,28 @@
                 </div>
 
                 <h2>
-                    Victim Information
+                    Recipient Information
                 </h2>
 
             </div>
 
-
             <p class="section-description">
-
-                Victim information associated with this approved
-                relief requirement.
-
+                Only the personal information required for identifying
+                and contacting the recipient is shown.
             </p>
 
 
-            <!-- VICTIM BANNER -->
-
-            <div class="victim-banner">
-
-                <div class="victim-avatar">
-                    👤
-                </div>
-
-                <div>
-
-                    <div class="victim-name"
-                         th:text="${requirement.victim.fullName}">
-
-                        Victim Name
-
-                    </div>
-
-                    <div class="victim-role">
-
-                        Registered Victim
-
-                    </div>
-
-                </div>
-
-            </div>
+            <div class="recipient-grid">
 
 
-            <!-- VICTIM DETAILS -->
+                <div class="recipient-box">
 
-            <div class="info-grid">
-
-
-                <!-- FULL NAME -->
-
-                <div class="info-box">
-
-                    <div class="info-label">
+                    <div class="recipient-label">
                         Full Name
                     </div>
 
-                    <div class="info-value"
-                         th:text="${requirement.victim.fullName}">
+                    <div class="recipient-value"
+                         th:text="${requirement.recipientName}">
 
                         Victim Name
 
@@ -1627,33 +1405,14 @@
                 </div>
 
 
-                <!-- NIC -->
+                <div class="recipient-box"
+                     th:if="${requirement.victim != null}">
 
-                <div class="info-box">
-
-                    <div class="info-label">
-                        NIC Number
+                    <div class="recipient-label">
+                        Phone Number
                     </div>
 
-                    <div class="info-value"
-                         th:text="${requirement.victim.nicNumber}">
-
-                        NIC
-
-                    </div>
-
-                </div>
-
-
-                <!-- PHONE -->
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        📞 Phone Number
-                    </div>
-
-                    <div class="info-value"
+                    <div class="recipient-value"
                          th:text="${requirement.victim.phoneNumber}">
 
                         Phone Number
@@ -1663,351 +1422,48 @@
                 </div>
 
 
-                <!-- ADDRESS -->
+                <div class="recipient-box"
+                     th:if="${requirement.affectedArea != null}">
 
-                <div class="info-box">
-
-                    <div class="info-label">
-                        🏠 Registered Address
+                    <div class="recipient-label">
+                        Affected / Delivery Area
                     </div>
 
-                    <div class="info-value"
+                    <div class="recipient-value"
+                         th:text="${requirement.affectedArea}">
+
+                        Delivery Area
+
+                    </div>
+
+                </div>
+
+
+                <div class="recipient-box"
+                     th:if="${requirement.victim != null
+                             and requirement.shelter == 'Not Assigned'}">
+
+                    <div class="recipient-label">
+                        Registered Home Address
+                    </div>
+
+                    <div class="recipient-value"
                          th:text="${requirement.victim.address}">
 
-                        Address
+                        Registered Address
 
                     </div>
 
                 </div>
 
-
-                <!-- REGISTRATION DATE -->
-
-                <div class="info-box">
-
-                    <div class="info-label">
-                        📅 Registration Date
-                    </div>
-
-                    <div class="info-value"
-                         th:if="${requirement.victim.registrationDate != null}"
-                         th:text="${#temporals.format(requirement.victim.registrationDate, 'dd MMM yyyy')}">
-
-                        Date
-
-                    </div>
-
-                    <div class="info-value"
-                         th:if="${requirement.victim.registrationDate == null}">
-
-                        Not available
-
-                    </div>
-
-                </div>
-
-
-                <!-- NEEDS ASSESSMENT ID -->
-
-                <div class="info-box"
-                     th:if="${requirement.needsAssessment != null}">
-
-                    <div class="info-label">
-                        📝 Needs Assessment ID
-                    </div>
-
-                    <div class="info-value"
-                         th:text="${requirement.needsAssessment.id}">
-
-                        1
-
-                    </div>
-
-                </div>
 
             </div>
 
         </section>
 
 
-
         <!-- =================================================
-             SUBMITTED NEEDS ASSESSMENT
-        ================================================== -->
-
-        <section class="section"
-                 th:if="${requirement.needsAssessment != null}">
-
-            <div class="section-title">
-
-                <div class="section-icon">
-                    📝
-                </div>
-
-                <h2>
-                    Submitted Needs Assessment
-                </h2>
-
-            </div>
-
-
-            <p class="section-description">
-
-                The information originally submitted by the
-                victim and reviewed by the Relief Coordinator.
-
-            </p>
-
-
-            <div class="assessment-card">
-
-
-                <!-- ASSESSMENT STATUS -->
-
-                <div class="assessment-status">
-
-                    <span class="assessment-status-label">
-
-                        Assessment Status
-
-                    </span>
-
-
-                    <span class="assessment-status-value"
-                          th:text="${requirement.needsAssessment.status}">
-
-                        SUBMITTED
-
-                    </span>
-
-                </div>
-
-
-                <!-- ASSESSMENT DETAILS -->
-
-                <div class="assessment-grid">
-
-
-                    <!-- CURRENT SITUATION -->
-
-                    <div class="assessment-field full-width">
-
-                        <span class="assessment-label">
-
-                            Current Situation
-
-                        </span>
-
-                        <span class="assessment-value"
-                              th:if="${requirement.needsAssessment.currentSituation != null
-                                      and !#strings.isEmpty(requirement.needsAssessment.currentSituation)}"
-                              th:text="${requirement.needsAssessment.currentSituation}">
-
-                            Current situation
-
-                        </span>
-
-                        <span class="assessment-value"
-                              th:if="${requirement.needsAssessment.currentSituation == null
-                                      or #strings.isEmpty(requirement.needsAssessment.currentSituation)}">
-
-                            No current situation provided.
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- FOOD -->
-
-                    <div class="assessment-field">
-
-                        <span class="assessment-label">
-                            🍚 Food Required
-                        </span>
-
-                        <span class="assessment-value yes"
-                              th:if="${requirement.needsAssessment.foodRequired == true}">
-
-                            Yes
-
-                        </span>
-
-                        <span class="assessment-value no"
-                              th:if="${requirement.needsAssessment.foodRequired != true}">
-
-                            No
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- WATER -->
-
-                    <div class="assessment-field">
-
-                        <span class="assessment-label">
-                            💧 Drinking Water Required
-                        </span>
-
-                        <span class="assessment-value yes"
-                              th:if="${requirement.needsAssessment.waterRequired == true}">
-
-                            Yes
-
-                        </span>
-
-                        <span class="assessment-value no"
-                              th:if="${requirement.needsAssessment.waterRequired != true}">
-
-                            No
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- MEDICAL -->
-
-                    <div class="assessment-field">
-
-                        <span class="assessment-label">
-                            💊 Medical Assistance Required
-                        </span>
-
-                        <span class="assessment-value yes"
-                              th:if="${requirement.needsAssessment.medicalAssistanceRequired == true}">
-
-                            Yes
-
-                        </span>
-
-                        <span class="assessment-value no"
-                              th:if="${requirement.needsAssessment.medicalAssistanceRequired != true}">
-
-                            No
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- CLOTHING -->
-
-                    <div class="assessment-field">
-
-                        <span class="assessment-label">
-                            👕 Clothing Required
-                        </span>
-
-                        <span class="assessment-value yes"
-                              th:if="${requirement.needsAssessment.clothingRequired == true}">
-
-                            Yes
-
-                        </span>
-
-                        <span class="assessment-value no"
-                              th:if="${requirement.needsAssessment.clothingRequired != true}">
-
-                            No
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- HYGIENE -->
-
-                    <div class="assessment-field">
-
-                        <span class="assessment-label">
-                            🧼 Hygiene Items Required
-                        </span>
-
-                        <span class="assessment-value yes"
-                              th:if="${requirement.needsAssessment.hygieneItemsRequired == true}">
-
-                            Yes
-
-                        </span>
-
-                        <span class="assessment-value no"
-                              th:if="${requirement.needsAssessment.hygieneItemsRequired != true}">
-
-                            No
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- OTHER NEEDS -->
-
-                    <div class="assessment-field">
-
-                        <span class="assessment-label">
-                            Other Needs
-                        </span>
-
-                        <span class="assessment-value"
-                              th:if="${requirement.needsAssessment.otherNeeds != null
-                                      and !#strings.isEmpty(requirement.needsAssessment.otherNeeds)}"
-                              th:text="${requirement.needsAssessment.otherNeeds}">
-
-                            Other needs
-
-                        </span>
-
-                        <span class="assessment-value"
-                              th:if="${requirement.needsAssessment.otherNeeds == null
-                                      or #strings.isEmpty(requirement.needsAssessment.otherNeeds)}">
-
-                            None specified.
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- ADDITIONAL INFORMATION -->
-
-                    <div class="assessment-field full-width">
-
-                        <span class="assessment-label">
-                            Additional Information
-                        </span>
-
-                        <span class="assessment-value"
-                              th:if="${requirement.needsAssessment.additionalInformation != null
-                                      and !#strings.isEmpty(requirement.needsAssessment.additionalInformation)}"
-                              th:text="${requirement.needsAssessment.additionalInformation}">
-
-                            Additional information
-
-                        </span>
-
-                        <span class="assessment-value"
-                              th:if="${requirement.needsAssessment.additionalInformation == null
-                                      or #strings.isEmpty(requirement.needsAssessment.additionalInformation)}">
-
-                            No additional information provided.
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             SHELTER & DELIVERY INFORMATION
+             4. FAMILY INFORMATION
         ================================================== -->
 
         <section class="section">
@@ -2015,159 +1471,240 @@
             <div class="section-title">
 
                 <div class="section-icon">
-                    🏠
+                    👨‍👩‍👧‍👦
                 </div>
 
                 <h2>
-                    Shelter & Delivery Information
+                    Family Information
                 </h2>
 
             </div>
 
-
             <p class="section-description">
-
-                Information about the victim's assigned shelter
-                and the location where the approved relief
-                requirement should be delivered.
-
+                Family composition used by the Relief Coordinator
+                when deciding the approved relief quantities.
             </p>
 
 
-            <!-- SHELTER EXISTS -->
-
-            <div class="shelter-card"
-                 th:if="${requirement.victim.shelter != null}">
-
-                <div class="shelter-grid">
+            <div class="family-grid"
+                 th:if="${familyInformation != null}">
 
 
-                    <!-- SHELTER NAME -->
+                <div class="family-card">
 
-                    <div class="shelter-field">
-
-                        <span class="shelter-label">
-                            🏠 Assigned Shelter
-                        </span>
-
-                        <span class="shelter-value"
-                              th:text="${requirement.victim.shelter.shelterName}">
-
-                            Shelter Name
-
-                        </span>
-
+                    <div class="family-icon">
+                        👨‍👩‍👧‍👦
                     </div>
 
-
-                    <!-- LOCATION -->
-
-                    <div class="shelter-field">
-
-                        <span class="shelter-label">
-                            📍 Shelter Location
-                        </span>
-
-                        <span class="shelter-value"
-                              th:text="${requirement.victim.shelter.location}">
-
-                            Location
-
-                        </span>
-
+                    <div class="family-label">
+                        Total Members
                     </div>
 
-
-                    <!-- CONTACT PERSON -->
-
-                    <div class="shelter-field">
-
-                        <span class="shelter-label">
-                            👤 Shelter Contact Person
-                        </span>
-
-                        <span class="shelter-value"
-                              th:text="${requirement.victim.shelter.contactPerson}">
-
-                            Contact Person
-
-                        </span>
-
+                    <div class="family-value"
+                         th:text="${familyInformation.totalFamilyMembers}">
+                        0
                     </div>
-
-
-                    <!-- CONTACT NUMBER -->
-
-                    <div class="shelter-field">
-
-                        <span class="shelter-label">
-                            📞 Shelter Contact Number
-                        </span>
-
-                        <span class="shelter-value"
-                              th:text="${requirement.victim.shelter.contactNumber}">
-
-                            Contact Number
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- MAXIMUM CAPACITY -->
-
-                    <div class="shelter-field">
-
-                        <span class="shelter-label">
-                            👥 Maximum Capacity
-                        </span>
-
-                        <span class="shelter-value"
-                              th:text="${requirement.victim.shelter.maximumCapacity}">
-
-                            0
-
-                        </span>
-
-                    </div>
-
-
-                    <!-- CURRENT OCCUPANCY -->
-
-                    <div class="shelter-field">
-
-                        <span class="shelter-label">
-                            👨‍👩‍👧 Current Occupancy
-                        </span>
-
-                        <span class="shelter-value"
-                              th:text="${requirement.victim.shelter.currentOccupancy}">
-
-                            0
-
-                        </span>
-
-                    </div>
-
 
                 </div>
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👨
+                    </div>
+
+                    <div class="family-label">
+                        Male Members
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.maleMembers}">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👩
+                    </div>
+
+                    <div class="family-label">
+                        Female Members
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.femaleMembers}">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👶
+                    </div>
+
+                    <div class="family-label">
+                        Children Below 12
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.childrenBelow12}">
+                        0
+                    </div>
+
+                </div>
+
 
             </div>
 
 
-            <!-- NO SHELTER -->
+            <div class="empty-family"
+                 th:if="${familyInformation == null}">
 
-            <div class="no-shelter"
-                 th:if="${requirement.victim.shelter == null}">
-
-                🏠 This victim is currently not assigned to a shelter.
-                The relief requirement should therefore be delivered
-                according to the registered delivery address.
+                Family information is not available for this requirement.
 
             </div>
 
         </section>
 
+
+        <!-- =================================================
+             5. DELIVERY INFORMATION
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    🚚
+                </div>
+
+                <h2>
+                    Delivery Information
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                Use this information to determine where the prepared
+                relief package should be delivered.
+            </p>
+
+
+            <div class="delivery-card">
+
+
+                <div class="delivery-grid">
+
+
+                    <!-- DELIVERY TYPE -->
+
+                    <div class="delivery-box">
+
+                        <div class="delivery-label">
+                            Delivery Destination
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter != null
+                                     and requirement.shelter != 'Not Assigned'}">
+
+                            Assigned Shelter
+
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter == null
+                                     or requirement.shelter == 'Not Assigned'}">
+
+                            Registered Home Address
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DESTINATION NAME -->
+
+                    <div class="delivery-box">
+
+                        <div class="delivery-label">
+                            Destination Name
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter != null
+                                     and requirement.shelter != 'Not Assigned'}"
+                             th:text="${requirement.shelter}">
+
+                            Assigned Shelter
+
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter == null
+                                     or requirement.shelter == 'Not Assigned'}">
+
+                            Victim's Registered Home
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DELIVERY LOCATION -->
+
+                    <div class="delivery-box full-width">
+
+                        <div class="delivery-label">
+                            Delivery Location / Address
+                        </div>
+
+                        <div class="delivery-value"
+                             th:text="${requirement.affectedArea}">
+
+                            Delivery Location
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="delivery-note"
+                     th:if="${requirement.shelter != null
+                             and requirement.shelter != 'Not Assigned'}">
+
+                    🏠 The victim has an assigned shelter. The relief
+                    package should be prepared for delivery to the
+                    shelter location shown above.
+
+                </div>
+
+
+                <div class="delivery-note"
+                     th:if="${requirement.shelter == null
+                             or requirement.shelter == 'Not Assigned'}">
+
+                    🏠 The victim is not assigned to a shelter.
+                    The relief package should be delivered to the
+                    registered home address shown above.
+
+                </div>
+
+            </div>
+
+        </section>
 
 
         <!-- =================================================
@@ -2195,7 +1732,7 @@
 
     <div class="page-footer">
 
-        Flood Relief & Disaster Management System
+        Flood Relief &amp; Disaster Management System
         &nbsp;•&nbsp;
         Distribution Management Module
 

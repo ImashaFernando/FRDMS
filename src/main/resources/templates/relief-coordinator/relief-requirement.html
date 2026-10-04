@@ -151,6 +151,90 @@
         }
 
         /* =====================================================
+           FAMILY INFORMATION
+        ====================================================== */
+
+        .family-section {
+            margin-top: 28px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff8ed, #fffdf8);
+            border: 1px solid #f0dfbf;
+            border-left: 6px solid #e3ad4e;
+            border-radius: 20px;
+        }
+
+        .family-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 20px;
+        }
+
+        .family-icon {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #fff0d4;
+            font-size: 23px;
+        }
+
+        .family-header h3 {
+            margin: 0;
+            color: #76551f;
+            font-size: 23px;
+        }
+
+        .family-header p {
+            margin: 3px 0 0;
+            color: #8b7758;
+            font-size: 14px;
+        }
+
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .family-field {
+            background: white;
+            border: 1px solid #eadfc9;
+            border-radius: 15px;
+            padding: 18px;
+        }
+
+        .family-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #9b8a6d;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .family-value {
+            display: block;
+            color: #76551f;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .family-note {
+            margin-top: 16px;
+            padding: 13px 16px;
+            border-radius: 12px;
+            background: #fff8ea;
+            border: 1px solid #f0dfbf;
+            color: #8a7047;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
            SHELTER DETAILS
         ====================================================== */
 
@@ -378,7 +462,7 @@
         }
 
         /* =====================================================
-           STANDARD ITEMS
+           STANDARD ITEM
         ====================================================== */
 
         .standard-box {
@@ -402,12 +486,19 @@
         .standard-item {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 15px;
             background: white;
             border-radius: 15px;
-            padding: 16px 20px;
+            padding: 18px 20px;
             margin-top: 10px;
             border: 1px solid #dcecdf;
+        }
+
+        .standard-item-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .standard-check {
@@ -429,12 +520,49 @@
         }
 
         .standard-item span {
+            display: block;
             color: #789083;
             font-size: 14px;
+            margin-top: 3px;
         }
 
         /* =====================================================
-           ADDITIONAL ITEMS
+           QUANTITY INPUT
+        ====================================================== */
+
+        .quantity-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .quantity-label {
+            color: #7185a5;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .quantity-input {
+            width: 95px;
+            padding: 12px 10px;
+            border: 2px solid #dce4f1;
+            border-radius: 12px;
+            background: white;
+            color: #243f70;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+        }
+
+        .quantity-input:focus {
+            border-color: #527fd6;
+            box-shadow: 0 0 0 4px rgba(82, 127, 214, 0.10);
+        }
+
+        /* =====================================================
+           RELIEF ITEMS
         ====================================================== */
 
         .additional-title {
@@ -455,7 +583,6 @@
         }
 
         .item-card {
-            position: relative;
             display: flex;
             align-items: center;
             gap: 17px;
@@ -463,29 +590,7 @@
             background: white;
             border: 2px solid #e1e8f4;
             border-radius: 20px;
-            cursor: pointer;
-            transition: 0.25s ease;
-            min-height: 105px;
-        }
-
-        .item-card:hover {
-            transform: translateY(-3px);
-            border-color: #7f9fe4;
-            box-shadow: 0 10px 25px rgba(67, 102, 170, 0.12);
-        }
-
-        .item-card:has(input:checked) {
-            border-color: #527fd6;
-            background: #f4f7ff;
-            box-shadow: 0 8px 24px rgba(82, 127, 214, 0.14);
-        }
-
-        .item-card input {
-            width: 25px;
-            height: 25px;
-            accent-color: #4f7ed6;
-            flex-shrink: 0;
-            cursor: pointer;
+            min-height: 115px;
         }
 
         .item-icon {
@@ -500,6 +605,10 @@
             flex-shrink: 0;
         }
 
+        .item-content {
+            flex: 1;
+        }
+
         .item-content strong {
             display: block;
             font-size: 18px;
@@ -512,6 +621,45 @@
             color: #8191aa;
             font-size: 14px;
             line-height: 1.4;
+        }
+
+        /* =====================================================
+           ADDITIONAL REQUEST NOTICE
+        ====================================================== */
+
+        .additional-notice {
+            margin-top: 30px;
+            padding: 20px 22px;
+            border-radius: 18px;
+            background: #fff7e8;
+            border: 1px solid #efd8a8;
+            border-left: 6px solid #e3ad4e;
+        }
+
+        .additional-notice-title {
+            color: #79591f;
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .additional-notice-text {
+            color: #8a7047;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .requested-items-box {
+            margin-top: 15px;
+            padding: 16px 18px;
+            background: white;
+            border: 1px solid #eadfc9;
+            border-radius: 14px;
+            color: #76551f;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.6;
         }
 
         /* =====================================================
@@ -715,6 +863,14 @@
            RESPONSIVE
         ====================================================== */
 
+        @media (max-width: 1000px) {
+
+            .family-grid {
+                grid-template-columns: repeat(2, minmax(150px, 1fr));
+            }
+
+        }
+
         @media (max-width: 850px) {
 
             .page-container {
@@ -742,6 +898,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .family-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
             .shelter-grid {
                 grid-template-columns: 1fr;
             }
@@ -759,6 +919,15 @@
                 align-items: flex-start;
             }
 
+            .standard-item,
+            .item-card {
+                align-items: flex-start;
+            }
+
+            .quantity-area {
+                margin-left: auto;
+            }
+
             .actions {
                 flex-direction: column;
             }
@@ -766,6 +935,27 @@
             .btn {
                 width: 100%;
             }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .family-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .standard-item {
+                flex-direction: column;
+            }
+
+            .quantity-area {
+                margin-left: 0;
+            }
+
+            .item-card {
+                flex-wrap: wrap;
+            }
+
         }
 
     </style>
@@ -775,6 +965,7 @@
 
 <body>
 
+<!-- suppress HtmlMissingClosingTag -->
 <div class="page-container">
 
 
@@ -814,12 +1005,12 @@
 
 
         <p>
+
             Review the victim's submitted needs assessment carefully
-            before selecting additional relief assistance.
-            Every victim receives the standard dried food package
-            and 10 kg rice bag.
-            Additional assistance should be selected according to
-            the needs identified in the assessment.
+            before preparing the relief requirement. Consider the
+            victim's family size and family composition when deciding
+            the quantity of relief assistance.
+
         </p>
 
 
@@ -915,6 +1106,119 @@
                       th:text="${needsAssessment.id}">
                     0
                 </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FAMILY INFORMATION
+
+             The controller will provide familyInformation
+             in the next backend step.
+        ================================================== -->
+
+        <div class="family-section"
+             th:if="${familyInformation != null}">
+
+            <div class="family-header">
+
+                <div class="family-icon">
+                    👨‍👩‍👧‍👦
+                </div>
+
+                <div>
+
+                    <h3>
+                        Affected Family Information
+                    </h3>
+
+                    <p>
+                        Family information to help determine the
+                        appropriate relief quantities.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="family-grid">
+
+
+                <!-- TOTAL FAMILY MEMBERS -->
+
+                <div class="family-field">
+
+                    <span class="family-label">
+                        Total Family Members
+                    </span>
+
+                    <span class="family-value"
+                          th:text="${familyInformation.totalFamilyMembers}">
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- MALE MEMBERS -->
+
+                <div class="family-field">
+
+                    <span class="family-label">
+                        Male Members
+                    </span>
+
+                    <span class="family-value"
+                          th:text="${familyInformation.maleMembers}">
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- FEMALE MEMBERS -->
+
+                <div class="family-field">
+
+                    <span class="family-label">
+                        Female Members
+                    </span>
+
+                    <span class="family-value"
+                          th:text="${familyInformation.femaleMembers}">
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- CHILDREN BELOW 12 -->
+
+                <div class="family-field">
+
+                    <span class="family-label">
+                        Children Below 12
+                    </span>
+
+                    <span class="family-value"
+                          th:text="${familyInformation.childrenBelow12}">
+                        -
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="family-note">
+
+                💡 The Relief Coordinator should use these family
+                details when deciding the quantity of each relief
+                item required by the victim.
 
             </div>
 
@@ -1019,8 +1323,8 @@
             <p class="needs-assessment-description">
 
                 Use the information below to determine which
-                additional relief assistance should be provided
-                to this victim.
+                relief assistance should be prepared for this victim
+                according to the submitted needs assessment.
 
             </p>
 
@@ -1065,21 +1369,21 @@
                 </div>
 
 
-                <!-- FOOD -->
+                <!-- FOOD / BEDDING -->
 
                 <div class="assessment-field">
 
                     <span class="assessment-label">
-                        🍚 Food Required
+                        🛏️ Beddings Required
                     </span>
 
                     <span class="assessment-value yes"
-                          th:if="${needsAssessment.foodRequired == true}">
+                          th:if="${needsAssessment.beddingRequired == true}">
                         Yes
                     </span>
 
                     <span class="assessment-value no"
-                          th:if="${needsAssessment.foodRequired != true}">
+                          th:if="${needsAssessment.beddingRequired != true}">
                         No
                     </span>
 
@@ -1122,27 +1426,6 @@
 
                     <span class="assessment-value no"
                           th:if="${needsAssessment.medicalAssistanceRequired != true}">
-                        No
-                    </span>
-
-                </div>
-
-
-                <!-- CLOTHING -->
-
-                <div class="assessment-field">
-
-                    <span class="assessment-label">
-                        👕 Clothing Required
-                    </span>
-
-                    <span class="assessment-value yes"
-                          th:if="${needsAssessment.clothingRequired == true}">
-                        Yes
-                    </span>
-
-                    <span class="assessment-value no"
-                          th:if="${needsAssessment.clothingRequired != true}">
                         No
                     </span>
 
@@ -1226,13 +1509,6 @@
           method="post">
 
 
-        <!-- CSRF -->
-
-        <input type="hidden"
-               th:if="${_csrf != null}"
-               th:name="${_csrf.parameterName}"
-               th:value="${_csrf.token}">
-
 
         <!-- NEEDS ASSESSMENT ID -->
 
@@ -1261,14 +1537,15 @@
 
             <p class="section-description">
 
-                Select the additional assistance required according
-                to the victim's needs assessment.
+                Enter the quantity of each relief item that should
+                be allocated to the victim according to the submitted
+                needs assessment and family information.
 
             </p>
 
 
             <!-- =================================================
-                 STANDARD MANDATORY ITEMS
+                 STANDARD MANDATORY ITEM
             ================================================== -->
 
             <div class="standard-box">
@@ -1284,72 +1561,65 @@
 
                 <div class="standard-item">
 
-                    <div class="standard-check">
-                        ✓
+                    <div class="standard-item-left">
+
+                        <div class="standard-check">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Dried Food Bag
+                            </strong>
+
+                            <span>
+                                Standard food assistance provided to every victim.
+                            </span>
+
+                        </div>
+
                     </div>
 
-                    <div>
 
-                        <strong>
-                            Dried Food Bag
-                        </strong>
+                    <div class="quantity-area">
 
-                        <span>
-                            Standard food assistance provided to every victim
+                        <span class="quantity-label">
+                            Quantity
                         </span>
+
+                        <input type="number"
+                               class="quantity-input"
+                               name="driedFoodBagQuantity"
+                               min="1"
+                               th:value="${reliefRequirement.driedFoodBagQuantity}"
+                               placeholder="Qty">
 
                     </div>
 
                 </div>
 
 
-                <!-- RICE -->
-
-                <div class="standard-item">
-
-                    <div class="standard-check">
-                        ✓
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            10 kg Rice Bag
-                        </strong>
-
-                        <span>
-                            Standard rice assistance provided to every victim
-                        </span>
-
-                    </div>
-
-                </div>
-
-
+                <!-- KEEP EXISTING SAVE FUNCTION -->
                 <input type="hidden"
                        name="reliefItems"
                        value="Dried Food Bag">
-
-
-                <input type="hidden"
-                       name="reliefItems"
-                       value="10 kg Rice Bag">
 
             </div>
 
 
             <!-- =================================================
-                 ADDITIONAL ITEMS
+                 RELIEF ITEMS
             ================================================== -->
 
             <h3 class="additional-title">
-                Additional Assistance
+                Relief Items Based on Needs Assessment
             </h3>
 
             <p class="additional-description">
 
-                Select only the items required according to
-                the victim's submitted needs assessment.
+                Enter the quantity required for each type of assistance.
+                Enter the quantity that the Relief Coordinator approves for this victim based on the submitted needs assessment and family information. Use 0 when the item is not required.
 
             </p>
 
@@ -1359,12 +1629,7 @@
 
                 <!-- DRINKING WATER -->
 
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Drinking Water"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Drinking Water')}">
+                <div class="item-card">
 
                     <div class="item-icon">
                         💧
@@ -1377,22 +1642,31 @@
                         </strong>
 
                         <span>
-                            Safe drinking water for affected households
+                            Safe drinking water for affected households.
                         </span>
 
                     </div>
 
-                </label>
+                    <div class="quantity-area">
+
+                        <span class="quantity-label">
+                            Qty
+                        </span>
+
+                        <input type="number"
+                               class="quantity-input"
+                               name="drinkingWaterQuantity"
+                               min="0"
+                               th:value="${reliefRequirement.drinkingWaterQuantity}">
+
+                    </div>
+
+                </div>
 
 
                 <!-- MEDICINE -->
 
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Medicine / Medical Supplies"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Medicine / Medical Supplies')}">
+                <div class="item-card">
 
                     <div class="item-icon">
                         💊
@@ -1405,50 +1679,31 @@
                         </strong>
 
                         <span>
-                            Medical and health-related assistance
+                            Medical and health-related assistance.
                         </span>
 
                     </div>
 
-                </label>
+                    <div class="quantity-area">
 
-
-                <!-- CLOTHING -->
-
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Clothing"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Clothing')}">
-
-                    <div class="item-icon">
-                        👕
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Clothing
-                        </strong>
-
-                        <span>
-                            Essential clothing for affected victims
+                        <span class="quantity-label">
+                            Qty
                         </span>
 
+                        <input type="number"
+                               class="quantity-input"
+                               name="medicalSuppliesQuantity"
+                               min="0"
+                               th:value="${reliefRequirement.medicalSuppliesQuantity}">
+
                     </div>
 
-                </label>
+                </div>
 
 
                 <!-- HYGIENE -->
 
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Hygiene Kit"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Hygiene Kit')}">
+                <div class="item-card">
 
                     <div class="item-icon">
                         🧼
@@ -1461,22 +1716,31 @@
                         </strong>
 
                         <span>
-                            Soap, sanitary and personal hygiene items
+                            Soap, sanitary and personal hygiene items.
                         </span>
 
                     </div>
 
-                </label>
+                    <div class="quantity-area">
+
+                        <span class="quantity-label">
+                            Qty
+                        </span>
+
+                        <input type="number"
+                               class="quantity-input"
+                               name="hygieneKitQuantity"
+                               min="0"
+                               th:value="${reliefRequirement.hygieneKitQuantity}">
+
+                    </div>
+
+                </div>
 
 
                 <!-- BABY CARE -->
 
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Baby Care Items"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Baby Care Items')}">
+                <div class="item-card">
 
                     <div class="item-icon">
                         👶
@@ -1489,22 +1753,31 @@
                         </strong>
 
                         <span>
-                            Items required for infants and young children
+                            Items required for infants and young children.
                         </span>
 
                     </div>
 
-                </label>
+                    <div class="quantity-area">
+
+                        <span class="quantity-label">
+                            Qty
+                        </span>
+
+                        <input type="number"
+                               class="quantity-input"
+                               name="babyCareItemsQuantity"
+                               min="0"
+                               th:value="${reliefRequirement.babyCareItemsQuantity}">
+
+                    </div>
+
+                </div>
 
 
-                <!-- BLANKETS -->
+                <!-- BEDDING -->
 
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Blankets / Bedding"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Blankets / Bedding')}">
+                <div class="item-card">
 
                     <div class="item-icon">
                         🛏️
@@ -1517,124 +1790,69 @@
                         </strong>
 
                         <span>
-                            Sleeping materials for affected victims
+                            Sleeping materials for affected victims.
                         </span>
 
                     </div>
 
-                </label>
+                    <div class="quantity-area">
 
-
-                <!-- TORCH -->
-
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Torch / Emergency Light"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Torch / Emergency Light')}">
-
-                    <div class="item-icon">
-                        🔦
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Torch / Emergency Light
-                        </strong>
-
-                        <span>
-                            Lighting support for households without electricity
+                        <span class="quantity-label">
+                            Qty
                         </span>
 
-                    </div>
-
-                </label>
-
-
-                <!-- COOKING EQUIPMENT -->
-
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Cooking Equipment"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cooking Equipment')}">
-
-                    <div class="item-icon">
-                        🍳
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Cooking Equipment
-                        </strong>
-
-                        <span>
-                            Basic cooking utensils and equipment
-                        </span>
+                        <input type="number"
+                               class="quantity-input"
+                               name="beddingQuantity"
+                               min="0"
+                               th:value="${reliefRequirement.beddingQuantity}">
 
                     </div>
 
-                </label>
+                </div>
 
 
-                <!-- CLEANING -->
-
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Cleaning Supplies"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cleaning Supplies')}">
-
-                    <div class="item-icon">
-                        🧹
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Cleaning Supplies
-                        </strong>
-
-                        <span>
-                            Items required for cleaning affected homes
-                        </span>
-
-                    </div>
-
-                </label>
+            </div>
 
 
-                <!-- SPECIAL NEEDS -->
+            <!-- =================================================
+                 VICTIM REQUESTED ADDITIONAL ITEMS
+            ================================================== -->
 
-                <label class="item-card">
+            <div class="additional-notice">
 
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Special Needs Assistance"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Special Needs Assistance')}">
+                <div class="additional-notice-title">
 
-                    <div class="item-icon">
-                        ❤️
-                    </div>
+                    ⚠️ Additional Items Requested by Victim
 
-                    <div class="item-content">
+                </div>
 
-                        <strong>
-                            Special Needs Assistance
-                        </strong>
+                <p class="additional-notice-text">
 
-                        <span>
-                            Support for elderly, disabled or special requirements
-                        </span>
+                    The Relief Coordinator does not enter these items
+                    manually. If the victim has requested an item that
+                    is not included in the standard relief list, the
+                    request will be communicated to Distribution Management
+                    for further consideration.
 
-                    </div>
+                </p>
 
-                </label>
+
+                <div class="requested-items-box"
+                     th:if="${needsAssessment.otherNeeds != null and !#strings.isEmpty(needsAssessment.otherNeeds)}"
+                     th:text="${needsAssessment.otherNeeds}">
+
+                    Additional items requested by the victim.
+
+                </div>
+
+
+                <div class="requested-items-box"
+                     th:if="${needsAssessment.otherNeeds == null or #strings.isEmpty(needsAssessment.otherNeeds)}">
+
+                    No additional items were requested by the victim.
+
+                </div>
 
             </div>
 
@@ -1741,27 +1959,6 @@
                 </label>
 
 
-                <!--
-                    IMPORTANT:
-
-                    This is the RELIEF COORDINATOR page.
-
-                    RC can ONLY select:
-
-                    1. Pending
-                    2. Approved
-
-                    Ready for Distribution and Completed are NOT
-                    available here.
-
-                    Those statuses must be controlled by the
-                    Distribution Officer.
-
-                    IMPORTANT:
-                    The values sent to Spring Boot are uppercase
-                    so they match the values stored in the database.
-                -->
-
                 <select id="status"
                         name="status"
                         required>
@@ -1829,32 +2026,79 @@
 
     /* =========================================================
        GET SELECTED RELIEF ITEMS
+
+       Dried Food Bag is automatically included.
+       Quantity fields are displayed separately.
     ========================================================== */
 
     function getSelectedReliefItems() {
 
         const selectedItems = [];
 
-        document
-            .querySelectorAll(
-                'input[name="reliefItems"]:checked'
-            )
-            .forEach(function (checkbox) {
+        const driedFood =
+            "Dried Food Bag";
 
-                const itemName = checkbox.value;
+        selectedItems.push(driedFood);
 
-                if (
-                    itemName &&
-                    !selectedItems.includes(itemName)
-                ) {
 
-                    selectedItems.push(itemName);
+        const quantityFields = [
 
-                }
+            {
+                name: "Drinking Water",
+                selector: 'input[name="drinkingWaterQuantity"]'
+            },
 
-            });
+            {
+                name: "Medicine / Medical Supplies",
+                selector: 'input[name="medicalSuppliesQuantity"]'
+            },
+
+            {
+                name: "Hygiene Kit",
+                selector: 'input[name="hygieneKitQuantity"]'
+            },
+
+            {
+                name: "Baby Care Items",
+                selector: 'input[name="babyCareItemsQuantity"]'
+            },
+
+            {
+                name: "Blankets / Bedding",
+                selector: 'input[name="beddingQuantity"]'
+            }
+
+        ];
+
+
+        quantityFields.forEach(function (item) {
+
+            const input =
+                document.querySelector(item.selector);
+
+
+            if (!input) {
+                return;
+            }
+
+
+            const quantity =
+                parseInt(input.value || "0");
+
+
+            if (quantity > 0) {
+
+                selectedItems.push(
+                    item.name + " (" + quantity + ")"
+                );
+
+            }
+
+        });
+
 
         return selectedItems;
+
     }
 
 
@@ -1870,11 +2114,13 @@
 
         }
 
+
         if (items.length === 1) {
 
             return items[0];
 
         }
+
 
         if (items.length === 2) {
 
@@ -1883,6 +2129,7 @@
                 items[1];
 
         }
+
 
         return items
                 .slice(0, -1)
@@ -1929,10 +2176,6 @@
             "the registered home address";
 
 
-        /*
-         * VICTIM IS IN SHELTER
-         */
-
         if (hasShelter) {
 
             let shelterDetails =
@@ -1955,10 +2198,6 @@
 
         }
 
-
-        /*
-         * VICTIM IS AT HOME
-         */
 
         else {
 
@@ -2005,8 +2244,6 @@
         }
 
 
-        /* VICTIM INFORMATION */
-
         const victimName =
             data.dataset.victimName ||
             "Victim";
@@ -2016,8 +2253,6 @@
             data.dataset.address ||
             "the registered home address";
 
-
-        /* SHELTER INFORMATION */
 
         const hasShelter =
             data.dataset.hasShelter === "true";
@@ -2033,8 +2268,6 @@
             "";
 
 
-        /* SELECTED RELIEF ITEMS */
-
         const selectedItems =
             getSelectedReliefItems();
 
@@ -2049,10 +2282,6 @@
 
         let deliveryLocation;
 
-
-        /*
-         * VICTIM IS IN SHELTER
-         */
 
         if (hasShelter) {
 
@@ -2083,10 +2312,6 @@
         }
 
 
-        /*
-         * VICTIM IS AT HOME
-         */
-
         else {
 
             deliveryText =
@@ -2101,10 +2326,6 @@
 
         }
 
-
-        /*
-         * FINAL MESSAGE
-         */
 
         const message =
 
@@ -2130,17 +2351,13 @@
             "Flood Relief and Disaster Management System";
 
 
-        /*
-         * PUT MESSAGE INTO TEXTAREA
-         */
+        if (!victimMessageManuallyEdited) {
 
-        messageBox.value =
-            message;
+            messageBox.value =
+                message;
 
+        }
 
-        /*
-         * UPDATE DELIVERY LOCATION
-         */
 
         if (deliveryLocationText) {
 
@@ -2188,10 +2405,6 @@
             }
 
 
-            /*
-             * Generate message if no existing message exists.
-             */
-
             if (
                 messageBox.value.trim() === ""
             ) {
@@ -2210,10 +2423,6 @@
             }
 
 
-            /*
-             * Detect manual editing.
-             */
-
             messageBox.addEventListener(
                 "input",
                 function () {
@@ -2226,19 +2435,21 @@
 
 
             /*
-             * Update automatic message whenever
-             * relief items are selected/unselected.
+
+             * Update the automatic victim message
+             * whenever a quantity changes.
+
              */
 
             document
                 .querySelectorAll(
-                    'input[name="reliefItems"]'
+                    ".quantity-input"
                 )
                 .forEach(
-                    function (checkbox) {
+                    function (input) {
 
-                        checkbox.addEventListener(
-                            "change",
+                        input.addEventListener(
+                            "input",
                             function () {
 
                                 if (

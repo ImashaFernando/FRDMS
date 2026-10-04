@@ -241,9 +241,9 @@
 
         .requirements-list {
             padding: 25px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
 
@@ -251,8 +251,8 @@
 
         .requirement-card {
             border: 1px solid #dce6f3;
-            border-radius: 20px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 18px 22px;
             background: linear-gradient(145deg, #ffffff, #f8fbff);
             transition: 0.25s ease;
             position: relative;
@@ -277,6 +277,21 @@
             pointer-events: none;
         }
 
+
+        /* ================= REQUIREMENT ROW ================= */
+
+        .requirement-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .requirement-person {
+            min-width: 0;
+        }
 
         /* ================= CARD TOP ================= */
 
@@ -804,269 +819,39 @@
 
 
             <!-- =================================================
-                 REQUIREMENT CARD
+                 REQUIREMENT ROW
+                 Only the approved requirement name, ID and View Details
+                 button are shown here. Full information is available
+                 through View Details.
                  ================================================= -->
 
             <div class="requirement-card"
-                 th:each="requirement : ${requirements}">
+                 th:each="requirement : ${requirements}"
+                 th:if="${requirement.status != null && #strings.equalsIgnoreCase(requirement.status, 'APPROVED')}">
 
+                <div class="requirement-row">
 
-                <!-- =================================================
-                     CARD TOP
-                     ================================================= -->
-
-                <div class="card-top">
-
-
-                    <div>
+                    <div class="requirement-person">
 
                         <div class="recipient"
                              th:text="${requirement.recipientName}">
-
                             Recipient Name
-
                         </div>
-
 
                         <div class="requirement-id">
-
                             Requirement #
-
-                            <span th:text="${requirement.id}">
-
-                                1
-
-                            </span>
-
+                            <span th:text="${requirement.id}">1</span>
                         </div>
 
                     </div>
-
-
-                    <!-- STATUS -->
-
-                    <div class="status"
-                         th:text="${requirement.status}">
-
-                        APPROVED
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     SUMMARY HEADING
-                     ================================================= -->
-
-                <div class="summary-heading">
-
-                    <span>👤</span>
-
-                    Victim Relief Summary
-
-                </div>
-
-
-
-                <!-- =================================================
-                     REQUIREMENT DATE
-                     ================================================= -->
-
-                <div class="date-box">
-
-                    <div class="date-label">
-
-                        Requirement Date
-
-                    </div>
-
-
-                    <div class="date-value">
-
-                        <span
-                                th:if="${requirement.createdAt != null}"
-                                th:text="${#temporals.format(
-                                    requirement.createdAt,
-                                    'dd MMM yyyy, hh:mm a'
-                                )}">
-
-                            Date
-
-                        </span>
-
-
-                        <span
-                                th:if="${requirement.createdAt == null}">
-
-                            Not available
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     LOCATION INFORMATION
-                     ================================================= -->
-
-                <div class="info-grid">
-
-
-                    <!-- AFFECTED AREA -->
-
-                    <div class="info-box">
-
-                        <div class="info-label">
-
-                            Affected Area
-
-                        </div>
-
-
-                        <div class="info-value"
-                             th:text="${requirement.affectedArea != null
-                                      && !#strings.isEmpty(requirement.affectedArea)
-                                      ? requirement.affectedArea
-                                      : 'Not specified'}">
-
-                            Area
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- SHELTER -->
-
-                    <div class="info-box">
-
-                        <div class="info-label">
-
-                            Assigned Shelter
-
-                        </div>
-
-
-                        <div class="info-value"
-                             th:text="${requirement.shelter != null
-                                      && !#strings.isEmpty(requirement.shelter)
-                                      ? requirement.shelter
-                                      : 'Not specified'}">
-
-                            Not specified
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- =================================================
-                     RELIEF ITEMS
-                     ================================================= -->
-
-                <div class="items-box">
-
-
-                    <div class="items-title">
-
-                        📦 Requested Relief Items
-
-                    </div>
-
-
-                    <div class="items-text"
-                         th:text="${requirement.reliefItems != null
-                                  && !#strings.isEmpty(requirement.reliefItems)
-                                  ? requirement.reliefItems
-                                  : 'No relief items specified'}">
-
-                        Relief items
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PROCESSING NOTE
-                     ================================================= -->
-
-                <div class="processing-note">
-
-                    <div class="processing-note-icon">
-                        ℹ️
-                    </div>
-
-                    <div class="processing-note-text">
-
-                        This requirement has been approved by the
-                        Relief Coordinator and is ready for
-                        Distribution Management processing.
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     FOOTER
-                     ================================================= -->
-
-                <div class="card-footer">
-
-
-                    <div class="date">
-
-                        📥 Received:
-
-                        <span
-                                th:if="${requirement.createdAt != null}"
-                                th:text="${#temporals.format(
-                                    requirement.createdAt,
-                                    'dd MMM yyyy, hh:mm a'
-                                )}">
-
-                            Date
-
-                        </span>
-
-
-                        <span
-                                th:if="${requirement.createdAt == null}">
-
-                            Not available
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- VIEW DETAILS -->
 
                     <a
                             th:href="@{/distribution/requirements/{id}(id=${requirement.id})}"
                             class="view-button">
-
                         View Details →
-
                     </a>
 
                 </div>
-
 
             </div>
 

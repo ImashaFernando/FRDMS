@@ -2,11 +2,13 @@ package com.frdms.frdms.victim_management.controller;
 
 import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
 import com.frdms.frdms.victim_management.entity.GNReport;
+import com.frdms.frdms.victim_management.entity.NeedsAssessment;
 import com.frdms.frdms.victim_management.entity.ReliefRequirement;
 import com.frdms.frdms.victim_management.entity.Victim;
 
 import com.frdms.frdms.victim_management.service.AffectedFamilyInformationService;
 import com.frdms.frdms.victim_management.service.GNReportService;
+import com.frdms.frdms.victim_management.service.NeedsAssessmentService;
 import com.frdms.frdms.victim_management.service.ReliefRequirementService;
 import com.frdms.frdms.victim_management.service.VictimService;
 
@@ -40,6 +42,9 @@ public class VictimDashboardController {
     private final ReliefRequirementService
             reliefRequirementService;
 
+    private final NeedsAssessmentService
+            needsAssessmentService;
+
 
     // =========================================================
     // CONSTRUCTOR
@@ -58,7 +63,10 @@ public class VictimDashboardController {
                     shelterAllocationService,
 
             ReliefRequirementService
-                    reliefRequirementService) {
+                    reliefRequirementService,
+
+            NeedsAssessmentService
+                    needsAssessmentService) {
 
         this.victimService =
                 victimService;
@@ -74,6 +82,9 @@ public class VictimDashboardController {
 
         this.reliefRequirementService =
                 reliefRequirementService;
+
+        this.needsAssessmentService =
+                needsAssessmentService;
     }
 
 
@@ -187,6 +198,30 @@ public class VictimDashboardController {
 
 
         // =====================================================
+        // GET LATEST NEEDS ASSESSMENT
+        // =====================================================
+
+        /*
+         * This is important.
+         *
+         * The Victim Dashboard needs to know whether
+         * the victim has already submitted a Needs Assessment.
+         *
+         * If an assessment exists but there is no Relief
+         * Requirement yet, the dashboard will display:
+         *
+         * "Needs Assessment Submitted - PENDING"
+         *
+         * The victim must wait until the Relief Coordinator
+         * reviews the assessment.
+         */
+
+        NeedsAssessment needsAssessment =
+                needsAssessmentService
+                        .getLatestAssessmentByVictim(victim);
+
+
+        // =====================================================
         // GET RELIEF REQUIREMENTS
         // =====================================================
 
@@ -255,6 +290,26 @@ public class VictimDashboardController {
         model.addAttribute(
                 "shelterAllocation",
                 shelterAllocation
+        );
+
+
+        // =====================================================
+        // SEND NEEDS ASSESSMENT
+        // =====================================================
+
+        /*
+         * This allows dashboard.html to check:
+         *
+         * needsAssessment == null
+         *
+         * OR
+         *
+         * needsAssessment != null
+         */
+
+        model.addAttribute(
+                "needsAssessment",
+                needsAssessment
         );
 
 
