@@ -2,7 +2,9 @@ package com.frdms.frdms.victim_management.controller;
 
 import com.frdms.frdms.victim_management.entity.NeedsAssessment;
 import com.frdms.frdms.victim_management.entity.Victim;
+import com.frdms.frdms.victim_management.service.GNReportService;
 import com.frdms.frdms.victim_management.service.NeedsAssessmentService;
+import com.frdms.frdms.victim_management.service.ReliefRequirementService;
 import com.frdms.frdms.victim_management.service.VictimService;
 
 import jakarta.servlet.http.HttpSession;
@@ -13,96 +15,229 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 @RequestMapping("/needs-assessment")
 public class NeedsAssessmentController {
 
+
     private final NeedsAssessmentService needsAssessmentService;
+
     private final VictimService victimService;
+
+    private final ReliefRequirementService reliefRequirementService;
+
+    private final GNReportService gnReportService;
+
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
 
     public NeedsAssessmentController(
             NeedsAssessmentService needsAssessmentService,
-            VictimService victimService) {
+            VictimService victimService,
+            ReliefRequirementService reliefRequirementService,
+            GNReportService gnReportService) {
 
-        this.needsAssessmentService = needsAssessmentService;
-        this.victimService = victimService;
+        this.needsAssessmentService =
+                needsAssessmentService;
+
+        this.victimService =
+                victimService;
+
+        this.reliefRequirementService =
+                reliefRequirementService;
+
+        this.gnReportService =
+                gnReportService;
     }
 
 
     // =========================================================
-    // VICTIM SIDE
+    // SHOW NEEDS ASSESSMENT FORM
     // =========================================================
-
-    /*
-     * Show the Needs Assessment form.
-     *
-     * If the victim already has an assessment,
-     * the same existing assessment is loaded.
-     *
-     * If the victim does not have an assessment,
-     * a new blank assessment is created.
-     */
 
     @GetMapping("/form")
     public String showNeedsAssessmentForm(
             HttpSession session,
             Model model) {
 
-        // -----------------------------------------------------
+
+        // =====================================================
         // CHECK VICTIM LOGIN
-        // -----------------------------------------------------
+        // =====================================================
 
         Long victimId =
-                (Long) session.getAttribute("victimId");
+                (Long) session.getAttribute(
+                        "victimId"
+                );
+
 
         if (victimId == null) {
+
             return "redirect:/login";
         }
 
 
-        // -----------------------------------------------------
-        // GET LOGGED-IN VICTIM
-        // -----------------------------------------------------
+        // =====================================================
+        // GET VICTIM
+        // =====================================================
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim;
+
+        try {
+
+            victim =
+                    victimService.getVictimById(
+                            victimId
+                    );
+
+        } catch (Exception e) {
+
+            session.invalidate();
+
+            return "redirect:/login";
+        }
+
 
         if (victim == null) {
+
             session.invalidate();
+
             return "redirect:/login";
         }
 
 
-        // -----------------------------------------------------
-        // FIND EXISTING ASSESSMENT
-        // -----------------------------------------------------
+        // =====================================================
+        // CHECK GN REPORT APPROVAL
+        // =====================================================
+
+        /*
+         * The victim cannot access the Needs Assessment
+         * until the latest GN Report has been APPROVED.
+         */
+
+        boolean gnReportApproved =
+                gnReportService
+                        .isLatestGNReportApproved(
+                                victim
+                        );
+
+
+        if (!gnReportApproved) {
+
+            /*
+             * Send the victim back to the dashboard.
+             *
+             * The dashboard can then show that the
+             * GN Report is still waiting for approval.
+             */
+
+            return "redirect:/victim/dashboard?gnApprovalRequired=true";
+        }
+
+
+        // =====================================================
+        // GET EXISTING NEEDS ASSESSMENT
+        // =====================================================
 
         NeedsAssessment assessment =
                 needsAssessmentService
-                        .getLatestAssessmentByVictim(victim);
+                        .getLatestAssessmentByVictim(
+                                victim
+                        );
 
 
-        // -----------------------------------------------------
-        // IF NO ASSESSMENT EXISTS
-        // CREATE A NEW BLANK OBJECT
-        // -----------------------------------------------------
+        // =====================================================
+        // CHECK EXISTING RELIEF REQUIREMENT
+        // =====================================================
 
-        if (assessment == null) {
+        if (assessment != null) {
 
-            assessment = new NeedsAssessment();
+            var existingReliefRequirement =
+                    reliefRequirementService
+                            .getByNeedsAssessment(
+                                    assessment
+                            );
 
-            assessment.setVictim(victim);
+
+            if (existingReliefRequirement.isPresent()) {
+
+                return "redirect:/needs-assessment/status";
+            }
         }
 
 
-        // -----------------------------------------------------
-        // SEND DATA TO THYMELEAF
-        // -----------------------------------------------------
+        // =====================================================
+        // CREATE NEW ASSESSMENT
+        // =====================================================
+
+        if (assessment == null) {
+
+            assessment =
+                    new NeedsAssessment();
+
+            assessment.setVictim(
+                    victim
+            );
+
+
+            /*
+             * Food is no longer collected from the
+             * Victim Needs Assessment form.
+             */
+            assessment.setFoodRequired(
+                    false
+            );
+
+
+            /*
+             * New Beddings option.
+             */
+            assessment.setBeddingRequired(
+                    false
+            );
+
+
+            assessment.setWaterRequired(
+                    false
+            );
+
+
+            assessment.setMedicalAssistanceRequired(
+                    false
+            );
+
+
+            /*
+             * Clothing is no longer collected.
+             */
+            assessment.setClothingRequired(
+                    false
+            );
+
+
+            assessment.setHygieneItemsRequired(
+                    false
+            );
+
+
+            assessment.setStatus(
+                    "SUBMITTED"
+            );
+        }
+
+
+        // =====================================================
+        // SEND DATA TO VIEW
+        // =====================================================
 
         model.addAttribute(
                 "victim",
                 victim
         );
+
 
         model.addAttribute(
                 "needsAssessment",
@@ -115,7 +250,7 @@ public class NeedsAssessmentController {
 
 
     // =========================================================
-    // SUBMIT / UPDATE NEEDS ASSESSMENT
+    // SUBMIT NEEDS ASSESSMENT
     // =========================================================
 
     @PostMapping("/submit")
@@ -132,235 +267,428 @@ public class NeedsAssessmentController {
             Model model) {
 
 
-        // -----------------------------------------------------
+        // =====================================================
         // CHECK VICTIM LOGIN
-        // -----------------------------------------------------
+        // =====================================================
 
         Long victimId =
-                (Long) session.getAttribute("victimId");
+                (Long) session.getAttribute(
+                        "victimId"
+                );
+
 
         if (victimId == null) {
+
             return "redirect:/login";
         }
 
 
-        // -----------------------------------------------------
-        // GET LOGGED-IN VICTIM
-        // -----------------------------------------------------
+        // =====================================================
+        // GET VICTIM
+        // =====================================================
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim;
+
+        try {
+
+            victim =
+                    victimService.getVictimById(
+                            victimId
+                    );
+
+        } catch (Exception e) {
+
+            session.invalidate();
+
+            return "redirect:/login";
+        }
+
 
         if (victim == null) {
+
             session.invalidate();
+
             return "redirect:/login";
         }
 
 
-        // -----------------------------------------------------
+        // =====================================================
+        // CHECK GN REPORT APPROVAL AGAIN
+        // =====================================================
+
+        /*
+         * IMPORTANT:
+         *
+         * We check this again during POST.
+         *
+         * This prevents a victim from bypassing the rule
+         * by manually submitting a POST request.
+         */
+
+        boolean gnReportApproved =
+                gnReportService
+                        .isLatestGNReportApproved(
+                                victim
+                        );
+
+
+        if (!gnReportApproved) {
+
+            return "redirect:/victim/dashboard?gnApprovalRequired=true";
+        }
+
+
+        // =====================================================
+        // NORMALIZE CHECKBOX VALUES
+        // =====================================================
+
+        /*
+         * Food is no longer part of the Victim form.
+         *
+         * Keep the old field false so existing database
+         * compatibility is maintained.
+         */
+
+        submittedAssessment.setFoodRequired(
+                false
+        );
+
+
+        /*
+         * Beddings
+         *
+         * If the checkbox is not selected,
+         * Thymeleaf may submit null.
+         *
+         * Convert null to false.
+         */
+
+        if (submittedAssessment
+                .getBeddingRequired() == null) {
+
+            submittedAssessment
+                    .setBeddingRequired(
+                            false
+                    );
+        }
+
+
+        if (submittedAssessment
+                .getWaterRequired() == null) {
+
+            submittedAssessment.setWaterRequired(
+                    false
+            );
+        }
+
+
+        if (submittedAssessment
+                .getMedicalAssistanceRequired() == null) {
+
+            submittedAssessment
+                    .setMedicalAssistanceRequired(
+                            false
+                    );
+        }
+
+
+        /*
+         * Clothing is no longer part of the
+         * Victim Needs Assessment form.
+         */
+
+        submittedAssessment.setClothingRequired(
+                false
+        );
+
+
+        if (submittedAssessment
+                .getHygieneItemsRequired() == null) {
+
+            submittedAssessment
+                    .setHygieneItemsRequired(
+                            false
+                    );
+        }
+
+
+        // =====================================================
         // VALIDATION ERRORS
-        // -----------------------------------------------------
+        // =====================================================
 
         if (bindingResult.hasErrors()) {
+
+            System.out.println(
+                    "=========================================="
+            );
+
+            System.out.println(
+                    "NEEDS ASSESSMENT VALIDATION ERROR"
+            );
+
+            System.out.println(
+                    "=========================================="
+            );
+
+
+            bindingResult
+                    .getAllErrors()
+                    .forEach(error ->
+                            System.out.println(
+                                    "ERROR: "
+                                            + error
+                                            .getDefaultMessage()
+                            )
+                    );
+
 
             model.addAttribute(
                     "victim",
                     victim
             );
 
+
+            model.addAttribute(
+                    "needsAssessment",
+                    submittedAssessment
+            );
+
+
             return "victim/needs-assessment";
         }
 
 
         // =====================================================
-        // FIND EXISTING ASSESSMENT FOR THIS VICTIM
+        // GET EXISTING ASSESSMENT
         // =====================================================
 
         NeedsAssessment existingAssessment =
                 needsAssessmentService
-                        .getLatestAssessmentByVictim(victim);
+                        .getLatestAssessmentByVictim(
+                                victim
+                        );
 
 
         // =====================================================
-        // EXISTING ASSESSMENT FOUND
-        // UPDATE THE SAME RECORD
+        // CHECK EXISTING RELIEF REQUIREMENT
         // =====================================================
 
         if (existingAssessment != null) {
 
-            // -------------------------------------------------
-            // UPDATE CURRENT SITUATION
-            // -------------------------------------------------
+            var existingReliefRequirement =
+                    reliefRequirementService
+                            .getByNeedsAssessment(
+                                    existingAssessment
+                            );
+
+
+            if (existingReliefRequirement.isPresent()) {
+
+                return "redirect:/needs-assessment/status";
+            }
+        }
+
+
+        // =====================================================
+        // UPDATE EXISTING ASSESSMENT
+        // =====================================================
+
+        if (existingAssessment != null) {
 
             existingAssessment.setCurrentSituation(
-                    submittedAssessment.getCurrentSituation()
+                    submittedAssessment
+                            .getCurrentSituation()
             );
 
 
-            // -------------------------------------------------
-            // UPDATE FOOD REQUIREMENT
-            // -------------------------------------------------
-
+            /*
+             * Food is no longer collected.
+             */
             existingAssessment.setFoodRequired(
-                    submittedAssessment.getFoodRequired()
+                    false
             );
 
 
-            // -------------------------------------------------
-            // UPDATE WATER REQUIREMENT
-            // -------------------------------------------------
+            /*
+             * Save Beddings.
+             */
+            existingAssessment.setBeddingRequired(
+                    submittedAssessment
+                            .getBeddingRequired()
+            );
+
 
             existingAssessment.setWaterRequired(
-                    submittedAssessment.getWaterRequired()
-            );
-
-
-            // -------------------------------------------------
-            // UPDATE MEDICAL ASSISTANCE
-            // -------------------------------------------------
-
-            existingAssessment.setMedicalAssistanceRequired(
                     submittedAssessment
-                            .getMedicalAssistanceRequired()
+                            .getWaterRequired()
             );
 
 
-            // -------------------------------------------------
-            // UPDATE CLOTHING REQUIREMENT
-            // -------------------------------------------------
-
-            existingAssessment.setClothingRequired(
-                    submittedAssessment.getClothingRequired()
-            );
+            existingAssessment
+                    .setMedicalAssistanceRequired(
+                            submittedAssessment
+                                    .getMedicalAssistanceRequired()
+                    );
 
 
-            // -------------------------------------------------
-            // UPDATE HYGIENE ITEMS
-            // -------------------------------------------------
+            /*
+             * Clothing is no longer collected.
+             */
+            existingAssessment
+                    .setClothingRequired(
+                            false
+                    );
 
-            existingAssessment.setHygieneItemsRequired(
-                    submittedAssessment
-                            .getHygieneItemsRequired()
-            );
 
+            existingAssessment
+                    .setHygieneItemsRequired(
+                            submittedAssessment
+                                    .getHygieneItemsRequired()
+                    );
 
-            // -------------------------------------------------
-            // UPDATE OTHER NEEDS
-            // -------------------------------------------------
 
             existingAssessment.setOtherNeeds(
-                    submittedAssessment.getOtherNeeds()
-            );
-
-
-            // -------------------------------------------------
-            // UPDATE ADDITIONAL INFORMATION
-            // -------------------------------------------------
-
-            existingAssessment.setAdditionalInformation(
                     submittedAssessment
-                            .getAdditionalInformation()
+                            .getOtherNeeds()
             );
 
 
-            // -------------------------------------------------
-            // KEEP THE SAME VICTIM
-            // -------------------------------------------------
+            existingAssessment
+                    .setAdditionalInformation(
+                            submittedAssessment
+                                    .getAdditionalInformation()
+                    );
 
-            existingAssessment.setVictim(victim);
+
+            existingAssessment.setVictim(
+                    victim
+            );
 
 
-            // -------------------------------------------------
-            // MARK AS UPDATED
-            // -------------------------------------------------
+            existingAssessment.setPriority(
+                    null
+            );
+
+
+            existingAssessment
+                    .setAssessmentRemarks(
+                            null
+                    );
+
+
+            existingAssessment.setAssessedBy(
+                    null
+            );
+
+
+            existingAssessment.setAssessmentDate(
+                    null
+            );
+
+
+            /*
+             * Keep the assessment in a state that
+             * indicates it has been submitted again.
+             */
 
             existingAssessment.setStatus(
                     "UPDATED"
             );
 
 
-            // -------------------------------------------------
-            // CLEAR OLD COORDINATOR ASSESSMENT
-            // -------------------------------------------------
-
-            existingAssessment.setPriority(null);
-
-            existingAssessment.setAssessmentRemarks(null);
-
-            existingAssessment.setAssessedBy(null);
-
-            existingAssessment.setAssessmentDate(null);
+            needsAssessmentService
+                    .saveAssessment(
+                            existingAssessment
+                    );
 
 
-            // -------------------------------------------------
-            // SAVE SAME DATABASE RECORD
-            // -------------------------------------------------
-
-            needsAssessmentService.saveAssessment(
-                    existingAssessment
-            );
-
-        }
+        } else {
 
 
-        // =====================================================
-        // NO EXISTING ASSESSMENT
-        // CREATE FIRST ASSESSMENT
-        // =====================================================
-
-        else {
-
-            // -------------------------------------------------
-            // CONNECT ASSESSMENT TO VICTIM
-            // -------------------------------------------------
+            // =================================================
+            // CREATE NEW ASSESSMENT
+            // =================================================
 
             submittedAssessment.setVictim(
                     victim
             );
 
 
-            // -------------------------------------------------
-            // SET INITIAL STATUS
-            // -------------------------------------------------
-
             submittedAssessment.setStatus(
                     "SUBMITTED"
             );
 
 
-            // -------------------------------------------------
-            // CLEAR COORDINATOR FIELDS
-            // -------------------------------------------------
-
-            submittedAssessment.setPriority(null);
-
-            submittedAssessment.setAssessmentRemarks(null);
-
-            submittedAssessment.setAssessedBy(null);
-
-            submittedAssessment.setAssessmentDate(null);
+            /*
+             * Food is no longer collected.
+             */
+            submittedAssessment
+                    .setFoodRequired(
+                            false
+                    );
 
 
-            // -------------------------------------------------
-            // CREATE NEW DATABASE RECORD
-            // -------------------------------------------------
+            /*
+             * Beddings is now the replacement
+             * assistance option.
+             */
+            if (submittedAssessment
+                    .getBeddingRequired() == null) {
 
-            needsAssessmentService.saveAssessment(
-                    submittedAssessment
+                submittedAssessment
+                        .setBeddingRequired(
+                                false
+                        );
+            }
+
+
+            /*
+             * Clothing is no longer collected.
+             */
+            submittedAssessment
+                    .setClothingRequired(
+                            false
+                    );
+
+
+            submittedAssessment.setPriority(
+                    null
             );
+
+
+            submittedAssessment
+                    .setAssessmentRemarks(
+                            null
+                    );
+
+
+            submittedAssessment.setAssessedBy(
+                    null
+            );
+
+
+            submittedAssessment.setAssessmentDate(
+                    null
+            );
+
+
+            needsAssessmentService
+                    .saveAssessment(
+                            submittedAssessment
+                    );
         }
 
 
-        // -----------------------------------------------------
-        // REDIRECT TO STATUS PAGE
-        // -----------------------------------------------------
+        // =====================================================
+        // SUCCESS
+        // =====================================================
 
-        return "redirect:/needs-assessment/status";
+        return "redirect:/victim/dashboard?assessmentSuccess=true";
     }
 
 
     // =========================================================
-    // VICTIM STATUS
+    // VIEW NEEDS ASSESSMENT STATUS
     // =========================================================
 
     @GetMapping("/status")
@@ -369,38 +697,60 @@ public class NeedsAssessmentController {
             Model model) {
 
 
-        // -----------------------------------------------------
-        // CHECK VICTIM LOGIN
-        // -----------------------------------------------------
+        // =====================================================
+        // CHECK LOGIN
+        // =====================================================
 
         Long victimId =
-                (Long) session.getAttribute("victimId");
+                (Long) session.getAttribute(
+                        "victimId"
+                );
+
 
         if (victimId == null) {
+
             return "redirect:/login";
         }
 
 
-        // -----------------------------------------------------
-        // GET LOGGED-IN VICTIM
-        // -----------------------------------------------------
+        // =====================================================
+        // GET VICTIM
+        // =====================================================
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim;
+
+        try {
+
+            victim =
+                    victimService.getVictimById(
+                            victimId
+                    );
+
+        } catch (Exception e) {
+
+            session.invalidate();
+
+            return "redirect:/login";
+        }
+
 
         if (victim == null) {
+
             session.invalidate();
+
             return "redirect:/login";
         }
 
 
-        // -----------------------------------------------------
-        // GET LATEST ASSESSMENT
-        // -----------------------------------------------------
+        // =====================================================
+        // GET NEEDS ASSESSMENT
+        // =====================================================
 
         NeedsAssessment assessment =
                 needsAssessmentService
-                        .getLatestAssessmentByVictim(victim);
+                        .getLatestAssessmentByVictim(
+                                victim
+                        );
 
 
         if (assessment != null) {
@@ -409,12 +759,28 @@ public class NeedsAssessmentController {
                     "needsAssessment",
                     assessment
             );
+
+
+            var reliefRequirement =
+                    reliefRequirementService
+                            .getByNeedsAssessment(
+                                    assessment
+                            );
+
+
+            if (reliefRequirement.isPresent()) {
+
+                model.addAttribute(
+                        "latestReliefRequirement",
+                        reliefRequirement.get()
+                );
+            }
         }
 
 
-        // -----------------------------------------------------
-        // SEND VICTIM TO PAGE
-        // -----------------------------------------------------
+        // =====================================================
+        // SEND VICTIM
+        // =====================================================
 
         model.addAttribute(
                 "victim",

@@ -24,6 +24,15 @@ public interface AffectedFamilyInformationRepository
 
 
     // =========================================================
+    // FIND FAMILY INFORMATION BY VICTIM ID
+    // =========================================================
+
+    Optional<AffectedFamilyInformation> findByVictim_Id(
+            Long victimId
+    );
+
+
+    // =========================================================
     // FIND FAMILY INFORMATION FOR A DISASTER
     // =========================================================
 
@@ -48,9 +57,12 @@ public interface AffectedFamilyInformationRepository
             Long disasterId,
             Boolean shelterRequired
     );
+
+
     // =========================================================
     // FIND FAMILIES REQUIRING SHELTER
     // =========================================================
 
-    List<AffectedFamilyInformation> findByShelterRequiredTrueOrderByIdDesc();
+    List<AffectedFamilyInformation>
+    findByShelterRequiredTrueOrderByIdDesc();
 }

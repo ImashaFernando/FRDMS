@@ -151,6 +151,60 @@
         }
 
 
+        /* =========================================================
+           BACK TO PROJECT MANAGER DASHBOARD BUTTON
+           ========================================================= */
+
+        .back-dashboard-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #0b2a4a,
+                            #176fb8
+                    );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+
+            transition:
+                    background 0.2s ease,
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+        }
+
+
+        .back-dashboard-button:hover {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #176fb8,
+                            #248be0
+                    );
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                    0 6px 15px rgba(36, 139, 224, 0.25);
+        }
+
+
 
         /* =========================================================
            FILTER SECTION
@@ -230,6 +284,7 @@
         }
 
 
+
         .filter-form {
             display: grid;
 
@@ -300,6 +355,7 @@
             box-shadow:
                     0 0 0 3px rgba(36, 139, 224, 0.10);
         }
+
 
 
         /* =========================================================
@@ -856,6 +912,7 @@
             .active-filter {
                 flex-wrap: wrap;
             }
+
         }
 
     </style>
@@ -913,6 +970,19 @@
                 </p>
 
             </div>
+
+
+            <!-- =================================================
+                 BACK TO PROJECT MANAGER DASHBOARD
+                 ================================================= -->
+
+            <a
+                    th:href="@{/project-manager/dashboard}"
+                    class="back-dashboard-button">
+
+                ← Back to Project Manager Dashboard
+
+            </a>
 
         </div>
 

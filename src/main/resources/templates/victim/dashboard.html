@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -9,6 +10,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>Victim Dashboard | FRDMS</title>
+
 
     <style>
 
@@ -20,8 +22,11 @@
 
 
         body {
+
             font-family: Arial, sans-serif;
+
             background: #f2f5f7;
+
             color: #0B2A4A;
         }
 
@@ -31,31 +36,41 @@
            ================================ */
 
         .header {
+
             background: #0C1721;
+
             color: white;
 
             padding: 18px 40px;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
 
         .logo h1 {
+
             font-size: 25px;
+
             margin-bottom: 4px;
         }
 
 
         .logo p {
+
             font-size: 13px;
+
             color: #CFE8F7;
         }
 
 
         .logout-btn {
+
             background: #28888F;
+
             color: white;
 
             text-decoration: none;
@@ -69,6 +84,7 @@
 
 
         .logout-btn:hover {
+
             background: #206f75;
         }
 
@@ -78,6 +94,7 @@
            ================================ */
 
         .container {
+
             max-width: 1100px;
 
             margin: 35px auto;
@@ -91,11 +108,13 @@
            ================================ */
 
         .welcome {
-            background: linear-gradient(
-                    135deg,
-                    #0B2A4A,
-                    #248BE0
-            );
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #0B2A4A,
+                            #248BE0
+                    );
 
             color: white;
 
@@ -112,6 +131,7 @@
 
 
         .welcome h2 {
+
             font-size: 28px;
 
             margin-bottom: 8px;
@@ -119,6 +139,7 @@
 
 
         .welcome p {
+
             color: #E8F5FC;
 
             font-size: 15px;
@@ -130,6 +151,7 @@
            ================================ */
 
         .profile-card {
+
             background: white;
 
             border-radius: 15px;
@@ -145,6 +167,7 @@
 
 
         .profile-title {
+
             display: flex;
 
             align-items: center;
@@ -156,6 +179,7 @@
 
 
         .profile-title h3 {
+
             font-size: 21px;
 
             color: #0B2A4A;
@@ -163,6 +187,7 @@
 
 
         .profile-badge {
+
             background: #CFE8F7;
 
             color: #0B2A4A;
@@ -182,6 +207,7 @@
            ================================ */
 
         .profile-grid {
+
             display: grid;
 
             grid-template-columns:
@@ -192,6 +218,7 @@
 
 
         .info-box {
+
             background: #f7f9fa;
 
             border: 1px solid #E6E8E9;
@@ -203,6 +230,7 @@
 
 
         .info-label {
+
             display: block;
 
             font-size: 12px;
@@ -218,6 +246,7 @@
 
 
         .info-value {
+
             font-size: 16px;
 
             color: #0B2A4A;
@@ -227,10 +256,203 @@
 
 
         /* ================================
+           PROFILE EDIT BUTTON
+           ================================ */
+
+        .edit-profile-btn {
+
+            background: #248BE0;
+
+            color: white;
+
+            border: none;
+
+            padding: 9px 16px;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: background 0.2s;
+        }
+
+
+        .edit-profile-btn:hover {
+
+            background: #176db5;
+        }
+
+
+        /* ================================
+           PROFILE EDIT FORM
+           ================================ */
+
+        .profile-edit-form {
+
+            display: none;
+        }
+
+
+        .profile-edit-form.active {
+
+            display: block;
+        }
+
+
+        .profile-view.hidden {
+
+            display: none;
+        }
+
+
+        .profile-input {
+
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border: 1px solid #D5DDE2;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            color: #0B2A4A;
+
+            background: white;
+
+            outline: none;
+        }
+
+
+        .profile-input:focus {
+
+            border-color: #248BE0;
+
+            box-shadow:
+                    0 0 0 2px
+                    rgba(36, 139, 224, 0.12);
+        }
+
+
+        .profile-input[readonly] {
+
+            background: #EEF2F4;
+
+            color: #667781;
+
+            cursor: not-allowed;
+        }
+
+
+        .profile-edit-actions {
+
+            margin-top: 22px;
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+
+        .save-profile-btn {
+
+            background: #28888F;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 20px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .save-profile-btn:hover {
+
+            background: #206f75;
+        }
+
+
+        .cancel-profile-btn {
+
+            background: #E8ECEF;
+
+            color: #0B2A4A;
+
+            border: none;
+
+            padding: 11px 20px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .cancel-profile-btn:hover {
+
+            background: #D8DEE2;
+        }
+
+
+        /* ================================
+           PROFILE MESSAGES
+           ================================ */
+
+        .profile-success {
+
+            background: #D1E7DD;
+
+            color: #0F5132;
+
+            border: 1px solid #A3CFBB;
+
+            padding: 13px 16px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .profile-error {
+
+            background: #F8D7DA;
+
+            color: #842029;
+
+            border: 1px solid #F1AEB5;
+
+            padding: 13px 16px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================================
            SHELTER INFORMATION
            ================================ */
 
         .shelter-card {
+
             background: white;
 
             border-radius: 15px;
@@ -248,6 +470,7 @@
 
 
         .shelter-title {
+
             display: flex;
 
             align-items: center;
@@ -259,6 +482,7 @@
 
 
         .shelter-title h3 {
+
             font-size: 21px;
 
             color: #0B2A4A;
@@ -266,6 +490,7 @@
 
 
         .shelter-status {
+
             padding: 7px 13px;
 
             border-radius: 20px;
@@ -277,6 +502,7 @@
 
 
         .waiting-status {
+
             background: #FFF3CD;
 
             color: #856404;
@@ -284,6 +510,7 @@
 
 
         .allocated-status {
+
             background: #D1E7DD;
 
             color: #0F5132;
@@ -291,6 +518,7 @@
 
 
         .shelter-message {
+
             background: #f7f9fa;
 
             border: 1px solid #E6E8E9;
@@ -308,6 +536,7 @@
 
 
         .shelter-grid {
+
             display: grid;
 
             grid-template-columns:
@@ -318,6 +547,7 @@
 
 
         .shelter-info-box {
+
             background: #f7f9fa;
 
             border: 1px solid #E6E8E9;
@@ -329,6 +559,7 @@
 
 
         .shelter-info-label {
+
             display: block;
 
             font-size: 12px;
@@ -344,6 +575,7 @@
 
 
         .shelter-info-value {
+
             font-size: 16px;
 
             color: #0B2A4A;
@@ -359,6 +591,7 @@
            ================================ */
 
         .section-title {
+
             margin-bottom: 18px;
 
             font-size: 21px;
@@ -368,6 +601,7 @@
 
 
         .actions {
+
             display: grid;
 
             grid-template-columns:
@@ -378,6 +612,7 @@
 
 
         .action-card {
+
             background: white;
 
             border-radius: 14px;
@@ -399,6 +634,7 @@
 
 
         .action-card:hover {
+
             transform: translateY(-4px);
 
             box-shadow:
@@ -408,6 +644,7 @@
 
 
         .action-icon {
+
             font-size: 30px;
 
             margin-bottom: 12px;
@@ -415,6 +652,7 @@
 
 
         .action-card h4 {
+
             color: #0B2A4A;
 
             font-size: 17px;
@@ -424,11 +662,92 @@
 
 
         .action-card p {
+
             color: #557080;
 
             font-size: 13px;
 
             line-height: 1.5;
+        }
+
+
+        /* ================================
+           NEEDS ASSESSMENT NOTIFICATION
+           ================================ */
+
+        .needs-notification {
+
+            border: 2px solid #28888F;
+
+            background: #F0FAFA;
+        }
+
+
+        .needs-notification .action-icon {
+
+            color: #28888F;
+        }
+
+
+        .needs-notification h4 {
+
+            color: #206f75;
+        }
+
+
+        .needs-notification p {
+
+            color: #45666B;
+        }
+
+
+        /* ================================
+           NEEDS ASSESSMENT SUBMITTED
+           ================================ */
+
+        .needs-submitted {
+
+            border: 2px solid #248BE0;
+
+            background: #F4F9FE;
+        }
+
+
+        .needs-submitted .action-icon {
+
+            color: #248BE0;
+        }
+
+
+        .needs-submitted h4 {
+
+            color: #0B2A4A;
+        }
+
+
+        .needs-submitted p {
+
+            color: #557080;
+        }
+
+
+        .assessment-status {
+
+            display: inline-block;
+
+            background: #FFF3CD;
+
+            color: #856404;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
         }
 
 
@@ -439,32 +758,81 @@
         @media (max-width: 800px) {
 
             .profile-grid {
+
                 grid-template-columns: 1fr;
             }
+
 
             .shelter-grid {
+
                 grid-template-columns: 1fr;
             }
+
 
             .actions {
+
                 grid-template-columns: 1fr;
             }
 
+
             .header {
+
                 padding: 15px 20px;
             }
 
+
             .welcome h2 {
+
                 font-size: 23px;
             }
 
+
             .shelter-title {
+
                 align-items: flex-start;
 
                 gap: 10px;
 
                 flex-direction: column;
             }
+
+
+            .profile-title {
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+                flex-direction: column;
+            }
+
+
+            .profile-title > div {
+
+                width: 100%;
+
+                flex-wrap: wrap;
+            }
+
+
+            .edit-profile-btn {
+
+                width: auto;
+            }
+
+
+            .profile-edit-actions {
+
+                flex-direction: column;
+            }
+
+
+            .save-profile-btn,
+            .cancel-profile-btn {
+
+                width: 100%;
+            }
+
         }
 
     </style>
@@ -491,10 +859,14 @@
 
     </div>
 
-    <a th:href="@{/logout}" class="logout-btn">
-        Logout
-    </a>
 
+    <a
+            th:href="@{/logout}"
+            class="logout-btn">
+
+        Logout
+
+    </a>
 
 </header>
 
@@ -523,6 +895,7 @@
 
         </h2>
 
+
         <p>
 
             Welcome to your personal FRDMS dashboard.
@@ -541,119 +914,321 @@
 
     <section class="profile-card">
 
+
         <div class="profile-title">
 
             <h3>
                 My Profile
             </h3>
 
-            <span class="profile-badge">
-                Registered Victim
-            </span>
+
+            <div
+                    style="display: flex;
+                           align-items: center;
+                           gap: 12px;">
+
+                <span class="profile-badge">
+
+                    Registered Victim
+
+                </span>
+
+
+                <button
+                        type="button"
+                        class="edit-profile-btn"
+                        onclick="openProfileEdit()">
+
+                    ✏ Edit Profile
+
+                </button>
+
+            </div>
 
         </div>
 
 
-        <div class="profile-grid">
+        <!-- SUCCESS MESSAGE -->
+
+        <div
+                class="profile-success"
+                th:if="${profileSuccess}"
+                th:text="${profileSuccess}">
+
+        </div>
 
 
-            <!-- Full Name -->
+        <!-- ERROR MESSAGE -->
 
-            <div class="info-box">
+        <div
+                class="profile-error"
+                th:if="${profileError}"
+                th:text="${profileError}">
 
-                <span class="info-label">
-                    Full Name
-                </span>
+        </div>
 
-                <span
-                        class="info-value"
-                        th:text="${victim.fullName}">
 
-                    -
+        <!-- =================================
+             PROFILE VIEW
+             ================================= -->
 
-                </span>
+        <div
+                id="profileView"
+                class="profile-view">
+
+
+            <div class="profile-grid">
+
+
+                <!-- FULL NAME -->
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Full Name
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${victim.fullName}">
+
+                        -
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- NIC -->
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        NIC Number
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${victim.nicNumber}">
+
+                        -
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Phone Number
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${victim.phoneNumber}">
+
+                        -
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- ADDRESS -->
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Address
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${victim.address}">
+
+                        -
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- REGISTRATION DATE -->
+
+                <div class="info-box">
+
+                    <span class="info-label">
+                        Registration Date
+                    </span>
+
+                    <span
+                            class="info-value"
+                            th:text="${#temporals.format(
+                                victim.registrationDate,
+                                'dd MMM yyyy'
+                            )}">
+
+                        -
+
+                    </span>
+
+                </div>
 
             </div>
 
-
-
-            <!-- NIC -->
-
-            <div class="info-box">
-
-                <span class="info-label">
-                    NIC Number
-                </span>
-
-                <span
-                        class="info-value"
-                        th:text="${victim.nicNumber}">
-
-                    -
-
-                </span>
-
-            </div>
+        </div>
 
 
 
-            <!-- Phone -->
+        <!-- =================================
+             PROFILE EDIT FORM
+             ================================= -->
 
-            <div class="info-box">
-
-                <span class="info-label">
-                    Phone Number
-                </span>
-
-                <span
-                        class="info-value"
-                        th:text="${victim.phoneNumber}">
-
-                    -
-
-                </span>
-
-            </div>
+        <div
+                id="profileEditForm"
+                class="profile-edit-form">
 
 
+            <form
+                    th:action="@{/victim/dashboard/update-profile}"
+                    method="post">
 
-            <!-- Address -->
 
-            <div class="info-box">
+                <div class="profile-grid">
 
-                <span class="info-label">
-                    Address
-                </span>
 
-                <span
-                        class="info-value"
-                        th:text="${victim.address}">
+                    <!-- FULL NAME -->
 
-                    -
+                    <div class="info-box">
 
-                </span>
+                        <span class="info-label">
+                            Full Name
+                        </span>
 
-            </div>
+                        <input
+                                type="text"
+                                name="fullName"
+                                class="profile-input"
+                                th:value="${victim.fullName}"
+                                required>
+
+                    </div>
 
 
 
-            <!-- Registration Date -->
+                    <!-- NIC -->
 
-            <div class="info-box">
+                    <div class="info-box">
 
-                <span class="info-label">
-                    Registration Date
-                </span>
+                        <span class="info-label">
+                            NIC Number 🔒
+                        </span>
 
-                <span
-                        class="info-value"
-                        th:text="${#temporals.format(victim.registrationDate, 'dd MMM yyyy')}">
+                        <input
+                                type="text"
+                                class="profile-input"
+                                th:value="${victim.nicNumber}"
+                                readonly>
 
-                    -
+                    </div>
 
-                </span>
 
-            </div>
+
+                    <!-- PHONE -->
+
+                    <div class="info-box">
+
+                        <span class="info-label">
+                            Phone Number
+                        </span>
+
+                        <input
+                                type="text"
+                                name="phoneNumber"
+                                class="profile-input"
+                                th:value="${victim.phoneNumber}"
+                                required>
+
+                    </div>
+
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="info-box">
+
+                        <span class="info-label">
+                            Address
+                        </span>
+
+                        <input
+                                type="text"
+                                name="address"
+                                class="profile-input"
+                                th:value="${victim.address}"
+                                required>
+
+                    </div>
+
+
+
+                    <!-- REGISTRATION DATE -->
+
+                    <div class="info-box">
+
+                        <span class="info-label">
+                            Registration Date 🔒
+                        </span>
+
+                        <input
+                                type="text"
+                                class="profile-input"
+                                th:value="${#temporals.format(
+                                    victim.registrationDate,
+                                    'dd MMM yyyy'
+                                )}"
+                                readonly>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EDIT BUTTONS -->
+
+                <div class="profile-edit-actions">
+
+
+                    <button
+                            type="submit"
+                            class="save-profile-btn">
+
+                        💾 Save Changes
+
+                    </button>
+
+
+                    <button
+                            type="button"
+                            class="cancel-profile-btn"
+                            onclick="cancelProfileEdit()">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+
+            </form>
 
         </div>
 
@@ -670,6 +1245,7 @@
             th:if="${familyInformation != null
                     and familyInformation.shelterRequired}">
 
+
         <div class="shelter-title">
 
             <h3>
@@ -677,7 +1253,7 @@
             </h3>
 
 
-            <!-- WAITING STATUS -->
+            <!-- WAITING -->
 
             <span
                     class="shelter-status waiting-status"
@@ -688,7 +1264,7 @@
             </span>
 
 
-            <!-- ALLOCATED STATUS -->
+            <!-- ALLOCATED -->
 
             <span
                     class="shelter-status allocated-status"
@@ -701,9 +1277,8 @@
         </div>
 
 
-        <!-- =================================
-             WAITING FOR ALLOCATION
-             ================================= -->
+
+        <!-- WAITING MESSAGE -->
 
         <div
                 class="shelter-message"
@@ -711,22 +1286,21 @@
 
             Your shelter request has been received.
             You are currently waiting for shelter allocation.
-            Please check your dashboard again after the allocation
-            has been completed.
+            Please check your dashboard again after the
+            allocation has been completed.
 
         </div>
 
 
-        <!-- =================================
-             ALLOCATED SHELTER DETAILS
-             ================================= -->
+
+        <!-- ALLOCATED SHELTER -->
 
         <div
                 class="shelter-grid"
                 th:if="${shelterAllocation != null}">
 
 
-            <!-- Shelter Name -->
+            <!-- SHELTER NAME -->
 
             <div class="shelter-info-box">
 
@@ -745,7 +1319,8 @@
             </div>
 
 
-            <!-- Location -->
+
+            <!-- LOCATION -->
 
             <div class="shelter-info-box">
 
@@ -764,7 +1339,8 @@
             </div>
 
 
-            <!-- Disaster -->
+
+            <!-- DISASTER -->
 
             <div class="shelter-info-box">
 
@@ -783,7 +1359,8 @@
             </div>
 
 
-            <!-- Family Members -->
+
+            <!-- FAMILY MEMBERS -->
 
             <div class="shelter-info-box">
 
@@ -802,7 +1379,8 @@
             </div>
 
 
-            <!-- Shelter Capacity -->
+
+            <!-- SHELTER CAPACITY -->
 
             <div class="shelter-info-box">
 
@@ -821,7 +1399,8 @@
             </div>
 
 
-            <!-- Current Occupancy -->
+
+            <!-- CURRENT OCCUPANCY -->
 
             <div class="shelter-info-box">
 
@@ -856,6 +1435,7 @@
     </h3>
 
 
+
     <section class="actions">
 
 
@@ -868,18 +1448,24 @@
                 class="action-card">
 
             <div class="action-icon">
+
                 👨‍👩‍👧
+
             </div>
 
             <h4>
+
                 Family & Affected Information
+
             </h4>
 
             <p>
+
                 Provide a summary of your affected family,
                 including family size, children below 12,
                 male and female members, and shelter
                 requirements.
+
             </p>
 
         </a>
@@ -887,13 +1473,8 @@
 
 
         <!-- =================================
-             GN REPORT
+             GN REPORT - NOT SUBMITTED
              ================================= -->
-
-        <!--
-             If the victim has NOT submitted
-             a GN report, show Submit GN Report.
-        -->
 
         <a
                 th:if="${gnReport == null}"
@@ -901,26 +1482,32 @@
                 class="action-card">
 
             <div class="action-icon">
+
                 📄
+
             </div>
 
             <h4>
+
                 Submit GN Report
+
             </h4>
 
             <p>
+
                 Upload your GN report and provide
                 the required GN officer and division
                 information.
+
             </p>
 
         </a>
 
 
-        <!--
-             If the victim HAS already submitted
-             a GN report, show View GN Report Status.
-        -->
+
+        <!-- =================================
+             GN REPORT - ALREADY SUBMITTED
+             ================================= -->
 
         <a
                 th:if="${gnReport != null}"
@@ -928,16 +1515,22 @@
                 class="action-card">
 
             <div class="action-icon">
+
                 📄
+
             </div>
 
             <h4>
+
                 View GN Report Status
+
             </h4>
 
             <p>
+
                 View the verification status of your
                 submitted GN report.
+
             </p>
 
         </a>
@@ -945,26 +1538,38 @@
 
 
         <!-- =================================
-             NEEDS ASSESSMENT
+             NEEDS ASSESSMENT - NOT YET SUBMITTED
              ================================= -->
 
         <a
+                th:if="${needsAssessment == null
+                        and gnReport != null
+                        and #strings.equalsIgnoreCase(
+                            gnReport.verificationStatus,
+                            'APPROVED'
+                        )}"
                 th:href="@{/needs-assessment/form}"
                 class="action-card">
 
             <div class="action-icon">
+
                 📋
+
             </div>
 
             <h4>
+
                 Needs Assessment
+
             </h4>
 
             <p>
+
                 Provide information about your current
                 situation and the assistance you may require.
                 Your information will be reviewed by the
                 Relief Coordinator.
+
             </p>
 
         </a>
@@ -972,33 +1577,129 @@
 
 
         <!-- =================================
-             MY INFORMATION
+             NEEDS ASSESSMENT - SUBMITTED
              ================================= -->
 
         <a
-                href="#"
-                class="action-card">
+                th:if="${needsAssessment != null
+                        and latestReliefRequirement == null}"
+                th:href="@{/needs-assessment/status}"
+                class="action-card needs-submitted">
 
             <div class="action-icon">
-                👤
+
+                📋
+
             </div>
 
+            <span class="assessment-status">
+
+                PENDING REVIEW
+
+            </span>
+
             <h4>
-                My Information
+
+                View Submitted Needs Assessment
+
             </h4>
 
             <p>
-                Review the personal information
-                registered in the system.
+
+                Your Needs Assessment has been successfully
+                submitted.
+
+            </p>
+
+            <p>
+
+                Click here to view the information you
+                submitted and check its current review status.
+
             </p>
 
         </a>
+
+
+
+        <!-- =================================
+             RELIEF REQUIREMENT RECEIVED
+             ================================= -->
+
+        <a
+                th:if="${latestReliefRequirement != null}"
+                th:href="@{/needs-assessment/status}"
+                class="action-card needs-notification">
+
+            <div class="action-icon">
+
+                🎁
+
+            </div>
+
+            <h4>
+
+                Relief Requirement Received
+
+            </h4>
+
+            <p>
+
+                Your relief requirement has been received.
+                Click here to view the relief requirement
+                and its current status.
+
+            </p>
+
+        </a>
+
 
 
     </section>
 
 
 </main>
+
+
+
+<!-- =====================================
+     PROFILE EDIT JAVASCRIPT
+     ===================================== -->
+
+<script>
+
+    function openProfileEdit() {
+
+        document
+            .getElementById("profileView")
+            .classList
+            .add("hidden");
+
+
+        document
+            .getElementById("profileEditForm")
+            .classList
+            .add("active");
+
+    }
+
+
+    function cancelProfileEdit() {
+
+        document
+            .getElementById("profileEditForm")
+            .classList
+            .remove("active");
+
+
+        document
+            .getElementById("profileView")
+            .classList
+            .remove("hidden");
+
+    }
+
+</script>
 
 
 </body>

@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Relief Requirement Details | FRDMS
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                    "Segoe UI",
+                    Arial,
+                    sans-serif;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eef4ff 0%,
+                            #f7f9fd 45%,
+                            #edf3fc 100%
+                    );
+
+            color: #243b63;
+            min-height: 100vh;
+        }
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .header {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #172b4d,
+                            #274a7c
+                    );
+
+            color: white;
+            padding: 22px 55px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                    0 8px 25px
+                    rgba(23, 43, 77, 0.18);
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 54px;
+            height: 54px;
+
+            border-radius: 16px;
+
+            background:
+                    rgba(255, 255, 255, 0.14);
+
+            border:
+                    1px solid
+                    rgba(255, 255, 255, 0.25);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .brand-subtitle {
+            margin-top: 4px;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        .back-dashboard {
+            text-decoration: none;
+            color: #244b7f;
+            background: #edf4ff;
+
+            padding: 12px 20px;
+            border-radius: 25px;
+
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .back-dashboard:hover {
+            transform: translateY(-2px);
+            background: white;
+
+            box-shadow:
+                    0 8px 20px
+                    rgba(0, 0, 0, 0.15);
+        }
+
+        /* =====================================================
+           PAGE
+        ====================================================== */
+
+        .page-container {
+            width: min(
+                    1450px,
+                    calc(100% - 70px)
+            );
+
+            margin: 35px auto 60px;
+        }
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #ffffff,
+                            #f1f6ff
+                    );
+
+            border:
+                    1px solid
+                    #dce7f7;
+
+            border-radius: 28px;
+
+            padding: 42px 45px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 30px;
+
+            box-shadow:
+                    0 12px 35px
+                    rgba(47, 76, 120, 0.08);
+        }
+
+        .hero-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .hero-icon {
+            width: 82px;
+            height: 82px;
+
+            border-radius: 24px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #e4eeff,
+                            #f3f7ff
+                    );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+
+            border:
+                    1px solid
+                    #d3e1f7;
+        }
+
+        .hero-label {
+            color: #6d84aa;
+            font-size: 13px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 {
+            color: #203d69;
+            font-size: 40px;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #7890b1;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 760px;
+        }
+
+        .status-badge {
+            flex-shrink: 0;
+
+            background: #e9f7ec;
+            color: #39834d;
+
+            border-radius: 30px;
+
+            padding: 13px 24px;
+
+            font-size: 14px;
+            font-weight: 900;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* =====================================================
+           MAIN CARD
+        ====================================================== */
+
+        .main-card {
+            margin-top: 35px;
+
+            background: white;
+
+            border:
+                    1px solid
+                    #dfe8f5;
+
+            border-radius: 28px;
+
+            padding: 38px;
+
+            box-shadow:
+                    0 15px 40px
+                    rgba(47, 76, 120, 0.08);
+        }
+
+        .section {
+            padding: 10px 0 36px;
+
+            border-bottom:
+                    1px solid
+                    #e5ebf5;
+
+            margin-bottom: 36px;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 10px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            margin-bottom: 10px;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 15px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eaf2ff,
+                            #f4f7ff
+                    );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+        }
+
+        .section-title h2 {
+            color: #294d80;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .section-description {
+            color: #8295b2;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        /* =====================================================
+           REQUIREMENT SUMMARY
+        ====================================================== */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(
+                            4,
+                            minmax(0, 1fr)
+                    );
+
+            gap: 16px;
+        }
+
+        .summary-box {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f7faff,
+                            #fbfcff
+                    );
+
+            border:
+                    1px solid
+                    #dfe8f5;
+
+            border-radius: 17px;
+
+            padding: 20px;
+
+            min-height: 92px;
+        }
+
+        .summary-label {
+            color: #8297b7;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            color: #29456f;
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+
+        .summary-value.status {
+            color: #39834d;
+        }
+
+        /* =====================================================
+           RELIEF ITEMS & QUANTITIES
+        ====================================================== */
+
+        .quantity-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(
+                            3,
+                            minmax(0, 1fr)
+                    );
+
+            gap: 18px;
+        }
+
+        .quantity-card {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f6f9ff,
+                            #fbfcff
+                    );
+
+            border:
+                    1px solid
+                    #dce7f6;
+
+            border-radius: 20px;
+
+            padding: 24px;
+
+            display: flex;
+            align-items: center;
+            gap: 17px;
+
+            min-height: 125px;
+
+            box-shadow:
+                    0 7px 20px
+                    rgba(45, 74, 120, 0.05);
+        }
+
+        .quantity-icon {
+            width: 55px;
+            height: 55px;
+
+            flex-shrink: 0;
+
+            border-radius: 17px;
+
+            background: #e9f1ff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 27px;
+        }
+
+        .quantity-name {
+            color: #6f86aa;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .quantity-value {
+            color: #294d80;
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .quantity-unit {
+            color: #7f93b0;
+            font-size: 13px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .quantity-note {
+            margin-top: 20px;
+
+            padding: 15px 18px;
+
+            background: #f7faff;
+
+            border:
+                    1px solid
+                    #dfe9f7;
+
+            border-radius: 14px;
+
+            color: #7187a8;
+
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        /* =====================================================
+           ADDITIONAL REQUIREMENTS
+        ====================================================== */
+
+        .additional-requirements-box {
+            margin-top: 20px;
+            padding: 22px;
+            background: #fff9ed;
+            border: 1px solid #ead39a;
+            border-left: 6px solid #d8a944;
+            border-radius: 17px;
+        }
+
+        .additional-requirements-title {
+            color: #77581f;
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .additional-requirements-content {
+            background: #ffffff;
+            border: 1px solid #eadfc4;
+            border-radius: 13px;
+            padding: 15px 17px;
+            color: #765f2d;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        /* =====================================================
+           RECIPIENT INFORMATION
+        ====================================================== */
+
+        .recipient-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(
+                            2,
+                            minmax(0, 1fr)
+                    );
+
+            gap: 16px;
+        }
+
+        .recipient-box {
+            background: #f8faff;
+
+            border:
+                    1px solid
+                    #e0e8f5;
+
+            border-radius: 17px;
+
+            padding: 20px;
+        }
+
+        .recipient-label {
+            color: #8297b7;
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .recipient-value {
+            color: #29456f;
+            font-size: 16px;
+            font-weight: 800;
+
+            line-height: 1.55;
+            word-break: break-word;
+        }
+
+        .recipient-box.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* =====================================================
+           FAMILY INFORMATION
+        ====================================================== */
+
+        .family-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(
+                            4,
+                            minmax(0, 1fr)
+                    );
+
+            gap: 16px;
+        }
+
+        .family-card {
+            background: #f8faff;
+
+            border:
+                    1px solid
+                    #dfe8f5;
+
+            border-radius: 18px;
+
+            padding: 22px 18px;
+
+            text-align: center;
+        }
+
+        .family-icon {
+            font-size: 27px;
+            margin-bottom: 9px;
+        }
+
+        .family-label {
+            color: #7187a8;
+            font-size: 12px;
+            font-weight: 800;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .family-value {
+            color: #244b7f;
+            font-size: 30px;
+            font-weight: 900;
+
+            margin-top: 7px;
+        }
+
+        /* =====================================================
+           DELIVERY INFORMATION
+        ====================================================== */
+
+        .delivery-card {
+            background:
+                    linear-gradient(
+                            135deg,
+                            #f3f8ff,
+                            #fbfdff
+                    );
+
+            border:
+                    1px solid
+                    #dce8f7;
+
+            border-radius: 22px;
+
+            padding: 26px;
+        }
+
+        .delivery-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(
+                            2,
+                            minmax(0, 1fr)
+                    );
+
+            gap: 16px;
+        }
+
+        .delivery-box {
+            background: white;
+
+            border:
+                    1px solid
+                    #e0e8f5;
+
+            border-radius: 16px;
+
+            padding: 19px;
+        }
+
+        .delivery-label {
+            color: #8297b7;
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .delivery-value {
+            color: #294d80;
+            font-size: 16px;
+            font-weight: 800;
+
+            line-height: 1.55;
+            word-break: break-word;
+        }
+
+        .delivery-box.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .delivery-note {
+            margin-top: 18px;
+
+            padding: 15px 18px;
+
+            border-radius: 14px;
+
+            background: #fff9e9;
+
+            border:
+                    1px solid
+                    #f0dfae;
+
+            color: #866d31;
+
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        /* =====================================================
+           EMPTY / MISSING FAMILY INFORMATION
+        ====================================================== */
+
+        .not-available {
+            color: #8798b1;
+            font-weight: 600;
+        }
+
+        .empty-family {
+            padding: 20px;
+
+            background: #f8faff;
+
+            border:
+                    1px dashed
+                    #cfdbea;
+
+            border-radius: 16px;
+
+            color: #7c8ea8;
+
+            text-align: center;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           ACTIONS
+        ====================================================== */
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+
+            padding-top: 4px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            border: none;
+
+            padding: 13px 22px;
+
+            border-radius: 13px;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .btn-back {
+            background: #edf4ff;
+            color: #315a91;
+        }
+
+        .btn-back:hover {
+            background: #dfeaff;
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        .page-footer {
+            text-align: center;
+
+            color: #8b9bb4;
+
+            font-size: 12px;
+
+            margin-top: 25px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1050px) {
+
+            .header {
+                padding: 20px 30px;
+            }
+
+            .page-container {
+                width: calc(100% - 40px);
+            }
+
+            .summary-grid,
+            .family-grid {
+                grid-template-columns:
+                        repeat(
+                                2,
+                                minmax(0, 1fr)
+                        );
+            }
+
+            .quantity-grid {
+                grid-template-columns:
+                        repeat(
+                                2,
+                                minmax(0, 1fr)
+                        );
+            }
+
+        }
+
+        @media (max-width: 760px) {
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .back-dashboard {
+                align-self: stretch;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 30px 25px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-left {
+                align-items: flex-start;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .main-card {
+                padding: 25px;
+            }
+
+            .summary-grid,
+            .quantity-grid,
+            .recipient-grid,
+            .family-grid,
+            .delivery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recipient-box.full-width,
+            .delivery-box.full-width {
+                grid-column: auto;
+            }
+
+        }
+
+        @media (max-width: 520px) {
+
+            .page-container {
+                width: calc(100% - 24px);
+                margin-top: 18px;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .brand-title {
+                font-size: 19px;
+            }
+
+            .hero-left {
+                flex-direction: column;
+            }
+
+            .hero-icon {
+                width: 68px;
+                height: 68px;
+            }
+
+            .main-card {
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .section-title h2 {
+                font-size: 22px;
+            }
+
+            .section {
+                margin-bottom: 28px;
+                padding-bottom: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header class="header">
+
+    <div class="brand-area">
+
+        <div class="logo">
+            🌊
+        </div>
+
+        <div>
+
+            <div class="brand-title">
+                Flood Relief &amp; Disaster Management System
+            </div>
+
+            <div class="brand-subtitle">
+                Distribution Management
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <a th:href="@{/distribution/requirements}"
+       class="back-dashboard">
+
+        ← Requirements
+
+    </a>
+
+</header>
+
+
+<!-- =====================================================
+     PAGE
+====================================================== -->
+
+<main class="page-container">
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <div class="hero-icon">
+                📦
+            </div>
+
+            <div>
+
+                <div class="hero-label">
+                    APPROVED RELIEF REQUIREMENT
+                </div>
+
+                <h1>
+                    Requirement Details
+                </h1>
+
+                <p>
+                    View the approved quantities, recipient information,
+                    family information, and delivery destination required
+                    for Distribution Management.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="status-badge"
+             th:text="${requirement.status}">
+
+            APPROVED
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         MAIN CARD
+    ================================================== -->
+
+    <section class="main-card">
+
+
+        <!-- =================================================
+             1. REQUIREMENT SUMMARY
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    📋
+                </div>
+
+                <h2>
+                    Requirement Summary
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                Basic information needed to identify and process
+                this approved relief requirement.
+            </p>
+
+
+            <div class="summary-grid">
+
+
+                <div class="summary-box">
+
+                    <div class="summary-label">
+                        Requirement Number
+                    </div>
+
+                    <div class="summary-value">
+
+                        #
+
+                        <span th:text="${requirement.id}">
+                            1
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-box">
+
+                    <div class="summary-label">
+                        Requirement Date
+                    </div>
+
+                    <div class="summary-value"
+                         th:if="${requirement.createdAt != null}"
+                         th:text="${#temporals.format(requirement.createdAt, 'dd MMM yyyy, hh:mm a')}">
+
+                        Date
+
+                    </div>
+
+                    <div class="summary-value not-available"
+                         th:if="${requirement.createdAt == null}">
+
+                        Not available
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-box">
+
+                    <div class="summary-label">
+                        Recipient
+                    </div>
+
+                    <div class="summary-value"
+                         th:text="${requirement.recipientName}">
+
+                        Victim Name
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-box">
+
+                    <div class="summary-label">
+                        Status
+                    </div>
+
+                    <div class="summary-value status"
+                         th:text="${requirement.status}">
+
+                        APPROVED
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             2. APPROVED RELIEF ITEMS AND QUANTITIES
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    📦
+                </div>
+
+                <h2>
+                    Approved Relief Items &amp; Quantities
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                These are the exact quantities approved by the
+                Relief Coordinator for package preparation.
+                Items with zero quantity are not displayed.
+            </p>
+
+
+            <div class="quantity-grid">
+
+
+                <!-- DRIED FOOD -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.driedFoodBagQuantity != null
+                             and requirement.driedFoodBagQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        🍚
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Dried Food Bag
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.driedFoodBagQuantity}">
+                                1
+                            </span>
+
+                            <span class="quantity-unit">
+                                bag(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DRINKING WATER -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.drinkingWaterQuantity != null
+                             and requirement.drinkingWaterQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        💧
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Drinking Water
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.drinkingWaterQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                unit(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MEDICAL SUPPLIES -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.medicalSuppliesQuantity != null
+                             and requirement.medicalSuppliesQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        💊
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Medical Supplies
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.medicalSuppliesQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                unit(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HYGIENE KIT -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.hygieneKitQuantity != null
+                             and requirement.hygieneKitQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        🧼
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Hygiene Kit
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.hygieneKitQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                kit(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BABY CARE ITEMS -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.babyCareItemsQuantity != null
+                             and requirement.babyCareItemsQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        👶
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Baby Care Items
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.babyCareItemsQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                item(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BEDDING -->
+
+                <div class="quantity-card"
+                     th:if="${requirement.beddingQuantity != null
+                             and requirement.beddingQuantity > 0}">
+
+                    <div class="quantity-icon">
+                        🛏️
+                    </div>
+
+                    <div>
+
+                        <div class="quantity-name">
+                            Bedding
+                        </div>
+
+                        <div>
+
+                            <span class="quantity-value"
+                                  th:text="${requirement.beddingQuantity}">
+                                0
+                            </span>
+
+                            <span class="quantity-unit">
+                                item(s)
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ADDITIONAL REQUIREMENTS REQUESTED BY VICTIM
+            ================================================== -->
+
+            <div class="additional-requirements-box"
+                 th:if="${needsAssessment != null
+                         and needsAssessment.otherNeeds != null
+                         and !#strings.isEmpty(needsAssessment.otherNeeds)
+                         and !'no'.equalsIgnoreCase(#strings.trim(needsAssessment.otherNeeds))}">
+
+                <div class="additional-requirements-title">
+                    ⚠️ Additional Requirements Requested by Victim
+                </div>
+
+                <div class="additional-requirements-content"
+                     th:text="${needsAssessment.otherNeeds}">
+                    Additional requirements requested by the victim.
+                </div>
+
+            </div>
+
+
+            <div class="quantity-note">
+                📌 Only the quantities approved by the Relief Coordinator
+                are shown above. The Distribution Management team can use
+                these quantities directly when preparing the relief package.
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             3. RECIPIENT INFORMATION
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    👤
+                </div>
+
+                <h2>
+                    Recipient Information
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                Only the personal information required for identifying
+                and contacting the recipient is shown.
+            </p>
+
+
+            <div class="recipient-grid">
+
+
+                <div class="recipient-box">
+
+                    <div class="recipient-label">
+                        Full Name
+                    </div>
+
+                    <div class="recipient-value"
+                         th:text="${requirement.recipientName}">
+
+                        Victim Name
+
+                    </div>
+
+                </div>
+
+
+                <div class="recipient-box"
+                     th:if="${requirement.victim != null}">
+
+                    <div class="recipient-label">
+                        Phone Number
+                    </div>
+
+                    <div class="recipient-value"
+                         th:text="${requirement.victim.phoneNumber}">
+
+                        Phone Number
+
+                    </div>
+
+                </div>
+
+
+                <div class="recipient-box"
+                     th:if="${requirement.affectedArea != null}">
+
+                    <div class="recipient-label">
+                        Affected / Delivery Area
+                    </div>
+
+                    <div class="recipient-value"
+                         th:text="${requirement.affectedArea}">
+
+                        Delivery Area
+
+                    </div>
+
+                </div>
+
+
+                <div class="recipient-box"
+                     th:if="${requirement.victim != null
+                             and requirement.shelter == 'Not Assigned'}">
+
+                    <div class="recipient-label">
+                        Registered Home Address
+                    </div>
+
+                    <div class="recipient-value"
+                         th:text="${requirement.victim.address}">
+
+                        Registered Address
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             4. FAMILY INFORMATION
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    👨‍👩‍👧‍👦
+                </div>
+
+                <h2>
+                    Family Information
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                Family composition used by the Relief Coordinator
+                when deciding the approved relief quantities.
+            </p>
+
+
+            <div class="family-grid"
+                 th:if="${familyInformation != null}">
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👨‍👩‍👧‍👦
+                    </div>
+
+                    <div class="family-label">
+                        Total Members
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.totalFamilyMembers}">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👨
+                    </div>
+
+                    <div class="family-label">
+                        Male Members
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.maleMembers}">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👩
+                    </div>
+
+                    <div class="family-label">
+                        Female Members
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.femaleMembers}">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="family-card">
+
+                    <div class="family-icon">
+                        👶
+                    </div>
+
+                    <div class="family-label">
+                        Children Below 12
+                    </div>
+
+                    <div class="family-value"
+                         th:text="${familyInformation.childrenBelow12}">
+                        0
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="empty-family"
+                 th:if="${familyInformation == null}">
+
+                Family information is not available for this requirement.
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             5. DELIVERY INFORMATION
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div class="section-icon">
+                    🚚
+                </div>
+
+                <h2>
+                    Delivery Information
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                Use this information to determine where the prepared
+                relief package should be delivered.
+            </p>
+
+
+            <div class="delivery-card">
+
+
+                <div class="delivery-grid">
+
+
+                    <!-- DELIVERY TYPE -->
+
+                    <div class="delivery-box">
+
+                        <div class="delivery-label">
+                            Delivery Destination
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter != null
+                                     and requirement.shelter != 'Not Assigned'}">
+
+                            Assigned Shelter
+
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter == null
+                                     or requirement.shelter == 'Not Assigned'}">
+
+                            Registered Home Address
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DESTINATION NAME -->
+
+                    <div class="delivery-box">
+
+                        <div class="delivery-label">
+                            Destination Name
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter != null
+                                     and requirement.shelter != 'Not Assigned'}"
+                             th:text="${requirement.shelter}">
+
+                            Assigned Shelter
+
+                        </div>
+
+                        <div class="delivery-value"
+                             th:if="${requirement.shelter == null
+                                     or requirement.shelter == 'Not Assigned'}">
+
+                            Victim's Registered Home
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DELIVERY LOCATION -->
+
+                    <div class="delivery-box full-width">
+
+                        <div class="delivery-label">
+                            Delivery Location / Address
+                        </div>
+
+                        <div class="delivery-value"
+                             th:text="${requirement.affectedArea}">
+
+                            Delivery Location
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="delivery-note"
+                     th:if="${requirement.shelter != null
+                             and requirement.shelter != 'Not Assigned'}">
+
+                    🏠 The victim has an assigned shelter. The relief
+                    package should be prepared for delivery to the
+                    shelter location shown above.
+
+                </div>
+
+
+                <div class="delivery-note"
+                     th:if="${requirement.shelter == null
+                             or requirement.shelter == 'Not Assigned'}">
+
+                    🏠 The victim is not assigned to a shelter.
+                    The relief package should be delivered to the
+                    registered home address shown above.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <div class="actions">
+
+            <a th:href="@{/distribution/requirements}"
+               class="btn btn-back">
+
+                ← Back to Requirements
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <div class="page-footer">
+
+        Flood Relief &amp; Disaster Management System
+        &nbsp;•&nbsp;
+        Distribution Management Module
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

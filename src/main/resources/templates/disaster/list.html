@@ -11,203 +11,86 @@
 
   <title>Flood Events | FRDMS</title>
 
+  <link rel="stylesheet"
+        th:href="@{/css/disaster.css}">
+
 
   <style>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-
-    :root {
-
-      --navy: #10284d;
-      --navy-light: #183b70;
-
-      --blue: #4d83d9;
-      --blue-dark: #3568b8;
-      --blue-light: #eef5ff;
-
-      --background: #f4f7fb;
-
-      --white: #ffffff;
-
-      --text: #18345d;
-      --muted: #667892;
-
-      --border: #dce5f0;
-
-      --green: #17865b;
-      --orange: #d98918;
-      --red: #c94a4a;
-
-      --shadow:
-              0 12px 35px
-              rgba(25, 55, 95, 0.09);
-    }
-
-
-    body {
-
-      font-family:
-              "Segoe UI",
-              Arial,
-              sans-serif;
-
-      background:
-              linear-gradient(
-                      135deg,
-                      #f5f8fc 0%,
-                      #edf4fb 100%
-              );
-
-      color: var(--text);
-
-      min-height: 100vh;
-    }
-
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-
     /* =====================================================
-       HEADER
-       ===================================================== */
-
-    .page-header {
-
-      min-height: 92px;
-
-      background:
-              linear-gradient(
-                      120deg,
-                      #0e1c31,
-                      #152f56
-              );
-
-      color: white;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      padding: 18px 6%;
-
-      box-shadow:
-              0 5px 20px
-              rgba(9, 27, 50, 0.18);
-    }
-
-
-    .brand {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 15px;
-    }
-
-
-    .brand-icon {
-
-      width: 55px;
-      height: 55px;
-
-      border-radius: 16px;
-
-      background:
-              linear-gradient(
-                      135deg,
-                      #6d9ce8,
-                      #3f70c3
-              );
-
-      display: grid;
-
-      place-items: center;
-
-      font-size: 28px;
-    }
-
-
-    .brand-title {
-
-      font-size: 27px;
-
-      font-weight: 800;
-    }
-
-
-    .brand-subtitle {
-
-      margin-top: 3px;
-
-      color: #a9c9f5;
-
-      font-size: 14px;
-    }
-
-
-    .header-badge {
-
-      padding: 12px 18px;
-
-      border:
-              1px solid
-              rgba(255,255,255,.15);
-
-      background:
-              rgba(255,255,255,.08);
-
-      border-radius: 30px;
-
-      font-size: 12px;
-
-      font-weight: 800;
-
-      letter-spacing: .8px;
-    }
-
-
-    /* =====================================================
-       PAGE
+       PAGE LAYOUT OVERRIDES
        ===================================================== */
 
     .page-container {
-
-      width: min(1450px, 92%);
-
-      margin:
-              34px auto 60px;
+      position: relative;
     }
 
 
     /* =====================================================
-       HERO
+       PROJECT MANAGER DASHBOARD BUTTON
+       Attached to the upper-right border of the hero banner
+       ===================================================== */
+
+    .dashboard-button-row {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      width: auto;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 20;
+    }
+
+    .back-dashboard-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 11px 20px;
+      background: rgba(255, 255, 255, 0.97);
+      color: #244a7c;
+      border: 1px solid #d6e3f5;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      line-height: 1;
+      box-shadow: 0 7px 18px rgba(34, 65, 110, 0.10);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease,
+      color 0.2s ease;
+    }
+
+    .back-dashboard-button:hover {
+      transform: translateY(-2px);
+      background: #ffffff;
+      color: #17385f;
+      box-shadow: 0 11px 25px rgba(34, 65, 110, 0.17);
+    }
+
+    .back-arrow {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+
+    /* =====================================================
+       THINNER + MORE ATTRACTIVE FLOOD EVENT HERO
        ===================================================== */
 
     .hero-section {
+      min-height: 0 !important;
 
-      background:
-              linear-gradient(
-                      120deg,
-                      #263e88,
-                      #4d75c9
-              );
+      /* Extra top space allows the dashboard button
+         to sit neatly inside the upper border */
+      padding: 70px 42px 32px 42px !important;
 
-      border-radius: 24px;
-
-      padding: 32px;
-
-      color: white;
+      border-radius: 28px !important;
 
       display: flex;
 
@@ -215,13 +98,38 @@
 
       justify-content: space-between;
 
-      gap: 25px;
+      gap: 35px;
+
+      box-sizing: border-box;
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+              radial-gradient(
+                      circle at 96% 8%,
+                      rgba(91, 126, 196, 0.13) 0 110px,
+                      transparent 111px
+              ),
+
+              radial-gradient(
+                      circle at 2% 105%,
+                      rgba(91, 126, 196, 0.08) 0 95px,
+                      transparent 96px
+              ),
+
+              linear-gradient(
+                      135deg,
+                      #ffffff 0%,
+                      #f4f8ff 55%,
+                      #edf4ff 100%
+              ) !important;
+
+      border: 1px solid #d8e5f7;
 
       box-shadow:
-              0 16px 35px
-              rgba(49, 81, 153, .20);
-
-      margin-bottom: 24px;
+              0 18px 45px rgba(35, 68, 112, 0.10);
     }
 
 
@@ -231,58 +139,65 @@
 
       align-items: center;
 
-      gap: 20px;
+      gap: 28px;
+
+      flex: 1;
+
+      min-width: 0;
+
+      position: relative;
+
+      z-index: 2;
     }
 
 
     .hero-icon {
 
-      width: 70px;
-      height: 70px;
-
-      border-radius: 20px;
-
-      background:
-              rgba(255,255,255,.15);
-
-      display: grid;
-
-      place-items: center;
-
-      font-size: 35px;
+      flex-shrink: 0;
     }
 
 
     .hero-label {
 
-      font-size: 12px;
+      display: block;
+
+      margin-bottom: 8px;
+
+      letter-spacing: 2px;
 
       font-weight: 800;
-
-      letter-spacing: 1.2px;
     }
 
 
     .hero-section h1 {
 
-      font-size: 36px;
+      margin: 0 0 6px 0 !important;
 
-      margin:
-              5px 0 8px;
+      font-size: 50px !important;
+
+      line-height: 1.04 !important;
+
+      letter-spacing: -1px;
     }
 
 
     .hero-section p {
 
-      color: #e5edff;
+      margin: 0 !important;
 
-      max-width: 680px;
+      max-width: 850px;
 
-      line-height: 1.6;
+      line-height: 1.45;
     }
 
 
+    /* =====================================================
+       CREATE BUTTON
+       ===================================================== */
+
     .create-button {
+
+      flex-shrink: 0;
 
       display: inline-flex;
 
@@ -290,1120 +205,182 @@
 
       justify-content: center;
 
-      gap: 9px;
+      gap: 10px;
 
-      background: white;
+      min-width: 235px;
 
-      color: #27458f;
+      padding: 15px 24px;
 
-      padding: 14px 20px;
+      box-sizing: border-box;
 
-      border-radius: 13px;
+      position: relative;
 
-      font-weight: 800;
+      z-index: 2;
 
-      white-space: nowrap;
-
-      transition: .2s;
+      box-shadow:
+              0 10px 24px rgba(40, 86, 145, 0.18);
     }
 
 
-    .create-button:hover {
+    .button-icon {
 
-      transform:
-              translateY(-2px);
+      font-size: 22px;
+
+      line-height: 1;
     }
 
 
     /* =====================================================
-       DM06 BANNER
+       DM-06 BANNER
        ===================================================== */
 
     .dm06-banner {
 
-      display: flex;
-
-      align-items: center;
-
-      gap: 18px;
-
-      background: white;
-
-      border:
-              1px solid
-              #dbe6f4;
-
-      border-left:
-              5px solid
-              var(--blue);
-
-      border-radius: 17px;
-
-      padding: 20px 22px;
-
-      box-shadow: var(--shadow);
-
-      margin-bottom: 24px;
-    }
-
-
-    .dm06-icon {
-
-      width: 50px;
-      height: 50px;
-
-      border-radius: 14px;
-
-      background: #edf5ff;
-
-      display: grid;
-
-      place-items: center;
-
-      font-size: 25px;
-    }
-
-
-    .dm06-banner strong {
-
-      font-size: 16px;
-    }
-
-
-    .dm06-banner p {
-
-      color: var(--muted);
-
-      margin-top: 4px;
-
-      line-height: 1.5;
+      margin-top: 30px;
     }
 
 
     /* =====================================================
-       SEARCH
+       RESPONSIVE DESIGN
        ===================================================== */
 
-    .search-card {
-
-      background: white;
-
-      border:
-              1px solid
-              var(--border);
-
-      border-radius: 22px;
-
-      box-shadow: var(--shadow);
-
-      padding: 24px;
-
-      margin-bottom: 24px;
-    }
-
-
-    .search-title {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 14px;
-
-      margin-bottom: 18px;
-    }
-
-
-    .search-icon {
-
-      width: 48px;
-      height: 48px;
-
-      background:
-              var(--blue-light);
-
-      border-radius: 13px;
-
-      display: grid;
-
-      place-items: center;
-
-      font-size: 22px;
-    }
-
-
-    .search-title h2 {
-
-      font-size: 20px;
-    }
-
-
-    .search-title p {
-
-      color: var(--muted);
-
-      margin-top: 4px;
-
-      font-size: 14px;
-    }
-
-
-    .search-form {
-
-      display: flex;
-
-      gap: 10px;
-    }
-
-
-    .search-input-wrapper {
-
-      flex: 1;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-
-      background: #f7f9fc;
-
-      border:
-              1px solid
-              var(--border);
-
-      border-radius: 12px;
-
-      padding: 0 15px;
-    }
-
-
-    .search-input-wrapper input {
-
-      border: none;
-
-      outline: none;
-
-      background: transparent;
-
-      width: 100%;
-
-      height: 48px;
-
-      font-size: 15px;
-    }
-
-
-    .search-button,
-    .clear-button {
-
-      min-width: 100px;
-
-      height: 48px;
-
-      border-radius: 12px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-weight: 800;
-
-      cursor: pointer;
-
-      border: none;
-    }
-
-
-    .search-button {
-
-      background:
-              var(--blue);
-
-      color: white;
-
-      padding:
-              0 20px;
-    }
-
-
-    .clear-button {
-
-      background: #edf2f8;
-
-      color: #49617e;
-
-      padding:
-              0 20px;
-    }
-
-
-    /* =====================================================
-       TABLE
-       ===================================================== */
-
-    .events-card {
-
-      background: white;
-
-      border:
-              1px solid
-              var(--border);
-
-      border-radius: 22px;
-
-      box-shadow: var(--shadow);
-
-      overflow: hidden;
-    }
-
-
-    .events-card-header {
-
-      padding:
-              26px 28px;
-
-      display: flex;
-
-      justify-content:
-              space-between;
-
-      align-items: center;
-
-      border-bottom:
-              1px solid
-              var(--border);
-    }
-
-
-    .section-label {
-
-      font-size: 11px;
-
-      font-weight: 900;
-
-      letter-spacing: 1.2px;
-
-      color: var(--blue);
-    }
-
-
-    .events-card-header h2 {
-
-      font-size: 23px;
-
-      margin:
-              5px 0;
-    }
-
-
-    .events-card-header p {
-
-      color: var(--muted);
-
-      font-size: 14px;
-    }
-
-
-    .records-badge {
-
-      background:
-              #edf5ff;
-
-      color:
-              #3867aa;
-
-      padding:
-              10px 14px;
-
-      border-radius:
-              25px;
-
-      font-weight:
-              800;
-    }
-
-
-    .table-wrapper {
-
-      overflow-x: auto;
-    }
-
-
-    .event-table {
-
-      width: 100%;
-
-      border-collapse:
-              collapse;
-
-      min-width:
-              1200px;
-    }
-
-
-    .event-table th {
-
-      background:
-              #f7f9fc;
-
-      color:
-              #60738c;
-
-      text-align:
-              left;
-
-      font-size:
-              11px;
-
-      text-transform:
-              uppercase;
-
-      letter-spacing:
-              .8px;
-
-      padding:
-              16px 18px;
-
-      border-bottom:
-              1px solid
-              var(--border);
-
-      white-space:
-              nowrap;
-    }
-
-
-    .event-table td {
-
-      padding:
-              18px;
-
-      border-bottom:
-              1px solid
-              #edf1f6;
-
-      vertical-align:
-              middle;
-    }
-
-
-    .event-table tbody tr {
-
-      transition:
-              .18s;
-    }
-
-
-    .event-table tbody tr:hover {
-
-      background:
-              #f8fbff;
-    }
-
-
-    /* =====================================================
-       EVENT NAME
-       ===================================================== */
-
-    .id-badge {
-
-      min-width:
-              38px;
-
-      display:
-              inline-flex;
-
-      justify-content:
-              center;
-
-      padding:
-              7px 10px;
-
-      border-radius:
-              9px;
-
-      background:
-              #eef3fa;
-
-      color:
-              #46617f;
-
-      font-weight:
-              800;
-    }
-
-
-    .event-name-cell {
-
-      display:
-              flex;
-
-      align-items:
-              center;
-
-      gap:
-              12px;
-
-      min-width:
-              240px;
-    }
-
-
-    .event-mini-icon {
-
-      width:
-              43px;
-
-      height:
-              43px;
-
-      border-radius:
-              12px;
-
-      background:
-              #edf5ff;
-
-      display:
-              grid;
-
-      place-items:
-              center;
-
-      font-size:
-              21px;
-
-      flex-shrink:
-              0;
-    }
-
-
-    .event-name-cell strong {
-
-      display:
-              block;
-
-      font-size:
-              15px;
-    }
-
-
-    .event-name-cell small {
-
-      display:
-              block;
-
-      color:
-              #8594a8;
-
-      margin-top:
-              3px;
-    }
-
-
-    /* =====================================================
-       DATE
-       ===================================================== */
-
-    .date-badge {
-
-      display:
-              inline-flex;
-
-      align-items:
-              center;
-
-      gap:
-              7px;
-
-      padding:
-              8px 10px;
-
-      border-radius:
-              9px;
-
-      background:
-              #f5f8fc;
-
-      color:
-              #435c7c;
-
-      font-weight:
-              700;
-
-      white-space:
-              nowrap;
-    }
-
-
-    /* =====================================================
-       SEVERITY
-       ===================================================== */
-
-    .severity-badge {
-
-      display:
-              inline-flex;
-
-      align-items:
-              center;
-
-      padding:
-              8px 12px;
-
-      border-radius:
-              20px;
-
-      font-size:
-              11px;
-
-      font-weight:
-              900;
-
-      white-space:
-              nowrap;
-    }
-
-
-    .severity-low {
-
-      color:
-              #19734f;
-
-      background:
-              #e9f8f0;
-
-      border:
-              1px solid
-              #c9eedc;
-    }
-
-
-    .severity-medium {
-
-      color:
-              #a36b0b;
-
-      background:
-              #fff4d9;
-
-      border:
-              1px solid
-              #f6dfaa;
-    }
-
-
-    .severity-high {
-
-      color:
-              #bd5a17;
-
-      background:
-              #fff0e4;
-
-      border:
-              1px solid
-              #f4d2b9;
-    }
-
-
-    .severity-critical {
-
-      color:
-              #b43c3c;
-
-      background:
-              #ffe9e9;
-
-      border:
-              1px solid
-              #f4caca;
-    }
-
-
-    .severity-unknown {
-
-      color:
-              #667892;
-
-      background:
-              #f0f3f7;
-
-      border:
-              1px solid
-              #dfe5ec;
-    }
-
-
-    /* =====================================================
-       FAMILY COUNT
-       ===================================================== */
-
-    .family-count {
-
-      display:
-              inline-flex;
-
-      align-items:
-              center;
-
-      gap:
-              8px;
-
-      min-width:
-              125px;
-
-      padding:
-              9px 12px;
-
-      border-radius:
-              12px;
-
-      background:
-              #f0f8ff;
-
-      border:
-              1px solid
-              #d7eafb;
-
-      color:
-              #2f609c;
-
-      font-weight:
-              800;
-    }
-
-
-    .family-count strong {
-
-      font-size:
-              17px;
-
-      color:
-              #1e4f8b;
-    }
-
-
-    .family-count small {
-
-      color:
-              #6e8198;
-
-      font-size:
-              11px;
-
-      font-weight:
-              700;
-    }
-
-
-    .family-zero {
-
-      background:
-              #f5f7fa;
-
-      border-color:
-              #e2e7ee;
-
-      color:
-              #718096;
-    }
-
-
-    /* =====================================================
-       DESCRIPTION
-       ===================================================== */
-
-    .description-cell {
-
-      max-width:
-              280px;
-
-      color:
-              #5d7089;
-
-      line-height:
-              1.5;
-
-      display:
-              -webkit-box;
-
-      -webkit-line-clamp:
-              2;
-
-      -webkit-box-orient:
-              vertical;
-
-      overflow:
-              hidden;
-    }
-
-
-    /* =====================================================
-       ACTIONS
-       ===================================================== */
-
-    .action-buttons {
-
-      display:
-              flex;
-
-      align-items:
-              center;
-
-      gap:
-              7px;
-
-      flex-wrap:
-              wrap;
-
-      min-width:
-              255px;
-    }
-
-
-    .action-button {
-
-      display:
-              inline-flex;
-
-      align-items:
-              center;
-
-      justify-content:
-              center;
-
-      gap:
-              6px;
-
-      min-height:
-              36px;
-
-      padding:
-              8px 11px;
-
-      border-radius:
-              9px;
-
-      font-size:
-              12px;
-
-      font-weight:
-              800;
-
-      border:
-              1px solid
-              transparent;
-    }
-
-
-    .view-button {
-
-      background:
-              #edf5ff;
-
-      color:
-              #3569b2;
-
-      border-color:
-              #d9e8fb;
-    }
-
-
-    .edit-button {
-
-      background:
-              #eef8f3;
-
-      color:
-              #17764f;
-
-      border-color:
-              #d8eee3;
-    }
-
-
-    .delete-form {
-
-      margin:
-              0;
-    }
-
-
-    .delete-button {
-
-      background:
-              #fff0f0;
-
-      color:
-              #bb4646;
-
-      border:
-              1px solid
-              #f5d7d7;
-
-      cursor:
-              pointer;
-
-      min-height:
-              36px;
-
-      padding:
-              8px 11px;
-
-      border-radius:
-              9px;
-
-      font-size:
-              12px;
-
-      font-weight:
-              800;
-    }
-
-
-    /* =====================================================
-       EMPTY
-       ===================================================== */
-
-    .empty-state {
-
-      padding:
-              65px 25px;
-
-      text-align:
-              center;
-    }
-
-
-    .empty-icon {
-
-      width:
-              72px;
-
-      height:
-              72px;
-
-      border-radius:
-              20px;
-
-      background:
-              #edf5ff;
-
-      display:
-              grid;
-
-      place-items:
-              center;
-
-      margin:
-              0 auto 16px;
-
-      font-size:
-              31px;
-    }
-
-
-    .empty-state h3 {
-
-      font-size:
-              20px;
-
-      margin-bottom:
-              8px;
-    }
-
-
-    .empty-state p {
-
-      color:
-              var(--muted);
-
-      margin-bottom:
-              20px;
-    }
-
-
-    .empty-create-button {
-
-      display:
-              inline-flex;
-
-      padding:
-              12px 18px;
-
-      background:
-              var(--blue);
-
-      color:
-              white;
-
-      border-radius:
-              11px;
-
-      font-weight:
-              800;
-    }
-
-
-    /* =====================================================
-       WORKFLOW
-       ===================================================== */
-
-    .workflow-card {
-
-      margin-top:
-              24px;
-
-      padding:
-              20px 24px;
-
-      display:
-              flex;
-
-      align-items:
-              center;
-
-      gap:
-              16px;
-
-      background:
-              white;
-
-      border:
-              1px solid
-              var(--border);
-
-      border-radius:
-              22px;
-
-      box-shadow:
-              var(--shadow);
-    }
-
-
-    .workflow-icon {
-
-      width:
-              48px;
-
-      height:
-              48px;
-
-      background:
-              #edf5ff;
-
-      border-radius:
-              13px;
-
-      display:
-              grid;
-
-      place-items:
-              center;
-
-      font-size:
-              22px;
-    }
-
-
-    .workflow-card p {
-
-      margin-top:
-              4px;
-
-      color:
-              var(--muted);
-
-      line-height:
-              1.55;
-    }
-
-
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
-
-    @media (max-width: 850px) {
-
-      .page-header {
-
-        padding:
-                16px 4%;
-      }
-
-
-      .header-badge {
-
-        display:
-                none;
-      }
-
-
-      .page-container {
-
-        width:
-                94%;
-
-        margin-top:
-                20px;
-      }
-
+    @media (max-width: 1000px) {
 
       .hero-section {
 
-        padding:
-                24px;
+        padding: 68px 30px 30px 30px !important;
 
-        flex-direction:
-                column;
-
-        align-items:
-                flex-start;
       }
 
 
       .hero-section h1 {
 
-        font-size:
-                29px;
+        font-size: 44px !important;
+
+      }
+
+
+      .hero-content {
+
+        gap: 20px;
+
+      }
+
+    }
+
+
+    @media (max-width: 850px) {
+
+      .dashboard-button-row {
+
+        top: 14px;
+
+        right: 16px;
+
+        left: 16px;
+
+        justify-content: flex-end;
+
+        margin: 0;
+      }
+
+
+      .back-dashboard-button {
+
+        width: auto;
+
+        max-width: 100%;
+
+        font-size: 13px;
+
+        padding: 10px 15px;
+      }
+
+
+      .hero-section {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 68px 28px 28px 28px !important;
+
+      }
+
+
+      .hero-content {
+
+        width: 100%;
+
+      }
+
+
+      .hero-section h1 {
+
+        font-size: 38px !important;
+
+      }
+
+
+      .hero-section p {
+
+        font-size: 16px;
+
       }
 
 
       .create-button {
 
-        width:
-                100%;
+        width: 100%;
 
-        justify-content:
-                center;
+        min-width: 0;
+
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .dashboard-button-row {
+
+        top: 12px;
+
+        right: 12px;
+
+        left: 12px;
+
+        justify-content: flex-start;
+
       }
 
 
-      .search-form {
+      .back-dashboard-button {
 
-        flex-direction:
-                column;
+        width: auto;
+
+        max-width: 100%;
+
+        font-size: 12px;
+
+        padding: 9px 12px;
+
       }
 
 
-      .search-button,
-      .clear-button {
+      .hero-content {
 
-        width:
-                100%;
+        flex-direction: column;
+
+        align-items: flex-start;
+
       }
 
 
-      .events-card-header {
+      .hero-section h1 {
 
-        align-items:
-                flex-start;
+        font-size: 34px !important;
 
-        flex-direction:
-                column;
       }
 
     }
@@ -1416,9 +393,9 @@
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================================
      HEADER
-     ===================================================== -->
+     ========================================================= -->
 
 <header class="page-header">
 
@@ -1428,11 +405,13 @@
       🌊
     </div>
 
+
     <div>
 
       <div class="brand-title">
         FRDMS
       </div>
+
 
       <div class="brand-subtitle">
         Flood Disaster Relief Management System
@@ -1451,51 +430,109 @@
 
 
 
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
 <main class="page-container">
 
 
-  <!-- =================================================
-       HERO
-       ================================================= -->
+  <!-- =====================================================
+       FLOOD EVENT HERO
+       ===================================================== -->
 
   <section class="hero-section">
 
+
+    <!-- =================================================
+         BACK TO PROJECT MANAGER DASHBOARD
+         Positioned directly on the upper-right border
+         ================================================= -->
+
+    <div class="dashboard-button-row">
+
+      <a th:href="@{/project-manager/dashboard}"
+         class="back-dashboard-button">
+
+        <span class="back-arrow">
+          ←
+        </span>
+
+        <span>
+          Back to Project Manager Dashboard
+        </span>
+
+      </a>
+
+    </div>
+
+
+    <!-- =================================================
+         FLOOD EVENT CONTENT
+         ================================================= -->
+
     <div class="hero-content">
 
+
       <div class="hero-icon">
+
         🌊
+
       </div>
 
 
       <div>
 
-                <span class="hero-label">
-                    DISASTER MANAGEMENT
-                </span>
+        <span class="hero-label">
+
+          DISASTER MANAGEMENT
+
+        </span>
 
 
         <h1>
+
           Flood Events
+
         </h1>
 
 
         <p>
-          Manage flood events, severity levels,
-          affected areas and registered affected
-          families from one place.
+
+          Record, review and manage flood events and
+          monitor the families affected by each event.
+
         </p>
 
       </div>
 
+
     </div>
 
+
+
+    <!-- =================================================
+         CREATE FLOOD EVENT
+         ================================================= -->
 
     <a th:href="@{/disasters/new}"
        class="create-button">
 
-      ＋ Create Flood Event
+      <span class="button-icon">
+
+        ＋
+
+      </span>
+
+
+      <span>
+
+        Create Flood Event
+
+      </span>
 
     </a>
+
 
   </section>
 
@@ -1505,32 +542,43 @@
 
 
 
-  <!-- =================================================
+  <!-- =====================================================
        SEARCH
-       ================================================= -->
+       ===================================================== -->
 
   <section class="search-card">
 
+
     <div class="search-title">
 
+
       <div class="search-icon">
+
         🔎
+
       </div>
 
 
       <div>
 
         <h2>
+
           Search Flood Events
+
         </h2>
 
+
         <p>
+
           Find a recorded flood event quickly.
+
         </p>
 
       </div>
 
+
     </div>
+
 
 
     <form th:action="@{/disasters}"
@@ -1540,19 +588,24 @@
 
       <div class="search-input-wrapper">
 
-        🔍
 
-        <input
-                type="text"
-                name="keyword"
-                th:value="${keyword}"
-                placeholder="Search by flood event name...">
+        <span>
+
+          🔍
+
+        </span>
+
+
+        <input type="text"
+               name="keyword"
+               th:value="${keyword}"
+               placeholder="Search by flood event name...">
 
       </div>
 
 
-      <button
-              type="submit"
+
+      <button type="submit"
               class="search-button">
 
         Search
@@ -1560,52 +613,65 @@
       </button>
 
 
-      <a
-              th:href="@{/disasters}"
-              class="clear-button">
+
+      <a th:href="@{/disasters}"
+         class="clear-button">
 
         Clear
 
       </a>
 
+
     </form>
+
 
   </section>
 
 
 
-  <!-- =================================================
-       EVENTS
-       ================================================= -->
+  <!-- =====================================================
+       EVENT TABLE
+       ===================================================== -->
 
   <section class="events-card">
 
 
     <div class="events-card-header">
 
+
       <div>
 
-                <span class="section-label">
-                    RECORDED EVENTS
-                </span>
+        <span class="section-label">
+
+          RECORDED EVENTS
+
+        </span>
 
 
         <h2>
+
           Flood Event Records
+
         </h2>
 
 
         <p>
-          View the disaster information and
-          affected-family registrations.
+
+          Select an event to view complete information
+          and its affected family summary.
+
         </p>
 
       </div>
 
 
+
       <div class="records-badge">
-        🌊 Flood Events
+
+        🌊 Events
+
       </div>
+
 
     </div>
 
@@ -1622,31 +688,44 @@
         <tr>
 
           <th>
+
             ID
+
           </th>
 
+
           <th>
+
             Flood Event
+
           </th>
 
+
           <th>
+
             Date
+
           </th>
 
+
           <th>
+
             Severity
+
           </th>
 
-          <th>
-            Registered Families
-          </th>
 
           <th>
+
             Description
+
           </th>
 
+
           <th>
+
             Action
+
           </th>
 
         </tr>
@@ -1658,38 +737,48 @@
         <tbody>
 
 
-        <tr
-                th:each="disaster : ${disasters}">
+        <!-- =================================================
+             FLOOD EVENT RECORDS
+             ================================================= -->
+
+        <tr th:each="disaster : ${disasters}">
 
 
-          <!-- ID -->
+          <!-- =================================================
+               ID
+               ================================================= -->
 
           <td>
 
-                        <span
-                                class="id-badge"
-                                th:text="${disaster.id}">
+            <span class="id-badge"
+                  th:text="${disaster.id}">
 
-                            1
+              1
 
-                        </span>
+            </span>
 
           </td>
 
 
 
-          <!-- EVENT -->
+          <!-- =================================================
+               EVENT
+               ================================================= -->
 
           <td>
 
             <div class="event-name-cell">
 
+
               <div class="event-mini-icon">
+
                 🌊
+
               </div>
 
 
               <div>
+
 
                 <strong
                         th:text="${disaster.eventName}">
@@ -1700,158 +789,110 @@
 
 
                 <small>
+
                   Flood Disaster Event
+
                 </small>
+
 
               </div>
 
+
             </div>
-
-          </td>
-
-
-
-          <!-- DATE -->
-
-          <td>
-
-                        <span class="date-badge">
-
-                            📅
-
-                            <span
-                                    th:text="${disaster.eventDate != null ? #temporals.format(disaster.eventDate, 'dd/MM/yyyy') : 'Not available'}">
-
-                                08/09/2026
-
-                            </span>
-
-                        </span>
-
-          </td>
-
-
-
-          <!-- SEVERITY -->
-
-          <td>
-
-
-                        <span
-                                th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'LOW')}"
-                                class="severity-badge severity-low">
-
-                            ● LOW
-
-                        </span>
-
-
-            <span
-                    th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'MEDIUM')}"
-                    class="severity-badge severity-medium">
-
-                            ⚠ MEDIUM
-
-                        </span>
-
-
-            <span
-                    th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'HIGH')}"
-                    class="severity-badge severity-high">
-
-                            ⚠ HIGH
-
-                        </span>
-
-
-            <span
-                    th:if="${disaster.severityLevel != null and #strings.equalsIgnoreCase(disaster.severityLevel, 'CRITICAL')}"
-                    class="severity-badge severity-critical">
-
-                            ⛔ CRITICAL
-
-                        </span>
-
-
-            <span
-                    th:if="${disaster.severityLevel == null or
-                                (
-                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'LOW')
-                                    and
-                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'MEDIUM')
-                                    and
-                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'HIGH')
-                                    and
-                                    !#strings.equalsIgnoreCase(disaster.severityLevel, 'CRITICAL')
-                                )}"
-                    class="severity-badge severity-unknown">
-
-                            <span
-                                    th:text="${disaster.severityLevel != null ? disaster.severityLevel : 'NOT SET'}">
-
-                                NOT SET
-
-                            </span>
-
-                        </span>
 
           </td>
 
 
 
           <!-- =================================================
-               REGISTERED FAMILIES - DM06
+               DATE
                ================================================= -->
 
           <td>
 
-            <div
-                    th:if="${affectedFamilyCounts[disaster.id] != null and affectedFamilyCounts[disaster.id] > 0}"
-                    class="family-count">
+            <span class="date-badge">
 
-              👨‍👩‍👧
+              📅
 
-              <strong
-                      th:text="${affectedFamilyCounts[disaster.id]}">
+              <span
+                      th:text="${#temporals.format(disaster.eventDate, 'dd/MM/yyyy')}">
 
-                0
+                08/09/2026
 
-              </strong>
+              </span>
 
-              <small>
-                Families
-              </small>
-
-            </div>
-
-
-            <div
-                    th:if="${affectedFamilyCounts[disaster.id] == null or affectedFamilyCounts[disaster.id] == 0}"
-                    class="family-count family-zero">
-
-              👨‍👩‍👧
-
-              <strong>
-                0
-              </strong>
-
-              <small>
-                Families
-              </small>
-
-            </div>
+            </span>
 
           </td>
 
 
 
-          <!-- DESCRIPTION -->
+          <!-- =================================================
+               SEVERITY
+               ================================================= -->
 
           <td>
 
-            <div
-                    class="description-cell"
-                    th:text="${disaster.description}">
+
+            <!-- LOW -->
+
+            <span
+                    th:if="${#strings.equalsIgnoreCase(disaster.severityLevel, 'LOW')}"
+                    class="severity-badge severity-low">
+
+              ● LOW
+
+            </span>
+
+
+
+            <!-- MEDIUM -->
+
+            <span
+                    th:if="${#strings.equalsIgnoreCase(disaster.severityLevel, 'MEDIUM')}"
+                    class="severity-badge severity-medium">
+
+              ⚠ MEDIUM
+
+            </span>
+
+
+
+            <!-- HIGH -->
+
+            <span
+                    th:if="${#strings.equalsIgnoreCase(disaster.severityLevel, 'HIGH')}"
+                    class="severity-badge severity-high">
+
+              ⚠ HIGH
+
+            </span>
+
+
+
+            <!-- CRITICAL -->
+
+            <span
+                    th:if="${#strings.equalsIgnoreCase(disaster.severityLevel, 'CRITICAL')}"
+                    class="severity-badge severity-critical">
+
+              ⛔ CRITICAL
+
+            </span>
+
+
+          </td>
+
+
+
+          <!-- =================================================
+               DESCRIPTION
+               ================================================= -->
+
+          <td>
+
+            <div class="description-cell"
+                 th:text="${disaster.description}">
 
               Flood event description.
 
@@ -1861,43 +902,18 @@
 
 
 
-          <!-- ACTIONS -->
+          <!-- =================================================
+               ACTION
+               ================================================= -->
 
           <td>
 
-            <div class="action-buttons">
+            <a th:href="@{/disasters/details/{id}(id=${disaster.id})}"
+               class="view-button">
 
+              👁 View Event
 
-              <!-- VIEW -->
-
-              <a
-                      th:href="@{/disasters/details/{id}(id=${disaster.id})}"
-                      class="action-button view-button">
-
-                👁 View
-
-              </a>
-
-
-
-
-
-
-
-              <!-- DELETE -->
-
-              <form
-                      th:action="@{/disasters/delete/{id}(id=${disaster.id})}"
-                      method="post"
-                      class="delete-form"
-                      onsubmit="return confirmDelete();">
-
-
-
-              </form>
-
-
-            </div>
+            </a>
 
           </td>
 
@@ -1910,71 +926,68 @@
              EMPTY STATE
              ================================================= -->
 
-        <tr
-                th:if="${#lists.isEmpty(disasters)}">
+        <tr th:if="${#lists.isEmpty(disasters)}">
 
-          <td colspan="7">
+
+          <td colspan="6">
+
 
             <div class="empty-state">
 
+
               <div class="empty-icon">
+
                 🌊
+
               </div>
 
 
               <h3>
+
                 No Flood Events Found
+
               </h3>
 
 
               <p>
+
                 There are currently no recorded
-                flood events.
+                flood events matching your search.
+
               </p>
 
 
-              <a
-                      th:href="@{/disasters/new}"
-                      class="empty-create-button">
+              <a th:href="@{/disasters/new}"
+                 class="empty-create-button">
 
                 ＋ Create First Flood Event
 
               </a>
 
+
             </div>
 
+
           </td>
+
 
         </tr>
 
 
         </tbody>
 
+
       </table>
 
+
     </div>
+
 
   </section>
 
 
 
-
 </main>
-
-
-
-<script>
-
-  function confirmDelete() {
-
-    return confirm(
-            "Are you sure you want to delete this flood event?\n\n" +
-            "This action cannot be undone."
-    );
-
-  }
-
-</script>
 
 
 </body>

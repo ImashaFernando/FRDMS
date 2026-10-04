@@ -1,9 +1,10 @@
 package com.frdms.frdms.victim_management.entity;
 
 import com.frdms.frdms.disaster_management.entity.Disaster;
+import com.frdms.frdms.shelter_management.entity.Shelter;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -17,55 +18,157 @@ import java.time.LocalDate;
 )
 public class Victim {
 
+    // =========================================================
+    // PRIMARY KEY
+    // =========================================================
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
+    // =========================================================
+    // FULL NAME
+    // =========================================================
 
     @NotBlank(message = "Full name is required")
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
+
+    // =========================================================
+    // NIC NUMBER
+    // =========================================================
+
     @NotBlank(message = "NIC number is required")
-    @Column(name = "nic_number", nullable = false, unique = true)
+    @Column(
+            name = "nic_number",
+            nullable = false,
+            unique = true
+    )
     private String nicNumber;
 
-    /*
-     * Username is automatically generated from the NIC number.
-     * The victim does not need to enter a separate username.
-     */
-    @Column(name = "username", nullable = false, unique = true)
+
+    // =========================================================
+    // USERNAME
+    // NIC IS USED AS USERNAME
+    // =========================================================
+
+    @Column(
+            name = "username",
+            nullable = false,
+            unique = true
+    )
     private String username;
 
+
+    // =========================================================
+    // PASSWORD
+    // =========================================================
+
     @NotBlank(message = "Password is required")
-    @Column(name = "password", nullable = false)
+    @Column(
+            name = "password",
+            nullable = false
+    )
     private String password;
 
+
+    // =========================================================
+    // PHONE NUMBER
+    // =========================================================
+
     @NotBlank(message = "Phone number is required")
-    @Column(name = "phone_number", nullable = false)
+    @Column(
+            name = "phone_number",
+            nullable = false
+    )
     private String phoneNumber;
 
+
+    // =========================================================
+    // ADDRESS
+    // =========================================================
+
     @NotBlank(message = "Address is required")
-    @Column(name = "address", nullable = false)
+    @Column(
+            name = "address",
+            nullable = false
+    )
     private String address;
+
+
+    // =========================================================
+    // REGISTRATION DATE
+    // =========================================================
 
     @Column(name = "registration_date")
     private LocalDate registrationDate;
 
+
+    // =========================================================
+    // DISASTER / FLOOD EVENT
+    // =========================================================
+
     /*
-     * Disaster selected by the victim during registration.
+     * Each victim is associated with the flood event
+     * for which assistance is requested.
+     *
+     * Many victims can belong to one disaster.
      */
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "disaster_id")
     private Disaster disaster;
 
 
-    // ---------------------------------------------------------
-    // Constructors
-    // ---------------------------------------------------------
+    // =========================================================
+    // AFFECTED AREA
+    // =========================================================
+
+    /*
+     * Stores the specific affected area of this victim.
+     *
+     * This is different from the Disaster itself because
+     * one disaster can affect multiple areas.
+     */
+
+    @Column(
+            name = "affected_area",
+            columnDefinition = "TEXT"
+    )
+    private String affectedArea;
+
+
+    // =========================================================
+    // SHELTER
+    // =========================================================
+
+    /*
+     * A victim may be assigned to one shelter.
+     *
+     * Many victims can belong to the same shelter.
+     *
+     * If the victim is not staying in a shelter,
+     * this value remains NULL.
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    private Shelter shelter;
+
+
+    // =========================================================
+    // CONSTRUCTORS
+    // =========================================================
 
     public Victim() {
     }
 
+
+    /*
+     * Existing constructor preserved.
+     */
     public Victim(
             String fullName,
             String nicNumber,
@@ -74,6 +177,7 @@ public class Victim {
             String address,
             Disaster disaster
     ) {
+
         this.fullName = fullName;
         this.nicNumber = nicNumber;
         this.password = password;
@@ -88,16 +192,12 @@ public class Victim {
     }
 
 
-    // ---------------------------------------------------------
-    // Getters and Setters
-    // ---------------------------------------------------------
+    // =========================================================
+    // GETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 
@@ -105,16 +205,68 @@ public class Victim {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
 
     public String getNicNumber() {
         return nicNumber;
     }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+
+    public Disaster getDisaster() {
+        return disaster;
+    }
+
+
+    public String getAffectedArea() {
+        return affectedArea;
+    }
+
+
+    public Shelter getShelter() {
+        return shelter;
+    }
+
+
+    // =========================================================
+    // SETTERS
+    // =========================================================
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+
     public void setNicNumber(String nicNumber) {
+
         this.nicNumber = nicNumber;
 
         /*
@@ -126,63 +278,49 @@ public class Victim {
     }
 
 
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-
-    public String getPassword() {
-        return password;
-    }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-
-    public String getAddress() {
-        return address;
-    }
 
     public void setAddress(String address) {
         this.address = address;
     }
 
 
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
-
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-
-    public Disaster getDisaster() {
-        return disaster;
-    }
 
     public void setDisaster(Disaster disaster) {
         this.disaster = disaster;
     }
 
 
-    // ---------------------------------------------------------
-    // Automatically prepare data before saving
-    // ---------------------------------------------------------
+    public void setAffectedArea(String affectedArea) {
+        this.affectedArea = affectedArea;
+    }
+
+
+    public void setShelter(Shelter shelter) {
+        this.shelter = shelter;
+    }
+
+
+    // =========================================================
+    // PRE-PERSIST
+    // =========================================================
 
     @PrePersist
     protected void beforeSave() {
@@ -193,6 +331,7 @@ public class Victim {
         if (username == null || username.trim().isEmpty()) {
             username = nicNumber;
         }
+
 
         /*
          * Automatically store today's registration date.

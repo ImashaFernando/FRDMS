@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -10,7 +11,12 @@
 
   <title>Needs Assessment Status | FRDMS</title>
 
+
   <style>
+
+    /* =====================================================
+       GLOBAL
+       ===================================================== */
 
     * {
       box-sizing: border-box;
@@ -18,103 +24,654 @@
       padding: 0;
     }
 
+
     body {
+
       font-family: Arial, sans-serif;
-      background: #f4f7fa;
-      color: #0C1721;
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #f4f8fb,
+                      #eef4f8
+              );
+
+      color: #0B2A4A;
+
+      min-height: 100vh;
     }
 
 
-    /* ================= HEADER ================= */
+    /* =====================================================
+       HEADER
+       ===================================================== */
 
     .header {
+
       background: #0C1721;
+
       color: white;
 
-      padding: 22px 45px;
+      padding: 20px 45px;
 
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
+
+      box-shadow:
+              0 3px 12px
+              rgba(0,0,0,0.15);
     }
+
 
     .header h1 {
+
       font-size: 24px;
+
+      margin-bottom: 5px;
     }
+
 
     .header p {
-      margin-top: 5px;
+
       color: #CFE8F7;
+
       font-size: 14px;
     }
+
 
     .back-btn {
+
       text-decoration: none;
+
       color: white;
+
       background: #248BE0;
 
-      padding: 10px 18px;
+      padding: 11px 20px;
 
-      border-radius: 7px;
+      border-radius: 8px;
 
       font-size: 14px;
+
+      font-weight: bold;
+
+      transition: 0.2s;
     }
+
 
     .back-btn:hover {
+
       background: #1c72b9;
+
+      transform: translateY(-1px);
     }
 
 
-    /* ================= CONTAINER ================= */
+    /* =====================================================
+       MAIN CONTAINER
+       ===================================================== */
 
     .container {
-      width: 90%;
-      max-width: 1000px;
 
-      margin: 35px auto;
+      width: 92%;
+
+      max-width: 1050px;
+
+      margin: 35px auto 60px;
     }
 
+
+    /* =====================================================
+       PAGE TITLE
+       ===================================================== */
+
     .page-title {
+
       margin-bottom: 25px;
     }
 
+
     .page-title h2 {
-      font-size: 28px;
+
+      font-size: 30px;
+
       margin-bottom: 8px;
+
+      color: #0B2A4A;
     }
 
+
     .page-title p {
-      color: #666;
+
+      color: #667784;
+
       font-size: 15px;
+
       line-height: 1.5;
     }
 
 
-    /* ================= CARD ================= */
+    /* =====================================================
+       GENERAL CARD
+       ===================================================== */
 
     .card {
+
       background: white;
 
       padding: 28px;
 
-      border-radius: 12px;
+      border-radius: 16px;
 
       margin-bottom: 25px;
 
       box-shadow:
-              0 3px 12px
-              rgba(0, 0, 0, 0.08);
+              0 5px 20px
+              rgba(0,0,0,0.07);
+
+      border: 1px solid #e5ebef;
     }
 
+
     .card h3 {
+
       color: #0B2A4A;
+
+      font-size: 21px;
+
       margin-bottom: 20px;
     }
 
 
-    /* ================= STATUS ================= */
+    /* =====================================================
+       RELIEF REQUIREMENT - MAIN CARD
+       ===================================================== */
+
+    .relief-card {
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #ffffff,
+                      #f5fbfc
+              );
+
+      border-radius: 18px;
+
+      padding: 30px;
+
+      margin-bottom: 30px;
+
+      border: 2px solid #6aa5aa;
+
+      box-shadow:
+              0 7px 25px
+              rgba(40,136,143,0.12);
+    }
+
+
+    .relief-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-start;
+
+      gap: 20px;
+
+      margin-bottom: 22px;
+    }
+
+
+    .relief-heading {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+    }
+
+
+    .relief-icon {
+
+      width: 55px;
+
+      height: 55px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 14px;
+
+      background: #dff3ef;
+
+      font-size: 28px;
+    }
+
+
+    .relief-heading h3 {
+
+      margin: 0;
+
+      font-size: 23px;
+
+      color: #0B2A4A;
+    }
+
+
+    .relief-heading p {
+
+      margin-top: 5px;
+
+      color: #647887;
+
+      font-size: 13px;
+    }
+
+
+    .relief-status {
+
+      padding: 9px 16px;
+
+      border-radius: 25px;
+
+      background: #d9f0df;
+
+      color: #176b32;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      white-space: nowrap;
+    }
+
+
+    /* =====================================================
+       IMPORTANT MESSAGE
+       ===================================================== */
+
+    .victim-message {
+
+      background: #eef7ff;
+
+      border-left: 5px solid #248BE0;
+
+      padding: 18px 20px;
+
+      border-radius: 10px;
+
+      margin-bottom: 25px;
+
+      line-height: 1.6;
+
+      color: #183b57;
+    }
+
+
+    .victim-message-title {
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      margin-bottom: 7px;
+
+      color: #0B2A4A;
+    }
+
+
+    .victim-message-text {
+
+      font-size: 15px;
+
+      white-space: pre-line;
+    }
+
+
+    /* =====================================================
+       SECTION HEADING
+       ===================================================== */
+
+    .relief-section-title {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      margin-bottom: 15px;
+
+      color: #0B2A4A;
+
+      font-size: 18px;
+
+      font-weight: bold;
+    }
+
+
+    /* =====================================================
+       RELIEF ITEMS GRID
+       ===================================================== */
+
+    .relief-items-grid {
+
+      display: grid;
+
+      grid-template-columns:
+                    repeat(2, 1fr);
+
+      gap: 14px;
+
+      margin-bottom: 28px;
+    }
+
+
+    .relief-item {
+
+      background: #f7fafb;
+
+      border: 1px solid #dce6ea;
+
+      border-left: 5px solid #9ebbc0;
+
+      border-radius: 12px;
+
+      padding: 17px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      min-height: 72px;
+
+      transition: 0.2s;
+    }
+
+
+    .relief-item:hover {
+
+      transform: translateY(-2px);
+
+      box-shadow:
+              0 4px 12px
+              rgba(0,0,0,0.07);
+    }
+
+
+    .relief-item.compulsory {
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #eef9f1,
+                      #f7fcf8
+              );
+
+      border-left-color: #28888F;
+    }
+
+
+    .item-icon {
+
+      width: 42px;
+
+      height: 42px;
+
+      min-width: 42px;
+
+      border-radius: 50%;
+
+      background: #dff0e2;
+
+      color: #176b32;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 20px;
+
+      font-weight: bold;
+    }
+
+
+    .item-content {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 4px;
+    }
+
+
+    .item-name {
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      color: #0B2A4A;
+
+      line-height: 1.3;
+    }
+
+
+    .compulsory-label {
+
+      color: #176b32;
+
+      font-size: 11px;
+
+      font-weight: bold;
+
+      letter-spacing: 0.5px;
+    }
+
+
+    .approved-label {
+
+      color: #667784;
+
+      font-size: 11px;
+
+      font-weight: bold;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       LOCATION CARD
+       ===================================================== */
+
+    .collection-box {
+
+      background: #f5f9fc;
+
+      border: 1px solid #d9e5ed;
+
+      border-radius: 13px;
+
+      padding: 20px;
+
+      margin-bottom: 20px;
+    }
+
+
+    .collection-title {
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+      color: #0B2A4A;
+
+      margin-bottom: 15px;
+    }
+
+
+    .location-grid {
+
+      display: grid;
+
+      grid-template-columns:
+                    repeat(2, 1fr);
+
+      gap: 15px;
+    }
+
+
+    .location-item {
+
+      background: white;
+
+      padding: 15px;
+
+      border-radius: 9px;
+
+      border: 1px solid #e0e8ed;
+    }
+
+
+    .location-label {
+
+      display: block;
+
+      font-size: 11px;
+
+      font-weight: bold;
+
+      text-transform: uppercase;
+
+      color: #687b88;
+
+      margin-bottom: 6px;
+    }
+
+
+    .location-value {
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      color: #0B2A4A;
+
+      line-height: 1.4;
+    }
+
+
+    /* =====================================================
+       RELIEF CONFIRMATION
+       ===================================================== */
+
+    .confirmation-box {
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #eaf8ee,
+                      #f6fcf7
+              );
+
+      border: 1px solid #b8dfc2;
+
+      border-radius: 12px;
+
+      padding: 17px 20px;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      color: #176b32;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+    }
+
+
+    .confirmation-icon {
+
+      font-size: 24px;
+
+      min-width: 28px;
+    }
+
+
+    /* =====================================================
+       LOCKED MESSAGE
+       ===================================================== */
+
+    .locked-box {
+
+      background:
+              linear-gradient(
+                      135deg,
+                      #fff8e6,
+                      #fffdf6
+              );
+
+      border: 1px solid #f0d58a;
+
+      border-left: 5px solid #e3aa24;
+
+      border-radius: 12px;
+
+      padding: 18px 20px;
+
+      margin-top: 20px;
+
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 12px;
+
+      color: #765500;
+
+      line-height: 1.5;
+    }
+
+
+    .locked-icon {
+
+      font-size: 23px;
+
+      min-width: 28px;
+    }
+
+
+    .locked-box strong {
+
+      color: #624700;
+    }
+
+
+    /* =====================================================
+       ASSESSMENT STATUS
+       ===================================================== */
 
     .status-container {
+
       display: flex;
 
       align-items: center;
@@ -125,17 +682,22 @@
 
       padding: 20px;
 
-      border-radius: 10px;
+      border-radius: 12px;
 
       margin-bottom: 20px;
     }
 
+
     .status-label {
+
       font-weight: bold;
+
       color: #555;
     }
 
+
     .status {
+
       padding: 9px 18px;
 
       border-radius: 20px;
@@ -145,30 +707,45 @@
       font-size: 13px;
     }
 
+
     .status-submitted {
+
       background: #fff3cd;
+
       color: #856404;
     }
 
+
     .status-review {
+
       background: #cfe8f7;
+
       color: #155b86;
     }
 
+
     .status-updated {
+
       background: #ffe5b4;
+
       color: #8a4b00;
     }
 
+
     .status-assessed {
+
       background: #d4edda;
+
       color: #155724;
     }
 
 
-    /* ================= INFORMATION BOX ================= */
+    /* =====================================================
+       INFORMATION BOX
+       ===================================================== */
 
     .info-box {
+
       margin-top: 20px;
 
       background: #CFE8F7;
@@ -177,35 +754,42 @@
 
       padding: 15px;
 
-      border-radius: 6px;
+      border-radius: 7px;
 
       font-size: 14px;
 
       line-height: 1.5;
     }
 
+
     .updated-info {
+
       background: #fff3cd;
 
       border-left: 5px solid #f0ad4e;
 
       padding: 15px;
 
-      border-radius: 6px;
+      border-radius: 7px;
 
       font-size: 14px;
 
       line-height: 1.5;
     }
 
+
     .updated-info strong {
+
       color: #8a5a00;
     }
 
 
-    /* ================= GRID ================= */
+    /* =====================================================
+       SUBMITTED NEEDS
+       ===================================================== */
 
     .info-grid {
+
       display: grid;
 
       grid-template-columns:
@@ -214,15 +798,19 @@
       gap: 18px;
     }
 
+
     .info-item {
+
       background: #f4f7fa;
 
-      padding: 15px;
+      padding: 16px;
 
-      border-radius: 8px;
+      border-radius: 9px;
     }
 
+
     .info-item strong {
+
       display: block;
 
       margin-bottom: 7px;
@@ -232,19 +820,27 @@
       font-size: 13px;
     }
 
+
     .info-item span {
+
       font-size: 14px;
+
       line-height: 1.5;
     }
 
+
     .full-width {
+
       grid-column: 1 / -1;
     }
 
 
-    /* ================= NEEDS ================= */
+    /* =====================================================
+       NEED TAGS
+       ===================================================== */
 
     .needs-list {
+
       display: flex;
 
       flex-wrap: wrap;
@@ -254,7 +850,9 @@
       margin-top: 20px;
     }
 
+
     .need {
+
       background: #CFE8F7;
 
       color: #0B2A4A;
@@ -269,9 +867,12 @@
     }
 
 
-    /* ================= ASSESSMENT ================= */
+    /* =====================================================
+       COORDINATOR ASSESSMENT
+       ===================================================== */
 
     .assessment-box {
+
       background: #f4f7fa;
 
       padding: 20px;
@@ -279,41 +880,33 @@
       border-radius: 10px;
     }
 
+
     .assessment-box p {
+
       margin-bottom: 12px;
 
       line-height: 1.5;
     }
 
+
     .assessment-box p:last-child {
+
       margin-bottom: 0;
     }
 
+
     .assessment-box strong {
+
       color: #333;
     }
 
 
-    /* ================= NO DATA ================= */
-
-    .empty {
-      text-align: center;
-
-      padding: 40px 20px;
-
-      color: #666;
-    }
-
-    .empty h3 {
-      margin-bottom: 10px;
-
-      color: #0B2A4A;
-    }
-
-
-    /* ================= ACTION BUTTONS ================= */
+    /* =====================================================
+       ACTION BUTTONS
+       ===================================================== */
 
     .actions {
+
       margin-top: 30px;
 
       display: flex;
@@ -323,12 +916,14 @@
       flex-wrap: wrap;
     }
 
+
     .btn {
+
       text-decoration: none;
 
       padding: 13px 24px;
 
-      border-radius: 7px;
+      border-radius: 8px;
 
       font-size: 14px;
 
@@ -339,49 +934,51 @@
       cursor: pointer;
     }
 
+
     .btn-primary {
+
       background: #248BE0;
 
       color: white;
     }
 
+
     .btn-primary:hover {
+
       background: #1c72b9;
     }
 
-    .btn-secondary {
-      background: #e6e8e9;
 
-      color: #222;
+    /* =====================================================
+       EMPTY
+       ===================================================== */
 
-      border: 1px solid #d1d5d7;
-    }
+    .empty {
 
-    .btn-secondary:hover {
-      background: #d4d7d9;
-    }
+      text-align: center;
 
+      padding: 45px 20px;
 
-    /* ================= UPDATE BUTTON ================= */
-
-    .update-btn {
-      background: #28888F;
-
-      color: white;
-
-      border: none;
-    }
-
-    .update-btn:hover {
-      background: #206f75;
+      color: #666;
     }
 
 
-    /* ================= RESPONSIVE ================= */
+    .empty h3 {
+
+      margin-bottom: 10px;
+
+      color: #0B2A4A;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
 
     @media (max-width: 700px) {
 
       .header {
+
         padding: 20px;
 
         flex-direction: column;
@@ -391,19 +988,51 @@
         align-items: flex-start;
       }
 
+
       .container {
+
         width: 94%;
       }
 
-      .info-grid {
+
+      .relief-header {
+
+        flex-direction: column;
+      }
+
+
+      .relief-status {
+
+        align-self: flex-start;
+      }
+
+
+      .relief-items-grid {
+
         grid-template-columns: 1fr;
       }
 
+
+      .location-grid {
+
+        grid-template-columns: 1fr;
+      }
+
+
+      .info-grid {
+
+        grid-template-columns: 1fr;
+      }
+
+
       .full-width {
+
         grid-column: auto;
       }
 
+
       .status-container {
+
         flex-direction: column;
 
         align-items: flex-start;
@@ -411,11 +1040,15 @@
         gap: 12px;
       }
 
+
       .actions {
+
         flex-direction: column;
       }
 
+
       .btn {
+
         text-align: center;
 
         width: 100%;
@@ -476,15 +1109,338 @@
   <div class="page-title">
 
     <h2>
-      Needs Assessment Status
+      Needs Assessment
     </h2>
 
     <p>
-      View the current status of your submitted
-      needs assessment.
+      View your submitted needs assessment and
+      the relief assistance confirmed by the
+      Relief Coordinator.
     </p>
 
   </div>
+
+
+
+  <!-- =================================================
+       RELIEF REQUIREMENT
+       THIS APPEARS ONLY AFTER RC SENDS IT
+       ================================================= -->
+
+  <section
+          class="relief-card"
+
+          th:if="${latestReliefRequirement != null}">
+
+
+    <!-- =================================================
+         RELIEF HEADER
+         ================================================= -->
+
+    <div class="relief-header">
+
+      <div class="relief-heading">
+
+        <div class="relief-icon">
+          🎁
+        </div>
+
+        <div>
+
+          <h3>
+            Your Relief Assistance
+          </h3>
+
+          <p>
+            These are the items confirmed for you
+            by the Relief Coordinator.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <span class="relief-status">
+
+                ✓
+                <span
+                        th:text="${latestReliefRequirement.status}">
+                    APPROVED
+                </span>
+
+            </span>
+
+    </div>
+
+
+
+    <!-- =================================================
+         RC MESSAGE
+         ================================================= -->
+
+    <div
+            class="victim-message"
+
+            th:if="${latestReliefRequirement.victimMessage != null
+                        and !#strings.isEmpty(latestReliefRequirement.victimMessage)}">
+
+      <div class="victim-message-title">
+
+        💬 Message from Relief Coordinator
+
+      </div>
+
+      <div
+              class="victim-message-text"
+
+              th:text="${latestReliefRequirement.victimMessage}">
+
+        Relief information
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ITEMS VICTIM WILL RECEIVE
+         ================================================= -->
+
+    <div class="relief-section-title">
+
+      📦
+
+      <span>
+                What You Will Receive
+            </span>
+
+    </div>
+
+
+    <div class="relief-items-grid">
+
+
+      <!-- =================================================
+           EACH ITEM
+           IMPORTANT:
+           SPLIT ONLY USING |
+           ================================================= -->
+
+      <div
+              th:each="item :
+                        ${#strings.arraySplit(
+                            latestReliefRequirement.reliefItems,
+                            '|'
+                        )}"
+
+              class="relief-item"
+
+              th:classappend="${
+                        #strings.trim(item) == 'Dried Food Bag'
+                        or
+                        #strings.trim(item) == '10 kg Rice Bag'
+                    }
+                    ? ' compulsory'
+                    : ''">
+
+
+        <!-- ICON -->
+
+        <div class="item-icon">
+
+          ✓
+
+        </div>
+
+
+        <!-- ITEM NAME -->
+
+        <div class="item-content">
+
+                    <span
+                            class="item-name"
+
+                            th:text="${#strings.trim(item)}">
+
+                        Relief Item
+
+                    </span>
+
+
+          <!-- COMPULSORY -->
+
+          <span
+                  class="compulsory-label"
+
+                  th:if="${
+                                #strings.trim(item) == 'Dried Food Bag'
+                                or
+                                #strings.trim(item) == '10 kg Rice Bag'
+                            }">
+
+                        ★ COMPULSORY
+
+                    </span>
+
+
+          <!-- OTHER APPROVED ITEM -->
+
+          <span
+                  class="approved-label"
+
+                  th:if="${
+                                #strings.trim(item) != 'Dried Food Bag'
+                                and
+                                #strings.trim(item) != '10 kg Rice Bag'
+                            }">
+
+                        ✓ APPROVED FOR YOU
+
+                    </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         COLLECTION / DELIVERY LOCATION
+         ================================================= -->
+
+    <div class="collection-box">
+
+      <div class="collection-title">
+
+        📍 Where You Will Receive Your Relief
+
+      </div>
+
+
+      <div class="location-grid">
+
+
+        <!-- SHELTER -->
+
+        <div class="location-item">
+
+                    <span class="location-label">
+                        Shelter
+                    </span>
+
+          <span
+                  class="location-value"
+
+                  th:text="${
+                                latestReliefRequirement.shelter != null
+                                and !#strings.isEmpty(
+                                    latestReliefRequirement.shelter
+                                )
+                                ?
+                                latestReliefRequirement.shelter
+                                :
+                                'Not Assigned'
+                            }">
+
+                        Not Assigned
+
+                    </span>
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div class="location-item">
+
+                    <span class="location-label">
+                        Collection / Delivery Location
+                    </span>
+
+          <span
+                  class="location-value"
+
+                  th:text="${
+                                latestReliefRequirement.affectedArea != null
+                                and !#strings.isEmpty(
+                                    latestReliefRequirement.affectedArea
+                                )
+                                ?
+                                latestReliefRequirement.affectedArea
+                                :
+                                'Not Specified'
+                            }">
+
+                        Not Specified
+
+                    </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONFIRMATION
+         ================================================= -->
+
+    <div class="confirmation-box">
+
+      <div class="confirmation-icon">
+        ✓
+      </div>
+
+      <div>
+
+        <strong>
+          Relief requirement received.
+        </strong>
+
+        <br>
+
+        The above items are the relief assistance
+        confirmed for you by the Relief Coordinator.
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         LOCK THE NEEDS ASSESSMENT
+         ================================================= -->
+
+    <div class="locked-box">
+
+      <div class="locked-icon">
+        🔒
+      </div>
+
+      <div>
+
+        <strong>
+          Needs Assessment Locked
+        </strong>
+
+        <br>
+
+        Your relief requirement has already been
+        confirmed and sent to you. You can no longer
+        update this needs assessment.
+
+      </div>
+
+    </div>
+
+  </section>
 
 
 
@@ -502,7 +1458,7 @@
     <div class="card">
 
       <h3>
-        Assessment Status
+        Needs Assessment Status
       </h3>
 
 
@@ -518,13 +1474,21 @@
         <span
                 class="status"
 
-                th:classappend="${needsAssessment.status == 'SUBMITTED'}
-                                        ? ' status-submitted'
-                                        : (${needsAssessment.status == 'UNDER_REVIEW'}
-                                        ? ' status-review'
-                                        : (${needsAssessment.status == 'UPDATED'}
-                                        ? ' status-updated'
-                                        : ' status-assessed'))"
+                th:classappend="${
+                            needsAssessment.status == 'SUBMITTED'
+                        }
+                        ? ' status-submitted'
+                        :
+                        (${
+                            needsAssessment.status == 'UNDER_REVIEW'
+                        }
+                        ? ' status-review'
+                        :
+                        (${
+                            needsAssessment.status == 'UPDATED'
+                        }
+                        ? ' status-updated'
+                        : ' status-assessed'))"
 
                 th:text="${needsAssessment.status}">
 
@@ -601,9 +1565,8 @@
         Your needs assessment has been updated
         successfully.
 
-        The Relief Coordinator will be notified
-        that your information has changed and
-        will review the updated assessment again.
+        The Relief Coordinator will review the
+        updated information again.
 
       </div>
 
@@ -640,11 +1603,11 @@
     <div class="card">
 
       <h3>
-        Submitted Needs
+        Your Submitted Needs
       </h3>
 
 
-      <!-- Current Situation -->
+      <!-- CURRENT SITUATION -->
 
       <div class="info-grid">
 
@@ -674,20 +1637,20 @@
       <div class="needs-list">
 
 
-        <!-- Food -->
+        <!-- BEDDINGS -->
 
         <span
                 class="need"
 
-                th:if="${needsAssessment.foodRequired}">
+                th:if="${needsAssessment.beddingRequired}">
 
-                    Food
+                    Beddings
 
                 </span>
 
 
 
-        <!-- Drinking Water -->
+        <!-- WATER -->
 
         <span
                 class="need"
@@ -700,7 +1663,7 @@
 
 
 
-        <!-- Medical Assistance -->
+        <!-- MEDICAL -->
 
         <span
                 class="need"
@@ -713,7 +1676,7 @@
 
 
 
-        <!-- Clothing -->
+        <!-- CLOTHING -->
 
         <span
                 class="need"
@@ -726,7 +1689,7 @@
 
 
 
-        <!-- Hygiene Items -->
+        <!-- HYGIENE -->
 
         <span
                 class="need"
@@ -742,7 +1705,7 @@
 
 
       <!-- =================================================
-           OTHER / ADDITIONAL INFORMATION
+           OTHER INFORMATION
            ================================================= -->
 
       <div
@@ -750,7 +1713,7 @@
               style="margin-top: 20px;">
 
 
-        <!-- Other Needs -->
+        <!-- OTHER NEEDS -->
 
         <div
                 class="info-item full-width"
@@ -773,7 +1736,7 @@
 
 
 
-        <!-- Additional Information -->
+        <!-- ADDITIONAL INFORMATION -->
 
         <div
                 class="info-item full-width"
@@ -817,8 +1780,6 @@
       <div class="assessment-box">
 
 
-        <!-- Priority -->
-
         <p>
 
           <strong>
@@ -837,8 +1798,6 @@
         </p>
 
 
-
-        <!-- Assessment Remarks -->
 
         <p>
 
@@ -859,8 +1818,6 @@
 
 
 
-        <!-- Assessed By -->
-
         <p>
 
           <strong>
@@ -879,8 +1836,6 @@
         </p>
 
 
-
-        <!-- Assessment Date -->
 
         <p>
 
@@ -926,12 +1881,18 @@
       </a>
 
 
+      <!-- =================================================
+           UPDATE BUTTON
 
-      <!-- UPDATE EXISTING ASSESSMENT -->
+           ONLY SHOW IF THERE IS NO RELIEF REQUIREMENT
+           ================================================= -->
 
       <a
+              th:if="${latestReliefRequirement == null}"
+
               th:href="@{/needs-assessment/form}"
-              class="btn update-btn">
+
+              class="btn btn-primary">
 
         ✎ Update Needs Assessment
 
