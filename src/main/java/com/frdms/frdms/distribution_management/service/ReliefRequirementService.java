@@ -33,22 +33,23 @@ public class ReliefRequirementService {
     // =========================================================
 
     /**
-     * Gets relief requirements that have been APPROVED
-     * by the Relief Coordinator.
+     * Gets relief requirements that have been
+     * approved by the Relief Coordinator and sent
+     * to Distribution Management.
      *
      * These requirements are read directly from the
      * Victim Management relief_requirements table.
      *
      * IMPORTANT:
      *
-     * The Relief Coordinator saves:
+     * The Relief Coordinator must select "Approved"
+     * before sending the requirement to Distribution
+     * Management.
      *
-     * PENDING
-     * or
+     * Therefore Distribution Management retrieves
+     * requirements with the status:
+     *
      * APPROVED
-     *
-     * Distribution Management should receive the requirement
-     * when its status is APPROVED.
      */
 
     @Transactional(readOnly = true)
@@ -138,9 +139,9 @@ public class ReliefRequirementService {
     // =========================================================
 
     /**
-     * Returns the number of APPROVED relief requirements
-     * currently waiting to be processed by Distribution
-     * Management.
+     * Returns the number of approved relief
+     * requirements currently waiting to be
+     * processed by Distribution Management.
      */
 
     @Transactional(readOnly = true)
@@ -155,7 +156,8 @@ public class ReliefRequirementService {
     // =========================================================
 
     /**
-     * Returns the latest approved requirement.
+     * Returns the latest approved requirement that
+     * has been sent to Distribution Management.
      *
      * Used by the Distribution dashboard to display
      * the latest requirement date.

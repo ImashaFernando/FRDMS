@@ -18,6 +18,7 @@ import java.util.Optional;
 @RequestMapping("/relief-coordinator")
 public class ReliefCoordinatorController {
 
+
     private final NeedsAssessmentService needsAssessmentService;
 
     private final ReliefRequirementRepository reliefRequirementRepository;
@@ -191,14 +192,24 @@ public class ReliefCoordinatorController {
          *
          * with
          *
-         * Relief Requirement Status
+         * RELIEF COORDINATOR DISPLAY STATUS
          *
-         * Example:
+         * IMPORTANT:
          *
-         * Assessment ID 1 -> APPROVED
-         * Assessment ID 2 -> PENDING
-         * Assessment ID 3 -> READY FOR DISTRIBUTION
-         * Assessment ID 4 -> COMPLETED
+         * The actual database status is NOT changed here.
+         *
+         * The RC dashboard only displays:
+         *
+         * PENDING
+         * APPROVED
+         * NOT ASSESSED
+         *
+         * Database statuses such as:
+         *
+         * READY FOR DISTRIBUTION
+         * COMPLETED
+         *
+         * are converted only for RC dashboard display.
          */
 
         Map<Long, String> reliefStatuses =
@@ -242,26 +253,82 @@ public class ReliefCoordinatorController {
                                 !status.trim().isEmpty()
                 ) {
 
+                    String normalizedStatus =
+                            status.trim().toUpperCase();
+
 
                     /*
-                     * Convert the status to uppercase so that
-                     * Thymeleaf receives a consistent value.
+                     * =================================================
+                     * RC DASHBOARD STATUS MAPPING
+                     * =================================================
                      *
-                     * Pending
-                     * pending
+                     * The RC dashboard should only show:
+                     *
                      * PENDING
+                     * APPROVED
                      *
-                     * all become:
+                     * We therefore convert the internal workflow
+                     * statuses into the two RC statuses.
+                     *
+                     * READY FOR DISTRIBUTION
+                     * ---------------------
+                     * This means the RC has approved/sent the
+                     * requirement to Distribution Management.
+                     *
+                     * Therefore RC sees:
+                     *
+                     * APPROVED
+                     *
+                     *
+                     * COMPLETED
+                     * ---------
+                     * This is a later Distribution-side state.
+                     *
+                     * Therefore RC still sees:
+                     *
+                     * APPROVED
+                     *
+                     *
+                     * APPROVED
+                     * --------
+                     * Remains:
+                     *
+                     * APPROVED
+                     *
+                     *
+                     * PENDING
+                     * -------
+                     * Remains:
                      *
                      * PENDING
                      */
 
-                    reliefStatuses.put(
-                            assessment.getId(),
-                            status
-                                    .trim()
-                                    .toUpperCase()
-                    );
+                    if (
+                            "APPROVED".equals(normalizedStatus)
+                                    ||
+                                    "READY FOR DISTRIBUTION".equals(normalizedStatus)
+                                    ||
+                                    "COMPLETED".equals(normalizedStatus)
+                    ) {
+
+                        reliefStatuses.put(
+                                assessment.getId(),
+                                "APPROVED"
+                        );
+
+                    } else {
+
+                        /*
+                         * Any pending/unknown/unfinished relief
+                         * requirement remains PENDING on the RC
+                         * dashboard.
+                         */
+
+                        reliefStatuses.put(
+                                assessment.getId(),
+                                "PENDING"
+                        );
+                    }
 
 
                 }
@@ -271,7 +338,6 @@ public class ReliefCoordinatorController {
                 // ---------------------------------------------
 
                 else {
-
 
                     reliefStatuses.put(
                             assessment.getId(),
@@ -288,6 +354,12 @@ public class ReliefCoordinatorController {
 
             else {
 
+                /*
+                 * No Relief Requirement has been created yet.
+                 *
+                 * This is different from PENDING because the RC
+                 * has not yet created the relief requirement.
+                 */
 
                 reliefStatuses.put(
                         assessment.getId(),

@@ -14,6 +14,11 @@ public interface ReliefRequirementRepository
     /*
      * Find the relief requirement belonging to a particular
      * needs assessment.
+     *
+     * This is important because when the Relief Coordinator
+     * opens the same needs assessment again, the previously
+     * saved quantities must be loaded instead of creating
+     * a new empty/default requirement.
      */
     Optional<ReliefRequirement> findByNeedsAssessment(
             NeedsAssessment needsAssessment
@@ -22,17 +27,20 @@ public interface ReliefRequirementRepository
     /*
      * Find all relief requirements belonging to a victim.
      */
-    List<ReliefRequirement> findByVictim(Victim victim);
+    List<ReliefRequirement> findByVictim(
+            Victim victim
+    );
 
     /*
      * Find relief requirements by status.
      */
-    List<ReliefRequirement> findByStatus(String status);
+    List<ReliefRequirement> findByStatus(
+            String status
+    );
 
     /*
-     * Get approved relief requirements for Distribution Management.
-     *
-     * Newest requirements appear first.
+     * Get relief requirements by status,
+     * newest requirements first.
      */
     List<ReliefRequirement> findByStatusOrderByCreatedAtDesc(
             String status

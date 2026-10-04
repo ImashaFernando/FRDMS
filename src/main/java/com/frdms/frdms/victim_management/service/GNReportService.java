@@ -12,79 +12,188 @@ public class GNReportService {
 
     private final GNReportRepository gnReportRepository;
 
-    public GNReportService(GNReportRepository gnReportRepository) {
-        this.gnReportRepository = gnReportRepository;
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
+    public GNReportService(
+            GNReportRepository gnReportRepository) {
+
+        this.gnReportRepository =
+                gnReportRepository;
     }
 
-    // Save a new GN report
-    public GNReport submitGNReport(GNReport gnReport) {
-        return gnReportRepository.save(gnReport);
+
+    // =========================================================
+    // SAVE GN REPORT
+    // =========================================================
+
+    public GNReport submitGNReport(
+            GNReport gnReport) {
+
+        return gnReportRepository.save(
+                gnReport
+        );
     }
 
-    // Get all GN reports
+
+    // =========================================================
+    // GET ALL GN REPORTS
+    // =========================================================
+
     public List<GNReport> getAllGNReports() {
+
         return gnReportRepository.findAll();
     }
 
-    // Get a GN report by ID
+
+    // =========================================================
+    // GET GN REPORT BY ID
+    // =========================================================
+
     public GNReport getGNReportById(Long id) {
+
         return gnReportRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "GN Report not found with ID: " + id
-                ));
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "GN Report not found with ID: "
+                                        + id
+                        )
+                );
     }
 
-    // Get GN reports belonging to a victim
-    public List<GNReport> getGNReportsByVictim(Victim victim) {
-        return gnReportRepository.findByVictim(victim);
+
+    // =========================================================
+    // GET GN REPORTS BY VICTIM
+    // =========================================================
+
+    public List<GNReport> getGNReportsByVictim(
+            Victim victim) {
+
+        return gnReportRepository
+                .findByVictim(victim);
     }
-    public GNReport getLatestGNReportByVictim(Victim victim) {
+
+
+    // =========================================================
+    // GET LATEST GN REPORT BY VICTIM
+    // =========================================================
+
+    public GNReport getLatestGNReportByVictim(
+            Victim victim) {
 
         List<GNReport> reports =
-                gnReportRepository.findByVictim(victim);
+                gnReportRepository
+                        .findByVictim(victim);
 
-        if (reports == null || reports.isEmpty()) {
+        if (reports == null
+                || reports.isEmpty()) {
+
             return null;
         }
 
-        return reports.get(reports.size() - 1);
+        return reports.get(
+                reports.size() - 1
+        );
     }
 
-    // Find report by report number
-    public GNReport getGNReportByNumber(String reportNumber) {
-        return gnReportRepository.findByReportNumber(reportNumber)
+
+    // =========================================================
+    // CHECK WHETHER GN REPORT IS APPROVED
+    // =========================================================
+
+    /*
+     * A victim can access the Needs Assessment
+     * ONLY when the latest GN Report is APPROVED.
+     *
+     * No report  -> false
+     * PENDING     -> false
+     * REJECTED    -> false
+     * APPROVED    -> true
+     */
+
+    public boolean isLatestGNReportApproved(
+            Victim victim) {
+
+        GNReport latestReport =
+                getLatestGNReportByVictim(
+                        victim
+                );
+
+        if (latestReport == null) {
+
+            return false;
+        }
+
+        return "APPROVED".equalsIgnoreCase(
+                latestReport.getVerificationStatus()
+        );
+    }
+
+
+    // =========================================================
+    // GET GN REPORT BY REPORT NUMBER
+    // =========================================================
+
+    public GNReport getGNReportByNumber(
+            String reportNumber) {
+
+        return gnReportRepository
+                .findByReportNumber(reportNumber)
                 .orElse(null);
     }
 
-    // Update an existing GN report
-    public GNReport updateGNReport(Long id, GNReport updatedReport) {
 
-        GNReport existingReport = getGNReportById(id);
+    // =========================================================
+    // UPDATE GN REPORT
+    // =========================================================
+
+    public GNReport updateGNReport(
+            Long id,
+            GNReport updatedReport) {
+
+        GNReport existingReport =
+                getGNReportById(id);
+
 
         existingReport.setReportNumber(
                 updatedReport.getReportNumber()
         );
 
+
         existingReport.setGnOfficerName(
                 updatedReport.getGnOfficerName()
         );
+
 
         existingReport.setGnDivision(
                 updatedReport.getGnDivision()
         );
 
+
         existingReport.setReportDescription(
                 updatedReport.getReportDescription()
         );
 
-        return gnReportRepository.save(existingReport);
+
+        return gnReportRepository.save(
+                existingReport
+        );
     }
 
-    // Delete a GN report
+
+    // =========================================================
+    // DELETE GN REPORT
+    // =========================================================
+
     public void deleteGNReport(Long id) {
 
-        GNReport gnReport = getGNReportById(id);
+        GNReport gnReport =
+                getGNReportById(id);
 
-        gnReportRepository.delete(gnReport);
+        gnReportRepository.delete(
+                gnReport
+        );
     }
 }
