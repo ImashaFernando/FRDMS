@@ -23,11 +23,13 @@ import java.util.Set;
 public class ReliefRequirementController {
 
     private final ReliefRequirementService reliefRequirementService;
-
     private final NeedsAssessmentService needsAssessmentService;
-
     private final VictimService victimService;
 
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
 
     public ReliefRequirementController(
             ReliefRequirementService reliefRequirementService,
@@ -54,7 +56,6 @@ public class ReliefRequirementController {
             @PathVariable Long needsAssessmentId,
             Model model) {
 
-
         // -----------------------------------------------------
         // FIND NEEDS ASSESSMENT
         // -----------------------------------------------------
@@ -65,6 +66,10 @@ public class ReliefRequirementController {
                                 needsAssessmentId
                         );
 
+
+        // -----------------------------------------------------
+        // SAFETY CHECK
+        // -----------------------------------------------------
 
         if (needsAssessment == null) {
 
@@ -101,7 +106,7 @@ public class ReliefRequirementController {
 
 
         // =====================================================
-        // FIND EXISTING RELIEF REQUIREMENT
+        // CHECK EXISTING RELIEF REQUIREMENT
         // =====================================================
 
         var existingRequirement =
@@ -112,7 +117,6 @@ public class ReliefRequirementController {
 
 
         ReliefRequirement reliefRequirement;
-
 
         Set<String> selectedReliefItems =
                 new HashSet<>();
@@ -129,17 +133,12 @@ public class ReliefRequirementController {
 
 
             // -------------------------------------------------
-            // CONNECT CURRENT NEEDS ASSESSMENT
+            // UPDATE VICTIM / ASSESSMENT REFERENCES
             // -------------------------------------------------
 
             reliefRequirement.setNeedsAssessment(
                     needsAssessment
             );
-
-
-            // -------------------------------------------------
-            // CONNECT CURRENT VICTIM
-            // -------------------------------------------------
 
             reliefRequirement.setVictim(
                     victim
@@ -150,14 +149,11 @@ public class ReliefRequirementController {
             // LOAD EXISTING RELIEF ITEMS
             // -------------------------------------------------
 
-            if (
-                    reliefRequirement.getReliefItems() != null
-                            &&
-                            !reliefRequirement
-                                    .getReliefItems()
-                                    .trim()
-                                    .isEmpty()
-            ) {
+            if (reliefRequirement.getReliefItems() != null
+                    && !reliefRequirement
+                    .getReliefItems()
+                    .trim()
+                    .isEmpty()) {
 
                 selectedReliefItems.addAll(
                         Arrays.asList(
@@ -172,53 +168,20 @@ public class ReliefRequirementController {
 
 
             // -------------------------------------------------
-            // NORMALIZE EXISTING STATUS
+            // REMOVE OLD ITEMS THAT ARE NO LONGER USED
             // -------------------------------------------------
 
-            String existingStatus =
-                    reliefRequirement.getStatus();
+            selectedReliefItems.remove(
+                    "10 kg Rice Bag"
+            );
 
+            selectedReliefItems.remove(
+                    "Torch / Emergency Light"
+            );
 
-            if (existingStatus == null
-                    || existingStatus.trim().isEmpty()) {
-
-                reliefRequirement.setStatus(
-                        "PENDING"
-                );
-
-            } else {
-
-                existingStatus =
-                        existingStatus
-                                .trim()
-                                .toUpperCase();
-
-
-                /*
-                 * RC page only supports:
-                 *
-                 * PENDING
-                 * APPROVED
-                 *
-                 * If an old value such as
-                 * "Pending" or "Approved" exists,
-                 * convert it to uppercase.
-                 */
-
-                if ("APPROVED".equals(existingStatus)) {
-
-                    reliefRequirement.setStatus(
-                            "APPROVED"
-                    );
-
-                } else {
-
-                    reliefRequirement.setStatus(
-                            "PENDING"
-                    );
-                }
-            }
-
+            selectedReliefItems.remove(
+                    "Cooking Equipment"
+            );
         }
 
 
@@ -240,41 +203,31 @@ public class ReliefRequirementController {
             reliefRequirement.setVictim(
                     victim
             );
-
-
-            /*
-             * New relief requirements start as PENDING.
-             */
-
-            reliefRequirement.setStatus(
-                    "PENDING"
-            );
         }
 
 
         // =====================================================
-        // MANDATORY RELIEF ITEMS
+        // IMPORTANT
         // =====================================================
-
         /*
-         * Every victim automatically receives:
+         * The Relief Coordinator should select the assistance
+         * according to the victim's Needs Assessment.
          *
-         * 1. Dried Food Bag
-         * 2. 10 kg Rice Bag
+         * We NO LONGER automatically add:
+         *
+         * - 10 kg Rice Bag
+         * - Torch / Emergency Light
+         * - Cooking Equipment
+         *
+         * Dried Food Bag is also NOT forced here.
+         *
+         * The coordinator selects the actual assistance
+         * from the HTML form.
          */
 
-        selectedReliefItems.add(
-                "Dried Food Bag"
-        );
-
-
-        selectedReliefItems.add(
-                "10 kg Rice Bag"
-        );
-
 
         // =====================================================
-        // SEND DATA TO THYMELEAF
+        // SEND DATA TO HTML
         // =====================================================
 
         model.addAttribute(
@@ -282,18 +235,15 @@ public class ReliefRequirementController {
                 reliefRequirement
         );
 
-
         model.addAttribute(
                 "needsAssessment",
                 needsAssessment
         );
 
-
         model.addAttribute(
                 "victim",
                 victim
         );
-
 
         model.addAttribute(
                 "selectedReliefItems",
@@ -302,7 +252,7 @@ public class ReliefRequirementController {
 
 
         // =====================================================
-        // OPEN PAGE
+        // OPEN RELIEF REQUIREMENT PAGE
         // =====================================================
 
         return "relief-coordinator/relief-requirement";
@@ -316,30 +266,75 @@ public class ReliefRequirementController {
     @PostMapping("/save")
     public String saveReliefRequirement(
 
-            @RequestParam(
-                    name = "needsAssessmentId"
-            )
-            Long needsAssessmentId,
+            @RequestParam Long needsAssessmentId,
 
 
+            // -------------------------------------------------
+            // SELECTED RELIEF ITEMS
+            // -------------------------------------------------
+
             @RequestParam(
-                    name = "reliefItems",
+                    value = "reliefItems",
                     required = false
             )
             List<String> reliefItems,
 
 
+            // -------------------------------------------------
+            // ADDITIONAL ITEMS
+            // -------------------------------------------------
+            /*
+             * This comes from the new text box in the HTML.
+             *
+             * Example:
+             *
+             * Rice 25kg
+             * Baby formula
+             * Mosquito nets
+             *
+             * It will be stored together with the selected
+             * relief items.
+             */
+
             @RequestParam(
-                    name = "victimMessage",
+                    value = "additionalItems",
+                    required = false
+            )
+            String additionalItems,
+
+
+            // -------------------------------------------------
+            // VICTIM MESSAGE
+            // -------------------------------------------------
+
+            @RequestParam(
+                    value = "victimMessage",
                     required = false
             )
             String victimMessage,
 
 
+            // -------------------------------------------------
+            // STATUS
+            // -------------------------------------------------
+
             @RequestParam(
-                    name = "status"
+                    value = "status",
+                    required = false
             )
             String status,
+
+
+            // -------------------------------------------------
+            // SEND TO DISTRIBUTION
+            // -------------------------------------------------
+
+            @RequestParam(
+                    value = "sendToDistribution",
+                    required = false,
+                    defaultValue = "false"
+            )
+            boolean sendToDistribution,
 
 
             RedirectAttributes redirectAttributes) {
@@ -422,7 +417,6 @@ public class ReliefRequirementController {
 
             reliefRequirement =
                     existingRequirement.get();
-
         }
 
 
@@ -434,16 +428,6 @@ public class ReliefRequirementController {
 
             reliefRequirement =
                     new ReliefRequirement();
-
-
-            reliefRequirement.setNeedsAssessment(
-                    needsAssessment
-            );
-
-
-            reliefRequirement.setVictim(
-                    victim
-            );
         }
 
 
@@ -473,11 +457,8 @@ public class ReliefRequirementController {
                 victim.getFullName();
 
 
-        if (
-                recipientName == null
-                        ||
-                        recipientName.trim().isEmpty()
-        ) {
+        if (recipientName == null
+                || recipientName.trim().isEmpty()) {
 
             recipientName =
                     "Unknown Recipient";
@@ -496,27 +477,26 @@ public class ReliefRequirementController {
         String shelterName =
                 "Not Assigned";
 
-
         String affectedArea =
                 victim.getAddress();
 
 
-        if (victim.getShelter() != null) {
+        // -----------------------------------------------------
+        // IF VICTIM HAS A SHELTER
+        // -----------------------------------------------------
 
+        if (victim.getShelter() != null) {
 
             // -------------------------------------------------
             // SHELTER NAME
             // -------------------------------------------------
 
-            if (
-                    victim.getShelter()
-                            .getShelterName() != null
-                            &&
-                            !victim.getShelter()
-                                    .getShelterName()
-                                    .trim()
-                                    .isEmpty()
-            ) {
+            if (victim.getShelter()
+                    .getShelterName() != null
+                    && !victim.getShelter()
+                    .getShelterName()
+                    .trim()
+                    .isEmpty()) {
 
                 shelterName =
                         victim.getShelter()
@@ -529,15 +509,12 @@ public class ReliefRequirementController {
             // SHELTER LOCATION
             // -------------------------------------------------
 
-            if (
-                    victim.getShelter()
-                            .getLocation() != null
-                            &&
-                            !victim.getShelter()
-                                    .getLocation()
-                                    .trim()
-                                    .isEmpty()
-            ) {
+            if (victim.getShelter()
+                    .getLocation() != null
+                    && !victim.getShelter()
+                    .getLocation()
+                    .trim()
+                    .isEmpty()) {
 
                 affectedArea =
                         victim.getShelter()
@@ -548,14 +525,11 @@ public class ReliefRequirementController {
 
 
         // -----------------------------------------------------
-        // SAFETY CHECK FOR AFFECTED AREA
+        // SAFETY CHECK
         // -----------------------------------------------------
 
-        if (
-                affectedArea == null
-                        ||
-                        affectedArea.trim().isEmpty()
-        ) {
+        if (affectedArea == null
+                || affectedArea.trim().isEmpty()) {
 
             affectedArea =
                     "Not Specified";
@@ -592,34 +566,109 @@ public class ReliefRequirementController {
 
 
         // =====================================================
-        // ALWAYS ADD DRIED FOOD BAG
+        // REMOVE OLD / DISCONTINUED ITEMS
         // =====================================================
 
-        if (
-                !reliefItems.contains(
-                        "Dried Food Bag"
-                )
-        ) {
+        /*
+         * These items are no longer part of the
+         * Relief Coordinator assistance form.
+         */
 
-            reliefItems.add(
-                    "Dried Food Bag"
-            );
+        reliefItems.remove(
+                "10 kg Rice Bag"
+        );
+
+        reliefItems.remove(
+                "Torch / Emergency Light"
+        );
+
+        reliefItems.remove(
+                "Cooking Equipment"
+        );
+
+
+        // =====================================================
+        // CLEAN EMPTY VALUES
+        // =====================================================
+
+        reliefItems.removeIf(
+                item ->
+                        item == null
+                                || item.trim().isEmpty()
+        );
+
+
+        // =====================================================
+        // ADD ADDITIONAL ITEMS
+        // =====================================================
+
+        /*
+         * Additional items are entered manually by the
+         * Relief Coordinator according to the victim's
+         * submitted Needs Assessment.
+         *
+         * They are added to the same reliefItems field so
+         * Distribution Management can see them later.
+         */
+
+        if (additionalItems != null
+                && !additionalItems.trim().isEmpty()) {
+
+            String[] additionalItemList =
+                    additionalItems
+                            .split("[,\\n]");
+
+
+            for (String item :
+                    additionalItemList) {
+
+                if (item != null
+                        && !item.trim().isEmpty()) {
+
+                    String cleanedItem =
+                            item.trim();
+
+
+                    // Prevent discontinued items
+                    // from being saved through
+                    // the additional-items box.
+
+                    if (!cleanedItem.equalsIgnoreCase(
+                            "10 kg Rice Bag")
+                            && !cleanedItem.equalsIgnoreCase(
+                            "Torch / Emergency Light")
+                            && !cleanedItem.equalsIgnoreCase(
+                            "Cooking Equipment")) {
+
+                        reliefItems.add(
+                                cleanedItem
+                        );
+                    }
+                }
+            }
         }
 
 
         // =====================================================
-        // ALWAYS ADD 10 KG RICE BAG
+        // REMOVE DUPLICATE ITEMS
         // =====================================================
 
-        if (
-                !reliefItems.contains(
-                        "10 kg Rice Bag"
-                )
-        ) {
+        List<String> cleanedReliefItems =
+                new ArrayList<>();
 
-            reliefItems.add(
-                    "10 kg Rice Bag"
-            );
+
+        for (String item :
+                reliefItems) {
+
+            if (item != null
+                    && !item.trim().isEmpty()
+                    && !cleanedReliefItems.contains(
+                    item.trim())) {
+
+                cleanedReliefItems.add(
+                        item.trim()
+                );
+            }
         }
 
 
@@ -630,7 +679,7 @@ public class ReliefRequirementController {
         String savedReliefItems =
                 String.join(
                         " | ",
-                        reliefItems
+                        cleanedReliefItems
                 );
 
 
@@ -661,74 +710,44 @@ public class ReliefRequirementController {
         // SAVE STATUS
         // =====================================================
 
-        /*
-         * THIS IS THE IMPORTANT PART.
-         *
-         * The value coming from the HTML can be:
-         *
-         * Pending
-         * pending
-         * PENDING
-         *
-         * or
-         *
-         * Approved
-         * approved
-         * APPROVED
-         *
-         * We convert everything to uppercase before
-         * saving to MySQL.
-         */
+        if (sendToDistribution) {
 
-        String finalStatus;
+            /*
+             * When the RC clicks:
+             *
+             * Save & Send to Victim + Distribution
+             *
+             * the requirement becomes ready for
+             * Distribution Management.
+             */
 
+            reliefRequirement.setStatus(
+                    "READY FOR DISTRIBUTION"
+            );
 
-        if (
-                status != null
-                        &&
-                        !status.trim().isEmpty()
-        ) {
+        } else if (status != null
+                && !status.trim().isEmpty()) {
 
-            String submittedStatus =
-                    status
-                            .trim()
-                            .toUpperCase();
-
-
-            if (
-                    "APPROVED".equals(
-                            submittedStatus
-                    )
-            ) {
-
-                finalStatus =
-                        "APPROVED";
-
-            } else {
-
-                finalStatus =
-                        "PENDING";
-            }
+            reliefRequirement.setStatus(
+                    status.trim()
+            );
 
         } else {
 
-            finalStatus =
-                    "PENDING";
+            reliefRequirement.setStatus(
+                    "Pending"
+            );
         }
-
-
-        /*
-         * Save the final normalized status.
-         */
-
-        reliefRequirement.setStatus(
-                finalStatus
-        );
 
 
         // =====================================================
         // MARK VICTIM AS NOTIFIED
         // =====================================================
+
+        /*
+         * The saved requirement is now available for
+         * the Victim Dashboard.
+         */
 
         reliefRequirement.setVictimNotified(
                 true
@@ -739,46 +758,42 @@ public class ReliefRequirementController {
         // SAVE TO DATABASE
         // =====================================================
 
-        ReliefRequirement savedRequirement =
-                reliefRequirementService
-                        .createReliefRequirement(
-                                reliefRequirement
-                        );
+        reliefRequirementService
+                .createReliefRequirement(
+                        reliefRequirement
+                );
 
 
         // =====================================================
-        // VERIFY STATUS WAS SAVED
+        // RESULT MESSAGE
         // =====================================================
 
-        if (
-                savedRequirement == null
-                        ||
-                        savedRequirement.getStatus() == null
-        ) {
+        if (sendToDistribution) {
 
             redirectAttributes.addFlashAttribute(
-                    "error",
-                    "Relief requirement could not be saved."
+                    "success",
+                    "Relief requirement saved and sent to the Victim and Distribution Management successfully."
             );
 
-            return "redirect:/relief-coordinator/dashboard";
+        } else {
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "Relief requirement saved successfully."
+            );
         }
 
 
         // =====================================================
-        // SUCCESS MESSAGE
+        // AFTER SAVE
         // =====================================================
 
-        redirectAttributes.addFlashAttribute(
-                "success",
-                "Relief requirement saved successfully with status: "
-                        + savedRequirement.getStatus()
-        );
-
-
-        // =====================================================
-        // RETURN TO DASHBOARD
-        // =====================================================
+        /*
+         * Keep the existing Relief Coordinator flow.
+         *
+         * Distribution Management reads the same
+         * ReliefRequirement record from the database.
+         */
 
         return "redirect:/relief-coordinator/dashboard";
     }

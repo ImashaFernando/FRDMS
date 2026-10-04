@@ -515,6 +515,41 @@
         }
 
         /* =====================================================
+           ADDITIONAL ITEMS TEXTBOX
+        ====================================================== */
+
+        .additional-items-section {
+            margin-top: 35px;
+            padding-top: 30px;
+            border-top: 1px solid #e6ebf3;
+        }
+
+        .additional-items-textarea {
+            width: 100%;
+            min-height: 150px;
+            resize: vertical;
+            padding: 20px;
+            border: 2px solid #dce4f1;
+            border-radius: 20px;
+            background: white;
+            color: #334d70;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.7;
+            outline: none;
+        }
+
+        .additional-items-textarea:focus {
+            border-color: #4d70d0;
+            box-shadow: 0 0 0 5px rgba(77, 112, 208, 0.10);
+        }
+
+        .additional-items-textarea::placeholder {
+            color: #8a98aa;
+        }
+
+
+        /* =====================================================
            MESSAGE
         ====================================================== */
 
@@ -815,11 +850,9 @@
 
         <p>
             Review the victim's submitted needs assessment carefully
-            before selecting additional relief assistance.
-            Every victim receives the standard dried food package
-            and 10 kg rice bag.
-            Additional assistance should be selected according to
-            the needs identified in the assessment.
+            before preparing the relief requirement. The relief items
+            should be selected according to the needs identified in
+            the assessment.
         </p>
 
 
@@ -1019,8 +1052,8 @@
             <p class="needs-assessment-description">
 
                 Use the information below to determine which
-                additional relief assistance should be provided
-                to this victim.
+                relief assistance should be prepared for this victim
+                according to the submitted needs assessment.
 
             </p>
 
@@ -1303,37 +1336,10 @@
                 </div>
 
 
-                <!-- RICE -->
-
-                <div class="standard-item">
-
-                    <div class="standard-check">
-                        ✓
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            10 kg Rice Bag
-                        </strong>
-
-                        <span>
-                            Standard rice assistance provided to every victim
-                        </span>
-
-                    </div>
-
-                </div>
-
-
                 <input type="hidden"
                        name="reliefItems"
                        value="Dried Food Bag">
 
-
-                <input type="hidden"
-                       name="reliefItems"
-                       value="10 kg Rice Bag">
 
             </div>
 
@@ -1343,12 +1349,12 @@
             ================================================== -->
 
             <h3 class="additional-title">
-                Additional Assistance
+                Relief Items Based on Needs Assessment
             </h3>
 
             <p class="additional-description">
 
-                Select only the items required according to
+                Select the relief items required according to
                 the victim's submitted needs assessment.
 
             </p>
@@ -1413,32 +1419,7 @@
                 </label>
 
 
-                <!-- CLOTHING -->
 
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Clothing"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Clothing')}">
-
-                    <div class="item-icon">
-                        👕
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Clothing
-                        </strong>
-
-                        <span>
-                            Essential clothing for affected victims
-                        </span>
-
-                    </div>
-
-                </label>
 
 
                 <!-- HYGIENE -->
@@ -1523,64 +1504,6 @@
                     </div>
 
                 </label>
-
-
-                <!-- TORCH -->
-
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Torch / Emergency Light"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Torch / Emergency Light')}">
-
-                    <div class="item-icon">
-                        🔦
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Torch / Emergency Light
-                        </strong>
-
-                        <span>
-                            Lighting support for households without electricity
-                        </span>
-
-                    </div>
-
-                </label>
-
-
-                <!-- COOKING EQUIPMENT -->
-
-                <label class="item-card">
-
-                    <input type="checkbox"
-                           name="reliefItems"
-                           value="Cooking Equipment"
-                           th:checked="${selectedReliefItems != null and selectedReliefItems.contains('Cooking Equipment')}">
-
-                    <div class="item-icon">
-                        🍳
-                    </div>
-
-                    <div class="item-content">
-
-                        <strong>
-                            Cooking Equipment
-                        </strong>
-
-                        <span>
-                            Basic cooking utensils and equipment
-                        </span>
-
-                    </div>
-
-                </label>
-
-
                 <!-- CLEANING -->
 
                 <label class="item-card">
@@ -1635,6 +1558,52 @@
                     </div>
 
                 </label>
+
+            </div>
+
+
+            <!-- =================================================
+                 ADDITIONAL ITEMS REQUESTED BY VICTIM
+            ================================================== -->
+
+            <div class="additional-items-section">
+
+                <div class="message-heading">
+
+                    <div class="message-icon">
+                        ➕
+                    </div>
+
+                    <div>
+
+                        <label class="field-label"
+                               for="additionalItems">
+
+                            Additional Items Requested by Victim
+
+                        </label>
+
+                        <p class="message-description">
+
+                            Enter any additional items mentioned by the victim
+                            in the needs assessment that are not available in
+                            the item list above. Separate multiple items with
+                            commas or write each item on a new line.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <textarea id="additionalItems"
+                          name="additionalItems"
+                          class="additional-items-textarea"
+                          placeholder="Example:
+Baby formula
+Mosquito nets
+Special medication"></textarea>
 
             </div>
 

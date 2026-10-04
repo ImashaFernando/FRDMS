@@ -44,7 +44,13 @@ public class AffectedFamilyInformationService {
     public Optional<AffectedFamilyInformation> getByVictim(
             Victim victim) {
 
-        return repository.findByVictim(victim);
+        if (victim == null || victim.getId() == null) {
+            return Optional.empty();
+        }
+
+        return repository.findByVictim_Id(
+                victim.getId()
+        );
     }
 
 
@@ -164,15 +170,18 @@ public class AffectedFamilyInformationService {
                 existingInformation
         );
     }
+
+
     // =========================================================
-// GET FAMILIES REQUIRING SHELTER
-// SM-US7
-// =========================================================
+    // GET FAMILIES REQUIRING SHELTER
+    // SM-US7
+    // =========================================================
 
     public List<AffectedFamilyInformation>
     getFamiliesRequiringShelter() {
-        return repository.findByShelterRequiredTrueOrderByIdDesc();
+
+        return repository
+                .findByShelterRequiredTrueOrderByIdDesc();
     }
-        }
 
-
+}
