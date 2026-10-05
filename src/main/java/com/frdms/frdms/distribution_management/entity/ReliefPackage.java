@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "relief_packages")
+
 public class ReliefPackage {
 
     @Id
@@ -62,6 +63,21 @@ public class ReliefPackage {
             message = "Driver name cannot exceed 100 characters")
     @Column(name = "driver_name", length = 100)
     private String driverName;
+
+    // =========================================================
+// FAMILY COUNTS USED FOR PACKAGE QUANTITY CALCULATION
+// These values are entered manually during package creation.
+// They are not stored as database columns.
+// =========================================================
+
+    @Transient
+    private Integer adults;
+
+    @Transient
+    private Integer children;
+
+    @Transient
+    private Integer women;
 
     @OneToMany(
             mappedBy = "reliefPackage",
@@ -151,6 +167,30 @@ public class ReliefPackage {
 
     public void setDriverName(String driverName) {
         this.driverName = driverName;
+    }
+
+    public Integer getAdults() {
+        return adults;
+    }
+
+    public void setAdults(Integer adults) {
+        this.adults = adults;
+    }
+
+    public Integer getChildren() {
+        return children;
+    }
+
+    public void setChildren(Integer children) {
+        this.children = children;
+    }
+
+    public Integer getWomen() {
+        return women;
+    }
+
+    public void setWomen(Integer women) {
+        this.women = women;
     }
 
     public List<ReliefPackageItem> getItems() {

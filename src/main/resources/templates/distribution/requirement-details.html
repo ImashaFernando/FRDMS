@@ -21,6 +21,7 @@
             padding: 0;
         }
 
+
         body {
             font-family:
                     "Segoe UI",
@@ -747,6 +748,15 @@
         .btn-back {
             background: #edf4ff;
             color: #315a91;
+        }
+        .btn-package {
+            background: linear-gradient(135deg, #3582B8, #1F3A60);
+            color: white;
+        }
+
+        .btn-package:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(31, 58, 96, 0.25);
         }
 
         .btn-back:hover {
@@ -1717,6 +1727,13 @@
                class="btn btn-back">
 
                 ← Back to Requirements
+
+            </a>
+
+            <a th:href="@{/distribution/packages/new(requirementId=${requirement.id})}"
+               class="btn btn-package">
+
+                📦 Make Package
 
             </a>
 

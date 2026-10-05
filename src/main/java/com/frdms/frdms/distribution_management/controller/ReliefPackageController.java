@@ -2,6 +2,8 @@ package com.frdms.frdms.distribution_management.controller;
 
 import com.frdms.frdms.distribution_management.entity.ReliefPackage;
 import com.frdms.frdms.distribution_management.service.ReliefPackageService;
+import com.frdms.frdms.distribution_management.service.ReliefRequirementService;
+import com.frdms.frdms.victim_management.entity.ReliefRequirement;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,14 @@ public class ReliefPackageController {
 
     private final ReliefPackageService packageService;
 
-    public ReliefPackageController(ReliefPackageService packageService) {
+    private final ReliefRequirementService reliefRequirementService;
+
+    public ReliefPackageController(
+            ReliefPackageService packageService,
+            ReliefRequirementService reliefRequirementService) {
+
         this.packageService = packageService;
+        this.reliefRequirementService = reliefRequirementService;
     }
 
 
@@ -44,18 +52,91 @@ public class ReliefPackageController {
 
     // Show Create Package page
     @GetMapping("/new")
-    public String showCreatePackageForm(Model model) {
+    public String showCreatePackageForm(
+            @RequestParam Long requirementId,
+            Model model) {
 
+        // Get the exact requirement selected by the Distribution officer
+        ReliefRequirement requirement =
+                reliefRequirementService.getRequirementById(requirementId);
+
+        // Only approved requirements can be used to create a package
+        if (requirement.getStatus() == null
+                || !"APPROVED".equalsIgnoreCase(
+                requirement.getStatus().trim())) {
+
+            return "redirect:/distribution/requirements";
+        }
+
+        // Create a new relief package
         ReliefPackage reliefPackage = new ReliefPackage();
 
-        // Start with one empty relief item row
-        reliefPackage.addItem(new com.frdms.frdms.distribution_management.entity.ReliefPackageItem());
+        // =========================================================
+        // AUTOMATICALLY FILL REQUIREMENT / VICTIM DETAILS
+        // =========================================================
 
-        model.addAttribute("reliefPackage", reliefPackage);
+        // Recipient name comes from the approved requirement
+        reliefPackage.setRecipientName(
+                requirement.getRecipientName()
+        );
+
+        // Affected area comes from the approved requirement
+        reliefPackage.setAffectedArea(
+                requirement.getAffectedArea()
+        );
+
+        // Shelter comes from the approved requirement
+        reliefPackage.setShelter(
+                requirement.getShelter()
+        );
+
+        // Contact number comes from the victim
+        if (requirement.getVictim() != null) {
+
+            reliefPackage.setContactNumber(
+                    requirement.getVictim().getPhoneNumber()
+            );
+        }
+
+        // =========================================================
+        // AUTOMATIC DELIVERY ADDRESS
+        // =========================================================
+
+        if (requirement.getShelter() != null
+                && !requirement.getShelter().isBlank()
+                && !"Not Assigned".equalsIgnoreCase(
+                requirement.getShelter().trim())) {
+
+            // Victim has an assigned shelter
+            reliefPackage.setDeliveryAddress(
+                    requirement.getShelter()
+            );
+
+        } else if (requirement.getVictim() != null) {
+
+            // No shelter → use victim's registered address
+            reliefPackage.setDeliveryAddress(
+                    requirement.getVictim().getAddress()
+            );
+        }
+
+        // Start with one empty relief item row
+        reliefPackage.addItem(
+                new com.frdms.frdms.distribution_management.entity.ReliefPackageItem()
+        );
+
+        model.addAttribute(
+                "reliefPackage",
+                reliefPackage
+        );
+
+        model.addAttribute(
+                "requirement",
+                requirement
+        );
 
         return "distribution/create-package";
     }
-
 
     // Save Package
     @PostMapping("/save")
