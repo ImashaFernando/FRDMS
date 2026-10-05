@@ -201,6 +201,8 @@
                     </div>
 
 
+
+
                     <!-- Status -->
 
                     <div class="form-group">
@@ -270,6 +272,184 @@
                     </div>
 
                 </div>
+
+            </div>
+            <!-- =================================================
+     FAMILY COMPOSITION
+     Used for relief quantity calculation
+     ================================================= -->
+
+            <div class="family-composition-card">
+
+                <div class="family-composition-header">
+
+                    <div class="family-composition-icon">
+                        👨‍👩‍👧‍👦
+                    </div>
+
+                    <div>
+                        <h2>Family Composition</h2>
+
+                        <p>
+                            Enter the number of family members to calculate
+                            the required relief quantities.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="family-count-grid">
+
+                    <!-- Adults -->
+
+                    <div class="family-count-box">
+
+                        <div class="family-count-icon">
+                            👨
+                        </div>
+
+                        <div class="family-count-content">
+
+                            <label for="adults">
+                                Adults
+                            </label>
+
+                            <input type="number"
+                                   id="adults"
+                                   th:field="*{adults}"
+                                   min="0"
+                                   placeholder="Number of adults"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Children -->
+
+                    <div class="family-count-box">
+
+                        <div class="family-count-icon">
+                            👶
+                        </div>
+
+                        <div class="family-count-content">
+
+                            <label for="children">
+                                Children
+                            </label>
+
+                            <input type="number"
+                                   id="children"
+                                   th:field="*{children}"
+                                   min="0"
+                                   placeholder="Number of children"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Women -->
+
+                    <div class="family-count-box">
+
+                        <div class="family-count-icon">
+                            👩
+                        </div>
+
+                        <div class="family-count-content">
+
+                            <label for="women">
+                                Women
+                            </label>
+
+                            <input type="number"
+                                   id="women"
+                                   th:field="*{women}"
+                                   min="0"
+                                   placeholder="Number of women"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+     ADDITIONAL REQUIREMENTS REQUESTED
+     ===================================================== -->
+
+            <div class="additional-requirements-card"
+                 th:if="${needsAssessment != null
+             and needsAssessment.otherNeeds != null
+             and !#strings.isEmpty(needsAssessment.otherNeeds.trim())}">
+
+                <div class="additional-requirements-header">
+
+                    <div class="additional-requirements-icon">
+                        ➕
+                    </div>
+
+                    <div>
+                        <h2>Additional Requirements Requested</h2>
+
+                        <p>
+                            Additional items requested for this relief requirement.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="additional-requirements-content"
+                     th:text="${needsAssessment.otherNeeds}">
+                    Additional requirements requested by the victim.
+                </div>
+
+                <div class="additional-requirements-note">
+                    Review these additional requirements and use
+                    <strong>+ Add Item</strong> below to manually include
+                    any required items in the relief package.
+                </div>
+
+            </div>
+            <!-- =================================================
+     PREPARE RELIEF ITEMS
+     ================================================= -->
+
+            <div class="prepare-items-section">
+
+                <button type="button"
+                        id="prepareReliefItemsBtn"
+                        class="btn-prepare-items"
+
+                        th:data-approved-items="${requirement.reliefItems}"
+
+                        th:data-water-quantity="${requirement.drinkingWaterQuantity}"
+
+                        th:data-bedding-quantity="${requirement.beddingQuantity}"
+
+                        th:data-hygiene-quantity="${requirement.hygieneKitQuantity}"
+
+                        th:data-medicine-quantity="${requirement.medicalSuppliesQuantity}">
+
+                    🧺 Prepare Relief Items
+
+                </button>
+
+                    🧺 Prepare Relief Items
+
+                </button>
+
+                <p class="prepare-items-help">
+                    Automatically prepare the applicable relief items
+                    and calculate quantities based on family composition.
+                </p>
 
             </div>
 
@@ -394,6 +574,8 @@
                 </div>
 
 
+
+
                 <!-- =========================
                      BUTTONS
                      ========================= -->
@@ -436,6 +618,774 @@
     let itemIndex = 1;
 
 
+    /* =========================================================
+       PREPARE RELIEF ITEMS
+       ========================================================= */
+
+    document
+        .getElementById("prepareReliefItemsBtn")
+        .addEventListener("click", prepareReliefItems);
+
+
+    function prepareReliefItems() {
+
+        const adults =
+            parseInt(
+                document.getElementById("adults").value
+            ) || 0;
+
+        const children =
+            parseInt(
+                document.getElementById("children").value
+            ) || 0;
+
+        const approvedItemsElement =
+            document.getElementById("prepareReliefItemsBtn");
+
+        const approvedItems =
+            approvedItemsElement
+                .getAttribute("data-approved-items") || "";
+
+        const waterQuantity =
+            parseInt(
+                approvedItemsElement
+                    .getAttribute("data-water-quantity")
+            ) || 0;
+
+        const beddingQuantity =
+            parseInt(
+                approvedItemsElement
+                    .getAttribute("data-bedding-quantity")
+            ) || 0;
+
+        const hygieneQuantity =
+            parseInt(
+                approvedItemsElement
+                    .getAttribute("data-hygiene-quantity")
+            ) || 0;
+
+        const medicineQuantity =
+            parseInt(
+                approvedItemsElement
+                    .getAttribute("data-medicine-quantity")
+            ) || 0;
+
+
+
+        const approvedText =
+            approvedItems.toLowerCase();
+
+        const waterApproved =
+            approvedText.includes("drinking water") ||
+            approvedText.includes("water");
+
+        const beddingApproved =
+            approvedText.includes("bedding");
+
+        const hygieneApproved =
+            approvedText.includes("hygiene");
+
+        const medicineApproved =
+            approvedText.includes("medicine supplies") ||
+            approvedText.includes("medicine") ||
+            approvedText.includes("first aid");
+
+
+
+        /*
+         * Family members are required before
+         * relief quantities can be calculated.
+         */
+
+        if (adults === 0 &&
+            children === 0 &&
+            women === 0) {
+
+            alert(
+                "Please enter the family composition before preparing relief items."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Clear the existing manually-entered row.
+         */
+
+        const container =
+            document.getElementById("itemsContainer");
+
+        container.innerHTML = "";
+
+        itemIndex = 0;
+
+
+        /* =====================================================
+           🍚 DRY FOOD PACKAGE
+           Always included
+           ===================================================== */
+
+        addCategoryHeader(
+            "🍚",
+            "Dry Food Package"
+        );
+
+
+        /*
+         * Adult standard = 14 days
+         *
+         * Children receive 50% of the adult quantity.
+         */
+
+        const familyFoodMultiplier =
+            adults + (children * 0.5);
+
+
+        addGeneratedItem(
+            "Rice",
+            familyFoodMultiplier * 5,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Dhal",
+            familyFoodMultiplier * 1,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Soya meat",
+            familyFoodMultiplier * 0.5,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Canned tuna",
+            familyFoodMultiplier * 2,
+            "cans"
+        );
+
+        addGeneratedItem(
+            "Dry fish",
+            familyFoodMultiplier * 0.25,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Sugar",
+            familyFoodMultiplier * 0.5,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Salt",
+            familyFoodMultiplier * 0.25,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Tea",
+            familyFoodMultiplier * 0.1,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Milk powder",
+            familyFoodMultiplier * 0.4,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Chilli powder",
+            familyFoodMultiplier * 0.1,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Curry powder",
+            familyFoodMultiplier * 0.1,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Turmeric powder",
+            familyFoodMultiplier * 0.05,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Coconut powder",
+            familyFoodMultiplier * 0.25,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Cooking oil",
+            familyFoodMultiplier * 0.5,
+            "litres"
+        );
+
+        addGeneratedItem(
+            "Biscuit packets",
+            familyFoodMultiplier * 2,
+            "packets"
+        );
+
+        addGeneratedItem(
+            "Cereal",
+            familyFoodMultiplier * 0.5,
+            "kg"
+        );
+
+        addGeneratedItem(
+            "Instant noodles",
+            familyFoodMultiplier * 2,
+            "packets"
+        );
+
+        addGeneratedItem(
+            "Canned food",
+            familyFoodMultiplier * 1,
+            "cans"
+        );
+
+
+        /*
+         * Family-level additions.
+         *
+         * These do NOT depend on family size.
+         */
+
+        addGeneratedItem(
+            "Panadol",
+            2,
+            "cards"
+        );
+
+        addGeneratedItem(
+            "Paspanguwa",
+            3,
+            "packets"
+        );
+
+
+        /* =====================================================
+           🍫 CHILDREN'S TREAT PACK
+           Only generated when children exist.
+           ===================================================== */
+
+        if (children > 0) {
+
+            addCategoryHeader(
+                "🍫",
+                "Children's Treat Pack"
+            );
+
+            addGeneratedItem(
+                "Small chocolate bar",
+                children,
+                "bars"
+            );
+
+            addGeneratedItem(
+                "Small fruit juice",
+                children,
+                "bottles"
+            );
+        }
+        /* =====================================================
+   💧 DRINKING WATER PACK
+   1 Water Pack = 6 × 1.5L bottles
+   ===================================================== */
+
+        if (waterApproved) {
+
+            addCategoryHeader(
+                "💧",
+                "Drinking Water Pack"
+            );
+
+            // 6 bottles of 1.5L per approved Water Pack
+
+            addGeneratedItem(
+                "Drinking Water (1.5L bottles)",
+                6 * waterQuantity,
+                "bottles"
+            );
+        }
+        /* =====================================================
+   🛏️ BEDDING PACK
+   Approved quantity = number of bedding packs
+   ===================================================== */
+
+        if (beddingApproved) {
+
+            addCategoryHeader(
+                "🛏️",
+                "Bedding Pack"
+            );
+
+
+            /*
+             * One Bedding Pack contains:
+             *
+             * 1 Sleeping Mat
+             * 1 Blanket
+             * 1 Bedsheet
+             * 1 Pillow
+             *
+             * The approved quantity tells us
+             * how many packs are required.
+             */
+
+
+            addGeneratedItem(
+                "Sleeping mat",
+                1 * beddingQuantity,
+                "pcs"
+            );
+
+
+            addGeneratedItem(
+                "Blanket",
+                1 * beddingQuantity,
+                "pcs"
+            );
+
+
+            addGeneratedItem(
+                "Bedsheet",
+                1 * beddingQuantity,
+                "pcs"
+            );
+
+
+            addGeneratedItem(
+                "Pillow",
+                1 * beddingQuantity,
+                "pcs"
+            );
+        }
+        /* =====================================================
+    🧼 HYGIENE PACK
+    Approved quantity = number of Hygiene Packs
+
+    Per 1 Hygiene Pack:
+    - 6 soap bars
+    - 1 toothbrush per family member
+    - 1 toothpaste
+    - 1 shampoo
+    - 2 sanitary pads per woman
+    ===================================================== */
+
+        if (hygieneApproved) {
+
+            addCategoryHeader(
+                "🧼",
+                "Hygiene Pack"
+            );
+
+            const totalFamilyMembers =
+                adults + children + women;
+
+
+            // 6 soap bars per Hygiene Pack
+
+            addGeneratedItem(
+                "Soap",
+                6 * hygieneQuantity,
+                "bars"
+            );
+
+
+            // 1 toothbrush per family member per Hygiene Pack
+
+            if (totalFamilyMembers > 0) {
+
+                addGeneratedItem(
+                    "Toothbrush",
+                    totalFamilyMembers * hygieneQuantity,
+                    "pcs"
+                );
+            }
+
+
+            // 1 toothpaste per Hygiene Pack
+
+            addGeneratedItem(
+                "Toothpaste",
+                1 * hygieneQuantity,
+                "tubes"
+            );
+
+
+            // 1 shampoo bottle per Hygiene Pack
+
+            addGeneratedItem(
+                "Shampoo",
+                1 * hygieneQuantity,
+                "bottles"
+            );
+
+
+            // 2 sanitary pads per woman per Hygiene Pack
+
+            if (women > 0) {
+
+                addGeneratedItem(
+                    "Sanitary pads",
+                    women * hygieneQuantity * 2,
+                    "pads"
+                );
+            }
+        }
+        /* =====================================================
+   🩹 MEDICINE SUPPLIES PACK
+   Approved quantity = number of medicine packs
+   ===================================================== */
+
+        if (medicineApproved) {
+
+            addCategoryHeader(
+                "🩹",
+                "Medicine Supplies Pack"
+            );
+
+
+            /*
+             * The approved quantity represents
+             * the number of Medicine Supplies Packs.
+             */
+
+            // 1 Paracetamol card per pack
+
+            addGeneratedItem(
+                "Paracetamol",
+                1 * medicineQuantity,
+                "cards"
+            );
+
+
+            // 5 ORS sachets per pack
+
+            addGeneratedItem(
+                "ORS sachets",
+                5 * medicineQuantity,
+                "sachets"
+            );
+
+
+            // 1 Antacid strip per pack
+
+            addGeneratedItem(
+                "Antacid",
+                1 * medicineQuantity,
+                "strips"
+            );
+
+
+            // 1 Antihistamine strip per pack
+
+            addGeneratedItem(
+                "Antihistamine",
+                1 * medicineQuantity,
+                "strips"
+            );
+
+
+            // 1 Antiseptic solution bottle per pack
+
+            addGeneratedItem(
+                "Antiseptic solution",
+                1 * medicineQuantity,
+                "bottles"
+            );
+
+
+            // 10 adhesive bandages per pack
+
+            addGeneratedItem(
+                "Adhesive bandages",
+                10 * medicineQuantity,
+                "pieces"
+            );
+
+
+            // 5 sterile gauze pieces per pack
+
+            addGeneratedItem(
+                "Sterile gauze",
+                5 * medicineQuantity,
+                "pieces"
+            );
+
+
+            // 1 medical tape roll per pack
+
+            addGeneratedItem(
+                "Medical tape",
+                1 * medicineQuantity,
+                "rolls"
+            );
+
+
+            // 1 elastic bandage per pack
+
+            addGeneratedItem(
+                "Elastic bandage",
+                1 * medicineQuantity,
+                "rolls"
+            );
+
+        }
+
+
+
+
+
+
+        updateItemNumbers();
+
+
+        /*
+         * Scroll to generated items.
+         */
+
+        document
+            .getElementById("itemsContainer")
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+    }
+
+
+    /* =========================================================
+       ADD CATEGORY HEADER
+       ========================================================= */
+
+    function addCategoryHeader(
+        emoji,
+        categoryName
+    ) {
+
+        const container =
+            document.getElementById("itemsContainer");
+
+
+        const category =
+            document.createElement("div");
+
+
+        category.className =
+            "relief-category-header";
+
+
+        category.innerHTML = `
+            <div class="relief-category-icon">
+                ${emoji}
+            </div>
+
+            <div>
+                <h3>${categoryName}</h3>
+
+                <p>
+                    Automatically prepared relief items
+                </p>
+            </div>
+        `;
+
+
+        container.appendChild(category);
+    }
+
+
+    /* =========================================================
+       ADD GENERATED ITEM
+       ========================================================= */
+
+    function addGeneratedItem(
+        itemName,
+        quantity,
+        unit
+    ) {
+
+        const container =
+            document.getElementById("itemsContainer");
+
+
+        const row =
+            document.createElement("div");
+
+
+        row.className =
+            "package-item-row";
+
+
+        const formattedQuantity =
+            Number(quantity.toFixed(2));
+
+
+        row.innerHTML = `
+
+            <div class="item-number">
+                ${itemIndex + 1}
+            </div>
+
+
+            <div class="item-field">
+
+                <label>
+                    Relief Item
+                </label>
+
+                <input type="text"
+                       name="items[${itemIndex}].reliefItemName"
+                       value="${itemName}"
+                       required>
+
+            </div>
+
+
+            <div class="item-field">
+
+                <label>
+                    Quantity
+                </label>
+
+                <input type="number"
+                       name="items[${itemIndex}].quantity"
+                       value="${formattedQuantity}"
+                       min="0.01"
+                       step="0.01"
+                       required>
+
+            </div>
+
+
+            <div class="item-field">
+
+                <label>
+                    Unit
+                </label>
+
+                <input type="text"
+                       name="items[${itemIndex}].unit"
+                       value="${unit}"
+                       required>
+
+            </div>
+
+
+            <button type="button"
+                    class="remove-item-button"
+                    onclick="removeItem(this)">
+
+                ×
+
+            </button>
+
+        `;
+
+
+        container.appendChild(row);
+
+        itemIndex++;
+    }
+    /* =========================================================
+   ADD MEDICINE ITEM
+   Quantity is entered/adjusted by the officer.
+   ========================================================= */
+
+    function addMedicineItem(itemName) {
+
+        const container =
+            document.getElementById("itemsContainer");
+
+
+        const row =
+            document.createElement("div");
+
+
+        row.className =
+            "package-item-row";
+
+
+        row.innerHTML = `
+
+        <div class="item-number">
+            ${itemIndex + 1}
+        </div>
+
+
+        <div class="item-field">
+
+            <label>
+                Relief Item
+            </label>
+
+            <input type="text"
+                   name="items[${itemIndex}].reliefItemName"
+                   value="${itemName}"
+                   required>
+
+        </div>
+
+
+        <div class="item-field">
+
+            <label>
+                Quantity
+            </label>
+
+            <input type="number"
+                   name="items[${itemIndex}].quantity"
+                   placeholder="Enter quantity"
+                   min="0.01"
+                   step="0.01"
+                   required>
+
+        </div>
+
+
+        <div class="item-field">
+
+            <label>
+                Unit
+            </label>
+
+            <input type="text"
+                   name="items[${itemIndex}].unit"
+                   placeholder="e.g. pack"
+                   required>
+
+        </div>
+
+
+        <button type="button"
+                class="remove-item-button"
+                onclick="removeItem(this)">
+
+            ×
+
+        </button>
+
+    `;
+
+
+        container.appendChild(row);
+
+        itemIndex++;
+
+        updateItemNumbers();
+    }
+
+
+    /* =========================================================
+       MANUAL ADD ITEM
+       ========================================================= */
+
     function addItem() {
 
         const container =
@@ -445,7 +1395,9 @@
         const row =
             document.createElement("div");
 
-        row.className = "package-item-row";
+
+        row.className =
+            "package-item-row";
 
 
         row.innerHTML = `
@@ -515,21 +1467,32 @@
         itemIndex++;
 
         updateItemNumbers();
-
     }
 
+
+
+
+
+
+    /* =========================================================
+       REMOVE ITEM
+       ========================================================= */
 
     function removeItem(button) {
 
         const row =
             button.closest(".package-item-row");
 
+
         row.remove();
 
         updateItemNumbers();
-
     }
 
+
+    /* =========================================================
+       UPDATE ITEM NUMBERS
+       ========================================================= */
 
     function updateItemNumbers() {
 
@@ -539,34 +1502,58 @@
             );
 
 
-        rows.forEach((row, index) => {
+        rows.forEach(
+            (row, index) => {
 
-            row.querySelector(".item-number")
-                .textContent = index + 1;
+                row.querySelector(
+                    ".item-number"
+                ).textContent =
+                    index + 1;
+            }
+        );
+    }
+    /* =========================================================
+   GET APPROVED QUANTITY
+   Reads the quantity from the approved requirement
+   ========================================================= */
 
-        });
+    function getApprovedQuantity(
+        approvedItems,
+        itemName
+    ) {
+
+        const parts =
+            approvedItems.split("|");
 
 
-        const removeButtons =
-            document.querySelectorAll(
-                ".remove-item-button"
+        const matchingPart =
+            parts.find(
+                part =>
+                    part
+                        .toLowerCase()
+                        .includes(itemName.toLowerCase())
             );
 
 
-        if (removeButtons.length === 1) {
-
-            removeButtons[0].disabled = true;
-
-        } else {
-
-            removeButtons.forEach(button => {
-
-                button.disabled = false;
-
-            });
-
+        if (!matchingPart) {
+            return 0;
         }
 
+
+        const quantityMatch =
+            matchingPart.match(
+                /(\d+(?:\.\d+)?)/
+            );
+
+
+        if (!quantityMatch) {
+            return 0;
+        }
+
+
+        return parseFloat(
+            quantityMatch[1]
+        );
     }
 
 </script>

@@ -665,24 +665,25 @@ body {
 
 .package-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    margin-top: 25px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 22px;
 }
 
 .package-card {
     background: #ffffff;
-    border: 1px solid #85B6D6;
-    border-radius: 18px;
-    padding: 28px 24px;
-    text-align: center;
-    box-shadow: 0 6px 18px rgba(31, 58, 96, 0.08);
-    transition: 0.25s ease;
+    border: 1px solid #B9D8EA;
+    border-radius: 14px;
+    padding: 18px 18px 14px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(31, 58, 96, 0.07);
+    transition: all 0.2s ease;
 }
 
 .package-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 28px rgba(31, 58, 96, 0.15);
+    transform: translateY(-3px);
+    border-color: #3582B8;
+    box-shadow: 0 8px 20px rgba(31, 58, 96, 0.12);
 }
 
 .package-icon {
@@ -4112,4 +4113,1662 @@ body {
     fill: none !important;
 
     display: block !important;
+}
+/* =========================================================
+   FAMILY COMPOSITION
+   ========================================================= */
+
+.family-composition-card {
+    background: #ffffff;
+    border: 1px solid #dfe8f5;
+    border-radius: 22px;
+    padding: 28px;
+    margin-top: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 30px rgba(40, 70, 110, 0.06);
+}
+
+.family-composition-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.family-composition-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: #eaf3fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    flex-shrink: 0;
+}
+
+.family-composition-header h2 {
+    margin: 0 0 5px;
+    color: #1f3a60;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.family-composition-header p {
+    margin: 0;
+    color: #71839b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.family-count-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.family-count-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f7faff;
+    border: 1px solid #dfe8f5;
+    border-radius: 17px;
+    padding: 18px;
+    transition: 0.25s ease;
+}
+
+.family-count-box:hover {
+    transform: translateY(-2px);
+    border-color: #85b6d6;
+    box-shadow: 0 8px 20px rgba(53, 130, 184, 0.08);
+}
+
+.family-count-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #e5f0f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.family-count-content {
+    flex: 1;
+}
+
+.family-count-content label {
+    display: block;
+    color: #1f3a60;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.family-count-content input {
+    width: 100%;
+    border: 1px solid #cbdbea;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #294d7d;
+    background: #ffffff;
+    outline: none;
+}
+
+.family-count-content input:focus {
+    border-color: #3582b8;
+    box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.10);
+}
+
+@media (max-width: 850px) {
+
+    .family-count-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* =========================================================
+   PREPARE RELIEF ITEMS
+   ========================================================= */
+
+.prepare-items-section {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 20px 0 28px;
+    padding: 20px 24px;
+    background: #f7faff;
+    border: 1px solid #dfe8f5;
+    border-radius: 18px;
+}
+
+.btn-prepare-items {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 22px;
+    background: linear-gradient(135deg, #3582B8, #1F3A60);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.btn-prepare-items:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(31, 58, 96, 0.20);
+}
+
+.prepare-items-help {
+    margin: 0;
+    color: #71839b;
+    font-size: 13px;
+    line-height: 1.5;
+}
+/* =========================================================
+   RELIEF ITEM CATEGORY HEADERS
+   ========================================================= */
+
+.relief-category-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 22px 0 14px;
+    padding: 16px 18px;
+
+    background: #f3f8fd;
+
+    border: 1px solid #dce8f4;
+    border-radius: 15px;
+}
+
+.relief-category-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e5f0f8;
+
+    border-radius: 13px;
+
+    font-size: 23px;
+
+    flex-shrink: 0;
+}
+
+.relief-category-header h3 {
+    margin: 0 0 3px;
+
+    color: #1f3a60;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.relief-category-header p {
+    margin: 0;
+
+    color: #71839b;
+
+    font-size: 12px;
+}
+/* =====================================================
+   ADDITIONAL REQUIREMENTS CARD
+   ===================================================== */
+
+.additional-requirements-card {
+    background: #fffaf2;
+    border: 1px solid #f0dfbf;
+    border-radius: 18px;
+    padding: 22px 24px;
+    margin-top: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 24px rgba(120, 90, 40, 0.06);
+}
+
+.additional-requirements-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.additional-requirements-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff0d6;
+    border-radius: 13px;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.additional-requirements-header h2 {
+    margin: 0 0 4px;
+    color: #1f3a60;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.additional-requirements-header p {
+    margin: 0;
+    color: #71839b;
+    font-size: 12px;
+}
+
+.additional-requirements-content {
+    background: #ffffff;
+    border: 1px solid #eadfcf;
+    border-radius: 12px;
+    padding: 15px 16px;
+    color: #34495e;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.additional-requirements-note {
+    margin-top: 12px;
+    color: #71839b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.additional-requirements-note strong {
+    color: #3582B8;
+}
+.relief-supply-status-button {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 15px 0 20px;
+    background: linear-gradient(135deg, #3582B8, #1F3A60);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.relief-supply-status-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(31, 58, 96, 0.25);
+}
+/* =========================================
+   NECESSARY RELIEF ITEMS - POLISHED UI
+   ========================================= */
+
+.requirements-section {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 36px 38px;
+    box-shadow: 0 10px 30px rgba(31, 58, 96, 0.10);
+}
+
+
+/* Page title */
+
+.requirements-title-row {
+    margin-bottom: 22px;
+}
+
+.requirements-title-row h1 {
+    font-size: 32px;
+    letter-spacing: -0.3px;
+}
+
+
+/* Relief Supply Status button */
+
+.relief-supply-status-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    margin-bottom: 22px;
+
+    background: linear-gradient(
+            135deg,
+            #3582B8,
+            #1F3A60
+    );
+
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow:
+            0 5px 14px rgba(31, 58, 96, 0.18);
+
+    transition: all 0.2s ease;
+}
+
+.relief-supply-status-button:hover {
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 8px 20px rgba(31, 58, 96, 0.25);
+}
+
+
+/* Total item types */
+
+.requirements-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 9px 15px;
+
+    margin-bottom: 18px;
+
+    background: #EDF3F6;
+
+    border: 1px solid #B9D8EA;
+
+    border-radius: 9px;
+
+    color: #3582B8;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.requirements-count span {
+    color: #1F3A60;
+    font-weight: 800;
+}
+
+
+/* Table */
+
+.requirements-table {
+    border-collapse: separate;
+    border-spacing: 0;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 4px 16px rgba(31, 58, 96, 0.07);
+}
+
+
+/* Table header */
+
+.requirements-table th {
+    background: linear-gradient(
+            135deg,
+            #1F3A60,
+            #294F7C
+    );
+
+    padding: 16px 16px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* Table cells */
+
+.requirements-table td {
+    padding: 17px 16px;
+
+    border-bottom: 1px solid #DCE8F0;
+
+    font-size: 14px;
+
+    background: #ffffff;
+
+    transition: background 0.2s ease;
+}
+
+
+/* Row hover */
+
+.requirements-table tbody tr:hover td {
+    background: #F2F8FC;
+}
+
+
+/* Relief item name */
+
+.requirements-table td:first-child {
+    font-weight: 600;
+}
+
+
+/* Request button */
+
+.request-item-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 90px;
+
+    padding: 9px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+            135deg,
+            #3582B8,
+            #1F3A60
+    );
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 4px 10px rgba(31, 58, 96, 0.15);
+
+    transition: all 0.2s ease;
+}
+
+.request-item-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 7px 16px rgba(31, 58, 96, 0.22);
+}
+
+.request-item-button:active {
+    transform: translateY(0);
+}
+
+
+/* Empty state */
+
+.no-requirements {
+    background: #F8FBFD !important;
+
+    padding: 45px 20px !important;
+
+    font-size: 15px !important;
+
+    color: #71859A !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .requirements-section {
+        padding: 25px 18px;
+    }
+
+    .requirements-title-row h1 {
+        font-size: 26px;
+    }
+
+    .requirements-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .relief-supply-status-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+/* =========================================
+   COMPACT RELIEF PACKAGE CARDS
+   ========================================= */
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.package-card {
+    position: relative;
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #B9D8EA;
+    border-radius: 14px;
+
+    padding: 0;
+
+    text-align: left;
+
+    box-shadow: 0 4px 12px rgba(31, 58, 96, 0.08);
+
+    transition: all 0.2s ease;
+}
+
+.package-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #3582B8;
+
+    box-shadow: 0 8px 20px rgba(31, 58, 96, 0.13);
+}
+
+
+/* Compact package header */
+
+.package-card-header {
+    min-height: 82px;
+
+    padding: 16px 18px;
+
+    background: linear-gradient(
+            135deg,
+            #1F3A60,
+            #3582B8
+    );
+}
+
+
+/* Package ID */
+
+.package-card-header h2,
+.package-card h2 {
+    font-size: 21px;
+    margin: 0;
+}
+
+
+/* Compact status badge */
+
+.package-status-badge {
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+}
+
+
+/* Package information */
+
+.package-card-body {
+    padding: 14px 16px 8px;
+}
+
+.package-recipient,
+.package-area {
+    margin-bottom: 10px;
+}
+
+.package-recipient strong,
+.package-area strong {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.package-recipient span,
+.package-area span {
+    font-size: 13px;
+}
+
+
+/* Status */
+
+.package-status {
+    margin: 10px 0 12px;
+    padding: 9px 12px;
+}
+
+
+/* Actions */
+
+.package-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 10px 12px;
+
+    border-top: 1px solid #E3EDF3;
+
+    background: #F8FBFD;
+
+    flex-wrap: wrap;
+}
+
+
+/* View */
+
+.package-details-button {
+    padding: 7px 11px;
+
+    border-radius: 7px;
+
+    background: #3582B8;
+
+    color: #ffffff;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    margin: 0;
+}
+
+
+/* Edit */
+
+.package-edit-button {
+    padding: 7px 11px;
+
+    border-radius: 7px;
+
+    background: #EDF3F6;
+
+    border: 1px solid #B9D8EA;
+
+    color: #1F3A60;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.package-edit-button:hover {
+    background: #DCECF5;
+}
+
+
+/* Assign Transport */
+
+.package-assign-button {
+    padding: 7px 11px;
+
+    margin: 0;
+
+    border-radius: 7px;
+
+    background: #2563EB;
+
+    color: #ffffff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* Cancel */
+
+.cancel-package-button {
+    padding: 7px 11px;
+
+    margin: 0;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    border: 1px solid #D3DEE6;
+
+    color: #526779;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+
+    .package-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* =========================================================
+   RELIEF PACKAGES — FINAL BLUE & WHITE UI
+   ========================================================= */
+
+/* ---------- PAGE BACKGROUND ---------- */
+
+body {
+    background: #EEF7FC;
+}
+
+.page-container {
+    background: #EEF7FC;
+}
+
+
+/* ---------- PACKAGE GRID ---------- */
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+}
+
+
+/* ---------- PACKAGE CARD ---------- */
+
+.package-card {
+    position: relative;
+    overflow: hidden;
+
+    padding: 0;
+
+    background: #FFFFFF;
+
+    border: 1px solid #D5E7F2;
+    border-radius: 14px;
+
+    box-shadow:
+            0 4px 14px rgba(30, 91, 136, 0.08);
+
+    text-align: left;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.package-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #9FC6DF;
+
+    box-shadow:
+            0 10px 24px rgba(30, 91, 136, 0.13);
+}
+
+
+/* ---------- PACKAGE HEADER ---------- */
+
+.package-card-header {
+    position: relative;
+
+    min-height: 70px;
+
+    padding: 16px 18px;
+
+    background: #123B63;
+
+    color: #FFFFFF;
+
+    border-bottom: 3px solid #E7F3FA;
+}
+
+
+/* Package ID */
+
+.package-card h2,
+.package-card-title h2 {
+    margin: 0;
+
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* Small blue accent */
+
+.package-card-header::after {
+    content: "";
+
+    display: block;
+
+    width: 32px;
+    height: 3px;
+
+    margin-top: 9px;
+
+    background: #6FAED1;
+
+    border-radius: 3px;
+}
+
+
+/* ---------- STATUS BADGES ---------- */
+
+.package-status-badge,
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 25px;
+
+    padding: 0 10px;
+
+    border-radius: 20px;
+
+    background: #EAF4FB;
+
+    color: #16527D;
+
+    border: 1px solid #BFDCEC;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* Successful */
+
+.package-status-badge.successful,
+.status-badge.successful {
+    background: #E8F6F1;
+    color: #23745C;
+    border-color: #B9E1D3;
+}
+
+
+/* Requesting */
+
+.package-status-badge.requesting,
+.status-badge.requesting {
+    background: #EAF4FB;
+    color: #16527D;
+    border-color: #BFDCEC;
+}
+
+
+/* Delivery */
+
+.package-status-badge.delivery,
+.status-badge.delivery {
+    background: #E7F1FA;
+    color: #245B88;
+    border-color: #BDD8EA;
+}
+
+
+/* ---------- INFORMATION ---------- */
+
+.package-recipient,
+.package-area {
+    margin: 0;
+
+    padding: 11px 16px;
+
+    background: #FFFFFF;
+
+    border-bottom: 1px solid #EDF3F7;
+}
+
+
+.package-recipient strong,
+.package-area strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #6B8498;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+}
+
+
+.package-recipient span,
+.package-area span {
+    display: block;
+
+    color: #163B5D;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* ---------- STATUS SECTION ---------- */
+
+.package-status {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0;
+
+    padding: 9px 16px;
+
+    background: #F7FBFD;
+
+    border-bottom: 1px solid #E5EEF4;
+}
+
+
+.package-status .status-label {
+    margin: 0;
+
+    color: #70879A;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+}
+
+
+/* ---------- ACTIONS ---------- */
+
+.package-card-actions,
+.package-card-footer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    flex-wrap: wrap;
+
+    padding: 10px 12px;
+
+    background: #FFFFFF;
+
+    border-top: 1px solid #EDF3F7;
+}
+
+
+/* ---------- ALL BUTTONS ---------- */
+
+.package-details-button,
+.package-edit-button,
+.package-assign-button,
+.cancel-package-button {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 31px;
+
+    padding: 0 11px;
+
+    margin: 0;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.18s ease;
+}
+
+
+/* ---------- VIEW DETAILS ---------- */
+
+.package-details-button {
+
+    background: #1677C8;
+
+    color: #FFFFFF;
+
+    border: 1px solid #1677C8;
+}
+
+.package-details-button:hover {
+
+    background: #125F9F;
+
+    border-color: #125F9F;
+
+    color: #FFFFFF;
+
+    transform: translateY(-1px);
+}
+
+
+/* ---------- EDIT ---------- */
+
+.package-edit-button {
+
+    background: #FFFFFF;
+
+    color: #16527D;
+
+    border: 1px solid #B8D2E2;
+}
+
+.package-edit-button:hover {
+
+    background: #EEF7FC;
+
+    border-color: #7FAFCB;
+
+    color: #123B63;
+}
+
+
+/* ---------- ASSIGN TRANSPORT ---------- */
+
+.package-assign-button {
+
+    background: #E8F4FB;
+
+    color: #16527D;
+
+    border: 1px solid #B9D8E9;
+}
+
+.package-assign-button:hover {
+
+    background: #D8ECF8;
+
+    border-color: #86B7D3;
+
+    color: #123B63;
+
+    transform: translateY(-1px);
+}
+
+
+/* ---------- CANCEL ---------- */
+
+.cancel-package-button {
+
+    background: #FFFFFF;
+
+    color: #718392;
+
+    border: 1px solid #D3DEE6;
+}
+
+.cancel-package-button:hover {
+
+    background: #F5F8FA;
+
+    color: #526575;
+
+    border-color: #B7C5CF;
+}
+
+
+/* =========================================================
+   SEARCH + FILTER
+   ========================================================= */
+
+.package-search-section {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin: 22px 0;
+
+    padding: 12px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #D5E7F2;
+
+    border-radius: 12px;
+
+    box-shadow:
+            0 3px 12px rgba(30, 91, 136, 0.06);
+}
+
+
+/* Search */
+
+.package-search-box {
+    position: relative;
+
+    flex: 1;
+}
+
+
+.package-search-box .search-icon {
+    position: absolute;
+
+    left: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 16px;
+
+    pointer-events: none;
+}
+
+
+.package-search-box input {
+
+    width: 100%;
+    height: 42px;
+
+    box-sizing: border-box;
+
+    padding: 0 14px 0 40px;
+
+    background: #F8FBFD;
+
+    border: 1px solid #C9DDE9;
+
+    border-radius: 8px;
+
+    color: #163B5D;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+
+.package-search-box input::placeholder {
+    color: #8AA0B1;
+}
+
+
+.package-search-box input:focus {
+
+    background: #FFFFFF;
+
+    border-color: #4F91BB;
+
+    box-shadow:
+            0 0 0 3px rgba(22, 119, 200, 0.08);
+}
+
+
+/* ---------- FILTER ---------- */
+
+.package-filter-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.package-filter-box label {
+
+    color: #536D80;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+.package-filter-box select {
+
+    height: 42px;
+
+    min-width: 145px;
+
+    padding: 0 30px 0 12px;
+
+    background: #F8FBFD;
+
+    border: 1px solid #C9DDE9;
+
+    border-radius: 8px;
+
+    color: #163B5D;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+.package-filter-box select:focus {
+
+    background: #FFFFFF;
+
+    border-color: #4F91BB;
+
+    box-shadow:
+            0 0 0 3px rgba(22, 119, 200, 0.08);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .package-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .package-search-section {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .package-filter-box {
+        justify-content: space-between;
+    }
+
+    .package-filter-box select {
+        flex: 1;
+    }
+
+}
+/* =========================================================
+   RELIEF PACKAGES — BLUE FRAME WITH SOFT FADE
+   ========================================================= */
+
+body:has(.package-grid) {
+    margin: 0;
+
+    background: #123B63 !important;
+}
+
+
+/* Main framed area */
+
+body:has(.package-grid) .page-container {
+
+    position: relative;
+
+    max-width: 1500px;
+
+    margin: 18px auto;
+
+    padding: 38px;
+
+    border-radius: 30px;
+
+    /* BLUE → LIGHT BLUE → WHITE FADE */
+    background:
+            radial-gradient(
+                    ellipse at center,
+                    #FFFFFF 38%,
+                    #F2F9FD 55%,
+                    #C8E2F1 70%,
+                    #5E9AC1 86%,
+                    #123B63 100%
+            ) !important;
+
+    border: none !important;
+
+    box-shadow:
+            0 12px 40px rgba(18, 59, 99, 0.28);
+}
+
+
+/* Keep the actual content clean */
+
+body:has(.package-grid) .package-grid {
+    background: transparent !important;
+}
+
+
+/* Search area stays white */
+
+body:has(.package-grid) .package-search-section {
+    background: #FFFFFF !important;
+}
+
+
+/* White statistic cards */
+
+body:has(.package-grid) .stat-card {
+    background: #FFFFFF !important;
+}
+
+
+/* White package cards */
+
+body:has(.package-grid) .package-card {
+    background: #FFFFFF !important;
+}
+
+
+/* Give the blue frame a little more presence */
+
+body:has(.package-grid) .package-grid {
+    padding: 4px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 700px) {
+
+    body:has(.package-grid) .page-container {
+        margin: 8px;
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+}
+/* =========================================================
+   DISTRIBUTION DASHBOARD — MODERN HERO
+   ========================================================= */
+
+.distribution-hero {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 330px;
+
+    padding: 45px 55px;
+
+    margin-bottom: 30px;
+
+    overflow: hidden;
+
+    border-radius: 26px;
+
+    background:
+            linear-gradient(
+                    120deg,
+                    #EAF5FF 0%,
+                    #D9ECFA 45%,
+                    #B8D9EF 72%,
+                    #8BBBD9 100%
+            );
+
+    border: 1px solid #B5D5EA;
+
+    box-shadow:
+            0 12px 30px rgba(31, 79, 116, 0.10);
+}
+
+
+/* ---------- LEFT CONTENT ---------- */
+
+.distribution-hero-content {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 24px;
+
+    max-width: 780px;
+}
+
+
+.distribution-hero-icon {
+    width: 76px;
+    height: 76px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    border-radius: 20px;
+
+    font-size: 38px;
+
+    box-shadow:
+            0 8px 20px rgba(31, 79, 116, 0.10);
+}
+
+
+.distribution-hero-label {
+    margin-bottom: 9px;
+
+    color: #39739C;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+}
+
+
+.distribution-hero-text h1 {
+    margin: 0 0 14px;
+
+    color: #123B63;
+
+    font-size: 38px;
+
+    line-height: 1.15;
+
+    font-weight: 800;
+}
+
+
+.distribution-hero-text p {
+    max-width: 620px;
+
+    margin: 0;
+
+    color: #496D89;
+
+    font-size: 16px;
+
+    line-height: 1.65;
+}
+
+
+/* ---------- RIGHT ART ---------- */
+
+.distribution-hero-art {
+    position: relative;
+
+    width: 330px;
+    height: 250px;
+
+    flex-shrink: 0;
+}
+
+
+/* Decorative circles */
+
+.art-circle {
+    position: absolute;
+
+    border-radius: 50%;
+}
+
+
+.art-circle-one {
+    width: 220px;
+    height: 220px;
+
+    right: 20px;
+    top: 10px;
+
+    background: rgba(255, 255, 255, 0.28);
+}
+
+
+.art-circle-two {
+    width: 130px;
+    height: 130px;
+
+    right: 130px;
+    bottom: 10px;
+
+    background: rgba(255, 255, 255, 0.38);
+}
+
+
+/* Box */
+
+.distribution-box {
+    position: absolute;
+
+    right: 55px;
+    bottom: 35px;
+
+    width: 105px;
+    height: 105px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FFFFFF;
+
+    border-radius: 22px;
+
+    font-size: 55px;
+
+    box-shadow:
+            0 15px 30px rgba(31, 79, 116, 0.15);
+
+    transform: rotate(-5deg);
+}
+
+
+/* Truck */
+
+.distribution-truck {
+    position: absolute;
+
+    right: 180px;
+    bottom: 28px;
+
+    font-size: 78px;
+
+    filter:
+            drop-shadow(
+                    0 10px 12px
+                    rgba(31, 79, 116, 0.15)
+            );
+
+    transform: scaleX(-1);
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 900px) {
+
+    .distribution-hero {
+        padding: 35px;
+
+    }
+
+    .distribution-hero-art {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .distribution-hero {
+        min-height: auto;
+
+        padding: 30px;
+    }
+
+    .distribution-hero-content {
+        gap: 16px;
+    }
+
+    .distribution-hero-icon {
+        width: 58px;
+        height: 58px;
+
+        font-size: 28px;
+    }
+
+    .distribution-hero-text h1 {
+        font-size: 28px;
+    }
+
+    .distribution-hero-text p {
+        font-size: 14px;
+    }
+
 }

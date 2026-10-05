@@ -8,9 +8,11 @@ public class NecessaryItemSummary {
     private BigDecimal totalRequired;
     private String unit;
 
-    public NecessaryItemSummary(String itemName,
-                                BigDecimal totalRequired,
-                                String unit) {
+    public NecessaryItemSummary(
+            String itemName,
+            BigDecimal totalRequired,
+            String unit) {
+
         this.itemName = itemName;
         this.totalRequired = totalRequired;
         this.unit = unit;
@@ -22,9 +24,6 @@ public class NecessaryItemSummary {
 
     public BigDecimal getTotalRequired() {
         return totalRequired;
-    }
-    public void setTotalRequired(BigDecimal totalRequired) {
-        this.totalRequired = totalRequired;
     }
 
     public String getUnit() {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Relief Supply Status</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/distribution.css}">
+
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <div class="requirements-section">
+
+        <div class="requirements-title-row">
+
+            <h1>Relief Supply Status</h1>
+
+            <a class="dashboard-icon-button"
+               th:href="@{/distribution/dashboard}"
+               title="Back to Dashboard"
+               aria-label="Back to Dashboard">
+
+                <svg viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+
+                    <path d="M3 10.5L12 3l9 7.5"></path>
+                    <path d="M5.5 9.5V21h13V9.5"></path>
+                    <path d="M9.5 21v-6h5v6"></path>
+
+                </svg>
+
+            </a>
+
+        </div>
+
+        <div class="requirements-count">
+
+            Requested Items:
+            <span th:text="${requests.size()}">0</span>
+
+        </div>
+
+        <table class="requirements-table">
+
+            <thead>
+
+            <tr>
+
+                <th>Relief Item</th>
+
+                <th>Requested Quantity</th>
+
+                <th>Unit</th>
+
+                <th>Status</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="request : ${requests}">
+
+                <td th:text="${request.itemName}">
+                    Rice
+                </td>
+
+                <td th:text="${request.quantity}">
+                    100
+                </td>
+
+                <td th:text="${request.unit}">
+                    kg
+                </td>
+
+                <td th:text="${request.status}">
+                    REQUESTED
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(requests)}">
+
+                <td colspan="4"
+                    class="no-requirements">
+
+                    No relief supply requests found.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
