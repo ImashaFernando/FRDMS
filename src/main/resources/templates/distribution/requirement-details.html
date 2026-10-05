@@ -1414,6 +1414,21 @@
 
                 </div>
 
+                <div class="recipient-box">
+
+                    <div class="recipient-label">
+                        Disaster Name
+                    </div>
+
+                    <div class="recipient-value"
+                         th:text="${disasterName != null ? disasterName : 'Not Available'}">
+
+                        Disaster Name
+
+                    </div>
+
+                </div>
+
 
                 <div class="recipient-box"
                      th:if="${requirement.victim != null}">
