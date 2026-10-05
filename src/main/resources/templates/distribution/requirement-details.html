@@ -1745,11 +1745,15 @@
 
             </a>
 
-            <a th:href="@{/distribution/packages/new(requirementId=${requirement.id})}"
+            <div th:if="${packageExists}"
+                 class="btn btn-package disabled">
+                ✓ Package Already Created
+            </div>
+
+            <a th:unless="${packageExists}"
+               th:href="@{/distribution/packages/new(requirementId=${requirement.id})}"
                class="btn btn-package">
-
                 📦 Make Package
-
             </a>
 
         </div>

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import com.frdms.frdms.distribution_management.entity.PackageStatus;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/distribution/packages")
@@ -60,6 +62,12 @@ public class ReliefPackageController {
         ReliefRequirement requirement =
                 reliefRequirementService.getRequirementById(requirementId);
 
+        if (packageService.existsByRequirementId(requirementId)) {
+            return "redirect:/distribution/requirements/"
+                    + requirementId
+                    + "?packageExists=true";
+        }
+
         // Only approved requirements can be used to create a package
         if (requirement.getStatus() == null
                 || !"APPROVED".equalsIgnoreCase(
@@ -70,6 +78,7 @@ public class ReliefPackageController {
 
         // Create a new relief package
         ReliefPackage reliefPackage = new ReliefPackage();
+        reliefPackage.setRequirementId(requirementId);
 
         // =========================================================
         // AUTOMATICALLY FILL REQUIREMENT / VICTIM DETAILS
@@ -84,6 +93,16 @@ public class ReliefPackageController {
         reliefPackage.setAffectedArea(
                 requirement.getAffectedArea()
         );
+
+        if (requirement.getVictim() != null
+                && requirement.getVictim().getDisaster() != null) {
+
+            reliefPackage.setDisasterName(
+                    requirement.getVictim()
+                            .getDisaster()
+                            .getEventName()
+            );
+        }
 
         // Shelter comes from the approved requirement
         reliefPackage.setShelter(
@@ -149,7 +168,13 @@ public class ReliefPackageController {
             return "distribution/create-package";
         }
 
-        packageService.savePackage(reliefPackage);
+        try {
+            packageService.savePackage(reliefPackage);
+        } catch (IllegalStateException e) {
+            return "redirect:/distribution/requirements/"
+                    + reliefPackage.getRequirementId()
+                    + "?packageExists=true";
+        }
 
         return "redirect:/distribution/packages";
     }
@@ -188,6 +213,12 @@ public class ReliefPackageController {
 
         if (bindingResult.hasErrors()) {
             return "distribution/edit-package";
+        }
+
+        if (reliefPackage.getStatus() == PackageStatus.SUCCESSFUL
+                && reliefPackage.getDistributionCompletedAt() == null) {
+
+            reliefPackage.setDistributionCompletedAt(LocalDateTime.now());
         }
 
         packageService.savePackage(reliefPackage);

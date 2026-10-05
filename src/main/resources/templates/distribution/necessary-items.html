@@ -56,80 +56,113 @@
 
     </div>
 
-    <table class="requirements-table">
+    <div th:if="${!#maps.isEmpty(itemsByDisaster)}">
 
-      <thead>
+      <div th:each="entry : ${itemsByDisaster}"
+           style="margin-bottom: 30px;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 14px rgba(31, 58, 96, 0.12);">
 
-      <tr>
+        <!-- Disaster Header -->
+        <div style="background: linear-gradient(135deg, #1F3A60, #3582B8);
+                    color: white;
+                    padding: 18px 22px;
+                    font-size: 20px;
+                    font-weight: 700;">
 
-        <th>Relief Item</th>
+          🌊 DISASTER:
+          <span th:text="${entry.key}">
+                Kelani River Flood
+            </span>
 
-        <th>Total Required</th>
+        </div>
 
-        <th>Unit</th>
+        <!-- Items for this disaster -->
+        <table class="requirements-table"
+               style="margin: 0;
+                      border-radius: 0;
+                      box-shadow: none;">
 
-        <th>Action</th>
+          <thead>
 
-      </tr>
+          <tr>
 
-      </thead>
+            <th>Relief Item</th>
 
-      <tbody>
+            <th>Total Required</th>
 
-      <tr th:each="item : ${necessaryItems}">
+            <th>Unit</th>
 
-        <td th:text="${item.itemName}">
-          Rice
-        </td>
+            <th>Action</th>
 
-        <td th:text="${item.totalRequired}">
-          100
-        </td>
+          </tr>
 
-        <td th:text="${item.unit}">
-          kg
-        </td>
+          </thead>
 
-        <td>
-          <form th:action="@{/distribution/necessary-items/request}"
-                method="post">
+          <tbody>
 
-            <input type="hidden"
-                   name="itemName"
-                   th:value="${item.itemName}">
+          <tr th:each="item : ${entry.value}">
 
-            <input type="hidden"
-                   name="quantity"
-                   th:value="${item.totalRequired}">
+            <td th:text="${item.itemName}">
+              Rice
+            </td>
 
-            <input type="hidden"
-                   name="unit"
-                   th:value="${item.unit}">
+            <td th:text="${item.totalRequired}">
+              100
+            </td>
 
-            <button type="submit"
-                    class="request-item-button">
-              Request
-            </button>
+            <td th:text="${item.unit}">
+              kg
+            </td>
 
-          </form>
-        </td>
+            <td>
 
-      </tr>
+              <form th:action="@{/distribution/necessary-items/request}"
+                    method="post">
 
-      <tr th:if="${#lists.isEmpty(necessaryItems)}">
+                <input type="hidden"
+                       name="disasterName"
+                       th:value="${item.disasterName}">
 
-        <td colspan="4"
-            class="no-requirements">
+                <input type="hidden"
+                       name="itemName"
+                       th:value="${item.itemName}">
 
-          No necessary relief items found.
+                <input type="hidden"
+                       name="quantity"
+                       th:value="${item.totalRequired}">
 
-        </td>
+                <input type="hidden"
+                       name="unit"
+                       th:value="${item.unit}">
 
-      </tr>
+                <button type="submit"
+                        class="request-item-button">
+                  Request
+                </button>
 
-      </tbody>
+              </form>
 
-    </table>
+            </td>
+
+          </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <!-- No necessary items -->
+    <div th:if="${#maps.isEmpty(itemsByDisaster)}"
+         class="no-requirements">
+
+      No necessary relief items found.
+
+    </div>
 
   </div>
 

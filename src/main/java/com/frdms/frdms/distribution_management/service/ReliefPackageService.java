@@ -18,9 +18,23 @@ public class ReliefPackageService {
         this.packageRepository = packageRepository;
     }
 
+    public boolean existsByRequirementId(Long requirementId) {
+        return packageRepository.existsByRequirementId(requirementId);
+    }
+
 
     // Save a new package
     public ReliefPackage savePackage(ReliefPackage reliefPackage) {
+
+        if (reliefPackage.getId() == null
+                && reliefPackage.getRequirementId() != null
+                && packageRepository.existsByRequirementId(
+                reliefPackage.getRequirementId())) {
+
+            throw new IllegalStateException(
+                    "A relief package has already been created for this requirement."
+            );
+        }
 
         // Generate package ID automatically for new packages
         if (reliefPackage.getPackageCode() == null ||
