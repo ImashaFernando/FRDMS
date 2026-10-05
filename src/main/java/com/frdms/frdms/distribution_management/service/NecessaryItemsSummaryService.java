@@ -31,8 +31,17 @@ public class NecessaryItemsSummaryService {
 
         for (ReliefPackageItem item : items) {
 
+            String disasterName =
+                    item.getReliefPackage().getDisasterName();
+
+            if (disasterName == null || disasterName.isBlank()) {
+                disasterName = "Unknown Disaster";
+            }
+
             String key =
-                    item.getReliefItemName().trim().toLowerCase()
+                    disasterName.trim().toLowerCase()
+                            + "|"
+                            + item.getReliefItemName().trim().toLowerCase()
                             + "|"
                             + item.getUnit().trim().toLowerCase();
 
@@ -44,6 +53,7 @@ public class NecessaryItemsSummaryService {
                 summaryMap.put(
                         key,
                         new NecessaryItemSummary(
+                                disasterName,
                                 item.getReliefItemName(),
                                 item.getQuantity(),
                                 item.getUnit()
@@ -59,6 +69,7 @@ public class NecessaryItemsSummaryService {
                 summaryMap.put(
                         key,
                         new NecessaryItemSummary(
+                                existing.getDisasterName(),
                                 existing.getItemName(),
                                 newTotal,
                                 existing.getUnit()

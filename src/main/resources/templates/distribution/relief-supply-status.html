@@ -57,6 +57,8 @@
 
             <tr>
 
+                <th>Disaster</th>
+
                 <th>Relief Item</th>
 
                 <th>Requested Quantity</th>
@@ -72,6 +74,10 @@
             <tbody>
 
             <tr th:each="request : ${requests}">
+
+                <td th:text="${request.disasterName}">
+                    Kelani River Flood
+                </td>
 
                 <td th:text="${request.itemName}">
                     Rice
@@ -93,7 +99,7 @@
 
             <tr th:if="${#lists.isEmpty(requests)}">
 
-                <td colspan="4"
+                <td colspan="5"
                     class="no-requirements">
 
                     No relief supply requests found.

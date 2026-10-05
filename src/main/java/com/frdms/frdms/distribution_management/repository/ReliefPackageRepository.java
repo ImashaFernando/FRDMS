@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface ReliefPackageRepository
         extends JpaRepository<ReliefPackage, Long> {
 
+    boolean existsByRequirementId(Long requirementId);
+
     Optional<ReliefPackage> findByPackageCode(String packageCode);
     List<ReliefPackage> findByStatusNot(PackageStatus status);
     List<ReliefPackage> findByStatus(PackageStatus status);

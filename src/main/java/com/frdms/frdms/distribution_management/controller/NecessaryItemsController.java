@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.frdms.frdms.distribution_management.service.NecessaryItemSummary;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/distribution")
@@ -27,9 +32,30 @@ public class NecessaryItemsController {
     @GetMapping("/necessary-items")
     public String showNecessaryItems(Model model) {
 
+        List<NecessaryItemSummary> necessaryItems =
+                summaryService.getNecessaryItems();
+
+        Map<String, List<NecessaryItemSummary>> itemsByDisaster =
+                new LinkedHashMap<>();
+
+        for (NecessaryItemSummary item : necessaryItems) {
+
+            itemsByDisaster
+                    .computeIfAbsent(
+                            item.getDisasterName(),
+                            key -> new java.util.ArrayList<>()
+                    )
+                    .add(item);
+        }
+
         model.addAttribute(
                 "necessaryItems",
-                summaryService.getNecessaryItems()
+                necessaryItems
+        );
+
+        model.addAttribute(
+                "itemsByDisaster",
+                itemsByDisaster
         );
 
         return "distribution/necessary-items";
@@ -37,11 +63,13 @@ public class NecessaryItemsController {
 
     @PostMapping("/necessary-items/request")
     public String requestItem(
+            @RequestParam String disasterName,
             @RequestParam String itemName,
             @RequestParam String quantity,
             @RequestParam String unit) {
 
         resourceRequestService.createRequest(
+                disasterName,
                 itemName,
                 new java.math.BigDecimal(quantity),
                 unit

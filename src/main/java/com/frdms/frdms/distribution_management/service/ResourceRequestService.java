@@ -15,12 +15,14 @@ public class ResourceRequestService {
     }
 
     public ResourceRequest createRequest(
+            String disasterName,
             String itemName,
             java.math.BigDecimal quantity,
             String unit) {
 
         ResourceRequest request = new ResourceRequest();
 
+        request.setDisasterName(disasterName);
         request.setItemName(itemName);
         request.setQuantity(quantity);
         request.setUnit(unit);

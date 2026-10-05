@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "relief_packages")
@@ -21,6 +22,9 @@ public class ReliefPackage {
     @Column(name = "package_code", nullable = false, unique = true, length = 20)
     private String packageCode;
 
+    @Column(name = "requirement_id", nullable = false, unique = true)
+    private Long requirementId;
+
     @NotBlank(message = "Recipient name is required")
     @Size(min = 2, max = 100,
             message = "Recipient name must be between 2 and 100 characters")
@@ -32,6 +36,11 @@ public class ReliefPackage {
             message = "Affected area cannot exceed 100 characters")
     @Column(name = "affected_area", nullable = false, length = 100)
     private String affectedArea;
+
+    @Size(max = 150,
+            message = "Disaster name cannot exceed 150 characters")
+    @Column(name = "disaster_name", length = 150)
+    private String disasterName;
 
     @Size(max = 100,
             message = "Shelter name cannot exceed 100 characters")
@@ -53,6 +62,9 @@ public class ReliefPackage {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
     private PackageStatus status = PackageStatus.REQUESTING_ITEMS;
+
+    @Column(name = "distribution_completed_at")
+    private LocalDateTime distributionCompletedAt;
 
     @Size(max = 20,
             message = "Vehicle number cannot exceed 20 characters")
@@ -105,6 +117,14 @@ public class ReliefPackage {
         this.packageCode = packageCode;
     }
 
+    public Long getRequirementId() {
+        return requirementId;
+    }
+
+    public void setRequirementId(Long requirementId) {
+        this.requirementId = requirementId;
+    }
+
     public String getRecipientName() {
         return recipientName;
     }
@@ -119,6 +139,14 @@ public class ReliefPackage {
 
     public void setAffectedArea(String affectedArea) {
         this.affectedArea = affectedArea;
+    }
+
+    public String getDisasterName() {
+        return disasterName;
+    }
+
+    public void setDisasterName(String disasterName) {
+        this.disasterName = disasterName;
     }
 
     public String getShelter() {
@@ -151,6 +179,14 @@ public class ReliefPackage {
 
     public void setStatus(PackageStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getDistributionCompletedAt() {
+        return distributionCompletedAt;
+    }
+
+    public void setDistributionCompletedAt(LocalDateTime distributionCompletedAt) {
+        this.distributionCompletedAt = distributionCompletedAt;
     }
 
     public String getVehicleNumber() {
