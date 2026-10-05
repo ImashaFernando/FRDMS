@@ -213,7 +213,20 @@ public class DistributionReliefRequirementController {
                 victim
         );
 
+// =====================================================
+// GET DISASTER
+// =====================================================
 
+        String disasterName = null;
+
+        if (victim != null && victim.getDisaster() != null) {
+            disasterName = victim.getDisaster().getEventName();
+        }
+
+        model.addAttribute(
+                "disasterName",
+                disasterName
+        );
         // =====================================================
         // GET FAMILY INFORMATION
         // =====================================================
