@@ -24,6 +24,7 @@
 
         <!-- Page Header -->
 
+
         <div class="package-details-header">
 
             <div>
@@ -65,6 +66,12 @@
                         REQUESTING_ITEMS
                     </span>
 
+                </div>
+                <div th:if="${reliefPackage.distributionCompletedAt != null}"
+                     style="margin-top: 8px; font-size: 14px;">
+                    <strong>Distributed On:</strong>
+                    <span th:text="${#temporals.format(reliefPackage.distributionCompletedAt, 'dd MMM yyyy, hh:mm a')}">
+    </span>
                 </div>
 
             </div>

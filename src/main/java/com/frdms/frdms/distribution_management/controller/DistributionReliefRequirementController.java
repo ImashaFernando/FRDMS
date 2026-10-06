@@ -16,25 +16,30 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.frdms.frdms.distribution_management.service.ReliefPackageService;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/distribution/requirements")
 public class DistributionReliefRequirementController {
-
     private final ReliefRequirementService reliefRequirementService;
 
     private final AffectedFamilyInformationService
             affectedFamilyInformationService;
+    private final ReliefPackageService reliefPackageService;
 
     public DistributionReliefRequirementController(
             ReliefRequirementService reliefRequirementService,
-            AffectedFamilyInformationService affectedFamilyInformationService) {
+            AffectedFamilyInformationService affectedFamilyInformationService,
+            ReliefPackageService reliefPackageService) {
 
         this.reliefRequirementService =
                 reliefRequirementService;
 
         this.affectedFamilyInformationService =
                 affectedFamilyInformationService;
+        this.reliefPackageService = reliefPackageService;
     }
 
     // =========================================================
@@ -85,6 +90,19 @@ public class DistributionReliefRequirementController {
         model.addAttribute(
                 "requirements",
                 approvedRequirements
+        );
+
+        Set<Long> packageCreatedRequirementIds = new HashSet<>();
+
+        for (ReliefRequirement requirement : approvedRequirements) {
+            if (reliefPackageService.existsByRequirementId(requirement.getId())) {
+                packageCreatedRequirementIds.add(requirement.getId());
+            }
+        }
+
+        model.addAttribute(
+                "packageCreatedRequirementIds",
+                packageCreatedRequirementIds
         );
 
         return "distribution/requirements";
@@ -152,6 +170,10 @@ public class DistributionReliefRequirementController {
                 "requirement",
                 requirement
         );
+        boolean packageExists =
+                reliefPackageService.existsByRequirementId(requirement.getId());
+
+        model.addAttribute("packageExists", packageExists);
 
 
         // =====================================================
@@ -213,7 +235,20 @@ public class DistributionReliefRequirementController {
                 victim
         );
 
+// =====================================================
+// GET DISASTER
+// =====================================================
 
+        String disasterName = null;
+
+        if (victim != null && victim.getDisaster() != null) {
+            disasterName = victim.getDisaster().getEventName();
+        }
+
+        model.addAttribute(
+                "disasterName",
+                disasterName
+        );
         // =====================================================
         // GET FAMILY INFORMATION
         // =====================================================

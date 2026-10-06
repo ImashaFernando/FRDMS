@@ -60,6 +60,8 @@
               th:object="${reliefPackage}"
               method="post">
 
+            <input type="hidden" th:field="*{requirementId}">
+
 
             <!-- =========================
                  PACKAGE INFORMATION
@@ -132,6 +134,27 @@
                         <div class="validation-error"
                              th:if="${#fields.hasErrors('affectedArea')}"
                              th:errors="*{affectedArea}">
+                        </div>
+
+                    </div>
+
+                    <!-- Disaster Name -->
+
+                    <div class="form-group">
+
+                        <label for="disasterName">
+                            Disaster Name
+                        </label>
+
+                        <input type="text"
+                               id="disasterName"
+                               th:field="*{disasterName}"
+                               placeholder="Disaster name"
+                               readonly>
+
+                        <div class="validation-error"
+                             th:if="${#fields.hasErrors('disasterName')}"
+                             th:errors="*{disasterName}">
                         </div>
 
                     </div>

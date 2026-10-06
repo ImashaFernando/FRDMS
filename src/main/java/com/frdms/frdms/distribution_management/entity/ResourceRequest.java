@@ -12,6 +12,9 @@ public class ResourceRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "disaster_name")
+    private String disasterName;
+
     @Column(name = "item_name", nullable = false)
     private String itemName;
 
@@ -26,6 +29,14 @@ public class ResourceRequest {
 
     public Long getId() {
         return id;
+    }
+
+    public String getDisasterName() {
+        return disasterName;
+    }
+
+    public void setDisasterName(String disasterName) {
+        this.disasterName = disasterName;
     }
 
     public String getItemName() {
