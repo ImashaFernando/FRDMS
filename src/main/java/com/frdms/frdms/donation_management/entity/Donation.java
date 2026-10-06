@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "donations")
@@ -40,7 +42,6 @@ public class Donation {
             value = "0.01",
             message = "Cash amount must be greater than 0"
     )
-
     private Double cashAmount;
 
 
@@ -79,6 +80,27 @@ public class Donation {
     @NotNull(message = "Donation date is required")
     @Column(nullable = false)
     private LocalDate donationDate;
+
+
+    // =========================================================
+    // DONATION ITEMS
+    // =========================================================
+    // One Donation can contain many DonationItems
+    // Example:
+    //
+    // Donation #1
+    //   ├── Rice     - 10 kg
+    //   ├── Dhal     - 5 kg
+    //   └── Soap     - 20 pcs
+    //
+    // =========================================================
+
+    @OneToMany(
+            mappedBy = "donation",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<DonationItem> donationItems = new ArrayList<>();
 
 
     // =========================================================
@@ -171,5 +193,18 @@ public class Donation {
 
     public void setDonationDate(LocalDate donationDate) {
         this.donationDate = donationDate;
+    }
+
+
+    // =========================================================
+    // DONATION ITEMS GETTER / SETTER
+    // =========================================================
+
+    public List<DonationItem> getDonationItems() {
+        return donationItems;
+    }
+
+    public void setDonationItems(List<DonationItem> donationItems) {
+        this.donationItems = donationItems;
     }
 }

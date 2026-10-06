@@ -225,7 +225,6 @@
 
                     </td>
 
-
                     <!-- =========================
                          ACTIONS
                     ========================== -->
@@ -235,9 +234,10 @@
                         <!--
                             ACCEPT / REJECT BUTTONS
                             ONLY FOR PENDING DONATIONS
+                            AND FINANCE OFFICER
                         -->
 
-                        <div th:if="${donation.status == 'PENDING'}"
+                        <div th:if="${donation.status == 'PENDING' and isFinanceOfficer}"
                              class="action-buttons">
 
 
@@ -291,12 +291,19 @@
 
                         <span th:if="${donation.status != 'PENDING'}"
                               class="processed-text">
-
                             Processed
+                        </span>
+
+                        <span th:if="${donation.status == 'PENDING'
+                                      and !isFinanceOfficer}"
+                              class="processed-text">
+
+                            Pending Review
 
                         </span>
 
                     </td>
+
 
                 </tr>
 

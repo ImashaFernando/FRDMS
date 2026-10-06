@@ -2,26 +2,42 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Goods Donations | FRDMS</title>
 
     <link rel="stylesheet"
           th:href="@{/css/goods-donations.css}">
+
 </head>
+
 
 <body>
 
 <div class="page-wrapper">
 
+
+    <!-- =====================================================
+         PAGE HEADER
+         ===================================================== -->
+
     <header class="page-header">
 
-        <div class="brand">FRDMS</div>
+        <div class="brand">
+            FRDMS
+        </div>
 
-        <span class="badge">DONATION MANAGEMENT</span>
+        <span class="badge">
+            DONATION MANAGEMENT
+        </span>
 
-        <h1>Goods Donations</h1>
+        <h1>
+            Goods Donations
+        </h1>
 
         <p>
             View goods contributions submitted by donors
@@ -31,31 +47,53 @@
     </header>
 
 
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
     <main class="donation-card">
+
+
+        <!-- =================================================
+             CARD HEADER
+             ================================================= -->
 
         <div class="card-header">
 
             <div>
-                <h2>Recorded Goods Donations</h2>
+
+                <h2>
+                    Recorded Goods Donations
+                </h2>
 
                 <p>
                     Goods donations submitted through the
                     donor donation form.
                 </p>
+
             </div>
 
 
-            <!-- Header Actions -->
+            <!-- =================================================
+                 HEADER ACTIONS
+                 ================================================= -->
+
             <div class="header-actions">
 
                 <a th:href="@{/finance/dashboard}"
                    class="dashboard-button">
+
                     ← Back to Dashboard
+
                 </a>
+
 
                 <a th:href="@{/donations/cash}"
                    class="switch-button">
+
                     View Cash Donations
+
                 </a>
 
             </div>
@@ -63,16 +101,24 @@
         </div>
 
 
-        <!-- =========================
+
+        <!-- =====================================================
              EMPTY STATE
-        ========================== -->
+             ===================================================== -->
 
         <div class="empty-state"
              th:if="${#lists.isEmpty(goodsDonations)}">
 
-            <div class="empty-icon">📦</div>
 
-            <h3>No Goods Donations</h3>
+            <div class="empty-icon">
+                📦
+            </div>
+
+
+            <h3>
+                No Goods Donations
+            </h3>
+
 
             <p>
                 No goods donations have been submitted yet.
@@ -81,100 +127,184 @@
         </div>
 
 
-        <!-- =========================
+
+        <!-- =====================================================
              GOODS DONATIONS TABLE
-        ========================== -->
+             ===================================================== -->
 
         <div class="table-container"
              th:unless="${#lists.isEmpty(goodsDonations)}">
 
+
             <table>
+
+
+                <!-- =================================================
+                     TABLE HEADER
+                     ================================================= -->
 
                 <thead>
 
                 <tr>
-                    <th>ID</th>
-                    <th>Donor ID</th>
-                    <th>Goods</th>
-                    <th>Quantity</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Donor ID
+                    </th>
+
+                    <th>
+                        Goods
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                    <th>
+                        Description
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
                 </tr>
 
                 </thead>
 
 
+
+                <!-- =================================================
+                     TABLE BODY
+                     ================================================= -->
+
                 <tbody>
+
 
                 <tr th:each="donation : ${goodsDonations}">
 
-                    <!-- ID -->
+
+                    <!-- =================================================
+                         DONATION ID
+                         ================================================= -->
+
                     <td th:text="${donation.id}">
+
                         1
+
                     </td>
 
 
-                    <!-- DONOR ID -->
+
+                    <!-- =================================================
+                         DONOR ID
+                         ================================================= -->
+
                     <td th:text="${donation.donorId}">
+
                         4
+
                     </td>
 
 
-                    <!-- GOODS -->
+
+                    <!-- =================================================
+                         GOODS
+                         ================================================= -->
+
                     <td th:text="${donation.goodsDescription}">
+
                         Rice
+
                     </td>
 
 
-                    <!-- QUANTITY -->
+
+                    <!-- =================================================
+                         QUANTITY
+                         ================================================= -->
+
                     <td th:text="${donation.goodsQuantity}">
+
                         20 kg
+
                     </td>
 
 
-                    <!-- DESCRIPTION -->
-                    <td th:text="${donation.description != null && !donation.description.isBlank()
+
+                    <!-- =================================================
+                         DESCRIPTION
+                         ================================================= -->
+
+                    <td th:text="${donation.description != null
+                                  && !donation.description.isBlank()
                                   ? donation.description
                                   : 'No description'}">
+
                         Food supplies
+
                     </td>
 
 
-                    <!-- STATUS -->
+
+                    <!-- =================================================
+                         STATUS
+                         ================================================= -->
+
                     <td>
 
                         <span class="status"
                               th:text="${donation.status != null
                                         ? donation.status
                                         : 'PENDING'}">
+
                             PENDING
+
                         </span>
 
                     </td>
 
 
-                    <!-- ACTIONS -->
+
+                    <!-- =================================================
+                         ACTIONS
+                         ================================================= -->
+
                     <td>
 
-                        <!-- Show buttons only for PENDING -->
 
-                        <div th:if="${donation.status == 'PENDING'}"
+                        <!-- =================================================
+                             FINANCE OFFICER ACTIONS
+
+                             Accept / Reject are shown ONLY when:
+                             1. Donation is PENDING
+                             2. Logged-in user is Finance Officer
+                             ================================================= -->
+
+                        <div th:if="${donation.status == 'PENDING'
+                                    and isFinanceOfficer}"
                              class="action-buttons">
 
 
-                            <!-- =========================
+                            <!-- =================================================
                                  ACCEPT GOODS DONATION
-                            ========================== -->
+                                 ================================================= -->
 
                             <form th:action="@{/donations/accept/{id}(id=${donation.id})}"
                                   method="post">
 
-                                <!-- IMPORTANT: identifies this as GOODS -->
 
                                 <input type="hidden"
                                        name="type"
                                        value="GOODS">
+
 
                                 <button type="submit"
                                         class="accept-button">
@@ -186,18 +316,19 @@
                             </form>
 
 
-                            <!-- =========================
+
+                            <!-- =================================================
                                  REJECT GOODS DONATION
-                            ========================== -->
+                                 ================================================= -->
 
                             <form th:action="@{/donations/reject/{id}(id=${donation.id})}"
                                   method="post">
 
-                                <!-- IMPORTANT: identifies this as GOODS -->
 
                                 <input type="hidden"
                                        name="type"
                                        value="GOODS">
+
 
                                 <button type="submit"
                                         class="reject-button">
@@ -208,10 +339,31 @@
 
                             </form>
 
+
                         </div>
 
 
-                        <!-- Already processed -->
+
+                        <!-- =================================================
+                             PM / OTHER USERS
+
+                             Pending donation:
+                             No Accept / Reject buttons.
+                             ================================================= -->
+
+                        <span th:if="${donation.status == 'PENDING'
+                                      and !isFinanceOfficer}"
+                              class="processed-text">
+
+                            Pending Review
+
+                        </span>
+
+
+
+                        <!-- =================================================
+                             ALREADY PROCESSED
+                             ================================================= -->
 
                         <span th:if="${donation.status != 'PENDING'}"
                               class="processed-text">
@@ -220,18 +372,26 @@
 
                         </span>
 
+
                     </td>
+
 
                 </tr>
 
+
                 </tbody>
 
+
             </table>
+
 
         </div>
 
 
-        <!-- FOOTER -->
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
 
         <div class="footer">
 
@@ -243,9 +403,13 @@
 
         </div>
 
+
     </main>
+
 
 </div>
 
+
 </body>
+
 </html>

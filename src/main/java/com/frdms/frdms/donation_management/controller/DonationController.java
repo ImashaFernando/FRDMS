@@ -1,6 +1,7 @@
 package com.frdms.frdms.donation_management.controller;
 
 import com.frdms.frdms.donation_management.entity.Donation;
+import com.frdms.frdms.donation_management.entity.DonationItem;
 import com.frdms.frdms.donation_management.entity.Donor;
 import com.frdms.frdms.donation_management.repository.DonorRepository;
 import com.frdms.frdms.donation_management.service.DonationService;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,50 +55,184 @@ public class DonationController {
     }
 
 
+    // =====================================
+    // DONOR - SUBMIT DONATION
+    // =====================================
+
     @PostMapping("/submit")
     public String submitDonation(
-            @Valid @ModelAttribute("donation") Donation donation,
+
+            @Valid @ModelAttribute("donation")
+            Donation donation,
+
             BindingResult bindingResult,
-            Authentication authentication) {
 
-        // =====================================
-        // CONDITIONAL VALIDATION
-        // =====================================
+            Authentication authentication,
 
-        // GOODS DONATION
-        if ("GOODS".equalsIgnoreCase(donation.getDonationType())) {
+            // =====================================
+            // NORMAL CHECKBOX ITEMS
+            // =====================================
 
-            // Goods Description
-            if (donation.getGoodsDescription() == null ||
-                    donation.getGoodsDescription().trim().isEmpty()) {
+            @RequestParam(
+                    value = "selectedItems",
+                    required = false
+            )
+            List<String> selectedItems,
 
-                bindingResult.rejectValue(
-                        "goodsDescription",
-                        "goodsDescription.required",
-                        "Goods description is required"
+            @RequestParam(
+                    value = "itemQuantities",
+                    required = false
+            )
+            List<Integer> itemQuantities,
+
+            @RequestParam(
+                    value = "itemUnits",
+                    required = false
+            )
+            List<String> itemUnits,
+
+            // =====================================
+            // ADDITIONAL / SPECIAL ITEM
+            // =====================================
+
+            @RequestParam(
+                    value = "additionalItemName",
+                    required = false
+            )
+            String additionalItemName,
+
+            @RequestParam(
+                    value = "additionalItemQuantity",
+                    required = false
+            )
+            Integer additionalItemQuantity,
+
+            @RequestParam(
+                    value = "additionalItemUnit",
+                    required = false
+            )
+            String additionalItemUnit) {
+
+
+        // =====================================================
+        // GOODS DONATION VALIDATION
+        // =====================================================
+
+        if ("GOODS".equalsIgnoreCase(
+                donation.getDonationType())) {
+
+            boolean hasNormalItems =
+                    selectedItems != null
+                            && !selectedItems.isEmpty();
+
+            boolean hasAdditionalItem =
+                    additionalItemName != null
+                            && !additionalItemName.trim().isEmpty();
+
+
+            if (!hasNormalItems && !hasAdditionalItem) {
+
+                bindingResult.reject(
+                        "items.required",
+                        "Please select at least one item or add an additional donation item"
                 );
             }
 
-            // Goods Quantity
-            if (donation.getGoodsQuantity() == null ||
-                    donation.getGoodsQuantity().trim().isEmpty()) {
 
-                bindingResult.rejectValue(
-                        "goodsQuantity",
-                        "goodsQuantity.required",
-                        "Goods quantity is required"
-                );
+            // NORMAL ITEM VALIDATION
+
+            if (hasNormalItems) {
+
+                if (itemQuantities == null ||
+                        itemQuantities.isEmpty()) {
+
+                    bindingResult.reject(
+                            "itemQuantities.required",
+                            "Please enter quantities for the selected items"
+                    );
+
+                } else {
+
+                    for (Integer quantity : itemQuantities) {
+
+                        if (quantity == null ||
+                                quantity <= 0) {
+
+                            bindingResult.reject(
+                                    "itemQuantities.invalid",
+                                    "All donation quantities must be greater than zero"
+                            );
+
+                            break;
+                        }
+                    }
+                }
+
+
+                if (itemQuantities != null &&
+                        selectedItems.size()
+                                != itemQuantities.size()) {
+
+                    bindingResult.reject(
+                            "items.mismatch",
+                            "Invalid donation item information"
+                    );
+                }
+
+
+                if (itemUnits == null ||
+                        itemUnits.isEmpty()) {
+
+                    bindingResult.reject(
+                            "units.required",
+                            "Please select a unit for each donated item"
+                    );
+
+                } else if (
+                        selectedItems.size()
+                                != itemUnits.size()) {
+
+                    bindingResult.reject(
+                            "units.mismatch",
+                            "Invalid donation unit information"
+                    );
+                }
+            }
+
+
+            // ADDITIONAL ITEM VALIDATION
+
+            if (hasAdditionalItem) {
+
+                if (additionalItemQuantity == null ||
+                        additionalItemQuantity <= 0) {
+
+                    bindingResult.reject(
+                            "additionalItemQuantity.invalid",
+                            "Please enter a valid quantity for the additional item"
+                    );
+                }
+
+
+                if (additionalItemUnit == null ||
+                        additionalItemUnit.trim().isEmpty()) {
+
+                    bindingResult.reject(
+                            "additionalItemUnit.required",
+                            "Please select a unit for the additional item"
+                    );
+                }
             }
         }
 
 
-        // =====================================
-        // CASH DONATION
-        // =====================================
+        // =====================================================
+        // CASH DONATION VALIDATION
+        // =====================================================
 
-        if ("CASH".equalsIgnoreCase(donation.getDonationType())) {
+        if ("CASH".equalsIgnoreCase(
+                donation.getDonationType())) {
 
-            // Cash amount required
             if (donation.getCashAmount() == null) {
 
                 bindingResult.rejectValue(
@@ -105,9 +241,7 @@ public class DonationController {
                         "Cash amount is required"
                 );
 
-            }
-            // Cash amount must be greater than zero
-            else if (donation.getCashAmount() <= 0) {
+            } else if (donation.getCashAmount() <= 0) {
 
                 bindingResult.rejectValue(
                         "cashAmount",
@@ -118,35 +252,175 @@ public class DonationController {
         }
 
 
-        // =====================================
+        // =====================================================
         // RETURN FORM IF VALIDATION ERRORS
-        // =====================================
+        // =====================================================
 
         if (bindingResult.hasErrors()) {
+
             return "donation/donation-submit";
         }
 
 
-        // =====================================
+        // =====================================================
         // GET LOGGED-IN DONOR
-        // =====================================
+        // =====================================================
 
-        Donor donor = getLoggedInDonor(authentication);
+        Donor donor =
+                getLoggedInDonor(authentication);
 
-        /*
-         * Never trust donorId coming from the form.
-         * Always use the authenticated donor's ID.
-         */
-        donation.setDonorId(donor.getId());
+        // Never trust donorId coming from the form
+        donation.setDonorId(
+                donor.getId()
+        );
 
 
-        // =====================================
+        // =====================================================
+        // CREATE DONATION ITEMS
+        // =====================================================
+
+        if ("GOODS".equalsIgnoreCase(
+                donation.getDonationType())) {
+
+            List<DonationItem> donationItems =
+                    new ArrayList<>();
+
+
+            // ADD NORMAL CHECKBOX ITEMS
+
+            if (selectedItems != null &&
+                    !selectedItems.isEmpty()) {
+
+                for (int i = 0;
+                     i < selectedItems.size();
+                     i++) {
+
+                    DonationItem item =
+                            new DonationItem();
+
+                    item.setDonation(
+                            donation
+                    );
+
+                    item.setItemName(
+                            selectedItems.get(i)
+                    );
+
+                    item.setQuantity(
+                            itemQuantities.get(i)
+                    );
+
+                    item.setUnit(
+                            itemUnits.get(i)
+                    );
+
+                    donationItems.add(item);
+                }
+            }
+
+
+            // ADDITIONAL / SPECIAL ITEM
+
+            if (additionalItemName != null &&
+                    !additionalItemName.trim().isEmpty()) {
+
+                DonationItem additionalItem =
+                        new DonationItem();
+
+                additionalItem.setDonation(
+                        donation
+                );
+
+                additionalItem.setItemName(
+                        additionalItemName.trim()
+                );
+
+                additionalItem.setQuantity(
+                        additionalItemQuantity
+                );
+
+                additionalItem.setUnit(
+                        additionalItemUnit
+                );
+
+                donationItems.add(
+                        additionalItem
+                );
+            }
+
+
+            // ATTACH ITEMS TO DONATION
+
+            donation.setDonationItems(
+                    donationItems
+            );
+
+
+            // KEEP OLD FIELDS COMPATIBLE
+
+            StringBuilder descriptionText =
+                    new StringBuilder();
+
+            for (int i = 0;
+                 i < donationItems.size();
+                 i++) {
+
+                if (i > 0) {
+                    descriptionText.append(", ");
+                }
+
+                descriptionText.append(
+                        donationItems.get(i).getItemName()
+                );
+            }
+
+            donation.setGoodsDescription(
+                    descriptionText.toString()
+            );
+
+
+            StringBuilder quantityText =
+                    new StringBuilder();
+
+            for (int i = 0;
+                 i < donationItems.size();
+                 i++) {
+
+                if (i > 0) {
+                    quantityText.append(", ");
+                }
+
+                quantityText.append(
+                        donationItems.get(i).getQuantity()
+                );
+
+                quantityText.append(" ");
+
+                quantityText.append(
+                        donationItems.get(i).getUnit()
+                );
+            }
+
+            donation.setGoodsQuantity(
+                    quantityText.toString()
+            );
+        }
+
+
+        // =====================================================
         // SAVE DONATION
-        // =====================================
+        // =====================================================
 
-        donationService.submitDonation(donation);
+        donationService.submitDonation(
+                donation
+        );
 
-        return "redirect:/donor/dashboard";
+
+        // =====================================================
+        // DONATION SUCCESS PAGE
+        // =====================================================
+
+        return "redirect:/donations/success";
     }
 
 
@@ -159,12 +433,18 @@ public class DonationController {
             Authentication authentication,
             Model model) {
 
-        Donor donor = getLoggedInDonor(authentication);
+        Donor donor =
+                getLoggedInDonor(authentication);
 
         List<Donation> donations =
-                donationService.getDonationsByDonor(donor.getId());
+                donationService.getDonationsByDonor(
+                        donor.getId()
+                );
 
-        model.addAttribute("donations", donations);
+        model.addAttribute(
+                "donations",
+                donations
+        );
 
         model.addAttribute(
                 "today",
@@ -185,50 +465,146 @@ public class DonationController {
             Authentication authentication,
             Model model) {
 
-        Donor donor = getLoggedInDonor(authentication);
+        Donor donor =
+                getLoggedInDonor(authentication);
 
         Donation donation =
                 donationService.getDonationById(id);
 
-        // Own donation check
-        if (!donation.getDonorId().equals(donor.getId())) {
+
+        // CHECK OWNERSHIP
+
+        if (!donation.getDonorId()
+                .equals(donor.getId())) {
+
             return "redirect:/donations/my";
         }
 
-        // 2-day check
-        if (!donationService.isWithinEditPeriod(donation)) {
+
+        // CHECK 2-DAY EDIT PERIOD
+
+        if (!donationService
+                .isWithinEditPeriod(donation)) {
+
             return "redirect:/donations/my";
         }
 
-        model.addAttribute("donation", donation);
+
+        model.addAttribute(
+                "donation",
+                donation
+        );
+
+        model.addAttribute(
+                "donationItems",
+                donation.getDonationItems()
+        );
 
         return "donation/edit-donation";
     }
 
 
+    // =====================================
+    // DONOR - UPDATE
+    // =====================================
+
     @PostMapping("/update/{id}")
     public String updateDonation(
+
             @PathVariable Long id,
-            @Valid @ModelAttribute("donation") Donation donation,
+
+            @Valid
+            @ModelAttribute("donation")
+            Donation donation,
+
             BindingResult bindingResult,
+
             Authentication authentication,
-            Model model) {
+
+            Model model,
+
+            @RequestParam(
+                    value = "selectedItems",
+                    required = false
+            )
+            List<String> selectedItems,
+
+            @RequestParam(
+                    value = "itemQuantities",
+                    required = false
+            )
+            List<Integer> itemQuantities,
+
+            @RequestParam(
+                    value = "itemUnits",
+                    required = false
+            )
+            List<String> itemUnits,
+
+            @RequestParam(
+                    value = "additionalItemName",
+                    required = false
+            )
+            String additionalItemName,
+
+            @RequestParam(
+                    value = "additionalItemQuantity",
+                    required = false
+            )
+            Integer additionalItemQuantity,
+
+            @RequestParam(
+                    value = "additionalItemUnit",
+                    required = false
+            )
+            String additionalItemUnit) {
+
+
+        // VALIDATION
 
         if (bindingResult.hasErrors()) {
+
+            model.addAttribute(
+                    "donationItems",
+                    donation.getDonationItems()
+            );
+
             return "donation/edit-donation";
         }
 
-        Donor donor = getLoggedInDonor(authentication);
+
+        // GET LOGGED-IN DONOR
+
+        Donor donor =
+                getLoggedInDonor(authentication);
+
 
         try {
 
             donationService.updateDonation(
+
                     id,
+
                     donor.getId(),
-                    donation
+
+                    donation,
+
+                    selectedItems,
+
+                    itemQuantities,
+
+                    itemUnits,
+
+                    additionalItemName,
+
+                    additionalItemQuantity,
+
+                    additionalItemUnit
             );
 
+
             return "redirect:/donations/my";
+
 
         } catch (IllegalStateException e) {
 
@@ -237,10 +613,22 @@ public class DonationController {
                     e.getMessage()
             );
 
+
+            Donation existingDonation =
+                    donationService.getDonationById(id);
+
+
             model.addAttribute(
                     "donation",
-                    donationService.getDonationById(id)
+                    existingDonation
             );
+
+
+            model.addAttribute(
+                    "donationItems",
+                    existingDonation.getDonationItems()
+            );
+
 
             return "donation/edit-donation";
         }
@@ -256,7 +644,8 @@ public class DonationController {
             @PathVariable Long id,
             Authentication authentication) {
 
-        Donor donor = getLoggedInDonor(authentication);
+        Donor donor =
+                getLoggedInDonor(authentication);
 
         try {
 
@@ -285,16 +674,25 @@ public class DonationController {
             Authentication authentication,
             Model model) {
 
-        Donor donor = getLoggedInDonor(authentication);
+        Donor donor =
+                getLoggedInDonor(authentication);
 
         Donation donation =
                 donationService.getDonationById(id);
 
-        if (!donation.getDonorId().equals(donor.getId())) {
+
+        if (!donation.getDonorId()
+                .equals(donor.getId())) {
+
             return "redirect:/donations/my";
         }
 
-        model.addAttribute("donation", donation);
+
+        model.addAttribute(
+                "donation",
+                donation
+        );
+
 
         return "donation/donation-receipt";
     }
@@ -306,25 +704,43 @@ public class DonationController {
 
     @GetMapping("/success")
     public String donationSuccess() {
+
         return "donation/donation-success";
     }
 
 
     // =====================================
-    // HELPER
+    // GET LOGGED-IN DONOR
     // =====================================
 
     private Donor getLoggedInDonor(
             Authentication authentication) {
 
-        String username = authentication.getName();
+        String username =
+                authentication.getName();
+
+
+        System.out.println(
+                "======================================"
+        );
+
+        System.out.println(
+                "LOGGED-IN USERNAME = " + username
+        );
+
+        System.out.println(
+                "======================================"
+        );
+
 
         return donorRepository
                 .findByUsername(username)
                 .orElseThrow(() ->
                         new IllegalStateException(
-                                "Logged-in donor not found"
-                        ));
+                                "Logged-in donor not found. Username = "
+                                        + username
+                        )
+                );
     }
 
 
@@ -333,32 +749,185 @@ public class DonationController {
     // =====================================
 
     @GetMapping("/cash")
-    public String viewCashDonations(Model model) {
+    public String viewCashDonations(
+            Authentication authentication,
+            Model model) {
 
         model.addAttribute(
                 "cashDonations",
                 donationService.getCashDonations()
         );
 
+
+        // Check logged-in user's role
+
+        boolean isFinanceOfficer =
+                authentication.getAuthorities()
+                        .stream()
+                        .anyMatch(authority ->
+                                authority.getAuthority()
+                                        .equals("ROLE_FINANCE_OFFICER")
+                        );
+
+
+        model.addAttribute(
+                "isFinanceOfficer",
+                isFinanceOfficer
+        );
+
+
         return "donation/cash-donations";
+    }
+
+
+    // =====================================
+    // FINANCE OFFICER - ACCEPTED CASH DONATIONS
+    // =====================================
+
+    @GetMapping("/cash/accepted")
+    public String viewAcceptedCashDonations(
+            Authentication authentication,
+            Model model) {
+
+        List<Donation> acceptedCashDonations =
+                donationService.getAcceptedCashDonations();
+
+        // Calculate total accepted cash
+        double totalAcceptedCash = acceptedCashDonations.stream()
+                .mapToDouble(donation ->
+                        donation.getCashAmount() != null
+                                ? donation.getCashAmount()
+                                : 0.0
+                )
+                .sum();
+
+        // Number of accepted donations
+        int acceptedDonationCount =
+                acceptedCashDonations.size();
+
+        // Calculate average donation
+        double averageAcceptedCash =
+                acceptedDonationCount > 0
+                        ? totalAcceptedCash / acceptedDonationCount
+                        : 0.0;
+
+        model.addAttribute(
+                "acceptedCashDonations",
+                acceptedCashDonations
+        );
+
+        model.addAttribute(
+                "totalAcceptedCash",
+                totalAcceptedCash
+        );
+
+        model.addAttribute(
+                "acceptedDonationCount",
+                acceptedDonationCount
+        );
+
+        model.addAttribute(
+                "averageAcceptedCash",
+                averageAcceptedCash
+        );
+
+        boolean isFinanceOfficer =
+                authentication.getAuthorities()
+                        .stream()
+                        .anyMatch(authority ->
+                                authority.getAuthority()
+                                        .equals("ROLE_FINANCE_OFFICER")
+                        );
+
+        model.addAttribute(
+                "isFinanceOfficer",
+                isFinanceOfficer
+        );
+
+        return "donation/accepted-cash-donations";
     }
 
 
     // =====================================
     // FINANCE OFFICER - GOODS DONATIONS
     // =====================================
+// =====================================
+// FINANCE OFFICER - GOODS DONATIONS
+// =====================================
 
     @GetMapping("/goods")
-    public String viewGoodsDonations(Model model) {
+    public String viewGoodsDonations(
+            Authentication authentication,
+            Model model) {
 
         model.addAttribute(
                 "goodsDonations",
                 donationService.getGoodsDonations()
         );
 
+        boolean isFinanceOfficer =
+                authentication.getAuthorities()
+                        .stream()
+                        .anyMatch(authority ->
+                                authority.getAuthority()
+                                        .equals("ROLE_FINANCE_OFFICER")
+                        );
+
+        model.addAttribute(
+                "isFinanceOfficer",
+                isFinanceOfficer
+        );
+
         return "donation/goods-donations";
     }
+    // =====================================
+// FINANCE OFFICER - ACCEPTED GOODS DONATIONS
+// =====================================
 
+    @GetMapping("/goods/accepted")
+    public String acceptedGoodsDonations(Model model) {
+
+        List<Donation> acceptedGoodsDonations =
+                donationService.getAcceptedGoodsDonations();
+
+        java.util.Map<Long, Donor> donors = new java.util.HashMap<>();
+
+        for (Donation donation : acceptedGoodsDonations) {
+
+            if (donation.getDonorId() != null) {
+
+                donorRepository.findById(donation.getDonorId())
+                        .ifPresent(donor ->
+                                donors.put(donation.getDonorId(), donor)
+                        );
+            }
+        }
+
+        int totalGoodsItemCount = acceptedGoodsDonations.stream()
+                .mapToInt(donation ->
+                        donation.getDonationItems() != null
+                                ? donation.getDonationItems().size()
+                                : 0
+                )
+                .sum();
+
+        model.addAttribute(
+                "acceptedGoodsDonations",
+                acceptedGoodsDonations
+        );
+
+        model.addAttribute(
+                "donors",
+                donors
+        );
+
+        model.addAttribute(
+                "totalGoodsItemCount",
+                totalGoodsItemCount
+        );
+
+        return "donation/accepted-goods-donations";
+    }
 
     // =====================================
     // FINANCE OFFICER - ACCEPT DONATION
@@ -369,11 +938,16 @@ public class DonationController {
             @PathVariable Long id,
             @RequestParam String type) {
 
-        donationService.acceptDonation(id);
+        donationService.acceptDonation(
+                id
+        );
+
 
         if ("GOODS".equalsIgnoreCase(type)) {
+
             return "redirect:/donations/goods";
         }
+
 
         return "redirect:/donations/cash";
     }
@@ -388,11 +962,16 @@ public class DonationController {
             @PathVariable Long id,
             @RequestParam String type) {
 
-        donationService.rejectDonation(id);
+        donationService.rejectDonation(
+                id
+        );
+
 
         if ("GOODS".equalsIgnoreCase(type)) {
+
             return "redirect:/donations/goods";
         }
+
 
         return "redirect:/donations/cash";
     }

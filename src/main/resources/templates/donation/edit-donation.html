@@ -1,29 +1,319 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Update Donation | FRDMS</title>
 
     <link rel="stylesheet"
           th:href="@{/css/edit-donation.css}">
+
+    <style>
+
+        /* =====================================================
+           RELIEF ITEM SECTION
+           ===================================================== */
+
+        .relief-items-container {
+            margin-top: 10px;
+        }
+
+
+        .relief-introduction {
+            margin-bottom: 18px;
+        }
+
+
+        .relief-introduction p {
+            margin-top: 5px;
+            color: #718398;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           CATEGORY
+           ===================================================== */
+
+        .donation-category {
+            margin-bottom: 18px;
+            padding: 16px;
+            background: #f8fbfd;
+            border: 1px solid #d7e4ed;
+            border-radius: 12px;
+        }
+
+
+        .donation-category h3 {
+            margin: 0 0 12px 0;
+            color: #1f3a60;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+
+        .category-icon {
+            margin-right: 5px;
+        }
+
+
+        /* =====================================================
+           ITEM ROW
+           ===================================================== */
+
+        .relief-item-row {
+            display: grid;
+
+            grid-template-columns:
+                35px
+                minmax(180px, 1fr)
+                130px
+                130px;
+
+            gap: 10px;
+
+            align-items: center;
+
+            padding: 10px 8px;
+
+            border-bottom: 1px solid #e4edf3;
+        }
+
+
+        .relief-item-row:last-child {
+            border-bottom: none;
+        }
+
+
+        /* =====================================================
+           CHECKBOX
+           ===================================================== */
+
+        .item-checkbox {
+            width: 18px;
+            height: 18px;
+
+            cursor: pointer;
+
+            accent-color: #3582b8;
+        }
+
+
+        /* =====================================================
+           ITEM NAME
+           ===================================================== */
+
+        .relief-item-name {
+            color: #1f3a60;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           QUANTITY
+           ===================================================== */
+
+        .item-quantity,
+        .item-unit {
+            width: 100%;
+
+            height: 40px;
+
+            padding: 0 10px;
+
+            border: 1px solid #c9d9e5;
+
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            color: #1f3a60;
+
+            font-size: 13px;
+
+            box-sizing: border-box;
+        }
+
+
+        .item-quantity:focus,
+        .item-unit:focus {
+            border-color: #3582b8;
+
+            outline: none;
+
+            box-shadow:
+                    0 0 0 3px
+                    rgba(53, 130, 184, 0.10);
+        }
+
+
+        .item-quantity:disabled,
+        .item-unit:disabled {
+            background: #edf3f7;
+
+            color: #9aa8b5;
+
+            cursor: not-allowed;
+        }
+
+
+        /* =====================================================
+           ADDITIONAL ITEM
+           ===================================================== */
+
+        .additional-item-section {
+            margin-top: 20px;
+
+            padding: 18px;
+
+            background: #f8fbfd;
+
+            border: 1px dashed #a9c7da;
+
+            border-radius: 12px;
+        }
+
+
+        .additional-item-section h3 {
+            margin: 0 0 5px;
+
+            color: #1f3a60;
+
+            font-size: 15px;
+        }
+
+
+        .additional-item-help {
+            margin: 0 0 14px;
+
+            color: #718398;
+
+            font-size: 12px;
+        }
+
+
+        .additional-item-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                150px
+                150px;
+
+            gap: 12px;
+        }
+
+
+        .additional-field {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .additional-field label {
+            margin-bottom: 5px;
+
+            color: #52677d;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .additional-field input,
+        .additional-field select {
+            height: 40px;
+
+            padding: 0 10px;
+
+            border: 1px solid #c9d9e5;
+
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            color: #1f3a60;
+
+            font-size: 13px;
+
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .relief-item-row {
+                grid-template-columns:
+                    30px
+                    1fr;
+
+                gap: 8px;
+            }
+
+
+            .relief-item-name {
+                grid-column: 2;
+            }
+
+
+            .item-quantity {
+                grid-column: 2;
+            }
+
+
+            .item-unit {
+                grid-column: 2;
+            }
+
+
+            .additional-item-row {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
 <div class="page-wrapper">
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
 
     <header class="page-header">
 
-        <div class="brand">FRDMS</div>
+        <div class="brand">
+            FRDMS
+        </div>
 
         <span class="badge">
             DONATION MANAGEMENT
         </span>
 
-        <h1>Update Donation</h1>
+        <h1>
+            Update Donation
+        </h1>
 
         <p>
             Update the details of an existing donation record.
@@ -32,11 +322,18 @@
     </header>
 
 
+    <!-- =====================================================
+         MAIN CARD
+         ===================================================== -->
+
     <main class="donation-card">
+
 
         <div class="card-title">
 
-            <h2>Donation Information</h2>
+            <h2>
+                Donation Information
+            </h2>
 
             <p>
                 Update the required donation details and save the changes.
@@ -45,39 +342,42 @@
         </div>
 
 
-        <!-- Error message -->
+        <!-- =================================================
+             ERROR
+             ================================================= -->
 
         <div th:if="${error}"
              class="error-message"
              th:text="${error}">
+
             Error message
+
         </div>
 
+
+        <!-- =================================================
+             FORM
+             ================================================= -->
 
         <form th:action="@{/donations/update/{id}(id=${donation.id})}"
               th:object="${donation}"
               method="post">
 
 
-            <!-- ================================================= -->
-            <!-- HIDDEN IMPORTANT VALUES                           -->
-            <!-- ================================================= -->
-
-            <!-- Donor ID is NOT editable -->
+            <!-- =================================================
+                 HIDDEN VALUES
+                 ================================================= -->
 
             <input type="hidden"
                    th:field="*{donorId}">
-
-
-            <!-- Donation date is required for validation -->
 
             <input type="hidden"
                    th:field="*{donationDate}">
 
 
-            <!-- ================================================= -->
-            <!-- DONOR ID - DISPLAY ONLY                           -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 DONOR ID
+                 ================================================= -->
 
             <div class="form-group">
 
@@ -96,9 +396,9 @@
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- DONATION TYPE                                     -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 DONATION TYPE
+                 ================================================= -->
 
             <div class="form-group">
 
@@ -124,17 +424,12 @@
 
                 </select>
 
-                <small class="error"
-                       th:if="${#fields.hasErrors('donationType')}"
-                       th:errors="*{donationType}">
-                </small>
-
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- CASH AMOUNT                                       -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 CASH
+                 ================================================= -->
 
             <div class="form-group"
                  id="cashGroup">
@@ -153,58 +448,994 @@
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- GOODS DESCRIPTION                                 -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 GOODS
+                 ================================================= -->
 
             <div class="form-group"
-                 id="goodsDescriptionGroup">
+                 id="goodsItemsGroup">
 
-                <label for="goodsDescription">
-                    Goods Description
+
+                <label>
+                    📦 Select Relief Items
                 </label>
 
-                <input type="text"
-                       id="goodsDescription"
-                       th:field="*{goodsDescription}"
-                       placeholder="Example: Rice">
+
+                <div class="relief-introduction">
+
+                    <p>
+                        Your previously donated items are already selected.
+                        You can change quantities, units, add new items,
+                        or remove items by unchecking them.
+                    </p>
+
+                </div>
+
+
+                <div class="relief-items-container">
+
+
+                    <!-- =================================================
+                         DRY FOOD PACKAGE
+                         ================================================= -->
+
+                    <div class="donation-category">
+
+                        <h3>
+                            <span class="category-icon">🍚</span>
+                            Dry Food Package
+                        </h3>
+
+
+                        <!-- Rice -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Rice"
+                                   data-item="Rice">
+
+                            <label class="relief-item-name">
+                                🍚 Rice
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Rice"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Rice">
+
+                                <option value="kg">kg</option>
+                                <option value="packets">packets</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Dhal -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Dhal"
+                                   data-item="Dhal">
+
+                            <label class="relief-item-name">
+                                🫘 Dhal
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Dhal"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Dhal">
+
+                                <option value="kg">kg</option>
+                                <option value="packets">packets</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Soya Meat -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Soya Meat"
+                                   data-item="Soya Meat">
+
+                            <label class="relief-item-name">
+                                🥩 Soya Meat
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Soya Meat"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Soya Meat">
+
+                                <option value="packets">packets</option>
+                                <option value="kg">kg</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Canned Tuna -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Canned Tuna"
+                                   data-item="Canned Tuna">
+
+                            <label class="relief-item-name">
+                                🐟 Canned Tuna
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Canned Tuna"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Canned Tuna">
+
+                                <option value="cans">cans</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Sugar -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Sugar"
+                                   data-item="Sugar">
+
+                            <label class="relief-item-name">
+                                🍬 Sugar
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Sugar"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Sugar">
+
+                                <option value="kg">kg</option>
+                                <option value="packets">packets</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Salt -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Salt"
+                                   data-item="Salt">
+
+                            <label class="relief-item-name">
+                                🧂 Salt
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Salt"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Salt">
+
+                                <option value="packets">packets</option>
+                                <option value="kg">kg</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Tea -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Tea"
+                                   data-item="Tea">
+
+                            <label class="relief-item-name">
+                                🍵 Tea
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Tea"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Tea">
+
+                                <option value="packets">packets</option>
+                                <option value="kg">kg</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Milk Powder -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Milk Powder"
+                                   data-item="Milk Powder">
+
+                            <label class="relief-item-name">
+                                🥛 Milk Powder
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Milk Powder"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Milk Powder">
+
+                                <option value="packets">packets</option>
+                                <option value="kg">kg</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Biscuit Packets -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Biscuit Packets"
+                                   data-item="Biscuit Packets">
+
+                            <label class="relief-item-name">
+                                🍪 Biscuit Packets
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Biscuit Packets"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Biscuit Packets">
+
+                                <option value="packets">packets</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CHILDREN'S TREAT PACK
+                         ================================================= -->
+
+                    <div class="donation-category">
+
+                        <h3>
+                            <span class="category-icon">🍫</span>
+                            Children's Treat Pack
+                        </h3>
+
+
+                        <!-- Chocolate -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Small Chocolate Bar"
+                                   data-item="Small Chocolate Bar">
+
+                            <label class="relief-item-name">
+                                🍫 Small Chocolate Bar
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Small Chocolate Bar"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Small Chocolate Bar">
+
+                                <option value="pcs">pcs</option>
+                                <option value="packets">packets</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Fruit Juice -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Small Fruit Juice"
+                                   data-item="Small Fruit Juice">
+
+                            <label class="relief-item-name">
+                                🧃 Small Fruit Juice
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Small Fruit Juice"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Small Fruit Juice">
+
+                                <option value="bottles">bottles</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DRINKING WATER PACK
+                         ================================================= -->
+
+                    <div class="donation-category">
+
+                        <h3>
+                            <span class="category-icon">💧</span>
+                            Drinking Water Pack
+                        </h3>
+
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Drinking Water"
+                                   data-item="Drinking Water">
+
+                            <label class="relief-item-name">
+                                💧 Drinking Water (1.5L)
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Drinking Water"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Drinking Water">
+
+                                <option value="bottles">bottles</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         BEDDING PACK
+                         ================================================= -->
+
+                    <div class="donation-category">
+
+                        <h3>
+                            <span class="category-icon">🛏️</span>
+                            Bedding Pack
+                        </h3>
+
+
+                        <!-- Sleeping Mat -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Sleeping Mat"
+                                   data-item="Sleeping Mat">
+
+                            <label class="relief-item-name">
+                                🛏️ Sleeping Mat
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Sleeping Mat"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Sleeping Mat">
+
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Blanket -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Blanket"
+                                   data-item="Blanket">
+
+                            <label class="relief-item-name">
+                                🛌 Blanket
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Blanket"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Blanket">
+
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Bedsheet -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Bedsheet"
+                                   data-item="Bedsheet">
+
+                            <label class="relief-item-name">
+                                🛏️ Bedsheet
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Bedsheet"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Bedsheet">
+
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Pillow -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Pillow"
+                                   data-item="Pillow">
+
+                            <label class="relief-item-name">
+                                💤 Pillow
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Pillow"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Pillow">
+
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         HYGIENE PACK
+                         ================================================= -->
+
+                    <div class="donation-category">
+
+                        <h3>
+                            <span class="category-icon">🧼</span>
+                            Hygiene Pack
+                        </h3>
+
+
+                        <!-- Soap -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Soap"
+                                   data-item="Soap">
+
+                            <label class="relief-item-name">
+                                🧼 Soap
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Soap"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Soap">
+
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Toothpaste -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Toothpaste"
+                                   data-item="Toothpaste">
+
+                            <label class="relief-item-name">
+                                🪥 Toothpaste
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Toothpaste"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Toothpaste">
+
+                                <option value="tubes">tubes</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Shampoo -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Shampoo"
+                                   data-item="Shampoo">
+
+                            <label class="relief-item-name">
+                                🧴 Shampoo
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Shampoo"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Shampoo">
+
+                                <option value="bottles">bottles</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         MEDICINE SUPPLIES PACK
+                         ================================================= -->
+
+                    <div class="donation-category">
+
+                        <h3>
+                            <span class="category-icon">💊</span>
+                            Medicine Supplies Pack
+                        </h3>
+
+
+                        <!-- Paracetamol -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Paracetamol"
+                                   data-item="Paracetamol">
+
+                            <label class="relief-item-name">
+                                💊 Paracetamol
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Paracetamol"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Paracetamol">
+
+                                <option value="packets">packets</option>
+                                <option value="strips">strips</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- ORS -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="ORS Sachets"
+                                   data-item="ORS Sachets">
+
+                            <label class="relief-item-name">
+                                🧃 ORS Sachets
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="ORS Sachets"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="ORS Sachets">
+
+                                <option value="sachets">sachets</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Antacid -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Antacid"
+                                   data-item="Antacid">
+
+                            <label class="relief-item-name">
+                                💊 Antacid
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Antacid"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Antacid">
+
+                                <option value="packets">packets</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Antiseptic Solution -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Antiseptic Solution"
+                                   data-item="Antiseptic Solution">
+
+                            <label class="relief-item-name">
+                                🧴 Antiseptic Solution
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Antiseptic Solution"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Antiseptic Solution">
+
+                                <option value="bottles">bottles</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Adhesive Bandages -->
+
+                        <div class="relief-item-row">
+
+                            <input type="checkbox"
+                                   class="item-checkbox"
+                                   name="selectedItems"
+                                   value="Adhesive Bandages"
+                                   data-item="Adhesive Bandages">
+
+                            <label class="relief-item-name">
+                                🩹 Adhesive Bandages
+                            </label>
+
+                            <input type="number"
+                                   class="item-quantity"
+                                   name="itemQuantities"
+                                   data-item="Adhesive Bandages"
+                                   min="1"
+                                   placeholder="Quantity">
+
+                            <select class="item-unit"
+                                    name="itemUnits"
+                                    data-item="Adhesive Bandages">
+
+                                <option value="packs">packs</option>
+                                <option value="pcs">pcs</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ADDITIONAL DONATION ITEM
+                         ================================================= -->
+
+                    <div class="additional-item-section">
+
+                        <h3>
+                            ➕ Additional Donation Item
+                        </h3>
+
+                        <p class="additional-item-help">
+                            Can't find the item you want to donate?
+                            Add it here.
+                        </p>
+
+
+                        <div class="additional-item-row">
+
+                            <div class="additional-field">
+
+                                <label for="additionalItemName">
+                                    Item Name
+                                </label>
+
+                                <input type="text"
+                                       id="additionalItemName"
+                                       name="additionalItemName"
+                                       placeholder="e.g. Baby Clothes">
+
+                            </div>
+
+
+                            <div class="additional-field">
+
+                                <label for="additionalItemQuantity">
+                                    Quantity
+                                </label>
+
+                                <input type="number"
+                                       id="additionalItemQuantity"
+                                       name="additionalItemQuantity"
+                                       min="1"
+                                       placeholder="Quantity">
+
+                            </div>
+
+
+                            <div class="additional-field">
+
+                                <label for="additionalItemUnit">
+                                    Unit
+                                </label>
+
+                                <select id="additionalItemUnit"
+                                        name="additionalItemUnit">
+
+                                    <option value="pcs">pcs</option>
+                                    <option value="kg">kg</option>
+                                    <option value="packets">packets</option>
+                                    <option value="boxes">boxes</option>
+                                    <option value="bottles">bottles</option>
+                                    <option value="packs">packs</option>
+                                    <option value="sets">sets</option>
+                                    <option value="other">Other</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
 
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- GOODS QUANTITY                                    -->
-            <!-- ================================================= -->
-
-            <div class="form-group"
-                 id="goodsQuantityGroup">
-
-                <label for="goodsQuantity">
-                    Goods Quantity
-                </label>
-
-                <input type="text"
-                       id="goodsQuantity"
-                       th:field="*{goodsQuantity}"
-                       placeholder="Example: 20 kg">
-
-            </div>
-
-
-            <!-- ================================================= -->
-            <!-- ADDITIONAL DETAILS                                -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 ADDITIONAL DETAILS
+                 ================================================= -->
 
             <div class="form-group">
 
                 <label for="description">
-
                     Additional Details
-
-                    <span>
-                        (Optional)
-                    </span>
-
+                    <span>(Optional)</span>
                 </label>
 
                 <textarea id="description"
@@ -213,17 +1444,12 @@
                           placeholder="Enter additional donation details">
                 </textarea>
 
-                <small class="error"
-                       th:if="${#fields.hasErrors('description')}"
-                       th:errors="*{description}">
-                </small>
-
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- DONATION DATE                                     -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 DONATION DATE
+                 ================================================= -->
 
             <div class="form-group">
 
@@ -242,35 +1468,32 @@
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- STATUS - READ ONLY                                -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 STATUS
+                 ================================================= -->
 
             <div class="form-group">
 
-                <label for="status">
+                <label>
                     Current Status
                 </label>
 
                 <input type="text"
-                       id="status"
                        th:value="${donation.status}"
                        readonly>
 
-                <p class="helper-text">
+                <small>
                     Donation status cannot be changed from this page.
-                </p>
+                </small>
 
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- BUTTONS                                           -->
-            <!-- ================================================= -->
+            <!-- =================================================
+                 BUTTONS
+                 ================================================= -->
 
             <div class="form-actions">
-
-                <!-- Donor goes back to OWN donations -->
 
                 <a th:href="@{/donations/my}"
                    class="cancel-button">
@@ -289,6 +1512,7 @@
 
             </div>
 
+
         </form>
 
     </main>
@@ -296,7 +1520,31 @@
 </div>
 
 
+<!-- =========================================================
+     EXISTING DONATION ITEMS
+     We use hidden HTML elements instead of serializing
+     DonationItem because DonationItem has a Donation reference.
+     ========================================================= -->
+
+<div id="existingDonationItems"
+     style="display:none;">
+
+    <span th:each="item : ${donationItems}"
+          class="existing-donation-item"
+          th:attr="
+              data-name=${item.itemName},
+              data-quantity=${item.quantity},
+              data-unit=${item.unit}">
+    </span>
+
+</div>
+
+
 <script>
+
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
 
     const donationType =
         document.getElementById("donationType");
@@ -304,70 +1552,327 @@
     const cashGroup =
         document.getElementById("cashGroup");
 
-    const goodsDescriptionGroup =
-        document.getElementById("goodsDescriptionGroup");
+    const goodsItemsGroup =
+        document.getElementById("goodsItemsGroup");
 
-    const goodsQuantityGroup =
-        document.getElementById("goodsQuantityGroup");
 
-    const cashAmount =
-        document.getElementById("cashAmount");
+    // =========================================================
+    // ALL EXISTING ITEMS
+    // =========================================================
 
-    const goodsDescription =
-        document.getElementById("goodsDescription");
+    const existingItems =
+        document.querySelectorAll(
+            ".existing-donation-item"
+        );
 
-    const goodsQuantity =
-        document.getElementById("goodsQuantity");
 
+    // =========================================================
+    // PREDEFINED ITEM NAMES
+    // =========================================================
+
+    const predefinedItems =
+        new Set(
+            Array.from(
+                document.querySelectorAll(
+                    ".item-checkbox"
+                )
+            ).map(
+                checkbox => checkbox.value
+            )
+        );
+
+
+    // =========================================================
+    // LOAD EXISTING DONATION ITEMS
+    // =========================================================
+
+    existingItems.forEach(existingItem => {
+
+        const name =
+            existingItem.dataset.name;
+
+        const quantity =
+            existingItem.dataset.quantity;
+
+        const unit =
+            existingItem.dataset.unit;
+
+
+        const checkbox =
+            document.querySelector(
+                '.item-checkbox[data-item="' +
+                CSS.escape(name) +
+                '"]'
+            );
+
+
+        // =====================================================
+        // PREDEFINED ITEM
+        // =====================================================
+
+        if (checkbox) {
+
+            checkbox.checked = true;
+
+
+            const row =
+                checkbox.closest(
+                    ".relief-item-row"
+                );
+
+
+            const quantityInput =
+                row.querySelector(
+                    ".item-quantity"
+                );
+
+
+            const unitSelect =
+                row.querySelector(
+                    ".item-unit"
+                );
+
+
+            quantityInput.value =
+                quantity;
+
+
+            // If the saved unit isn't currently
+            // one of the options, add it.
+
+            if (
+                unit &&
+                !Array.from(
+                    unitSelect.options
+                ).some(
+                    option =>
+                        option.value === unit
+                )
+            ) {
+
+                const newOption =
+                    document.createElement(
+                        "option"
+                    );
+
+                newOption.value = unit;
+
+                newOption.textContent = unit;
+
+                unitSelect.appendChild(
+                    newOption
+                );
+            }
+
+
+            unitSelect.value =
+                unit || "";
+
+
+            quantityInput.disabled =
+                false;
+
+            unitSelect.disabled =
+                false;
+
+        }
+
+            // =====================================================
+            // CUSTOM / ADDITIONAL ITEM
+        // =====================================================
+
+        else {
+
+            const additionalName =
+                document.getElementById(
+                    "additionalItemName"
+                );
+
+            const additionalQuantity =
+                document.getElementById(
+                    "additionalItemQuantity"
+                );
+
+            const additionalUnit =
+                document.getElementById(
+                    "additionalItemUnit"
+                );
+
+
+            additionalName.value =
+                name || "";
+
+
+            additionalQuantity.value =
+                quantity || "";
+
+
+            if (unit) {
+
+                if (
+                    !Array.from(
+                        additionalUnit.options
+                    ).some(
+                        option =>
+                            option.value === unit
+                    )
+                ) {
+
+                    const newOption =
+                        document.createElement(
+                            "option"
+                        );
+
+                    newOption.value = unit;
+
+                    newOption.textContent = unit;
+
+                    additionalUnit.appendChild(
+                        newOption
+                    );
+                }
+
+                additionalUnit.value =
+                    unit;
+            }
+
+        }
+
+    });
+
+
+    // =========================================================
+    // ENABLE / DISABLE ITEM INPUTS
+    // =========================================================
+
+    function updateItemState(checkbox) {
+
+        const row =
+            checkbox.closest(
+                ".relief-item-row"
+            );
+
+
+        const quantity =
+            row.querySelector(
+                ".item-quantity"
+            );
+
+
+        const unit =
+            row.querySelector(
+                ".item-unit"
+            );
+
+
+        if (checkbox.checked) {
+
+            quantity.disabled =
+                false;
+
+            unit.disabled =
+                false;
+
+            quantity.required =
+                true;
+
+            unit.required =
+                true;
+
+        } else {
+
+            quantity.disabled =
+                true;
+
+            unit.disabled =
+                true;
+
+            quantity.required =
+                false;
+
+            unit.required =
+                false;
+
+            quantity.value =
+                "";
+
+        }
+
+    }
+
+
+    // =========================================================
+    // CHECKBOX EVENTS
+    // =========================================================
+
+    document.querySelectorAll(
+        ".item-checkbox"
+    ).forEach(checkbox => {
+
+        checkbox.addEventListener(
+            "change",
+            function () {
+
+                updateItemState(this);
+
+            }
+        );
+
+    });
+
+
+    // =========================================================
+    // INITIAL ITEM STATE
+    // =========================================================
+
+    document.querySelectorAll(
+        ".item-checkbox"
+    ).forEach(checkbox => {
+
+        updateItemState(
+            checkbox
+        );
+
+    });
+
+
+    // =========================================================
+    // CASH / GOODS
+    // =========================================================
 
     function updateDonationFields() {
 
-        if (donationType.value === "CASH") {
+        if (
+            donationType.value ===
+            "CASH"
+        ) {
 
-            cashGroup.style.display = "block";
+            cashGroup.style.display =
+                "block";
 
-            goodsDescriptionGroup.style.display = "none";
-
-            goodsQuantityGroup.style.display = "none";
-
-
-            cashAmount.required = true;
-
-            goodsDescription.required = false;
-
-            goodsQuantity.required = false;
+            goodsItemsGroup.style.display =
+                "none";
 
 
-        } else if (donationType.value === "GOODS") {
+        } else if (
+            donationType.value ===
+            "GOODS"
+        ) {
 
-            cashGroup.style.display = "none";
+            cashGroup.style.display =
+                "none";
 
-            goodsDescriptionGroup.style.display = "block";
-
-            goodsQuantityGroup.style.display = "block";
-
-
-            cashAmount.required = false;
-
-            goodsDescription.required = true;
-
-            goodsQuantity.required = true;
+            goodsItemsGroup.style.display =
+                "block";
 
 
         } else {
 
-            cashGroup.style.display = "none";
+            cashGroup.style.display =
+                "none";
 
-            goodsDescriptionGroup.style.display = "none";
-
-            goodsQuantityGroup.style.display = "none";
-
-
-            cashAmount.required = false;
-
-            goodsDescription.required = false;
-
-            goodsQuantity.required = false;
+            goodsItemsGroup.style.display =
+                "none";
 
         }
 
@@ -383,6 +1888,7 @@
     updateDonationFields();
 
 </script>
+
 
 </body>
 

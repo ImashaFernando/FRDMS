@@ -188,6 +188,310 @@ body {
 }
 
 /* ========================================
+   GOODS HELP TEXT
+   ======================================== */
+
+.form-help {
+    color: #6F8292;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: -2px;
+}
+
+/* ========================================
+   DONATION TYPE SECTIONS
+   ======================================== */
+
+.donation-type-section {
+    display: none;
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   DONATION CATEGORIES
+   ======================================== */
+
+.donation-category {
+    margin-bottom: 24px;
+    padding: 16px 18px;
+    background: #F8FBFD;
+    border: 1px solid #E1ECF2;
+    border-radius: 12px;
+}
+
+.donation-category h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #1F3A60;
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+/* ========================================
+   CATEGORY ICONS
+   ======================================== */
+
+.category-icon {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border: 1px solid #D8E6EE;
+    border-radius: 9px;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(31, 58, 96, 0.06);
+}
+
+/* ========================================
+   DONATION ITEM ROW
+   ======================================== */
+
+.donation-item-row {
+    display: grid;
+    grid-template-columns: 22px minmax(130px, 1fr) 115px 95px;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.donation-item-row:hover {
+    background: #EDF5F9;
+}
+
+/* ========================================
+   ITEM CHECKBOX
+   ======================================== */
+
+.item-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #3582B8;
+    cursor: pointer;
+}
+
+/* ========================================
+   ITEM LABEL
+   ======================================== */
+
+.donation-item-row label {
+    color: #294661;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* ========================================
+   ITEM QUANTITY
+   ======================================== */
+
+.item-quantity {
+    width: 100%;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #C9DDEA;
+    border-radius: 7px;
+    background: #FFFFFF;
+    color: #1F3A60;
+    font-size: 12px;
+    outline: none;
+}
+
+.item-quantity::placeholder {
+    color: #9AAAB8;
+}
+
+.item-quantity:focus {
+    border-color: #3582B8;
+    box-shadow: 0 0 0 2px rgba(53, 130, 184, 0.10);
+}
+
+/* ========================================
+   ITEM UNIT
+   ======================================== */
+
+.item-unit {
+    width: 100%;
+    height: 34px;
+    padding: 0 6px;
+    border: 1px solid #C9DDEA;
+    border-radius: 7px;
+    background: #FFFFFF;
+    color: #1F3A60;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+.item-unit:focus {
+    border-color: #3582B8;
+    box-shadow: 0 0 0 2px rgba(53, 130, 184, 0.10);
+}
+
+/* ========================================
+   SELECTED ITEM
+   ======================================== */
+
+.donation-item-row:has(.item-checkbox:checked) {
+    background: #EAF4FA;
+    border: 1px solid #C9E1EE;
+}
+
+.donation-item-row:has(.item-checkbox:checked) label {
+    color: #1F3A60;
+    font-weight: 700;
+}
+
+/* ========================================
+   DISABLED ITEM INPUTS
+   ======================================== */
+
+.item-quantity:disabled,
+.item-unit:disabled {
+    background: #EEF2F4;
+    color: #A0ADB6;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+/* ========================================
+   READONLY INPUT
+   ======================================== */
+
+.readonly-input {
+    background: #EEF4F7 !important;
+    color: #63798A !important;
+    cursor: not-allowed;
+}
+/* ========================================
+   ADDITIONAL DONATION ITEM
+   ======================================== */
+
+.additional-item-section {
+    margin-top: 25px;
+    margin-bottom: 25px;
+
+    padding: 18px;
+
+    background: #FFFFFF;
+
+    border: 1px dashed #85B6D6;
+
+    border-radius: 12px;
+}
+
+.additional-item-section h3 {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: #1F3A60;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.additional-item-help {
+    color: #718398;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
+}
+
+.additional-item-row {
+    display: grid;
+
+    grid-template-columns: 1fr 140px 130px;
+
+    gap: 12px;
+
+    align-items: end;
+}
+
+.additional-field {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.additional-field label {
+    color: #1F3A60;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.additional-field input,
+.additional-field select {
+    width: 100%;
+
+    height: 40px;
+
+    padding: 0 10px;
+
+    border: 1px solid #C9DDEA;
+
+    border-radius: 8px;
+
+    background: #F8FBFD;
+
+    color: #1F3A60;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.additional-field input:focus,
+.additional-field select:focus {
+    background: #FFFFFF;
+
+    border-color: #3582B8;
+
+    box-shadow:
+            0 0 0 3px rgba(53, 130, 184, 0.10);
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    .additional-item-row {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* ========================================
    SUBMIT BUTTON
    ======================================== */
 
@@ -240,6 +544,27 @@ body {
    RESPONSIVE
    ======================================== */
 
+@media (max-width: 700px) {
+
+    .donation-item-row {
+        grid-template-columns: 22px 1fr;
+        gap: 6px;
+    }
+
+    .donation-item-row .item-quantity,
+    .donation-item-row .item-unit {
+        grid-column: 2;
+    }
+
+    .donation-item-row .item-quantity {
+        width: 100%;
+    }
+
+    .donation-item-row .item-unit {
+        width: 100%;
+    }
+}
+
 @media (max-width: 650px) {
 
     body {
@@ -261,6 +586,10 @@ body {
     .donation-footer {
         padding: 0 25px 25px;
     }
+
+    .donation-category {
+        padding: 14px;
+    }
 }
 
 @media (max-width: 450px) {
@@ -280,24 +609,12 @@ body {
     .donation-card form {
         padding: 25px 20px 20px;
     }
-}
-/* ========================================
-   DONATION TYPE SECTIONS
-   ======================================== */
 
-.donation-type-section {
-    display: none;
-    animation: fadeIn 0.25s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
+    .donation-category h3 {
+        font-size: 15px;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .donation-footer {
+        padding: 0 20px 20px;
     }
 }

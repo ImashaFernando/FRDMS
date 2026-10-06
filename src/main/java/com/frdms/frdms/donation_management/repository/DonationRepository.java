@@ -18,4 +18,13 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
             LocalDate startDate,
             LocalDate endDate
     );
+
+    // =========================================================
+    // ACCEPTED CASH DONATIONS
+    // =========================================================
+
+    List<Donation> findByDonationTypeAndStatus(
+            String donationType,
+            String status
+    );
 }

@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Accepted Goods Donations | FRDMS
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        :root {
+
+            --primary: #2563eb;
+
+            --primary-light: #eff6ff;
+
+            --text-dark: #172033;
+
+            --text: #374151;
+
+            --text-light: #6b7280;
+
+            --border: #e5eaf0;
+
+            --success: #16803c;
+
+            --success-light: #e9f8ef;
+
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eaf4ff 0%,
+                            #dceeff 50%,
+                            #cfe5ff 100%
+                    );
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           PAGE CONTAINER
+        ===================================================== */
+
+        .page-container {
+
+            width: 86%;
+
+            max-width: 1305px;
+
+            margin: 32px auto 45px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .page-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
+
+
+        .header-icon {
+
+            width: 56px;
+
+            height: 56px;
+
+            border-radius: 14px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #e8f1ff,
+                            #dceaff
+                    );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 27px;
+
+            border: 1px solid #dbe7fb;
+
+        }
+
+
+        .header-title h1 {
+
+            font-size: 25px;
+
+            font-weight: 750;
+
+            color: var(--text-dark);
+
+        }
+
+
+        .header-title p {
+
+            margin-top: 4px;
+
+            color: var(--text-light);
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-btn {
+
+            text-decoration: none;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            padding: 10px 17px;
+
+            background: white;
+
+            color: #344054;
+
+            border: 1px solid #d9e2ed;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: #f8fbff;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .summary-card {
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            box-shadow:
+                    0 4px 14px
+                    rgba(15, 23, 42, 0.05);
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+        .summary-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 3px;
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            #2563eb,
+                            #60a5fa
+                    );
+
+        }
+
+
+        .summary-label {
+
+            color: var(--text-light);
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+
+        .summary-value {
+
+            margin-top: 10px;
+
+            font-size: 24px;
+
+            font-weight: 750;
+
+            color: var(--text-dark);
+
+        }
+
+
+        /* =====================================================
+           TABLE CARD
+        ===================================================== */
+
+        .table-card {
+
+            width: 100%;
+
+            background: white;
+
+            border-radius: 15px;
+
+            border: 1px solid #e1e7ef;
+
+            box-shadow:
+                    0 8px 24px
+                    rgba(15, 23, 42, 0.07);
+
+            overflow: hidden;
+
+        }
+
+
+        /* =====================================================
+           TABLE HEADER
+        ===================================================== */
+
+        .table-header {
+            padding: 28px 30px;
+            background:#b8d4ef;
+            border-bottom: 1px solid #96bbdc;
+        }
+
+
+        .table-header h2 {
+            margin: 0 0 6px;
+            color: #123b63;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+
+        .table-header p {
+            margin: 0;
+            color:#315a7d;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-box {
+
+            padding: 14px 20px;
+            background-color: #fff9db;
+            border: 1px solid #f3df8a;
+            color: #334155;
+        }
+        .search-box::placeholder {
+            color: #8a7a3d;
+        }
+
+        .search-box input {
+
+            width: 320px;
+
+            height: 38px;
+
+            padding: 0 13px;
+
+            border:
+                    1px solid #d7e0eb;
+
+            border-radius: 8px;
+
+            outline: none;
+
+            font-size: 13px;
+
+        }
+        .search-box:focus {
+            background-color: #fffdf0;
+            border-color: #e8c94a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(232, 201, 74, 0.15);
+        }
+
+        .search-box input:focus {
+
+            border-color: #6d9cf7;
+
+            box-shadow:
+                    0 0 0 3px
+                    rgba(37, 99, 235, 0.08);
+
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            table-layout: fixed;
+
+        }
+
+
+        th {
+
+            padding: 13px 18px;
+
+            background: #f7f9fc;
+
+            color: #667085;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+
+            text-align: left;
+
+            border-bottom:
+                    1px solid #e5eaf0;
+
+        }
+
+
+        td {
+
+            padding: 16px 18px;
+
+            font-size: 13px;
+
+            color: #374151;
+
+            vertical-align: top;
+
+            border-bottom:
+                    1px solid #edf0f4;
+
+        }
+
+
+        tbody tr:hover td {
+
+            background: #f8fbff;
+
+        }
+
+
+        /* =====================================================
+           COLUMN WIDTH
+        ===================================================== */
+
+        th:nth-child(1),
+        td:nth-child(1) {
+
+            width: 13%;
+
+        }
+
+
+        th:nth-child(2),
+        td:nth-child(2) {
+
+            width: 20%;
+
+        }
+
+
+        th:nth-child(3),
+        td:nth-child(3) {
+
+            width: 16%;
+
+        }
+
+
+        th:nth-child(4),
+        td:nth-child(4) {
+
+            width: 36%;
+
+        }
+
+
+        th:nth-child(5),
+        td:nth-child(5) {
+
+            width: 15%;
+
+        }
+
+
+        /* =====================================================
+           DONATION ID
+        ===================================================== */
+
+        .donation-id {
+
+            font-weight: 700;
+
+            color: #243b63;
+
+        }
+
+
+        /* =====================================================
+           DONOR
+        ===================================================== */
+
+        .donor-name {
+
+            font-weight: 700;
+
+            color: #172033;
+
+        }
+
+
+        .donor-id {
+
+            margin-top: 3px;
+
+            color: #7b8494;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           ITEMS
+        ===================================================== */
+
+        .items {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .item-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 5px 8px;
+
+            background: #f8fafc;
+
+            border-radius: 6px;
+
+            width: fit-content;
+
+        }
+
+
+        .item-name {
+
+            font-weight: 600;
+
+            color: #243b63;
+
+        }
+
+
+        .item-quantity {
+
+            color: #2563eb;
+
+            font-weight: 700;
+
+        }
+
+
+        .item-unit {
+
+            color: #6b7280;
+
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            background: var(--success-light);
+
+            color: var(--success);
+
+            border:
+                    1px solid #d5f0df;
+
+            font-size: 10px;
+
+            font-weight: 750;
+
+        }
+
+
+        .status-dot {
+
+            width: 6px;
+
+            height: 6px;
+
+            background: #20a052;
+
+            border-radius: 50%;
+
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #7b8494;
+
+        }
+
+
+        .empty-icon {
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .empty-state h3 {
+
+            color: #374151;
+
+            font-size: 16px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .empty-state p {
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .page-container {
+
+                width: 94%;
+
+            }
+
+
+            .page-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+            }
+
+
+            .back-btn {
+
+                width: 100%;
+
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .search-box input {
+
+                width: 100%;
+
+            }
+
+
+            table {
+
+                min-width: 850px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page-container">
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <div class="page-header">
+
+        <div class="header-left">
+
+            <div class="header-icon">
+                📦
+            </div>
+
+
+            <div class="header-title">
+
+                <h1>
+                    Accepted Goods Donations
+                </h1>
+
+                <p>
+                    View all successfully accepted goods donations
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a th:href="@{/donations/goods}"
+           class="back-btn">
+
+            ← Back to Goods Donations
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUMMARY CARDS
+    ===================================================== -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Accepted Goods Donations
+            </div>
+
+            <div class="summary-value"
+                 th:text="${acceptedGoodsDonations.size()}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Donation Items
+            </div>
+
+            <div class="summary-value"
+                 th:text="${totalGoodsItemCount}">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Status
+            </div>
+
+            <div class="summary-value"
+                 style="color:#16803c;">
+
+                ACCEPTED
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         TABLE
+    ===================================================== -->
+
+    <div class="table-card">
+
+
+        <div class="table-header">
+
+            <h2>
+                Accepted Goods Donation Records
+            </h2>
+
+            <p>
+                Goods donations approved by the Finance Officer
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-box">
+
+            <input
+                    type="text"
+                    id="goodsSearch"
+                    placeholder="🔍 Search donation ID or donor..."
+                    onkeyup="searchGoods()">
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-wrapper">
+
+            <table id="goodsTable">
+
+
+                <thead>
+
+                <tr>
+
+                    <th>
+                        Donation ID
+                    </th>
+
+                    <th>
+                        Donated By
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Donated Items
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <!-- =================================================
+                     ACCEPTED GOODS DONATION
+                ================================================= -->
+
+                <tr th:each="donation : ${acceptedGoodsDonations}">
+
+
+                    <!-- DONATION ID -->
+
+                    <td class="donation-id"
+                        th:text="'#' + ${donation.id}">
+
+                        #1
+
+                    </td>
+
+
+                    <!-- DONOR -->
+
+                    <td>
+
+                        <div class="donor-name"
+                             th:text="${donors[donation.donorId].username}">
+
+                            Donor Name
+
+                        </div>
+
+
+                        <div class="donor-name"
+                             th:if="${donors[donation.donorId] == null}">
+
+                            Unknown Donor
+
+                        </div>
+
+
+                        <div class="donor-id">
+
+                            Donor ID:
+
+                            <span th:text="${donation.donorId}">
+                                1
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td th:text="${donation.donationDate}">
+
+                        2026-10-06
+
+                    </td>
+
+
+                    <!-- ITEMS -->
+
+                    <td>
+
+                        <div class="items">
+
+
+                            <div class="item-row"
+                                 th:each="item :
+                                 ${donation.donationItems}">
+
+
+                                <span class="item-name"
+                                      th:text="${item.itemName}">
+
+                                    Rice
+
+                                </span>
+
+
+                                <span class="item-quantity"
+                                      th:text="${item.quantity}">
+
+                                    50
+
+                                </span>
+
+
+                                <span class="item-unit"
+                                      th:text="${item.unit}">
+
+                                    kg
+
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="status-badge">
+
+                            <span class="status-dot"></span>
+
+                            ACCEPTED
+
+                        </span>
+
+                    </td>
+
+
+                </tr>
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================= -->
+
+                <tr th:if="${#lists.isEmpty(acceptedGoodsDonations)}">
+
+                    <td colspan="5">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                📦
+                            </div>
+
+                            <h3>
+                                No Accepted Goods Donations
+                            </h3>
+
+                            <p>
+                                There are currently no accepted goods donations.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     SEARCH SCRIPT
+===================================================== -->
+
+<script>
+
+    function searchGoods() {
+
+        const input =
+            document.getElementById("goodsSearch");
+
+        const filter =
+            input.value.toLowerCase();
+
+        const table =
+            document.getElementById("goodsTable");
+
+        const rows =
+            table
+                .getElementsByTagName("tbody")[0]
+                .getElementsByTagName("tr");
+
+
+        for (let i = 0; i < rows.length; i++) {
+
+            const text =
+                rows[i].textContent.toLowerCase();
+
+
+            if (text.includes(filter)) {
+
+                rows[i].style.display = "";
+
+            } else {
+
+                rows[i].style.display = "none";
+
+            }
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

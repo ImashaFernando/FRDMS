@@ -97,8 +97,22 @@
 
                 </a>
 
-            </div>
+                <!-- Accepted Cash Donations -->
+                <a th:href="@{/donations/cash/accepted}"
+                   class="nav-item">
 
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <span>
+        Accepted Cash Donations
+    </span>
+
+                </a>
+
+                <a th:href="@{/donations/goods/accepted}" class="nav-item active">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span>Accepted Goods Donations</span>
+                </a>
 
             <!-- =================================================
                  FINANCE
@@ -257,8 +271,9 @@
                 </a>
 
             </div>
-
+            </div>
         </nav>
+
 
 
         <!-- =====================================================

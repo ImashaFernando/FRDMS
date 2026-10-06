@@ -11,15 +11,20 @@ public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
 
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public InventoryService(
             InventoryRepository inventoryRepository) {
 
-        this.inventoryRepository =
-                inventoryRepository;
+        this.inventoryRepository = inventoryRepository;
     }
 
+
     // =========================================================
-    // GET ALL INVENTORY
+    // GET ALL INVENTORY ITEMS
     // =========================================================
 
     public List<Inventory> getAllItems() {
@@ -27,13 +32,15 @@ public class InventoryService {
         return inventoryRepository.findAll();
     }
 
+
     // =========================================================
-    // ADD ACCEPTED GOODS DONATION TO INVENTORY
+    // ADD DONATION TO INVENTORY
     // =========================================================
 
     public Inventory addDonationToInventory(
             String itemName,
             int quantity,
+            String unit,
             String description) {
 
         Inventory inventory =
@@ -41,8 +48,9 @@ public class InventoryService {
                         .findByItemNameIgnoreCase(itemName)
                         .orElse(null);
 
+
         // -----------------------------------------------------
-        // NEW ITEM
+        // ITEM DOES NOT EXIST
         // -----------------------------------------------------
 
         if (inventory == null) {
@@ -51,13 +59,14 @@ public class InventoryService {
 
             inventory.setItemName(itemName);
             inventory.setQuantity(quantity);
-            inventory.setUnit("Units");
+            inventory.setUnit(unit);
             inventory.setCategory("Donated Goods");
             inventory.setDescription(description);
         }
 
+
         // -----------------------------------------------------
-        // EXISTING ITEM
+        // ITEM ALREADY EXISTS
         // -----------------------------------------------------
 
         else {
@@ -70,13 +79,30 @@ public class InventoryService {
             inventory.setQuantity(
                     currentQuantity + quantity
             );
+
+
+            // Update unit if provided
+            if (unit != null && !unit.isBlank()) {
+
+                inventory.setUnit(unit);
+            }
+
+
+            // Update description if provided
+            if (description != null &&
+                    !description.isBlank()) {
+
+                inventory.setDescription(description);
+            }
         }
+
 
         return inventoryRepository.save(inventory);
     }
 
+
     // =========================================================
-    // SEND GOODS TO DISTRIBUTION MANAGER
+    // SEND INVENTORY TO DISTRIBUTION
     // =========================================================
 
     public Inventory sendToDistribution(
@@ -87,12 +113,16 @@ public class InventoryService {
                 inventoryRepository.findById(id)
                         .orElseThrow(() ->
                                 new IllegalArgumentException(
-                                        "Inventory item not found"));
+                                        "Inventory item not found"
+                                )
+                        );
+
 
         int currentQuantity =
                 inventory.getQuantity() == null
                         ? 0
                         : inventory.getQuantity();
+
 
         // -----------------------------------------------------
         // VALIDATE QUANTITY
@@ -101,14 +131,18 @@ public class InventoryService {
         if (quantity <= 0) {
 
             throw new IllegalArgumentException(
-                    "Quantity must be greater than 0");
+                    "Quantity must be greater than zero"
+            );
         }
+
 
         if (quantity > currentQuantity) {
 
             throw new IllegalArgumentException(
-                    "Insufficient inventory quantity");
+                    "Not enough inventory available"
+            );
         }
+
 
         // -----------------------------------------------------
         // REDUCE INVENTORY
@@ -118,6 +152,8 @@ public class InventoryService {
                 currentQuantity - quantity
         );
 
+
         return inventoryRepository.save(inventory);
     }
+
 }

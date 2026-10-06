@@ -9,39 +9,55 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>My Donations | FRDMS</title>
+    <title> My Donations | FRDMS</title>
 
     <link rel="stylesheet"
           th:href="@{/css/my-donations.css}">
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 
 <body>
 
 <div class="page-wrapper">
 
-    <!-- HEADER -->
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
 
     <div class="header">
 
         <div>
-            <h1>My Donations</h1>
+
+            <h1>
+                🎁 My Donations
+            </h1>
 
             <p>
                 View and manage your donations
             </p>
+
         </div>
+
 
         <div class="header-actions">
 
             <a th:href="@{/donor/dashboard}"
                class="dashboard-btn">
+
                 ← Dashboard
+
             </a>
+
 
             <a th:href="@{/donations/submit}"
                class="add-btn">
+
                 + Add Donation
+
             </a>
 
         </div>
@@ -49,11 +65,16 @@
     </div>
 
 
-    <!-- 2 DAY INFORMATION -->
+
+    <!-- =====================================================
+         2 DAY INFORMATION
+         ===================================================== -->
 
     <div class="info-box">
 
-        <strong>Important:</strong>
+        <strong>
+            Important:
+        </strong>
 
         You can edit or delete a donation only
         within 2 days from the donation date.
@@ -61,140 +82,228 @@
     </div>
 
 
-    <!-- DONATIONS TABLE -->
+
+    <!-- =====================================================
+         DONATIONS TABLE
+         ===================================================== -->
 
     <div class="table-container">
 
         <table>
 
+
+            <!-- =================================================
+                 TABLE HEADER
+                 ================================================= -->
+
             <thead>
 
             <tr>
 
-                <th>ID</th>
+                <th>
+                    ID
+                </th>
 
-                <th>Date</th>
+                <th>
+                    Date
+                </th>
 
-                <th>Type</th>
+                <th>
+                    Type
+                </th>
 
-                <th>Amount / Goods</th>
+                <th>
+                    Amount / Goods
+                </th>
 
-                <th>Description</th>
+                <th>
+                    Description
+                </th>
 
-                <th>Status</th>
+                <th>
+                    Status
+                </th>
 
-                <th>Actions</th>
+                <th>
+                    Actions
+                </th>
 
             </tr>
 
             </thead>
 
 
+
+            <!-- =================================================
+                 TABLE BODY
+                 ================================================= -->
+
             <tbody>
+
 
             <tr th:each="donation : ${donations}">
 
-                <!-- ID -->
+
+                <!-- =================================================
+                     ID
+                     ================================================= -->
 
                 <td th:text="${donation.id}">
+
                     1
+
                 </td>
 
 
-                <!-- DATE -->
+
+                <!-- =================================================
+                     DATE
+                     ================================================= -->
 
                 <td th:text="${donation.donationDate}">
+
                     2026-09-16
+
                 </td>
 
 
-                <!-- TYPE -->
+
+                <!-- =================================================
+                     TYPE
+                     ================================================= -->
 
                 <td th:text="${donation.donationType}">
+
                     CASH
+
                 </td>
 
 
-                <!-- AMOUNT / GOODS -->
+
+                <!-- =================================================
+                     AMOUNT / GOODS
+                     ================================================= -->
 
                 <td>
 
+
+                    <!-- CASH -->
+
                     <span th:if="${donation.donationType == 'CASH'}"
                           th:text="'LKR ' + ${donation.cashAmount}">
+
                         LKR 5000
+
                     </span>
+
+
+
+                    <!-- GOODS -->
 
                     <span th:if="${donation.donationType == 'GOODS'}"
                           th:text="${donation.goodsDescription}
                           + ' (' +
                           ${donation.goodsQuantity}
                           + ')'">
+
                         Rice (10kg)
+
                     </span>
 
+
                 </td>
 
 
-                <!-- DESCRIPTION -->
 
-                <td th:text="${donation.description}">
+                <!-- =================================================
+                     DESCRIPTION
+                     ================================================= -->
+
+                <td th:text="${donation.description != null
+                              and !donation.description.isBlank()
+                              ? donation.description
+                              : 'No description'}">
+
                     Donation
+
                 </td>
 
 
-                <!-- STATUS -->
+
+                <!-- =================================================
+                     STATUS
+                     ================================================= -->
 
                 <td>
 
                     <span class="status"
-                          th:text="${donation.status}">
+                          th:text="${donation.status != null
+                                    ? donation.status
+                                    : 'PENDING'}">
+
                         PENDING
+
                     </span>
 
                 </td>
 
 
-                <!-- ACTIONS -->
+
+                <!-- =================================================
+                     ACTIONS
+                     ================================================= -->
 
                 <td class="actions">
 
 
-                    <!-- EDIT -->
-
-                    <a th:if="${donation.donationDate != null
-                            and T(java.time.temporal.ChronoUnit).DAYS.between(
-                                donation.donationDate,
-                                today
-                            ) < 2}"
-
+                    <!-- =================================================
+                         EDIT
+                         ONLY WITHIN 2 DAYS
+                         ================================================= -->
+                    <a th:if="${donation.status == 'PENDING'
+        and donation.donationDate != null
+        and T(java.time.temporal.ChronoUnit).DAYS.between(
+            donation.donationDate,
+            today
+        ) < 2}"
                        th:href="@{'/donations/edit/' + ${donation.id}}"
-
                        class="edit-btn">
-
+                        <i class="fa-solid fa-pen-to-square"></i>
                         Edit
+                    </a>
+
 
                     </a>
 
 
-                    <!-- DELETE -->
+
+                    <!-- =================================================
+                         DELETE
+                         ONLY WITHIN 2 DAYS
+                         ================================================= -->
 
                     <form th:if="${donation.donationDate != null
-                            and T(java.time.temporal.ChronoUnit).DAYS.between(
-                                donation.donationDate,
-                                today
-                            ) < 2}"
+                                  and T(java.time.temporal.ChronoUnit).DAYS.between(
+                                      donation.donationDate,
+                                      today
+                                  ) < 2}"
 
-                          th:action="@{'/donations/delete/' + ${donation.id}}"
+                          th:action="@{/donations/delete/{id}(id=${donation.id})}"
 
                           method="post"
 
-                          style="display:inline;">
+                          class="delete-form">
 
-                        <button type="submit"
-                                class="delete-btn"
-                                onclick="return confirm(
-                                    'Are you sure you want to delete this donation?'
-                                );">
+
+                        <button type="button"
+
+                                class="delete-button"
+
+                                th:onclick="'showDeleteConfirmation('
+                                           + ${donation.id}
+                                           + ')'">
+
+                            <i class="fa-solid fa-trash"></i>
 
                             Delete
 
@@ -203,23 +312,32 @@
                     </form>
 
 
-                    <!-- RECEIPT -->
+
+                    <!-- =================================================
+                         RECEIPT
+                         ================================================= -->
 
                     <a th:href="@{'/donations/receipt/' + ${donation.id}}"
+
                        class="view-btn">
+
+                        <i class="fa-solid fa-receipt"></i>
 
                         Receipt
 
                     </a>
 
 
-                    <!-- EXPIRED -->
+
+                    <!-- =================================================
+                         EXPIRED
+                         ================================================= -->
 
                     <span th:if="${donation.donationDate != null
-                            and T(java.time.temporal.ChronoUnit).DAYS.between(
-                                donation.donationDate,
-                                today
-                            ) >= 2}"
+                                  and T(java.time.temporal.ChronoUnit).DAYS.between(
+                                      donation.donationDate,
+                                      today
+                                  ) >= 2}"
 
                           class="expired">
 
@@ -227,12 +345,17 @@
 
                     </span>
 
+
                 </td>
+
 
             </tr>
 
 
-            <!-- NO DONATIONS -->
+
+            <!-- =================================================
+                 NO DONATIONS
+                 ================================================= -->
 
             <tr th:if="${#lists.isEmpty(donations)}">
 
@@ -245,13 +368,230 @@
 
             </tr>
 
+
             </tbody>
+
 
         </table>
 
     </div>
 
+
 </div>
+
+
+
+<!-- DELETE CONFIRMATION MODAL -->
+
+<div id="deleteConfirmationModal"
+     class="delete-confirm-overlay">
+
+    <div class="delete-confirm-modal">
+
+        <div class="delete-confirm-icon">
+            <i class="fa-solid fa-trash"></i>
+        </div>
+
+        <div class="delete-confirm-content">
+
+            <h3>Delete Donation?</h3>
+
+            <p>
+                Are you sure you want to delete this donation?
+            </p>
+
+            <span>
+                This action cannot be undone.
+            </span>
+
+        </div>
+
+        <div class="delete-confirm-actions">
+
+            <button type="button"
+                    id="deleteCancelButton"
+                    class="delete-cancel-button">
+                Cancel
+            </button>
+
+            <button type="button"
+                    id="deleteConfirmButton"
+                    class="delete-confirm-button">
+                <i class="fa-solid fa-trash"></i>
+                Delete Donation
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     DELETE CONFIRMATION JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    let selectedDeleteForm = null;
+
+
+    // =====================================================
+    // OPEN DELETE CONFIRMATION
+    // =====================================================
+
+    function showDeleteConfirmation(donationId) {
+
+
+        selectedDeleteForm =
+            document.querySelector(
+                'form[action$="/donations/delete/' +
+                donationId +
+                '"]'
+            );
+
+
+        const modal =
+            document.getElementById(
+                "deleteConfirmationModal"
+            );
+
+
+        modal.classList.add("show");
+
+    }
+
+
+
+    // =====================================================
+    // CLOSE MODAL
+    // =====================================================
+
+    function closeDeleteConfirmation() {
+
+        const modal =
+            document.getElementById(
+                "deleteConfirmationModal"
+            );
+
+
+        modal.classList.remove("show");
+
+
+        selectedDeleteForm = null;
+
+    }
+
+
+
+    // =====================================================
+    // PAGE LOAD
+    // =====================================================
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            const modal =
+                document.getElementById(
+                    "deleteConfirmationModal"
+                );
+
+
+            const cancelButton =
+                document.getElementById(
+                    "deleteCancelButton"
+                );
+
+
+            const confirmButton =
+                document.getElementById(
+                    "deleteConfirmButton"
+                );
+
+
+
+            // =============================================
+            // CANCEL
+            // =============================================
+
+            cancelButton.addEventListener(
+                "click",
+                function () {
+
+                    closeDeleteConfirmation();
+
+                }
+            );
+
+
+
+            // =============================================
+            // CONFIRM DELETE
+            // =============================================
+
+            confirmButton.addEventListener(
+                "click",
+                function () {
+
+
+                    if (selectedDeleteForm) {
+
+                        selectedDeleteForm.submit();
+
+                    }
+
+                }
+            );
+
+
+
+            // =============================================
+            // CLICK OUTSIDE MODAL
+            // =============================================
+
+            modal.addEventListener(
+                "click",
+                function (event) {
+
+
+                    if (event.target === modal) {
+
+                        closeDeleteConfirmation();
+
+                    }
+
+                }
+            );
+
+
+
+            // =============================================
+            // ESC KEY
+            // =============================================
+
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+
+                    if (event.key === "Escape") {
+
+                        closeDeleteConfirmation();
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
 
 </body>
 
