@@ -1,8 +1,10 @@
 package com.frdms.frdms.finance_management.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "inventory")
@@ -18,16 +20,30 @@ public class Inventory {
 
     private String category;
 
-    @Min(value = 0, message = "Quantity cannot be negative")
-    @Column(nullable = false)
-    private Integer quantity = 0;
+    @DecimalMin(
+            value = "0.0",
+            inclusive = true,
+            message = "Quantity cannot be negative"
+    )
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal quantity = BigDecimal.ZERO;
 
     private String unit;
 
     private String description;
 
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public Inventory() {
     }
+
+
+    // =========================================================
+    // GETTERS AND SETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -37,6 +53,7 @@ public class Inventory {
         this.id = id;
     }
 
+
     public String getItemName() {
         return itemName;
     }
@@ -44,6 +61,7 @@ public class Inventory {
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
+
 
     public String getCategory() {
         return category;
@@ -53,13 +71,15 @@ public class Inventory {
         this.category = category;
     }
 
-    public Integer getQuantity() {
+
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
+
 
     public String getUnit() {
         return unit;
@@ -68,6 +88,7 @@ public class Inventory {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
 
     public String getDescription() {
         return description;

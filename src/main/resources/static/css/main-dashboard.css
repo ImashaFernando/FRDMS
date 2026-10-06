@@ -21,7 +21,7 @@ html {
 body {
     font-family: "Segoe UI", Arial, sans-serif;
     color: #17324d;
-    background: #f5f9fc;
+    background: #8bb2e3;
     line-height: 1.6;
 }
 
@@ -62,7 +62,7 @@ section {
 
     --white: #ffffff;
 
-    --text: #17324d;
+    --text: #639bd1;
     --muted: #637b8f;
 
     --border: #dce9f1;

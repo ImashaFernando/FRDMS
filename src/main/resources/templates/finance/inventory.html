@@ -17,21 +17,19 @@
 
 <div class="page-container">
 
-    <div class="header">
+    <div class="page-header">
 
         <div>
-
             <h1>Inventory Management</h1>
-
-            <p>
-                Available relief goods and supplies
-            </p>
-
+            <p>Available relief goods and supplies</p>
         </div>
 
+        <a th:href="@{/finance/inventory/requests}"
+           class="distribution-button">
+            📦 Distribution Requests
+        </a>
 
     </div>
-
 
     <div class="table-container">
 
@@ -53,7 +51,6 @@
 
                 <th>Description</th>
 
-                <th>Actions</th>
 
             </tr>
 
@@ -86,15 +83,6 @@
 
                 <td th:text="${item.description}">
                     Relief goods
-                </td>
-
-                <td>
-
-                    <a th:href="@{/finance/inventory/send/{id}(id=${item.id})}"
-                       class="send-btn">
-                        Send to Distribution
-                    </a>
-
                 </td>
 
             </tr>

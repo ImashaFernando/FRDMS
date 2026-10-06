@@ -1,9 +1,15 @@
 package com.frdms.frdms.finance_management.service;
 
+import com.frdms.frdms.distribution_management.entity.FundRequest;
+import com.frdms.frdms.distribution_management.repository.FundRequestRepository;
 import com.frdms.frdms.finance_management.entity.Budget;
 import com.frdms.frdms.finance_management.repository.BudgetRepository;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -11,154 +17,468 @@ public class BudgetService {
 
     private final BudgetRepository budgetRepository;
 
-    public BudgetService(BudgetRepository budgetRepository) {
+    private final FundRequestRepository fundRequestRepository;
+
+
+    public BudgetService(
+            BudgetRepository budgetRepository,
+            FundRequestRepository fundRequestRepository) {
+
         this.budgetRepository = budgetRepository;
+
+        this.fundRequestRepository =
+                fundRequestRepository;
     }
 
-    // =========================
-    // F07 - Create Budget Requirement
-    // =========================
+
+    // =========================================================
+    // F07 - CREATE BUDGET REQUIREMENT
+    // =========================================================
 
     public Budget createBudgetRequirement(Budget budget) {
+
         budget.setStatus("PENDING");
+
         return budgetRepository.save(budget);
     }
 
-    // =========================
-    // View All Budgets
-    // =========================
+
+    // =========================================================
+    // NEW - CREATE DISASTER BUDGET FROM FUND REQUESTS
+    // =========================================================
+
+    @Transactional
+    public Budget createBudgetFromFundRequests(
+            List<Long> fundRequestIds) {
+
+
+        // -----------------------------------------------------
+        // CHECK SELECTION
+        // -----------------------------------------------------
+
+        if (fundRequestIds == null ||
+                fundRequestIds.isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "Please select at least one fund request."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // GET ONLY VALID PENDING FUND REQUESTS
+        // -----------------------------------------------------
+
+        List<FundRequest> fundRequests =
+                fundRequestRepository
+                        .findByIdInAndStatus(
+                                fundRequestIds,
+                                "FUND_REQUESTED"
+                        );
+
+
+        // -----------------------------------------------------
+        // CHECK ALL REQUESTS WERE FOUND
+        // -----------------------------------------------------
+
+        if (fundRequests.size()
+                != fundRequestIds.size()) {
+
+            throw new IllegalStateException(
+                    "One or more selected fund requests " +
+                            "are no longer available."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // GET DISASTER NAME
+        // -----------------------------------------------------
+
+        String disasterName =
+                fundRequests.get(0).getDisasterName();
+
+
+        if (disasterName == null ||
+                disasterName.isBlank() ||
+                "Unknown Disaster".equalsIgnoreCase(
+                        disasterName.trim())) {
+
+            throw new IllegalArgumentException(
+                    "Selected fund requests must have " +
+                            "a valid disaster name."
+            );
+        }
+
+
+        disasterName = disasterName.trim();
+
+
+        // -----------------------------------------------------
+        // CALCULATE TOTAL
+        // -----------------------------------------------------
+
+        BigDecimal totalAmount =
+                BigDecimal.ZERO;
+
+
+        for (FundRequest fundRequest : fundRequests) {
+
+
+            // -------------------------------------------------
+            // CHECK SAME DISASTER
+            // -------------------------------------------------
+
+            String requestDisaster =
+                    fundRequest.getDisasterName();
+
+
+            if (requestDisaster == null ||
+                    !disasterName.equalsIgnoreCase(
+                            requestDisaster.trim())) {
+
+                throw new IllegalArgumentException(
+                        "All selected fund requests must " +
+                                "belong to the same disaster."
+                );
+            }
+
+
+            // -------------------------------------------------
+            // CHECK ESTIMATED COST
+            // -------------------------------------------------
+
+            BigDecimal estimatedCost =
+                    fundRequest.getEstimatedTotalCost();
+
+
+            if (estimatedCost == null ||
+                    estimatedCost.compareTo(
+                            BigDecimal.ZERO
+                    ) <= 0) {
+
+                throw new IllegalArgumentException(
+                        "Fund Request ID " +
+                                fundRequest.getId() +
+                                " has an invalid estimated cost."
+                );
+            }
+
+
+            // -------------------------------------------------
+            // ADD TO TOTAL
+            // -------------------------------------------------
+
+            totalAmount =
+                    totalAmount.add(
+                            estimatedCost
+                    );
+        }
+
+
+        // -----------------------------------------------------
+        // CHECK TOTAL
+        // -----------------------------------------------------
+
+        if (totalAmount.compareTo(
+                BigDecimal.ZERO
+        ) <= 0) {
+
+            throw new IllegalArgumentException(
+                    "Total budget amount must be greater than zero."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // CREATE BUDGET
+        // -----------------------------------------------------
+
+        Budget budget = new Budget();
+
+
+        budget.setDisasterName(
+                disasterName
+        );
+
+
+        budget.setActivity(
+                "Emergency Relief"
+        );
+
+
+        budget.setRequestedAmount(
+                totalAmount.doubleValue()
+        );
+
+
+        budget.setReason(
+                "Budget required to fulfill relief " +
+                        "fund requests for " +
+                        disasterName + "."
+        );
+
+
+        // -----------------------------------------------------
+        // SEND TO PROJECT MANAGER
+        // -----------------------------------------------------
+
+        budget.setStatus(
+                "PENDING"
+        );
+
+
+        Budget savedBudget =
+                budgetRepository.save(
+                        budget
+                );
+
+
+        // -----------------------------------------------------
+        // MARK FUND REQUESTS AS IN BUDGET
+        // -----------------------------------------------------
+
+        for (FundRequest fundRequest :
+                fundRequests) {
+
+            fundRequest.setStatus(
+                    "IN_BUDGET"
+            );
+
+            fundRequestRepository.save(
+                    fundRequest
+            );
+        }
+
+
+        return savedBudget;
+    }
+
+
+    // =========================================================
+    // VIEW ALL BUDGETS
+    // =========================================================
 
     public List<Budget> getAllBudgets() {
+
         return budgetRepository.findAll();
     }
 
-    // =========================
-    // PM - Pending Budgets
-    // =========================
+
+    // =========================================================
+    // PM - PENDING BUDGETS
+    // =========================================================
 
     public List<Budget> getPendingBudgets() {
-        return budgetRepository.findByStatus("PENDING");
+
+        return budgetRepository.findByStatus(
+                "PENDING"
+        );
     }
 
-    // =========================
-    // Get Budget By ID
-    // =========================
+
+    // =========================================================
+    // GET BUDGET BY ID
+    // =========================================================
 
     public Budget getBudgetById(Long id) {
+
         return budgetRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Budget not found"));
+                        new IllegalArgumentException(
+                                "Budget not found"
+                        )
+                );
     }
 
-    // =========================
-    // PM - Approve Budget
-    // =========================
+
+    // =========================================================
+    // PM - APPROVE BUDGET
+    // =========================================================
 
     public Budget approveBudget(Long id) {
 
-        Budget budget = getBudgetById(id);
+        Budget budget =
+                getBudgetById(id);
 
-        if (!"PENDING".equals(budget.getStatus())) {
+
+        if (!"PENDING".equals(
+                budget.getStatus())) {
+
             throw new IllegalStateException(
                     "Only pending budgets can be approved"
             );
         }
 
-        budget.setStatus("APPROVED");
 
-        return budgetRepository.save(budget);
+        budget.setStatus(
+                "APPROVED"
+        );
+
+
+        return budgetRepository.save(
+                budget
+        );
     }
 
-    // =========================
-    // PM - Reject Budget
-    // =========================
+
+    // =========================================================
+    // PM - REJECT BUDGET
+    // =========================================================
 
     public Budget rejectBudget(Long id) {
 
-        Budget budget = getBudgetById(id);
+        Budget budget =
+                getBudgetById(id);
 
-        if (!"PENDING".equals(budget.getStatus())) {
+
+        if (!"PENDING".equals(
+                budget.getStatus())) {
+
             throw new IllegalStateException(
                     "Only pending budgets can be rejected"
             );
         }
 
-        budget.setStatus("REJECTED");
 
-        return budgetRepository.save(budget);
+        budget.setStatus(
+                "REJECTED"
+        );
+
+
+        return budgetRepository.save(
+                budget
+        );
     }
 
-    // =========================
-    // Rejected Budgets / Trash
-    // =========================
+
+    // =========================================================
+    // REJECTED BUDGETS / TRASH
+    // =========================================================
 
     public List<Budget> getRejectedBudgets() {
-        return budgetRepository.findByStatus("REJECTED");
+
+        return budgetRepository.findByStatus(
+                "REJECTED"
+        );
     }
 
-    // =========================
-    // F08 - Approved Budgets
-    // =========================
+
+    // =========================================================
+    // F08 - APPROVED BUDGETS
+    // =========================================================
 
     public List<Budget> getApprovedBudgets() {
-        return budgetRepository.findByStatus("APPROVED");
+
+        return budgetRepository.findByStatus(
+                "APPROVED"
+        );
     }
 
-    // =========================
-    // F08 - Allocate Budget
-    // =========================
 
-    public Budget allocateBudget(Long id, Double allocatedAmount) {
+    // =========================================================
+    // F08 - ALLOCATE BUDGET
+    // =========================================================
 
-        Budget budget = getBudgetById(id);
+    public Budget allocateBudget(
+            Long id,
+            Double allocatedAmount) {
 
-        if (!"APPROVED".equals(budget.getStatus())) {
+        Budget budget =
+                getBudgetById(id);
+
+
+        if (!"APPROVED".equals(
+                budget.getStatus())) {
+
             throw new IllegalStateException(
                     "Only approved budgets can be allocated"
             );
         }
 
-        if (allocatedAmount == null || allocatedAmount <= 0) {
+
+        if (allocatedAmount == null ||
+                allocatedAmount <= 0) {
+
             throw new IllegalArgumentException(
                     "Allocated amount must be greater than 0"
             );
         }
 
-        if (allocatedAmount > budget.getRequestedAmount()) {
+
+        if (allocatedAmount >
+                budget.getRequestedAmount()) {
+
             throw new IllegalArgumentException(
-                    "Allocated amount cannot exceed requested amount"
+                    "Allocated amount cannot exceed " +
+                            "requested amount"
             );
         }
 
-        budget.setAllocatedAmount(allocatedAmount);
-        budget.setAllocatedDate(java.time.LocalDate.now());
-        budget.setStatus("ALLOCATED");
 
-        return budgetRepository.save(budget);
+        budget.setAllocatedAmount(
+                allocatedAmount
+        );
+
+
+        budget.setAllocatedDate(
+                LocalDate.now()
+        );
+
+
+        budget.setStatus(
+                "ALLOCATED"
+        );
+
+
+        return budgetRepository.save(
+                budget
+        );
     }
+// =========================================================
+// DISTRIBUTION - ALLOCATED FUNDS
+// =========================================================
+
+    public List<Budget> getAllocatedBudgets() {
+
+        return budgetRepository.findByStatus("ALLOCATED");
+    }
+
+    // =========================================================
+    // AVAILABLE BUDGET
+    // =========================================================
+
     public double getAvailableBudget() {
 
-        return budgetRepository.findByStatus("APPROVED")
+        return budgetRepository
+                .findByStatus("APPROVED")
                 .stream()
                 .mapToDouble(budget -> {
 
-                    double requested = budget.getRequestedAmount() != null
-                            ? budget.getRequestedAmount()
-                            : 0.0;
+                    double requested =
+                            budget.getRequestedAmount()
+                                    != null
+                                    ? budget.getRequestedAmount()
+                                    : 0.0;
 
-                    double allocated = budget.getAllocatedAmount() != null
-                            ? budget.getAllocatedAmount()
-                            : 0.0;
+                    double allocated =
+                            budget.getAllocatedAmount()
+                                    != null
+                                    ? budget.getAllocatedAmount()
+                                    : 0.0;
 
                     return requested - allocated;
                 })
                 .sum();
     }
-    // =========================
-// F13 - Budget Report
-// =========================
+
+
+    // =========================================================
+    // F13 - BUDGET REPORT
+    // =========================================================
 
     public List<Budget> getBudgetReport() {
+
         return budgetRepository.findAll();
     }
 }

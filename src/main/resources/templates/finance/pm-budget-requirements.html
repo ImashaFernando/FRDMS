@@ -12,9 +12,12 @@
 
   <link rel="stylesheet"
         th:href="@{/css/pm-budget-requirements.css}">
+
   <link rel="stylesheet"
         th:href="@{/css/confirmation.css}">
+
 </head>
+
 
 <body>
 
@@ -33,9 +36,12 @@
 
   </div>
 
+
   <a th:href="@{/pm/dashboard}"
      class="dashboard-btn">
+
     ← Back to Dashboard
+
   </a>
 
 </header>
@@ -43,50 +49,62 @@
 
 <main class="page-container">
 
+
+  <!-- =====================================================
+       PAGE HEADING
+       ===================================================== -->
+
   <div class="page-heading"
        style="
-        display:flex !important;
-        align-items:flex-start !important;
-        justify-content:space-between !important;
-        width:100% !important;
-        gap:30px !important;
-     ">
+            display:flex !important;
+            align-items:flex-start !important;
+            justify-content:space-between !important;
+            width:100% !important;
+            gap:30px !important;
+         ">
+
 
     <div style="flex:1 !important;">
 
-        <span class="eyebrow">
-            PROJECT MANAGER
-        </span>
+            <span class="eyebrow">
+                PROJECT MANAGER
+            </span>
+
 
       <h2>
         Pending Budget Requests
       </h2>
 
+
       <p>
-        Review budget requests submitted by the Finance Officer for disaster-relief activities.
+        Review budget requests submitted by the
+        Finance Officer for disaster-relief activities.
       </p>
 
     </div>
 
+
+    <!-- TRASH -->
+
     <a th:href="@{/finance/budgets/trash}"
        class="trash-btn"
        style="
-          display:inline-flex !important;
-          align-items:center !important;
-          justify-content:center !important;
-          flex-shrink:0 !important;
-          margin-top:45px !important;
-          padding:12px 20px !important;
-          background:#c0392b !important;
-          color:#ffffff !important;
-          border:none !important;
-          border-radius:8px !important;
-          text-decoration:none !important;
-          font-size:14px !important;
-          font-weight:700 !important;
-          white-space:nowrap !important;
-          cursor:pointer !important;
-       ">
+                display:inline-flex !important;
+                align-items:center !important;
+                justify-content:center !important;
+                flex-shrink:0 !important;
+                margin-top:45px !important;
+                padding:12px 20px !important;
+                background:#c0392b !important;
+                color:#ffffff !important;
+                border:none !important;
+                border-radius:8px !important;
+                text-decoration:none !important;
+                font-size:14px !important;
+                font-weight:700 !important;
+                white-space:nowrap !important;
+                cursor:pointer !important;
+           ">
 
       🗑 Trash Bin
 
@@ -95,7 +113,12 @@
   </div>
 
 
+  <!-- =====================================================
+       PENDING BUDGET TABLE
+       ===================================================== -->
+
   <section class="table-card">
+
 
     <div class="table-header">
 
@@ -116,17 +139,27 @@
 
     <div class="table-wrapper">
 
+
       <table>
+
 
         <thead>
 
         <tr>
 
           <th>ID</th>
+
+          <!-- NEW -->
+          <th>Disaster</th>
+
           <th>Activity</th>
+
           <th>Requested Amount</th>
+
           <th>Reason</th>
+
           <th>Status</th>
+
           <th>Action</th>
 
         </tr>
@@ -136,12 +169,34 @@
 
         <tbody>
 
+
+        <!-- =================================================
+             BUDGET ROWS
+             ================================================= -->
+
         <tr th:each="budget : ${budgets}">
+
+
+          <!-- ID -->
 
           <td th:text="${budget.id}">
             1
           </td>
 
+
+          <!-- =================================================
+               DISASTER NAME
+               ================================================= -->
+
+          <td class="disaster"
+              th:text="${budget.disasterName}">
+
+            Mahawali
+
+          </td>
+
+
+          <!-- ACTIVITY -->
 
           <td class="activity"
               th:text="${budget.activity}">
@@ -151,16 +206,27 @@
           </td>
 
 
+          <!-- REQUESTED AMOUNT -->
+
           <td class="amount">
 
             LKR
 
-            <span th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
+            <span
+                    th:text="${#numbers.formatDecimal(
+                                    budget.requestedAmount,
+                                    1,
+                                    2
+                                )}">
+
                             150,000.00
+
                         </span>
 
           </td>
 
+
+          <!-- REASON -->
 
           <td class="reason"
               th:text="${budget.reason}">
@@ -170,80 +236,117 @@
           </td>
 
 
+          <!-- STATUS -->
+
           <td>
 
                         <span class="status">
+
                             PENDING
+
                         </span>
 
           </td>
 
 
+          <!-- =================================================
+               ACTIONS
+               ================================================= -->
+
           <td>
 
             <div class="actions">
 
-              <!-- APPROVE -->
-              <form th:action="@{/pm/budgets/approve/{id}(id=${budget.id})}"
-                    method="post"
-                    th:id="'approveForm-' + ${budget.id}">
 
-                <button type="button"
+              <!-- APPROVE -->
+
+              <form
+                      th:action="@{/pm/budgets/approve/{id}(id=${budget.id})}"
+                      method="post"
+                      th:id="'approveForm-' + ${budget.id}">
+
+
+                <button
+                        type="button"
                         class="approve-btn"
-                        onclick="confirmBudgetAction(this.form.id, 'approve')">
+                        onclick="confirmBudgetAction(
+                                            this.form.id,
+                                            'approve'
+                                        )">
 
                   Approve
 
                 </button>
 
+
               </form>
 
 
               <!-- REJECT -->
-              <form th:action="@{/pm/budgets/reject/{id}(id=${budget.id})}"
-                    method="post"
-                    th:id="'rejectForm-' + ${budget.id}">
 
-                <button type="button"
+              <form
+                      th:action="@{/pm/budgets/reject/{id}(id=${budget.id})}"
+                      method="post"
+                      th:id="'rejectForm-' + ${budget.id}">
+
+
+                <button
+                        type="button"
                         class="reject-btn"
-                        onclick="confirmBudgetAction(this.form.id, 'reject')">
+                        onclick="confirmBudgetAction(
+                                            this.form.id,
+                                            'reject'
+                                        )">
 
                   Reject
 
                 </button>
 
+
               </form>
+
 
             </div>
 
           </td>
 
+
         </tr>
 
 
-        <!-- NO PENDING REQUESTS -->
+        <!-- =================================================
+             NO PENDING REQUESTS
+             ================================================= -->
 
         <tr th:if="${#lists.isEmpty(budgets)}">
 
-          <td colspan="6"
+
+          <!-- 7 columns now -->
+
+          <td colspan="7"
               class="empty-state">
+
 
             <div class="empty-icon">
               ✓
             </div>
 
+
             <h3>
               No Pending Budget Requests
             </h3>
+
 
             <p>
               There are currently no budget requests
               waiting for Project Manager review.
             </p>
 
+
           </td>
 
         </tr>
+
 
         </tbody>
 
@@ -254,35 +357,65 @@
   </section>
 
 </main>
-<div id="confirmationModal" class="confirm-overlay">
+
+
+<!-- =========================================================
+     CONFIRMATION MODAL
+     ========================================================= -->
+
+<div id="confirmationModal"
+     class="confirm-overlay">
+
 
   <div class="confirm-modal">
 
-    <div id="confirmIcon" class="confirm-icon">
+
+    <div id="confirmIcon"
+         class="confirm-icon">
+
       ⚠
+
     </div>
 
-    <h3 id="confirmTitle" class="confirm-title">
+
+    <h3 id="confirmTitle"
+        class="confirm-title">
+
       Confirmation
+
     </h3>
 
-    <p id="confirmMessage" class="confirm-message">
+
+    <p id="confirmMessage"
+       class="confirm-message">
+
       Are you sure?
+
     </p>
+
 
     <div class="confirm-actions">
 
-      <button type="button"
+
+      <button
+              type="button"
               id="confirmCancel"
               class="confirm-btn confirm-cancel">
+
         Cancel
+
       </button>
 
-      <button type="button"
+
+      <button
+              type="button"
               id="confirmOk"
               class="confirm-btn confirm-ok">
+
         Confirm
+
       </button>
+
 
     </div>
 
@@ -290,7 +423,11 @@
 
 </div>
 
-<script th:src="@{/js/confirmation.js}"></script>
+
+<script th:src="@{/js/confirmation.js}">
+</script>
+
+
 </body>
 
 </html>

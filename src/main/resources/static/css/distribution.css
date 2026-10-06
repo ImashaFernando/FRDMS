@@ -5772,3 +5772,28 @@ body:has(.package-grid) .package-grid {
     }
 
 }
+.request-funds-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 125px;
+    height: 36px;
+
+    background: #0b2c4a;
+    color: white;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.request-funds-button:hover {
+    background: #0b2c4a;
+    transform: translateY(-1px);
+}

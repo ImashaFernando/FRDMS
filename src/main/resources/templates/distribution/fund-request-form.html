@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Fund Request | FRDMS</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+
+            font-family: Arial, sans-serif;
+
+            background: #eaf4ff;
+
+            color: #173f63;
+        }
+
+
+        .container {
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            border-radius: 16px;
+
+            box-shadow:
+                    0 8px 25px
+                    rgba(0, 60, 100, 0.10);
+
+            overflow: hidden;
+        }
+
+
+        /* ==============================================
+           HEADER
+           ============================================== */
+
+        .header {
+            background: linear-gradient(
+                    135deg,
+                    #214c78,
+                    #3181b8
+            );
+
+            color: white;
+
+            padding: 28px 32px;
+        }
+
+        .header h1 {
+            margin: 0;
+
+            font-size: 27px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+
+            color: #dceeff;
+
+            font-size: 14px;
+        }
+
+
+        /* ==============================================
+           CONTENT
+           ============================================== */
+
+        .content {
+            padding: 30px;
+        }
+
+
+        /* ==============================================
+           INFORMATION CARD
+           ============================================== */
+
+        .request-summary {
+            background: #f4f8fc;
+
+            border: 1px solid #d9e7f3;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .summary-title {
+            font-size: 16px;
+
+            font-weight: 700;
+
+            color: #17466f;
+
+            margin-bottom: 18px;
+        }
+
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                    repeat(2, 1fr);
+
+            gap: 16px;
+        }
+
+
+        .summary-item label {
+            display: block;
+
+            font-size: 12px;
+
+            color: #718096;
+
+            margin-bottom: 5px;
+
+            font-weight: 600;
+        }
+
+        .summary-item span {
+            font-size: 15px;
+
+            font-weight: 700;
+
+            color: #243b53;
+        }
+
+
+        /* ==============================================
+           SHORTAGE HIGHLIGHT
+           ============================================== */
+
+        .shortage-box {
+            margin-top: 18px;
+
+            padding: 15px;
+
+            background: #fff4dc;
+
+            border: 1px solid #f6d58b;
+
+            border-radius: 8px;
+
+            color: #8a5200;
+        }
+
+        .shortage-box strong {
+            font-size: 18px;
+        }
+
+
+        /* ==============================================
+           FORM
+           ============================================== */
+
+        .form-title {
+            font-size: 18px;
+
+            font-weight: 700;
+
+            margin-bottom: 20px;
+
+            color: #17466f;
+        }
+
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #294b68;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            border: 1px solid #ccdbe8;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            font-family: inherit;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3181b8;
+
+            box-shadow:
+                    0 0 0 3px
+                    rgba(49,129,184,0.10);
+        }
+
+
+        .form-group textarea {
+            min-height: 100px;
+
+            resize: vertical;
+        }
+
+
+        .two-columns {
+            display: grid;
+
+            grid-template-columns:
+                    1fr 1fr;
+
+            gap: 18px;
+        }
+
+
+        /* ==============================================
+           TOTAL COST
+           ============================================== */
+
+        .total-box {
+            margin-top: 5px;
+
+            padding: 17px;
+
+            background: #eaf7ef;
+
+            border: 1px solid #bce3c9;
+
+            border-radius: 8px;
+        }
+
+        .total-label {
+            font-size: 12px;
+
+            color: #4c7058;
+
+            font-weight: 600;
+        }
+
+        .total-value {
+            margin-top: 4px;
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: #237a3b;
+        }
+
+
+        /* ==============================================
+           BUTTONS
+           ============================================== */
+
+        .button-row {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-top: 28px;
+        }
+
+
+        .cancel-button,
+        .submit-button {
+            width: 145px;
+
+            height: 42px;
+
+            border-radius: 7px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            border: none;
+        }
+
+
+        .cancel-button {
+            background: #edf2f7;
+
+            color: #4a5568;
+        }
+
+
+        .submit-button {
+            background: #2e7d32;
+
+            color: white;
+        }
+
+        .submit-button:hover {
+            background: #256628;
+        }
+
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .summary-grid,
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .button-row {
+                flex-direction: column;
+            }
+
+            .cancel-button,
+            .submit-button {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ==============================================
+         HEADER
+         ============================================== -->
+
+    <div class="header">
+
+        <h1>
+            Request Funds
+        </h1>
+
+        <p>
+            Submit a fund request for insufficient
+            relief inventory.
+        </p>
+
+    </div>
+
+
+    <div class="content">
+
+
+        <!-- ==============================================
+             REQUEST SUMMARY
+             ============================================== -->
+
+        <div class="request-summary">
+
+            <div class="summary-title">
+                Relief Request Information
+            </div>
+
+
+            <div class="summary-grid">
+
+
+                <div class="summary-item">
+
+                    <label>
+                        Disaster
+                    </label>
+
+                    <span
+                            th:text="${request.disasterName != null
+                            ? request.disasterName
+                            : 'Unknown Disaster'}">
+
+                        Mahawali
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <label>
+                        Relief Item
+                    </label>
+
+                    <span
+                            th:text="${request.itemName}">
+
+                        Dhal
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <label>
+                        Requested Quantity
+                    </label>
+
+                    <span
+                            th:text="${request.quantity
+                            .stripTrailingZeros()
+                            .toPlainString()}">
+
+                        3.50
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <label>
+                        Available Quantity
+                    </label>
+
+                    <span
+                            th:text="${availableQuantity
+                            .stripTrailingZeros()
+                            .toPlainString()}">
+
+                        2
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <label>
+                        Unit
+                    </label>
+
+                    <span
+                            th:text="${request.unit}">
+
+                        kg
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <label>
+                        Request Type
+                    </label>
+
+                    <span
+                            th:text="${request.status}">
+
+                        LOW_STOCK
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                 SHORTAGE
+                 ========================================== -->
+
+            <div class="shortage-box">
+
+                Shortage Quantity:
+
+                <strong>
+
+                    <span
+                            th:text="${shortageQuantity
+                            .stripTrailingZeros()
+                            .toPlainString()}">
+
+                        1.50
+
+                    </span>
+
+                    <span
+                            th:text="${request.unit}">
+
+                        kg
+
+                    </span>
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================================
+             FORM
+             ============================================== -->
+
+        <div class="form-title">
+
+            Fund Request Details
+
+        </div>
+
+
+        <form
+                th:action="@{/distribution/fund-requests/submit/{id}
+                    (id=${request.id})}"
+                method="post">
+
+
+            <!-- ==========================================
+                 PURPOSE
+                 ========================================== -->
+
+            <div class="form-group">
+
+                <label>
+                    Purpose / Reason
+                </label>
+
+                <textarea
+                        name="purpose"
+                        readonly
+                        th:text="'Purchase ' +
+                        ${shortageQuantity
+                            .stripTrailingZeros()
+                            .toPlainString()} +
+                        ' ' +
+                        ${request.unit} +
+                        ' of ' +
+                        ${request.itemName} +
+                        ' for relief distribution in ' +
+                        (${request.disasterName != null
+                            ? request.disasterName
+                            : 'the affected area'}) +
+                        ' because the available inventory is insufficient.'">
+
+                    Purpose
+
+                </textarea>
+
+            </div>
+
+
+            <!-- ==========================================
+                 PRICE + PRIORITY
+                 ========================================== -->
+
+            <div class="two-columns">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Estimated Unit Price (Rs.)
+                    </label>
+
+                    <input
+                            type="number"
+                            name="estimatedUnitPrice"
+                            min="0.01"
+                            step="0.01"
+                            required
+                            placeholder="e.g. 450.00">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Priority
+                    </label>
+
+                    <select
+                            name="priority"
+                            required>
+
+                        <option value="">
+                            Select Priority
+                        </option>
+
+                        <option value="NORMAL">
+                            Normal
+                        </option>
+
+                        <option value="HIGH">
+                            High
+                        </option>
+
+                        <option value="URGENT">
+                            Urgent
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                 TOTAL COST
+                 ========================================== -->
+
+            <div class="total-box">
+
+                <div class="total-label">
+                    Estimated Total Cost
+                </div>
+
+                <div
+                        class="total-value"
+                        id="totalCost">
+
+                    Rs. 0.00
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                 NOTES
+                 ========================================== -->
+
+            <div
+                    class="form-group"
+                    style="margin-top: 20px;">
+
+                <label>
+                    Additional Notes
+                </label>
+
+                <textarea
+                        name="notes"
+                        placeholder="Add any additional information..."></textarea>
+
+            </div>
+
+
+            <!-- ==========================================
+                 BUTTONS
+                 ========================================== -->
+
+            <div class="button-row">
+
+                <a
+                        th:href="@{/distribution/stock-status}"
+                        class="cancel-button">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                        type="submit"
+                        class="submit-button">
+
+                    Submit Fund Request
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TOTAL COST CALCULATION
+     ====================================================== -->
+
+<script>
+
+    const unitPriceInput =
+        document.querySelector(
+            'input[name="estimatedUnitPrice"]'
+        );
+
+    const shortageQuantity =
+        parseFloat(
+            '[[${shortageQuantity}]]'
+        );
+
+    const totalCost =
+        document.getElementById(
+            'totalCost'
+        );
+
+
+    function calculateTotal() {
+
+        const unitPrice =
+            parseFloat(
+                unitPriceInput.value
+            ) || 0;
+
+        const total =
+            shortageQuantity * unitPrice;
+
+        totalCost.textContent =
+            'Rs. ' +
+            total.toFixed(2);
+    }
+
+
+    unitPriceInput.addEventListener(
+        'input',
+        calculateTotal
+    );
+
+</script>
+
+</body>
+
+</html>

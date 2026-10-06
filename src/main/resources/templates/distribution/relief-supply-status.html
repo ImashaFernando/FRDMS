@@ -91,8 +91,34 @@
                     kg
                 </td>
 
-                <td th:text="${request.status}">
-                    REQUESTED
+                <td>
+
+    <span
+            th:text="${request.status}">
+        REQUESTED
+    </span>
+
+
+                    <!-- ==============================================
+                         REQUEST FUNDS
+                         ============================================== -->
+
+                    <div
+                            th:if="${request.status == 'LOW_STOCK'
+                or request.status == 'NOT_AVAILABLE'}"
+                            style="margin-top: 8px;">
+
+                        <a
+                                th:href="@{/distribution/fund-requests/new/{id}
+                    (id=${request.id})}"
+                                class="request-funds-button">
+
+                            Request Funds
+
+                        </a>
+
+                    </div>
+
                 </td>
 
             </tr>

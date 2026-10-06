@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Distribution Requests | FRDMS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 35px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(
+              135deg,
+              #e8f3ff,
+              #f5f9fd
+      );
+      color: #172b4d;
+    }
+
+
+    /* =====================================================
+       MAIN CONTAINER
+       ===================================================== */
+
+    .page-container {
+      max-width: 1450px;
+      margin: 0 auto;
+    }
+
+
+    /* =====================================================
+       MAIN CARD
+       ===================================================== */
+
+    .main-card {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(20, 65, 105, 0.10);
+      overflow: hidden;
+      border: 1px solid #dce9f5;
+    }
+
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
+
+    .page-header {
+      padding: 28px 32px 24px;
+      background: linear-gradient(
+              135deg,
+              #0f3d66,
+              #1d5d91
+      );
+      color: white;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .header-title {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .header-subtitle {
+      margin: 8px 0 0;
+      color: #dceeff;
+      font-size: 14px;
+    }
+
+    .request-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+    }
+
+
+    /* =====================================================
+       CONTENT
+       ===================================================== */
+
+    .content {
+      padding: 28px 32px 32px;
+    }
+
+
+    /* =====================================================
+       BANNERS
+       ===================================================== */
+
+    .message {
+      padding: 13px 17px;
+      border-radius: 9px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .success {
+      background: #e9f8ee;
+      color: #237a3b;
+      border: 1px solid #bce8c8;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #b42318;
+      border: 1px solid #f3c1bd;
+    }
+
+
+    /* =====================================================
+       TABLE WRAPPER
+       ===================================================== */
+
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #dce6ef;
+      border-radius: 12px;
+    }
+
+
+    /* =====================================================
+       TABLE
+       ===================================================== */
+
+    table {
+      width: 100%;
+      min-width: 1050px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+
+    /* =====================================================
+       TABLE HEADER
+       ===================================================== */
+
+    thead th {
+      background: #e8f2fc;
+      color: #17466f;
+      padding: 16px 15px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+      border-bottom: 2px solid #cbddeb;
+      white-space: nowrap;
+    }
+
+    thead th:first-child {
+      border-top-left-radius: 11px;
+    }
+
+    thead th:last-child {
+      border-top-right-radius: 11px;
+    }
+
+
+    /* =====================================================
+       TABLE BODY
+       ===================================================== */
+
+    tbody td {
+      padding: 17px 15px;
+      border-bottom: 1px solid #e6edf3;
+      color: #243b53;
+      font-size: 14px;
+      vertical-align: middle;
+      background: #ffffff;
+    }
+
+    tbody tr {
+      transition: background 0.2s ease;
+    }
+
+    tbody tr:hover td {
+      background: #f7fbff;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+
+    /* =====================================================
+       REQUEST ID
+       ===================================================== */
+
+    .request-id {
+      font-weight: 700;
+      color: #245b88;
+    }
+
+
+    /* =====================================================
+       ITEM NAME
+       ===================================================== */
+
+    .item-name {
+      font-weight: 600;
+      color: #173f63;
+    }
+
+
+    /* =====================================================
+       QUANTITY
+       ===================================================== */
+
+    .quantity {
+      font-weight: 600;
+      color: #263f58;
+    }
+
+
+    /* =====================================================
+       UNIT
+       ===================================================== */
+
+    .unit {
+      color: #536b82;
+      font-weight: 600;
+    }
+
+
+    /* =====================================================
+       STATUS BADGES
+       ===================================================== */
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 105px;
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .status-requested {
+      background: #e8f2ff;
+      color: #1769aa;
+    }
+
+    .status-sent {
+      background: #e8f7ed;
+      color: #237a3b;
+    }
+
+    .status-low {
+      background: #fff4dc;
+      color: #a45b00;
+    }
+
+    .status-unavailable {
+      background: #fdecec;
+      color: #b42318;
+    }
+
+
+    /* =====================================================
+       ACTION AREA
+       ===================================================== */
+
+    .action-cell {
+      min-width: 155px;
+    }
+
+    .action-form {
+      margin: 0;
+    }
+
+
+    /* =====================================================
+       ALL BUTTONS - SAME SIZE
+       ===================================================== */
+
+    .action-button {
+      width: 130px;
+      height: 40px;
+      border: none;
+      border-radius: 7px;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+
+
+    /* =====================================================
+       SEND GOODS
+       ===================================================== */
+
+    .send-button {
+      background: #2e7d32;
+    }
+
+    .send-button:hover {
+      background: #256628;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 9px rgba(46,125,50,0.25);
+    }
+
+
+    /* =====================================================
+       LOW STOCK
+       ===================================================== */
+
+    .low-stock-button {
+      background: #f59e0b;
+    }
+
+    .low-stock-button:hover {
+      background: #d97706;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 9px rgba(245,158,11,0.25);
+    }
+
+
+    /* =====================================================
+       NOT AVAILABLE
+       ===================================================== */
+
+    .unavailable-button {
+      background: #dc3545;
+    }
+
+    .unavailable-button:hover {
+      background: #b92d3b;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 9px rgba(220,53,69,0.25);
+    }
+
+
+    /* =====================================================
+       ALREADY PROCESSED
+       ===================================================== */
+
+    .already-processed {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      min-height: 40px;
+      color: #718096;
+      background: #f3f6f8;
+      border: 1px solid #dce4ea;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+
+    /* =====================================================
+       EMPTY STATE
+       ===================================================== */
+
+    .empty-state {
+      padding: 45px 20px;
+      text-align: center;
+      color: #718096;
+      font-size: 14px;
+    }
+
+
+    /* =====================================================
+       FOOTER INFO
+       ===================================================== */
+
+    .table-info {
+      margin-top: 15px;
+      color: #718096;
+      font-size: 13px;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 800px) {
+
+      body {
+        padding: 15px;
+      }
+
+      .page-header {
+        padding: 22px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .header-title {
+        font-size: 23px;
+      }
+
+      .request-icon {
+        display: none;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="page-container">
+
+  <div class="main-card">
+
+
+    <!-- =================================================
+         HEADER
+         ================================================= -->
+
+    <div class="page-header">
+
+      <div class="header-content">
+
+        <div>
+
+          <h1 class="header-title">
+            Distribution Requests
+          </h1>
+
+          <p class="header-subtitle">
+            Incoming relief goods requests from
+            Distribution Management
+          </p>
+
+        </div>
+
+        <div class="request-icon">
+          📦
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CONTENT
+         ================================================= -->
+
+    <div class="content">
+
+
+      <!-- =================================================
+           SUCCESS MESSAGE
+           ================================================= -->
+
+      <div
+              th:if="${successMessage}"
+              class="message success"
+              th:text="${successMessage}">
+      </div>
+
+
+      <!-- =================================================
+           ERROR MESSAGE
+           ================================================= -->
+
+      <div
+              th:if="${errorMessage}"
+              class="message error"
+              th:text="${errorMessage}">
+      </div>
+
+
+      <!-- =================================================
+           TABLE
+           ================================================= -->
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+          <tr>
+
+            <th>Request ID</th>
+
+            <th>Disaster</th>
+
+            <th>Item</th>
+
+            <th>Requested Quantity</th>
+
+            <th>Available Quantity</th>
+
+            <th>Unit</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+          </tr>
+
+          </thead>
+
+
+          <tbody>
+
+          <tr th:each="request : ${requests}">
+
+
+            <!-- =====================================
+                 REQUEST ID
+                 ===================================== -->
+
+            <td class="request-id"
+                th:text="${request.id}">
+
+              1
+
+            </td>
+
+
+            <!-- =====================================
+                 DISASTER
+                 ===================================== -->
+
+            <td th:text="${request.disasterName != null
+                            ? request.disasterName
+                            : 'Unknown Disaster'}">
+
+              Flood
+
+            </td>
+
+
+            <!-- =====================================
+                 ITEM
+                 ===================================== -->
+
+            <td class="item-name"
+                th:text="${request.itemName}">
+
+              Rice
+
+            </td>
+
+
+            <!-- =====================================
+                 REQUESTED QUANTITY
+                 ===================================== -->
+
+            <td class="quantity"
+                th:text="${request.quantity != null
+                            ? request.quantity
+                                .stripTrailingZeros()
+                                .toPlainString()
+                            : '0'}">
+
+              20
+
+            </td>
+
+
+            <!-- =====================================
+                 AVAILABLE QUANTITY
+                 ===================================== -->
+
+            <td class="quantity"
+                th:text="${availableQuantities[request.itemName] != null
+                            ? availableQuantities[request.itemName]
+                                .stripTrailingZeros()
+                                .toPlainString()
+                            : '0'}">
+
+              0
+
+            </td>
+
+
+            <!-- =====================================
+                 UNIT
+                 ===================================== -->
+
+            <td class="unit"
+                th:text="${inventoryUnits[request.itemName] != null
+                            ? inventoryUnits[request.itemName]
+                            : 'Not specified'}">
+
+              kg
+
+            </td>
+
+
+            <!-- =====================================
+                 STATUS
+                 ===================================== -->
+
+            <td>
+
+                            <span
+                                    class="status-badge"
+                                    th:classappend="${request.status == 'SENT'
+            ? ' status-sent'
+            : (request.status == 'LOW_STOCK'
+                ? ' status-low'
+                : (request.status == 'NOT_AVAILABLE'
+                    ? ' status-unavailable'
+                    : ' status-requested'))}"
+                                    th:text="${request.status}">
+
+    REQUESTED
+
+                            </span>
+
+            </td>
+
+
+            <!-- =====================================
+                 ACTION
+                 ===================================== -->
+
+            <td class="action-cell">
+
+
+              <!-- =================================
+                   ENOUGH STOCK
+                   ================================= -->
+
+              <form
+                      th:if="${request.status == 'REQUESTED'
+                                    and availableQuantities[request.itemName] != null
+                                    and availableQuantities[request.itemName]
+                                        >= request.quantity}"
+
+                      th:action="@{/finance/inventory/requests/{id}/send(
+                                        id=${request.id}
+                                    )}"
+
+                      method="post"
+                      class="action-form">
+
+                <button
+                        type="submit"
+                        class="action-button send-button">
+
+                  Send Goods
+
+                </button>
+
+              </form>
+
+
+              <!-- =================================
+                   LOW STOCK
+                   ================================= -->
+
+              <form
+                      th:if="${request.status == 'REQUESTED'
+                                    and availableQuantities[request.itemName] != null
+                                    and availableQuantities[request.itemName] > 0
+                                    and availableQuantities[request.itemName]
+                                        < request.quantity}"
+
+                      th:action="@{/finance/inventory/requests/{id}/low-stock(
+                                        id=${request.id}
+                                    )}"
+
+                      method="post"
+                      class="action-form">
+
+                <button
+                        type="submit"
+                        class="action-button low-stock-button">
+
+                  Low Stock
+
+                </button>
+
+              </form>
+
+
+              <!-- =================================
+                   NOT AVAILABLE
+                   ================================= -->
+
+              <form
+                      th:if="${request.status == 'REQUESTED'
+                                    and (availableQuantities[request.itemName] == null
+                                    or availableQuantities[request.itemName] == 0)}"
+
+                      th:action="@{/finance/inventory/requests/{id}/not-available(
+                                        id=${request.id}
+                                    )}"
+
+                      method="post"
+                      class="action-form">
+
+                <button
+                        type="submit"
+                        class="action-button unavailable-button">
+
+                  Not Available
+
+                </button>
+
+              </form>
+
+
+              <!-- =================================
+                   ALREADY PROCESSED
+                   ================================= -->
+
+              <span
+                      th:if="${request.status != 'REQUESTED'}"
+                      class="already-processed">
+
+                                Already Processed
+
+                            </span>
+
+
+            </td>
+
+          </tr>
+
+
+          <!-- =================================================
+               EMPTY STATE
+               ================================================= -->
+
+          <tr th:if="${#lists.isEmpty(requests)}">
+
+            <td colspan="8"
+                class="empty-state">
+
+              No distribution requests found.
+
+            </td>
+
+          </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="table-info">
+
+        Requests received from Distribution Management
+        are reviewed and processed here.
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>

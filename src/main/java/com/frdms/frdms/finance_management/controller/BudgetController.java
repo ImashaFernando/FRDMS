@@ -1,8 +1,11 @@
 package com.frdms.frdms.finance_management.controller;
 
+import com.frdms.frdms.distribution_management.service.FundRequestService;
 import com.frdms.frdms.finance_management.entity.Budget;
 import com.frdms.frdms.finance_management.service.BudgetService;
+
 import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +19,21 @@ public class BudgetController {
 
     private final BudgetService budgetService;
 
-    public BudgetController(BudgetService budgetService) {
+    private final FundRequestService fundRequestService;
+
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
+    public BudgetController(
+            BudgetService budgetService,
+            FundRequestService fundRequestService) {
+
         this.budgetService = budgetService;
+
+        this.fundRequestService =
+                fundRequestService;
     }
 
 
@@ -28,7 +44,10 @@ public class BudgetController {
     @GetMapping("/create")
     public String showCreateBudgetForm(Model model) {
 
-        model.addAttribute("budget", new Budget());
+        model.addAttribute(
+                "budget",
+                new Budget()
+        );
 
         return "finance/create-budget";
     }
@@ -40,10 +59,13 @@ public class BudgetController {
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+
             return "finance/create-budget";
         }
 
-        budgetService.createBudgetRequirement(budget);
+        budgetService.createBudgetRequirement(
+                budget
+        );
 
         return "redirect:/finance/budgets/success";
     }
@@ -91,13 +113,21 @@ public class BudgetController {
             @PathVariable Long id,
             Model model) {
 
-        Budget budget = budgetService.getBudgetById(id);
+        Budget budget =
+                budgetService.getBudgetById(id);
 
-        if (!"APPROVED".equals(budget.getStatus())) {
+
+        if (!"APPROVED".equals(
+                budget.getStatus())) {
+
             return "redirect:/finance/budgets/approved";
         }
 
-        model.addAttribute("budget", budget);
+
+        model.addAttribute(
+                "budget",
+                budget
+        );
 
         return "finance/allocate-budget-form";
     }
@@ -106,7 +136,8 @@ public class BudgetController {
     @PostMapping("/allocate/{id}")
     public String allocateBudget(
             @PathVariable Long id,
-            @RequestParam("allocatedAmount") Double allocatedAmount,
+            @RequestParam("allocatedAmount")
+            Double allocatedAmount,
             Model model) {
 
         try {
@@ -118,10 +149,14 @@ public class BudgetController {
 
             return "redirect:/finance/budgets/status";
 
-        } catch (IllegalArgumentException | IllegalStateException e) {
+        } catch (
+                IllegalArgumentException |
+                IllegalStateException e) {
 
             Budget budget =
-                    budgetService.getBudgetById(id);
+                    budgetService.getBudgetById(
+                            id
+                    );
 
             model.addAttribute(
                     "budget",
@@ -143,41 +178,77 @@ public class BudgetController {
     // =========================================================
 
     @GetMapping("/status")
-    public String viewBudgetStatus(Model model) {
+    public String viewBudgetStatus(
+            Model model) {
 
         List<Budget> budgets =
                 budgetService.getAllBudgets();
 
+
         long pendingCount =
                 budgets.stream()
-                        .filter(b -> "PENDING".equals(b.getStatus()))
+                        .filter(b ->
+                                "PENDING".equals(
+                                        b.getStatus()
+                                )
+                        )
                         .count();
+
 
         long approvedCount =
                 budgets.stream()
-                        .filter(b -> "APPROVED".equals(b.getStatus()))
+                        .filter(b ->
+                                "APPROVED".equals(
+                                        b.getStatus()
+                                )
+                        )
                         .count();
+
 
         long allocatedCount =
                 budgets.stream()
-                        .filter(b -> "ALLOCATED".equals(b.getStatus()))
+                        .filter(b ->
+                                "ALLOCATED".equals(
+                                        b.getStatus()
+                                )
+                        )
                         .count();
+
 
         long rejectedCount =
                 budgets.stream()
-                        .filter(b -> "REJECTED".equals(b.getStatus()))
+                        .filter(b ->
+                                "REJECTED".equals(
+                                        b.getStatus()
+                                )
+                        )
                         .count();
 
 
-        model.addAttribute("budgets", budgets);
+        model.addAttribute(
+                "budgets",
+                budgets
+        );
 
-        model.addAttribute("pendingCount", pendingCount);
+        model.addAttribute(
+                "pendingCount",
+                pendingCount
+        );
 
-        model.addAttribute("approvedCount", approvedCount);
+        model.addAttribute(
+                "approvedCount",
+                approvedCount
+        );
 
-        model.addAttribute("allocatedCount", allocatedCount);
+        model.addAttribute(
+                "allocatedCount",
+                allocatedCount
+        );
 
-        model.addAttribute("rejectedCount", rejectedCount);
+        model.addAttribute(
+                "rejectedCount",
+                rejectedCount
+        );
 
 
         return "finance/budget-status";
@@ -189,7 +260,8 @@ public class BudgetController {
     // =========================================================
 
     @GetMapping("/trash")
-    public String viewRejectedBudgets(Model model) {
+    public String viewRejectedBudgets(
+            Model model) {
 
         model.addAttribute(
                 "budgets",
@@ -208,5 +280,62 @@ public class BudgetController {
     public String budgetSuccess() {
 
         return "finance/budget-success";
+    }
+
+
+    // =========================================================
+    // FINANCE - CREATE DISASTER BUDGET
+    // FROM SELECTED FUND REQUESTS
+    // =========================================================
+
+    @PostMapping("/create-from-fund-requests")
+    public String createBudgetFromFundRequests(
+            @RequestParam(
+                    "fundRequestIds"
+            )
+            List<Long> fundRequestIds,
+            Model model) {
+
+        try {
+
+            budgetService.createBudgetFromFundRequests(
+                    fundRequestIds
+            );
+
+
+            // Successfully created budget
+            // and sent it to PM as PENDING.
+
+            return "redirect:/finance/budgets/status";
+
+
+        } catch (
+                IllegalArgumentException |
+                IllegalStateException e) {
+
+
+            // -------------------------------------------------
+            // SHOW ERROR
+            // -------------------------------------------------
+
+            model.addAttribute(
+                    "error",
+                    e.getMessage()
+            );
+
+
+            // -------------------------------------------------
+            // RELOAD FUND REQUESTS
+            // -------------------------------------------------
+
+            model.addAttribute(
+                    "fundRequests",
+                    fundRequestService
+                            .getPendingFundRequests()
+            );
+
+
+            return "finance/fund-requests";
+        }
     }
 }

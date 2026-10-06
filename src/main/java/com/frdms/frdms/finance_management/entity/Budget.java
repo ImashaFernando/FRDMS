@@ -15,28 +15,71 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // =========================================================
+    // DISASTER
+    // =========================================================
+
+    @NotBlank(message = "Disaster name is required")
+    @Column(name = "disaster_name", nullable = false)
+    private String disasterName;
+
+    // =========================================================
+    // ACTIVITY
+    // =========================================================
+
     @NotBlank(message = "Activity is required")
     @Column(nullable = false)
     private String activity;
 
+    // =========================================================
+    // REQUESTED AMOUNT
+    // =========================================================
+
     @NotNull(message = "Requested amount is required")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
+    @DecimalMin(
+            value = "0.01",
+            message = "Amount must be greater than 0"
+    )
     @Column(nullable = false)
     private Double requestedAmount;
+
+    // =========================================================
+    // REASON
+    // =========================================================
 
     @NotBlank(message = "Reason is required")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String reason;
 
+    // =========================================================
+    // STATUS
+    // =========================================================
+
     @Column(nullable = false)
     private String status;
 
+    // =========================================================
+    // ALLOCATED AMOUNT
+    // =========================================================
+
     private Double allocatedAmount;
+
+    // =========================================================
+    // ALLOCATED DATE
+    // =========================================================
 
     private LocalDate allocatedDate;
 
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public Budget() {
     }
+
+    // =========================================================
+    // GETTERS AND SETTERS
+    // =========================================================
 
     public Long getId() {
         return id;
@@ -44,6 +87,14 @@ public class Budget {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDisasterName() {
+        return disasterName;
+    }
+
+    public void setDisasterName(String disasterName) {
+        this.disasterName = disasterName;
     }
 
     public String getActivity() {

@@ -5,7 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface BudgetRepository extends JpaRepository<Budget, Long> {
+public interface BudgetRepository
+        extends JpaRepository<Budget, Long> {
 
     List<Budget> findByStatus(String status);
+
+    // Find budgets belonging to a specific disaster
+    List<Budget> findByDisasterName(String disasterName);
 }

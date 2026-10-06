@@ -1,15 +1,23 @@
 package com.frdms.frdms.finance_management.service;
 
+import com.frdms.frdms.distribution_management.entity.ResourceRequest;
+import com.frdms.frdms.distribution_management.repository.ResourceRequestRepository;
 import com.frdms.frdms.finance_management.entity.Inventory;
 import com.frdms.frdms.finance_management.repository.InventoryRepository;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
+    private final ResourceRequestRepository resourceRequestRepository;
 
 
     // =========================================================
@@ -17,9 +25,11 @@ public class InventoryService {
     // =========================================================
 
     public InventoryService(
-            InventoryRepository inventoryRepository) {
+            InventoryRepository inventoryRepository,
+            ResourceRequestRepository resourceRequestRepository) {
 
         this.inventoryRepository = inventoryRepository;
+        this.resourceRequestRepository = resourceRequestRepository;
     }
 
 
@@ -39,7 +49,7 @@ public class InventoryService {
 
     public Inventory addDonationToInventory(
             String itemName,
-            int quantity,
+            BigDecimal quantity,
             String unit,
             String description) {
 
@@ -71,24 +81,22 @@ public class InventoryService {
 
         else {
 
-            int currentQuantity =
+            BigDecimal currentQuantity =
                     inventory.getQuantity() == null
-                            ? 0
+                            ? BigDecimal.ZERO
                             : inventory.getQuantity();
 
             inventory.setQuantity(
-                    currentQuantity + quantity
+                    currentQuantity.add(quantity)
             );
 
 
-            // Update unit if provided
             if (unit != null && !unit.isBlank()) {
 
                 inventory.setUnit(unit);
             }
 
 
-            // Update description if provided
             if (description != null &&
                     !description.isBlank()) {
 
@@ -107,7 +115,7 @@ public class InventoryService {
 
     public Inventory sendToDistribution(
             Long id,
-            int quantity) {
+            BigDecimal quantity) {
 
         Inventory inventory =
                 inventoryRepository.findById(id)
@@ -118,9 +126,9 @@ public class InventoryService {
                         );
 
 
-        int currentQuantity =
+        BigDecimal currentQuantity =
                 inventory.getQuantity() == null
-                        ? 0
+                        ? BigDecimal.ZERO
                         : inventory.getQuantity();
 
 
@@ -128,7 +136,8 @@ public class InventoryService {
         // VALIDATE QUANTITY
         // -----------------------------------------------------
 
-        if (quantity <= 0) {
+        if (quantity == null ||
+                quantity.compareTo(BigDecimal.ZERO) <= 0) {
 
             throw new IllegalArgumentException(
                     "Quantity must be greater than zero"
@@ -136,7 +145,7 @@ public class InventoryService {
         }
 
 
-        if (quantity > currentQuantity) {
+        if (quantity.compareTo(currentQuantity) > 0) {
 
             throw new IllegalArgumentException(
                     "Not enough inventory available"
@@ -149,11 +158,322 @@ public class InventoryService {
         // -----------------------------------------------------
 
         inventory.setQuantity(
-                currentQuantity - quantity
+                currentQuantity.subtract(quantity)
         );
 
 
         return inventoryRepository.save(inventory);
+    }
+
+
+    // =========================================================
+    // GET DISTRIBUTION REQUESTS
+    // =========================================================
+
+    public List<ResourceRequest> getDistributionRequests() {
+
+        return resourceRequestRepository.findAll();
+    }
+
+
+    // =========================================================
+    // GET AVAILABLE QUANTITY
+    // =========================================================
+
+    public Map<String, BigDecimal> getAvailableQuantities(
+            List<ResourceRequest> requests) {
+
+        Map<String, BigDecimal> availableQuantities =
+                new HashMap<>();
+
+
+        for (ResourceRequest request : requests) {
+
+            Inventory inventory =
+                    inventoryRepository
+                            .findByItemNameIgnoreCase(
+                                    request.getItemName()
+                            )
+                            .orElse(null);
+
+
+            if (inventory != null) {
+
+                BigDecimal quantity =
+                        inventory.getQuantity() == null
+                                ? BigDecimal.ZERO
+                                : inventory.getQuantity();
+
+                availableQuantities.put(
+                        request.getItemName(),
+                        quantity
+                );
+
+            } else {
+
+                availableQuantities.put(
+                        request.getItemName(),
+                        BigDecimal.ZERO
+                );
+            }
+        }
+
+
+        return availableQuantities;
+    }
+
+
+    // =========================================================
+    // GET ORIGINAL INVENTORY UNITS
+    // =========================================================
+
+    public Map<String, String> getInventoryUnits(
+            List<ResourceRequest> requests) {
+
+        Map<String, String> inventoryUnits =
+                new HashMap<>();
+
+
+        for (ResourceRequest request : requests) {
+
+            Inventory inventory =
+                    inventoryRepository
+                            .findByItemNameIgnoreCase(
+                                    request.getItemName()
+                            )
+                            .orElse(null);
+
+
+            if (inventory != null &&
+                    inventory.getUnit() != null &&
+                    !inventory.getUnit().isBlank()) {
+
+                // Get original unit from Inventory
+                inventoryUnits.put(
+                        request.getItemName(),
+                        inventory.getUnit()
+                );
+
+            } else {
+
+                // Fallback to request unit
+                inventoryUnits.put(
+                        request.getItemName(),
+                        request.getUnit()
+                );
+            }
+        }
+
+
+        return inventoryUnits;
+    }
+
+
+    // =========================================================
+    // SEND REQUESTED GOODS TO DISTRIBUTION
+    // =========================================================
+
+    @Transactional
+    public void sendRequestToDistribution(Long requestId) {
+
+        ResourceRequest request =
+                resourceRequestRepository.findById(requestId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Resource request not found"
+                                )
+                        );
+
+
+        // -----------------------------------------------------
+        // CHECK REQUEST STATUS
+        // -----------------------------------------------------
+
+        if (!"REQUESTED".equalsIgnoreCase(
+                request.getStatus())) {
+
+            throw new IllegalStateException(
+                    "This request has already been processed."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // CHECK REQUESTED QUANTITY
+        // -----------------------------------------------------
+
+        if (request.getQuantity() == null ||
+                request.getQuantity()
+                        .compareTo(BigDecimal.ZERO) <= 0) {
+
+            throw new IllegalArgumentException(
+                    "Invalid requested quantity."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // FIND INVENTORY ITEM
+        // -----------------------------------------------------
+
+        Inventory inventory =
+                inventoryRepository
+                        .findByItemNameIgnoreCase(
+                                request.getItemName()
+                        )
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Item '" +
+                                                request.getItemName() +
+                                                "' is not available in inventory."
+                                )
+                        );
+
+
+        // -----------------------------------------------------
+        // CHECK UNIT
+        // -----------------------------------------------------
+
+        String inventoryUnit =
+                inventory.getUnit();
+
+        String requestedUnit =
+                request.getUnit();
+
+
+        if (inventoryUnit != null &&
+                requestedUnit != null &&
+                !inventoryUnit.trim()
+                        .equalsIgnoreCase(
+                                requestedUnit.trim()
+                        )) {
+
+            throw new IllegalArgumentException(
+                    "Unit mismatch. Inventory unit: " +
+                            inventoryUnit +
+                            ", requested unit: " +
+                            requestedUnit
+            );
+        }
+
+
+        // =====================================================
+        // CHECK AVAILABLE STOCK
+        // =====================================================
+
+        BigDecimal requestedQuantity =
+                request.getQuantity();
+
+        BigDecimal availableQuantity =
+                inventory.getQuantity() == null
+                        ? BigDecimal.ZERO
+                        : inventory.getQuantity();
+
+
+        if (requestedQuantity.compareTo(
+                availableQuantity) > 0) {
+
+            throw new IllegalArgumentException(
+                    "Not enough inventory available."
+            );
+        }
+
+
+        // =====================================================
+        // SEND GOODS
+        // =====================================================
+
+        sendToDistribution(
+                inventory.getId(),
+                requestedQuantity
+        );
+
+
+        // =====================================================
+        // UPDATE REQUEST STATUS
+        // =====================================================
+
+        request.setStatus("SENT");
+
+        resourceRequestRepository.save(request);
+    }
+
+
+    // =========================================================
+    // MARK REQUEST AS NOT AVAILABLE
+    // =========================================================
+
+    @Transactional
+    public void markRequestAsNotAvailable(Long requestId) {
+
+        ResourceRequest request =
+                resourceRequestRepository.findById(requestId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Resource request not found"
+                                )
+                        );
+
+
+        // -----------------------------------------------------
+        // CHECK REQUEST STATUS
+        // -----------------------------------------------------
+
+        if (!"REQUESTED".equalsIgnoreCase(
+                request.getStatus())) {
+
+            throw new IllegalStateException(
+                    "This request has already been processed."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // UPDATE STATUS
+        // -----------------------------------------------------
+
+        request.setStatus("NOT_AVAILABLE");
+
+        resourceRequestRepository.save(request);
+    }
+
+
+    // =========================================================
+    // MARK REQUEST AS LOW STOCK
+    // =========================================================
+
+    @Transactional
+    public void markRequestAsLowStock(Long requestId) {
+
+        ResourceRequest request =
+                resourceRequestRepository.findById(requestId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Resource request not found"
+                                )
+                        );
+
+
+        // -----------------------------------------------------
+        // CHECK REQUEST STATUS
+        // -----------------------------------------------------
+
+        if (!"REQUESTED".equalsIgnoreCase(
+                request.getStatus())) {
+
+            throw new IllegalStateException(
+                    "This request has already been processed."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // UPDATE STATUS
+        // -----------------------------------------------------
+
+        request.setStatus("LOW_STOCK");
+
+        resourceRequestRepository.save(request);
     }
 
 }

@@ -477,3 +477,50 @@ form button:hover {
 .send-btn:active {
     transform: scale(0.97);
 }
+.inventory-actions {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.distribution-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b4f8a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.distribution-button:hover {
+    background: #083b68;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+.page-header p {
+    margin: 6px 0 0;
+}
+
+.distribution-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b4f8a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.distribution-button:hover {
+    background: #083b68;
+}

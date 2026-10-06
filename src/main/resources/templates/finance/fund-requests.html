@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Fund Requests</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #b6d4f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: auto;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #163a5f;
+        }
+
+        .header p {
+            color: #6b7280;
+            margin-bottom: 0;
+        }
+
+        .table-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #faf8d7;
+            color: #163a5f;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f8fbff;
+        }
+
+        .select-column {
+            text-align: center;
+            width: 70px;
+        }
+
+        .request-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .status {
+            background: #b6d1e6;
+            color: #0d3355;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .priority-high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .priority-urgent {
+            color: #b91c1c;
+            font-weight: bold;
+        }
+
+        .priority-normal {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #6b7280;
+        }
+
+        /* =====================================================
+           BUDGET SUMMARY
+           ===================================================== */
+
+        .budget-summary {
+            margin-top: 25px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .summary-title {
+            color: #163a5f;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            color: #163a5f;
+            font-weight: bold;
+        }
+
+        .total-row {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #dceeff;
+            border-bottom: none;
+        }
+
+        .total-label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #163a5f;
+        }
+
+        .total-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #16734a;
+        }
+
+        .message {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .info-message {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .create-budget-button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #1769aa;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .create-budget-button:hover {
+            background: #125487;
+        }
+
+        .create-budget-button:disabled {
+            background: #aab7c4;
+            cursor: not-allowed;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div class="header">
+
+        <h1>Fund Requests</h1>
+
+        <p>
+            Review incoming fund requests from
+            Distribution Management and create
+            disaster-wise budgets.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         FUND REQUEST TABLE
+         ===================================================== -->
+
+    <div class="table-card">
+
+        <form id="budgetForm"
+              method="post"
+              action="/finance/budgets/create-from-fund-requests">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th class="select-column">
+                        Select
+                    </th>
+
+                    <th>ID</th>
+
+                    <th>Disaster</th>
+
+                    <th>Item</th>
+
+                    <th>Requested</th>
+
+                    <th>Available</th>
+
+                    <th>Shortage</th>
+
+                    <th>Unit</th>
+
+                    <th>Estimated Cost</th>
+
+                    <th>Priority</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="request : ${fundRequests}">
+
+                    <!-- CHECKBOX -->
+
+                    <td class="select-column">
+
+                        <input
+                                type="checkbox"
+                                name="fundRequestIds"
+                                class="request-checkbox"
+                                th:value="${request.id}"
+                                th:data-disaster="${request.disasterName}"
+                                th:data-cost="${request.estimatedTotalCost}"
+                                onchange="calculateBudget()">
+
+                    </td>
+
+
+                    <!-- ID -->
+
+                    <td th:text="${request.id}">
+                        1
+                    </td>
+
+
+                    <!-- DISASTER -->
+
+                    <td th:text="${request.disasterName}">
+                        Mahawali
+                    </td>
+
+
+                    <!-- ITEM -->
+
+                    <td th:text="${request.itemName}">
+                        Rice
+                    </td>
+
+
+                    <!-- REQUESTED -->
+
+                    <td th:text="${request.requestedQuantity}">
+                        17.50
+                    </td>
+
+
+                    <!-- AVAILABLE -->
+
+                    <td th:text="${request.availableQuantity}">
+                        3.00
+                    </td>
+
+
+                    <!-- SHORTAGE -->
+
+                    <td th:text="${request.shortageQuantity}">
+                        14.50
+                    </td>
+
+
+                    <!-- UNIT -->
+
+                    <td th:text="${request.unit}">
+                        kg
+                    </td>
+
+
+                    <!-- ESTIMATED COST -->
+
+                    <td>
+
+                        Rs.
+
+                        <span
+                                th:text="${request.estimatedTotalCost}">
+                            11600.00
+                        </span>
+
+                    </td>
+
+
+                    <!-- PRIORITY -->
+
+                    <td>
+
+                        <span
+                                th:text="${request.priority}"
+                                th:classappend="
+                                ${request.priority == 'URGENT'
+                                ? 'priority-urgent'
+                                : (request.priority == 'HIGH'
+                                ? 'priority-high'
+                                : 'priority-normal')}">
+
+                            HIGH
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                                class="status"
+                                th:text="${request.status}">
+
+                            FUND_REQUESTED
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+
+                <!-- EMPTY -->
+
+                <tr th:if="${#lists.isEmpty(fundRequests)}">
+
+                    <td colspan="11"
+                        class="empty">
+
+                        No pending fund requests found.
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <!-- =================================================
+                 BUDGET SUMMARY
+                 ================================================= -->
+
+            <div class="budget-summary">
+
+                <div class="summary-title">
+                    Disaster Budget Summary
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span class="summary-label">
+                        Selected Disaster
+                    </span>
+
+                    <span
+                            id="selectedDisaster"
+                            class="summary-value">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span class="summary-label">
+                        Selected Fund Requests
+                    </span>
+
+                    <span
+                            id="selectedCount"
+                            class="summary-value">
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row total-row">
+
+                    <span class="total-label">
+                        Total Budget
+                    </span>
+
+                    <span
+                            id="totalAmount"
+                            class="total-value">
+                        Rs. 0.00
+                    </span>
+
+                </div>
+
+
+                <!-- ERROR -->
+
+                <div
+                        id="errorMessage"
+                        class="message error-message">
+                </div>
+
+
+                <!-- INFO -->
+
+                <div
+                        id="infoMessage"
+                        class="message info-message">
+                </div>
+
+
+                <!-- CREATE BUTTON -->
+
+                <button
+                        type="submit"
+                        id="createBudgetButton"
+                        class="create-budget-button"
+                        disabled>
+
+                    Create Disaster Budget
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function calculateBudget() {
+
+        const checkboxes =
+            document.querySelectorAll(
+                ".request-checkbox:checked"
+            );
+
+        const disasterElement =
+            document.getElementById(
+                "selectedDisaster"
+            );
+
+        const countElement =
+            document.getElementById(
+                "selectedCount"
+            );
+
+        const totalElement =
+            document.getElementById(
+                "totalAmount"
+            );
+
+        const button =
+            document.getElementById(
+                "createBudgetButton"
+            );
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+        const infoMessage =
+            document.getElementById(
+                "infoMessage"
+            );
+
+
+        errorMessage.style.display = "none";
+        infoMessage.style.display = "none";
+
+
+        /* ==============================================
+           NOTHING SELECTED
+           ============================================== */
+
+        if (checkboxes.length === 0) {
+
+            disasterElement.textContent = "-";
+
+            countElement.textContent = "0";
+
+            totalElement.textContent =
+                "Rs. 0.00";
+
+            button.disabled = true;
+
+            return;
+        }
+
+
+        /* ==============================================
+           GET FIRST DISASTER
+           ============================================== */
+
+        const selectedDisaster =
+            checkboxes[0].dataset.disaster;
+
+
+        /* ==============================================
+           CHECK SAME DISASTER
+           ============================================== */
+
+        let sameDisaster = true;
+
+        checkboxes.forEach(function (checkbox) {
+
+            if (
+                checkbox.dataset.disaster !==
+                selectedDisaster
+            ) {
+
+                sameDisaster = false;
+
+            }
+
+        });
+
+
+        if (!sameDisaster) {
+
+            disasterElement.textContent =
+                "Multiple disasters";
+
+            countElement.textContent =
+                checkboxes.length;
+
+            totalElement.textContent =
+                "Rs. 0.00";
+
+            button.disabled = true;
+
+            errorMessage.textContent =
+                "Please select Fund Requests belonging to the same disaster.";
+
+            errorMessage.style.display =
+                "block";
+
+            return;
+        }
+
+
+        /* ==============================================
+           CALCULATE TOTAL
+           ============================================== */
+
+        let total = 0;
+
+        let invalidCost = false;
+
+
+        checkboxes.forEach(function (checkbox) {
+
+            const cost =
+                parseFloat(
+                    checkbox.dataset.cost
+                );
+
+
+            if (isNaN(cost) || cost < 0) {
+
+                invalidCost = true;
+
+            } else {
+
+                total += cost;
+
+            }
+
+        });
+
+
+        if (invalidCost) {
+
+            disasterElement.textContent =
+                selectedDisaster;
+
+            totalElement.textContent =
+                "Rs. 0.00";
+
+            button.disabled = true;
+
+            errorMessage.textContent =
+                "One or more selected Fund Requests has an invalid estimated cost.";
+
+            errorMessage.style.display =
+                "block";
+
+            return;
+        }
+
+
+        /* ==============================================
+           DISPLAY RESULT
+           ============================================== */
+
+        disasterElement.textContent =
+            selectedDisaster;
+
+        countElement.textContent =
+            checkboxes.length;
+
+        totalElement.textContent =
+            "Rs. " + total.toLocaleString(
+                "en-LK",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+
+        button.disabled = false;
+
+
+        infoMessage.textContent =
+            "All selected requests belong to " +
+            selectedDisaster +
+            ".";
+
+        infoMessage.style.display =
+            "block";
+    }
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Allocated Funds | FRDMS</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #eef6ff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #163a5f;
+        }
+
+        .header p {
+            color: #6b7280;
+            margin-bottom: 0;
+        }
+
+        .table-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #dceeff;
+            color: #163a5f;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f8fbff;
+        }
+
+        .disaster {
+            font-weight: bold;
+            color: #163a5f;
+        }
+
+        .amount {
+            font-weight: bold;
+            color: #0b2c4a;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #b2d6ff;
+            color: #0b2c4a;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #6b7280;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>
+            Allocated Funds
+        </h1>
+
+        <p>
+            View funds allocated by the Finance Officer
+            for approved disaster-relief budgets.
+        </p>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Disaster</th>
+
+                <th>Activity</th>
+
+                <th>Allocated Amount</th>
+
+                <th>Allocated Date</th>
+
+                <th>Status</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="budget : ${budgets}">
+
+                <!-- ID -->
+
+                <td th:text="${budget.id}">
+                    20
+                </td>
+
+
+                <!-- DISASTER -->
+
+                <td class="disaster"
+                    th:text="${budget.disasterName}">
+                    Mahawali
+                </td>
+
+
+                <!-- ACTIVITY -->
+
+                <td th:text="${budget.activity}">
+                    Emergency Relief
+                </td>
+
+
+                <!-- ALLOCATED AMOUNT -->
+
+                <td class="amount">
+
+                    LKR
+
+                    <span
+                            th:text="${#numbers.formatDecimal(
+                            budget.allocatedAmount,
+                            1,
+                            2
+                        )}">
+                        11,735.00
+                    </span>
+
+                </td>
+
+
+                <!-- DATE -->
+
+                <td th:text="${budget.allocatedDate}">
+                    2026-10-07
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+                    <span class="status"
+                          th:text="${budget.status}">
+
+                        ALLOCATED
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+
+            <!-- EMPTY -->
+
+            <tr th:if="${#lists.isEmpty(budgets)}">
+
+                <td colspan="6"
+                    class="empty">
+
+                    No allocated funds are currently available.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

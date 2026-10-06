@@ -134,35 +134,27 @@
                     <span>
                         Record Expense
                     </span>
+                    <a th:href="@{/finance/expenses}"
+                       class="nav-item">
 
+                        <i class="fa-solid fa-list"></i>
+
+                        <span>
+                        Expense Records
+                    </span>
+
+                    </a>
                 </a>
-
-
-                <!-- Expense Records -->
-                <a th:href="@{/finance/expenses}"
+                <a th:href="@{/finance/fund-requests}"
                    class="nav-item">
 
                     <i class="fa-solid fa-list"></i>
 
                     <span>
-                        Expense Records
+                        Fund Requests
                     </span>
 
                 </a>
-
-
-                <!-- Create Budget -->
-                <a th:href="@{/finance/budgets/create}"
-                   class="nav-item">
-
-                    <i class="fa-solid fa-wallet"></i>
-
-                    <span>
-                        Create Budget
-                    </span>
-
-                </a>
-
 
                 <!-- Allocate Budget -->
                 <a th:href="@{/finance/budgets/approved}"

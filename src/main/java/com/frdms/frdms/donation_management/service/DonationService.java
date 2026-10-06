@@ -8,6 +8,7 @@ import com.frdms.frdms.finance_management.service.InventoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class DonationService {
             donation.setStatus("PENDING");
         }
 
+
         // Automatically set today's date
         if (donation.getDonationDate() == null) {
 
@@ -54,6 +56,7 @@ public class DonationService {
                     LocalDate.now()
             );
         }
+
 
         return donationRepository.save(donation);
     }
@@ -77,9 +80,11 @@ public class DonationService {
 
         return donationRepository.findByDonationType("CASH");
     }
-// =========================================================
-// GET ACCEPTED GOODS DONATIONS
-// =========================================================
+
+
+    // =========================================================
+    // GET ACCEPTED GOODS DONATIONS
+    // =========================================================
 
     public List<Donation> getAcceptedGoodsDonations() {
 
@@ -88,9 +93,11 @@ public class DonationService {
                 "ACCEPTED"
         );
     }
+
+
     // =========================================================
-// GET ACCEPTED CASH DONATIONS
-// =========================================================
+    // GET ACCEPTED CASH DONATIONS
+    // =========================================================
 
     public List<Donation> getAcceptedCashDonations() {
 
@@ -99,6 +106,7 @@ public class DonationService {
                 "ACCEPTED"
         );
     }
+
 
     // =========================================================
     // GET GOODS DONATIONS
@@ -164,11 +172,13 @@ public class DonationService {
             return false;
         }
 
+
         long daysPassed =
                 ChronoUnit.DAYS.between(
                         donation.getDonationDate(),
                         LocalDate.now()
                 );
+
 
         /*
          * Allowed:
@@ -200,13 +210,13 @@ public class DonationService {
 
             List<String> selectedItems,
 
-            List<Integer> itemQuantities,
+            List<BigDecimal> itemQuantities,
 
             List<String> itemUnits,
 
             String additionalItemName,
 
-            Integer additionalItemQuantity,
+            BigDecimal additionalItemQuantity,
 
             String additionalItemUnit) {
 
@@ -344,7 +354,7 @@ public class DonationService {
                             selectedItems.get(i);
 
 
-                    Integer quantity =
+                    BigDecimal quantity =
                             itemQuantities.get(i);
 
 
@@ -352,7 +362,10 @@ public class DonationService {
                             itemUnits.get(i);
 
 
+                    // -------------------------------------------------
                     // Item name
+                    // -------------------------------------------------
+
                     if (itemName == null ||
                             itemName.trim().isEmpty()) {
 
@@ -362,9 +375,14 @@ public class DonationService {
                     }
 
 
+                    // -------------------------------------------------
                     // Quantity
+                    // -------------------------------------------------
+
                     if (quantity == null ||
-                            quantity <= 0) {
+                            quantity.compareTo(
+                                    BigDecimal.ZERO
+                            ) <= 0) {
 
                         throw new IllegalStateException(
                                 "Donation item quantity must be greater than 0"
@@ -372,7 +390,10 @@ public class DonationService {
                     }
 
 
+                    // -------------------------------------------------
                     // Unit
+                    // -------------------------------------------------
+
                     if (unit == null ||
                             unit.trim().isEmpty()) {
 
@@ -391,7 +412,9 @@ public class DonationService {
             if (hasAdditionalItem) {
 
                 if (additionalItemQuantity == null ||
-                        additionalItemQuantity <= 0) {
+                        additionalItemQuantity.compareTo(
+                                BigDecimal.ZERO
+                        ) <= 0) {
 
                     throw new IllegalStateException(
                             "Additional item quantity must be greater than 0"
@@ -781,7 +804,9 @@ public class DonationService {
                     donationItems) {
 
 
+                // -------------------------------------------------
                 // CHECK ITEM NAME
+                // -------------------------------------------------
 
                 if (item.getItemName() == null ||
                         item.getItemName()
@@ -794,10 +819,14 @@ public class DonationService {
                 }
 
 
+                // -------------------------------------------------
                 // CHECK QUANTITY
+                // -------------------------------------------------
 
                 if (item.getQuantity() == null ||
-                        item.getQuantity() <= 0) {
+                        item.getQuantity().compareTo(
+                                BigDecimal.ZERO
+                        ) <= 0) {
 
                     throw new IllegalStateException(
                             "Invalid quantity for donation item: "
@@ -806,7 +835,22 @@ public class DonationService {
                 }
 
 
+                // -------------------------------------------------
+                // CHECK UNIT
+                // -------------------------------------------------
+
+                if (item.getUnit() == null ||
+                        item.getUnit().trim().isEmpty()) {
+
+                    throw new IllegalStateException(
+                            "Donation item unit is required"
+                    );
+                }
+
+
+                // -------------------------------------------------
                 // ADD TO INVENTORY
+                // -------------------------------------------------
 
                 inventoryService.addDonationToInventory(
 
@@ -815,7 +859,8 @@ public class DonationService {
 
                         item.getQuantity(),
 
-                        item.getUnit(),
+                        item.getUnit()
+                                .trim(),
 
                         donation.getDescription()
                 );
