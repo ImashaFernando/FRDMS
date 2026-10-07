@@ -97,6 +97,7 @@
 
                 </a>
 
+
                 <!-- Accepted Cash Donations -->
                 <a th:href="@{/donations/cash/accepted}"
                    class="nav-item">
@@ -104,15 +105,26 @@
                     <i class="fa-solid fa-circle-check"></i>
 
                     <span>
-        Accepted Cash Donations
-    </span>
+                        Accepted Cash Donations
+                    </span>
 
                 </a>
 
-                <a th:href="@{/donations/goods/accepted}" class="nav-item active">
+
+                <!-- Accepted Goods Donations -->
+                <a th:href="@{/donations/goods/accepted}"
+                   class="nav-item">
+
                     <i class="fa-solid fa-box-open"></i>
-                    <span>Accepted Goods Donations</span>
+
+                    <span>
+                        Accepted Goods Donations
+                    </span>
+
                 </a>
+
+            </div>
+
 
             <!-- =================================================
                  FINANCE
@@ -125,26 +137,7 @@
                 </span>
 
 
-                <!-- Record Expense -->
-                <a th:href="@{/finance/expenses/create}"
-                   class="nav-item">
-
-                    <i class="fa-solid fa-receipt"></i>
-
-                    <span>
-                        Record Expense
-                    </span>
-                    <a th:href="@{/finance/expenses}"
-                       class="nav-item">
-
-                        <i class="fa-solid fa-list"></i>
-
-                        <span>
-                        Expense Records
-                    </span>
-
-                    </a>
-                </a>
+                <!-- Fund Requests -->
                 <a th:href="@{/finance/fund-requests}"
                    class="nav-item">
 
@@ -155,6 +148,7 @@
                     </span>
 
                 </a>
+
 
                 <!-- Allocate Budget -->
                 <a th:href="@{/finance/budgets/approved}"
@@ -224,19 +218,6 @@
                 </a>
 
 
-                <!-- Expense Report -->
-                <a th:href="@{/finance/reports/expenses}"
-                   class="nav-item">
-
-                    <i class="fa-solid fa-file-lines"></i>
-
-                    <span>
-                        Expense Report
-                    </span>
-
-                </a>
-
-
                 <!-- Budget Report -->
                 <a th:href="@{/finance/reports/budgets}"
                    class="nav-item">
@@ -263,9 +244,8 @@
                 </a>
 
             </div>
-            </div>
-        </nav>
 
+        </nav>
 
 
         <!-- =====================================================
@@ -290,8 +270,10 @@
 
             </div>
 
+
             <!-- Logout -->
-            <form th:action="@{/logout}" method="post">
+            <form th:action="@{/logout}"
+                  method="post">
 
                 <button type="submit"
                         class="sidebar-logout-btn"
@@ -349,8 +331,9 @@
                 </h2>
 
                 <p>
-                    Manage donations, expenses, budgets and financial
-                    reports for disaster relief activities.
+                    Manage donations, fund requests, budgets,
+                    allocations and financial reports for
+                    disaster relief activities.
                 </p>
 
             </div>
@@ -392,41 +375,15 @@
                         TOTAL DONATIONS
                     </span>
 
-                    <h3 th:text="'Rs. ' + ${#numbers.formatDecimal(totalDonations, 1, 2)}">
+                    <h3
+                            th:text="'Rs. ' + ${#numbers.formatDecimal(totalDonations, 1, 2)}">
+
                         Rs. 0.00
+
                     </h3>
 
                     <p>
                         All recorded donations
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- TOTAL EXPENSES -->
-
-            <div class="summary-card expense-card">
-
-                <div class="summary-icon">
-
-                    <i class="fa-solid fa-receipt"></i>
-
-                </div>
-
-                <div class="summary-content">
-
-                    <span class="summary-label">
-                        TOTAL EXPENSES
-                    </span>
-
-                    <h3 th:text="'Rs. ' + ${#numbers.formatDecimal(totalExpenses, 1, 2)}">
-                        Rs. 0.00
-                    </h3>
-
-                    <p>
-                        Recorded expenses
                     </p>
 
                 </div>
@@ -450,8 +407,11 @@
                         AVAILABLE BUDGET
                     </span>
 
-                    <h3 th:text="'Rs. ' + ${#numbers.formatDecimal(availableBudget, 1, 2)}">
+                    <h3
+                            th:text="'Rs. ' + ${#numbers.formatDecimal(availableBudget, 1, 2)}">
+
                         Rs. 0.00
+
                     </h3>
 
                     <p>
@@ -524,7 +484,9 @@
             <div class="quick-grid">
 
 
-                <!-- DONATIONS -->
+                <!-- =================================================
+                     DONATIONS
+                     ================================================= -->
 
                 <div class="quick-card">
 
@@ -549,8 +511,8 @@
 
 
                     <p>
-                        View donor information and submitted cash
-                        and goods donations.
+                        View donor information and manage
+                        submitted cash and goods donations.
                     </p>
 
 
@@ -566,49 +528,9 @@
                 </div>
 
 
-                <!-- EXPENSES -->
-
-                <div class="quick-card">
-
-                    <div class="quick-top">
-
-                        <div class="quick-icon expense-icon">
-
-                            <i class="fa-solid fa-file-invoice"></i>
-
-                        </div>
-
-                        <span class="card-number">
-                            02
-                        </span>
-
-                    </div>
-
-
-                    <h3>
-                        Expenses
-                    </h3>
-
-
-                    <p>
-                        Record, categorize and manage disaster-relief
-                        expenses.
-                    </p>
-
-
-                    <a th:href="@{/finance/expenses}"
-                       class="card-link">
-
-                        Manage Expenses
-
-                        <i class="fa-solid fa-arrow-right"></i>
-
-                    </a>
-
-                </div>
-
-
-                <!-- BUDGETS -->
+                <!-- =================================================
+                     BUDGETS
+                     ================================================= -->
 
                 <div class="quick-card">
 
@@ -621,7 +543,7 @@
                         </div>
 
                         <span class="card-number">
-                            03
+                            02
                         </span>
 
                     </div>
@@ -633,12 +555,12 @@
 
 
                     <p>
-                        Prepare budget requirements and manage
-                        approved allocations.
+                        Review budget requirements, approved
+                        budgets and allocated funds.
                     </p>
 
 
-                    <a th:href="@{/finance/budgets/create}"
+                    <a th:href="@{/finance/budgets/status}"
                        class="card-link">
 
                         Manage Budgets
@@ -650,7 +572,9 @@
                 </div>
 
 
-                <!-- REPORTS -->
+                <!-- =================================================
+                     REPORTS
+                     ================================================= -->
 
                 <div class="quick-card">
 
@@ -663,7 +587,7 @@
                         </div>
 
                         <span class="card-number">
-                            04
+                            03
                         </span>
 
                     </div>
@@ -675,8 +599,8 @@
 
 
                     <p>
-                        Generate donation, expense, budget and
-                        monthly reports.
+                        Generate donation, budget and
+                        monthly financial reports.
                     </p>
 
 
@@ -697,7 +621,7 @@
 
 
         <!-- =================================================
-             RECENT ACTIVITY
+             RECENT DONATION ACTIVITY
              ================================================= -->
 
         <section class="activity-section">
@@ -711,48 +635,15 @@
                     </span>
 
                     <h2>
-                        Recent Financial Transactions
+                        Recent Donation Activity
                     </h2>
 
                 </div>
-
-
-                <a th:href="@{/finance/expenses}"
-                   class="view-all">
-
-                    View All
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </a>
 
             </div>
 
 
             <div class="activity-box">
-
-
-                <!-- EMPTY STATE -->
-
-                <div th:if="${#lists.isEmpty(recentDonations) and #lists.isEmpty(recentExpenses)}"
-                     class="empty-state">
-
-                    <div class="empty-icon">
-
-                        <i class="fa-solid fa-receipt"></i>
-
-                    </div>
-
-                    <h3>
-                        No Recent Transactions
-                    </h3>
-
-                    <p>
-                        Financial transactions will appear here
-                        once records are added.
-                    </p>
-
-                </div>
 
 
                 <!-- =================================================
@@ -800,28 +691,43 @@
 
                             <tr th:each="donation : ${recentDonations}">
 
-                                <td th:text="${donation.donationDate}">
+                                <td
+                                        th:text="${donation.donationDate}">
+
                                     2026-09-24
+
                                 </td>
 
 
                                 <td>
 
                                     <span class="transaction-badge donation-badge">
-                                        Donation
+
+                                        <span
+                                                th:text="${donation.donationType}">
+                                            Donation
+                                        </span>
+
                                     </span>
 
                                 </td>
 
 
-                                <td th:text="${donation.description}">
+                                <td
+                                        th:text="${donation.description != null
+                                        and !donation.description.isBlank()
+                                        ? donation.description
+                                        : 'Donation'}">
+
                                     Donation
+
                                 </td>
 
 
-                                <td th:text="${donation.cashAmount != null
-                                    ? 'Rs. ' + #numbers.formatDecimal(donation.cashAmount, 1, 2)
-                                    : 'Goods Donation'}">
+                                <td
+                                        th:text="${donation.cashAmount != null
+                                        ? 'Rs. ' + #numbers.formatDecimal(donation.cashAmount, 1, 2)
+                                        : 'Goods Donation'}">
 
                                     Rs. 0.00
 
@@ -839,80 +745,26 @@
 
 
                 <!-- =================================================
-                     RECENT EXPENSES
+                     EMPTY STATE
                      ================================================= -->
 
-                <div th:if="${!#lists.isEmpty(recentExpenses)}"
-                     class="transaction-section">
+                <div th:if="${#lists.isEmpty(recentDonations)}"
+                     class="empty-state">
 
-                    <h3>
-                        Recent Expenses
-                    </h3>
+                    <div class="empty-icon">
 
-
-                    <div class="transaction-table-wrapper">
-
-                        <table class="transaction-table">
-
-                            <thead>
-
-                            <tr>
-
-                                <th>
-                                    Date
-                                </th>
-
-                                <th>
-                                    Type
-                                </th>
-
-                                <th>
-                                    Description
-                                </th>
-
-                                <th>
-                                    Amount
-                                </th>
-
-                            </tr>
-
-                            </thead>
-
-
-                            <tbody>
-
-                            <tr th:each="expense : ${recentExpenses}">
-
-                                <td th:text="${expense.expenseDate}">
-                                    2026-09-24
-                                </td>
-
-
-                                <td>
-
-                                    <span class="transaction-badge expense-badge">
-                                        Expense
-                                    </span>
-
-                                </td>
-
-
-                                <td th:text="${expense.description}">
-                                    Expense
-                                </td>
-
-
-                                <td th:text="'Rs. ' + ${#numbers.formatDecimal(expense.amount, 1, 2)}">
-                                    Rs. 0.00
-                                </td>
-
-                            </tr>
-
-                            </tbody>
-
-                        </table>
+                        <i class="fa-solid fa-box-open"></i>
 
                     </div>
+
+                    <h3>
+                        No Recent Donations
+                    </h3>
+
+                    <p>
+                        There are no recent donation records
+                        to display.
+                    </p>
 
                 </div>
 
@@ -932,7 +784,7 @@
             </span>
 
             <p>
-                Flood Relief & Disaster Management System
+                Flood Relief &amp; Disaster Management System
             </p>
 
         </footer>

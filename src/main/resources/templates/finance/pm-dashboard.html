@@ -35,6 +35,7 @@
 
     <aside class="sidebar">
 
+
         <!-- BRAND -->
 
         <div class="brand">
@@ -57,7 +58,9 @@
         <nav class="sidebar-nav">
 
 
-            <!-- OVERVIEW -->
+            <!-- =================================================
+                 OVERVIEW
+                 ================================================= -->
 
             <div class="nav-section-title">
                 OVERVIEW
@@ -68,12 +71,13 @@
                class="nav-item active">
 
                 <span class="nav-icon">
-                    ⌁
+                    <i class="fa-solid fa-gauge-high"></i>
                 </span>
 
                 Dashboard
 
             </a>
+
 
 
             <!-- =================================================
@@ -85,11 +89,13 @@
             </div>
 
 
+            <!-- Donor Details -->
+
             <a href="/donors/details"
                class="nav-item">
 
                 <span class="nav-icon">
-                    ♟
+                    <i class="fa-solid fa-user"></i>
                 </span>
 
                 Donor Details
@@ -97,11 +103,13 @@
             </a>
 
 
+            <!-- Cash Donations -->
+
             <a href="/donations/cash"
                class="nav-item">
 
                 <span class="nav-icon">
-                    ▣
+                    <i class="fa-solid fa-money-bill-wave"></i>
                 </span>
 
                 Cash Donations
@@ -109,16 +117,19 @@
             </a>
 
 
+            <!-- Goods Donations -->
+
             <a href="/donations/goods"
                class="nav-item">
 
                 <span class="nav-icon">
-                    ◆
+                    <i class="fa-solid fa-box-open"></i>
                 </span>
 
                 Goods Donations
 
             </a>
+
 
 
             <!-- =================================================
@@ -130,16 +141,19 @@
             </div>
 
 
+            <!-- Pending Requirements -->
+
             <a href="/pm/budgets/pending"
                class="nav-item">
 
                 <span class="nav-icon">
-                    ◷
+                    <i class="fa-solid fa-clock"></i>
                 </span>
 
                 Pending Requirements
 
             </a>
+
 
 
             <!-- =================================================
@@ -151,36 +165,29 @@
             </div>
 
 
-            <a href="/finance/reports/donations"
+
+
+            <!-- Budget Report -->
+
+            <a th:href="@{/finance/reports/budgets(from='pm')}"
                class="nav-item">
 
                 <span class="nav-icon">
-                    ▤
+                    <i class="fa-solid fa-chart-column"></i>
                 </span>
 
-                Donation Report
+                Budget Report
 
             </a>
 
-
-            <a href="/pm/expenses"
-               class="nav-item">
-
-                <span class="nav-icon">
-                    ▥
-                </span>
-
-                Expense Records
-
-            </a>
 
 
         </nav>
 
 
+
         <!-- =====================================================
              SIDEBAR USER / LOGOUT
-             SAME STYLE AS FINANCE OFFICER
              ===================================================== -->
 
         <div class="sidebar-user">
@@ -218,15 +225,15 @@
                         class="sidebar-logout-btn"
                         title="Logout"
                         onclick="showConfirmation({
-                title: 'Logout',
-                message: 'Are you sure you want to log out?',
-                confirmText: 'Logout',
-                type: 'danger',
-                icon: '↪',
-                action: function() {
-                    document.getElementById('pmLogoutForm').submit();
-                }
-            })">
+                            title: 'Logout',
+                            message: 'Are you sure you want to log out?',
+                            confirmText: 'Logout',
+                            type: 'danger',
+                            icon: '↪',
+                            action: function() {
+                                document.getElementById('pmLogoutForm').submit();
+                            }
+                        })">
 
                     <i class="fa-solid fa-right-from-bracket"></i>
 
@@ -282,7 +289,7 @@
 
                 <div class="notification">
 
-                    ♧
+                    <i class="fa-regular fa-bell"></i>
 
                     <span>
                         0
@@ -320,7 +327,7 @@
 
 
         <!-- =====================================================
-             FINANCIAL OVERVIEW
+             MANAGEMENT OVERVIEW
              ===================================================== -->
 
         <section class="hero-section">
@@ -333,19 +340,24 @@
                 </div>
 
                 <h3>
-                    Financial Performance
+                    Financial Overview
                 </h3>
 
                 <p>
-                    Monitor donations, expenses, budgets and
-                    financial activities across disaster-relief operations.
+                    Monitor donations, budget requirements,
+                    approvals and financial allocations across
+                    disaster-relief operations.
                 </p>
 
             </div>
 
 
             <div class="hero-badge">
-                🛡 Project Management
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                Project Management
+
             </div>
 
 
@@ -360,13 +372,19 @@
         <section class="summary-grid">
 
 
-            <!-- TOTAL DONATIONS -->
+            <!-- =================================================
+                 TOTAL DONATIONS
+                 ================================================= -->
 
             <div class="summary-card">
 
+
                 <div class="summary-icon donation-icon">
-                    $
+
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+
                 </div>
+
 
                 <div>
 
@@ -391,44 +409,19 @@
 
 
 
-            <!-- TOTAL EXPENSES -->
+            <!-- =================================================
+                 AVAILABLE BUDGET
+                 ================================================= -->
 
             <div class="summary-card">
 
-                <div class="summary-icon expense-icon">
-                    $
-                </div>
-
-                <div>
-
-                    <span class="summary-title">
-                        TOTAL EXPENSES
-                    </span>
-
-                    <strong class="summary-value"
-                            th:text="'Rs. ' + ${#numbers.formatDecimal(totalExpenses, 1, 2)}">
-
-                        Rs. 0.00
-
-                    </strong>
-
-                    <small>
-                        Overall recorded expenses
-                    </small>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- AVAILABLE BUDGET -->
-
-            <div class="summary-card">
 
                 <div class="summary-icon budget-icon">
-                    ▣
+
+                    <i class="fa-solid fa-wallet"></i>
+
                 </div>
+
 
                 <div>
 
@@ -453,13 +446,19 @@
 
 
 
-            <!-- PENDING REQUIREMENTS -->
+            <!-- =================================================
+                 PENDING REQUIREMENTS
+                 ================================================= -->
 
             <div class="summary-card">
 
+
                 <div class="summary-icon pending-icon">
-                    ⌛
+
+                    <i class="fa-solid fa-clock"></i>
+
                 </div>
+
 
                 <div>
 
@@ -531,7 +530,9 @@
 
 
                 <div class="requirement-icon">
-                    ✓
+
+                    <i class="fa-solid fa-check"></i>
+
                 </div>
 
 
@@ -570,7 +571,9 @@
 
 
                 <div class="requirement-icon">
-                    !
+
+                    <i class="fa-solid fa-exclamation"></i>
+
                 </div>
 
 
@@ -673,7 +676,9 @@
                    class="status-card">
 
                     <span class="status-number">
-                        →
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
                     </span>
 
                     <span>
@@ -701,7 +706,7 @@
             </span>
 
             <p>
-                Flood Relief & Disaster Management System
+                Flood Relief &amp; Disaster Management System
             </p>
 
         </footer>
@@ -711,47 +716,76 @@
 
 
 </div>
+
+
+
+<!-- =====================================================
+     CONFIRMATION MODAL
+     ===================================================== -->
+
 <div id="confirmationModal"
      class="confirm-overlay">
 
+
     <div class="confirm-modal">
+
 
         <div id="confirmIcon"
              class="confirm-icon">
+
             ⚠
+
         </div>
+
 
         <h3 id="confirmTitle"
             class="confirm-title">
+
             Confirmation
+
         </h3>
+
 
         <p id="confirmMessage"
            class="confirm-message">
+
             Are you sure?
+
         </p>
 
+
         <div class="confirm-actions">
+
 
             <button type="button"
                     id="confirmCancel"
                     class="confirm-btn confirm-cancel">
+
                 Cancel
+
             </button>
+
 
             <button type="button"
                     id="confirmOk"
                     class="confirm-btn confirm-ok">
+
                 Confirm
+
             </button>
+
 
         </div>
 
+
     </div>
+
 
 </div>
 
+
 <script th:src="@{/js/confirmation.js}"></script>
+
 </body>
 
 </html>

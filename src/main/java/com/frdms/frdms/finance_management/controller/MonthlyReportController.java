@@ -2,8 +2,8 @@ package com.frdms.frdms.finance_management.controller;
 
 import com.frdms.frdms.donation_management.entity.Donation;
 import com.frdms.frdms.donation_management.service.DonationService;
-import com.frdms.frdms.finance_management.entity.Expense;
-import com.frdms.frdms.finance_management.service.ExpenseService;
+import com.frdms.frdms.finance_management.entity.Budget;
+import com.frdms.frdms.finance_management.service.BudgetService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,20 +18,15 @@ import java.util.List;
 public class MonthlyReportController {
 
     private final DonationService donationService;
-    private final ExpenseService expenseService;
+    private final BudgetService budgetService;
 
     public MonthlyReportController(
             DonationService donationService,
-            ExpenseService expenseService) {
+            BudgetService budgetService) {
 
         this.donationService = donationService;
-        this.expenseService = expenseService;
+        this.budgetService = budgetService;
     }
-
-
-    // =========================
-    // F14 - Monthly Financial Report
-    // =========================
 
     @GetMapping("/finance/reports/monthly")
     public String generateMonthlyReport(
@@ -39,10 +34,18 @@ public class MonthlyReportController {
                     value = "month",
                     required = false
             ) String month,
+
+            @RequestParam(
+                    value = "from",
+                    required = false
+            ) String from,
+
             Model model) {
 
-        // If no month is selected,
-        // use the current month.
+        // =====================================================
+        // SELECTED MONTH
+        // =====================================================
+
         YearMonth selectedMonth;
 
         if (month == null || month.isBlank()) {
@@ -52,23 +55,19 @@ public class MonthlyReportController {
         } else {
 
             selectedMonth = YearMonth.parse(month);
-
         }
 
 
-        // First day of selected month
         LocalDate startDate =
                 selectedMonth.atDay(1);
 
-
-        // Last day of selected month
         LocalDate endDate =
                 selectedMonth.atEndOfMonth();
 
 
-        // =========================
+        // =====================================================
         // DONATIONS
-        // =========================
+        // =====================================================
 
         List<Donation> donations =
                 donationService.getDonationsForMonth(
@@ -81,7 +80,9 @@ public class MonthlyReportController {
                 donations.stream()
                         .filter(donation ->
                                 "CASH".equalsIgnoreCase(
-                                        donation.getDonationType()))
+                                        donation.getDonationType()
+                                )
+                        )
                         .count();
 
 
@@ -89,7 +90,9 @@ public class MonthlyReportController {
                 donations.stream()
                         .filter(donation ->
                                 "GOODS".equalsIgnoreCase(
-                                        donation.getDonationType()))
+                                        donation.getDonationType()
+                                )
+                        )
                         .count();
 
 
@@ -97,45 +100,54 @@ public class MonthlyReportController {
                 donations.stream()
                         .filter(donation ->
                                 "CASH".equalsIgnoreCase(
-                                        donation.getDonationType()))
+                                        donation.getDonationType()
+                                )
+                        )
                         .mapToDouble(donation ->
                                 donation.getCashAmount() != null
                                         ? donation.getCashAmount()
-                                        : 0.0)
+                                        : 0.0
+                        )
                         .sum();
 
 
-        // =========================
-        // EXPENSES
-        // =========================
+        // =====================================================
+        // ALLOCATIONS
+        // =====================================================
 
-        List<Expense> expenses =
-                expenseService.getExpensesForMonth(
-                        startDate,
-                        endDate
-                );
+        List<Budget> allocatedBudgets =
+                budgetService.getAllocatedBudgets();
 
 
-        double totalExpenses =
-                expenses.stream()
-                        .mapToDouble(expense ->
-                                expense.getAmount() != null
-                                        ? expense.getAmount()
-                                        : 0.0)
+        List<Budget> monthlyAllocationRecords =
+                allocatedBudgets.stream()
+                        .filter(budget ->
+                                budget.getAllocatedDate() != null
+                        )
+                        .filter(budget -> {
+
+                            LocalDate allocatedDate =
+                                    budget.getAllocatedDate();
+
+                            return !allocatedDate.isBefore(startDate)
+                                    && !allocatedDate.isAfter(endDate);
+                        })
+                        .toList();
+
+
+        double monthlyTotalAllocations =
+                monthlyAllocationRecords.stream()
+                        .mapToDouble(budget ->
+                                budget.getAllocatedAmount() != null
+                                        ? budget.getAllocatedAmount()
+                                        : 0.0
+                        )
                         .sum();
 
 
-        // =========================
-        // MONTHLY BALANCE
-        // =========================
-
-        double financialBalance =
-                totalCashDonations - totalExpenses;
-
-
-        // =========================
-        // SEND DATA TO HTML
-        // =========================
+        // =====================================================
+        // MODEL
+        // =====================================================
 
         model.addAttribute(
                 "selectedMonth",
@@ -144,8 +156,7 @@ public class MonthlyReportController {
 
         model.addAttribute(
                 "monthName",
-                selectedMonth.getMonth()
-                        .toString()
+                selectedMonth.getMonth().toString()
         );
 
         model.addAttribute(
@@ -158,12 +169,6 @@ public class MonthlyReportController {
                 "donations",
                 donations
         );
-
-        model.addAttribute(
-                "expenses",
-                expenses
-        );
-
 
         model.addAttribute(
                 "totalDonations",
@@ -185,15 +190,51 @@ public class MonthlyReportController {
                 totalCashDonations
         );
 
+
         model.addAttribute(
-                "totalExpenses",
-                totalExpenses
+                "monthlyTotalAllocations",
+                monthlyTotalAllocations
         );
 
         model.addAttribute(
-                "financialBalance",
-                financialBalance
+                "monthlyAllocationRecords",
+                monthlyAllocationRecords
         );
+
+        model.addAttribute(
+                "allocationRecordCount",
+                monthlyAllocationRecords.size()
+        );
+
+
+        // =====================================================
+        // BACK URL
+        // =====================================================
+
+        if ("pm".equalsIgnoreCase(from)) {
+
+            model.addAttribute(
+                    "backUrl",
+                    "/pm/dashboard"
+            );
+
+            model.addAttribute(
+                    "backText",
+                    "Back to PM Dashboard"
+            );
+
+        } else {
+
+            model.addAttribute(
+                    "backUrl",
+                    "/finance/dashboard"
+            );
+
+            model.addAttribute(
+                    "backText",
+                    "Back to Finance Dashboard"
+            );
+        }
 
 
         return "finance/monthly-report";
