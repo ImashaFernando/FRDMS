@@ -858,3 +858,52 @@ footer {
     }
 
 }
+/* =====================================================
+   ACTION BUTTONS
+   ===================================================== */
+
+.actions-cell {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.edit-btn {
+    background: #f0ad4e;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #ec971f;
+}
+
+.delete-btn {
+    background: #d9534f;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #c9302c;
+}
+
+.no-action {
+    color: #999;
+    font-size: 16px;
+}

@@ -20,6 +20,10 @@ public class BudgetService {
     private final FundRequestRepository fundRequestRepository;
 
 
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
+
     public BudgetService(
             BudgetRepository budgetRepository,
             FundRequestRepository fundRequestRepository) {
@@ -37,6 +41,7 @@ public class BudgetService {
 
     public Budget createBudgetRequirement(Budget budget) {
 
+        // New budget requests always start as PENDING
         budget.setStatus("PENDING");
 
         return budgetRepository.save(budget);
@@ -44,7 +49,7 @@ public class BudgetService {
 
 
     // =========================================================
-    // NEW - CREATE DISASTER BUDGET FROM FUND REQUESTS
+    // CREATE DISASTER BUDGET FROM FUND REQUESTS
     // =========================================================
 
     @Transactional
@@ -122,7 +127,8 @@ public class BudgetService {
                 BigDecimal.ZERO;
 
 
-        for (FundRequest fundRequest : fundRequests) {
+        for (FundRequest fundRequest :
+                fundRequests) {
 
 
             // -------------------------------------------------
@@ -293,6 +299,104 @@ public class BudgetService {
 
 
     // =========================================================
+    // FINANCE OFFICER - UPDATE PENDING BUDGET
+    // ONLY REASON CAN BE CHANGED
+    // =========================================================
+
+    public Budget updatePendingBudgetReason(
+            Long id,
+            String reason) {
+
+        // -----------------------------------------------------
+        // GET EXISTING BUDGET
+        // -----------------------------------------------------
+
+        Budget existingBudget =
+                getBudgetById(id);
+
+
+        // -----------------------------------------------------
+        // ONLY PENDING BUDGETS CAN BE EDITED
+        // -----------------------------------------------------
+
+        if (!"PENDING".equalsIgnoreCase(
+                existingBudget.getStatus())) {
+
+            throw new IllegalStateException(
+                    "Only pending budgets can be edited."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // VALIDATE REASON
+        // -----------------------------------------------------
+
+        if (reason == null ||
+                reason.trim().isEmpty()) {
+
+            throw new IllegalArgumentException(
+                    "Reason cannot be empty."
+            );
+        }
+
+
+        // -----------------------------------------------------
+        // UPDATE ONLY REASON
+        // -----------------------------------------------------
+
+        existingBudget.setReason(
+                reason.trim()
+        );
+
+
+        // -----------------------------------------------------
+        // KEEP STATUS AS PENDING
+        // -----------------------------------------------------
+
+        existingBudget.setStatus(
+                "PENDING"
+        );
+
+
+        // -----------------------------------------------------
+        // SAVE EXISTING BUDGET
+        // -----------------------------------------------------
+
+        return budgetRepository.save(
+                existingBudget
+        );
+    }
+
+
+    // =========================================================
+    // FINANCE OFFICER - DELETE PENDING BUDGET
+    // =========================================================
+
+    public void deletePendingBudget(Long id) {
+
+        Budget budget =
+                getBudgetById(id);
+
+
+        // -----------------------------------------------------
+        // ONLY PENDING BUDGETS CAN BE DELETED
+        // -----------------------------------------------------
+
+        if (!"PENDING".equalsIgnoreCase(
+                budget.getStatus())) {
+
+            throw new IllegalStateException(
+                    "Only pending budgets can be deleted."
+            );
+        }
+
+
+        budgetRepository.delete(budget);
+    }
+
+
+    // =========================================================
     // PM - APPROVE BUDGET
     // =========================================================
 
@@ -301,6 +405,10 @@ public class BudgetService {
         Budget budget =
                 getBudgetById(id);
 
+
+        // -----------------------------------------------------
+        // ONLY PENDING BUDGETS CAN BE APPROVED
+        // -----------------------------------------------------
 
         if (!"PENDING".equals(
                 budget.getStatus())) {
@@ -331,6 +439,10 @@ public class BudgetService {
         Budget budget =
                 getBudgetById(id);
 
+
+        // -----------------------------------------------------
+        // ONLY PENDING BUDGETS CAN BE REJECTED
+        // -----------------------------------------------------
 
         if (!"PENDING".equals(
                 budget.getStatus())) {
@@ -388,6 +500,10 @@ public class BudgetService {
                 getBudgetById(id);
 
 
+        // -----------------------------------------------------
+        // ONLY APPROVED BUDGETS CAN BE ALLOCATED
+        // -----------------------------------------------------
+
         if (!"APPROVED".equals(
                 budget.getStatus())) {
 
@@ -396,6 +512,10 @@ public class BudgetService {
             );
         }
 
+
+        // -----------------------------------------------------
+        // VALIDATE ALLOCATED AMOUNT
+        // -----------------------------------------------------
 
         if (allocatedAmount == null ||
                 allocatedAmount <= 0) {
@@ -406,6 +526,10 @@ public class BudgetService {
         }
 
 
+        // -----------------------------------------------------
+        // ALLOCATED AMOUNT CANNOT EXCEED REQUESTED AMOUNT
+        // -----------------------------------------------------
+
         if (allocatedAmount >
                 budget.getRequestedAmount()) {
 
@@ -415,6 +539,10 @@ public class BudgetService {
             );
         }
 
+
+        // -----------------------------------------------------
+        // SAVE ALLOCATION
+        // -----------------------------------------------------
 
         budget.setAllocatedAmount(
                 allocatedAmount
@@ -435,14 +563,19 @@ public class BudgetService {
                 budget
         );
     }
-// =========================================================
-// DISTRIBUTION - ALLOCATED FUNDS
-// =========================================================
+
+
+    // =========================================================
+    // DISTRIBUTION - ALLOCATED FUNDS
+    // =========================================================
 
     public List<Budget> getAllocatedBudgets() {
 
-        return budgetRepository.findByStatus("ALLOCATED");
+        return budgetRepository.findByStatus(
+                "ALLOCATED"
+        );
     }
+
 
     // =========================================================
     // AVAILABLE BUDGET
@@ -481,4 +614,5 @@ public class BudgetService {
 
         return budgetRepository.findAll();
     }
+
 }

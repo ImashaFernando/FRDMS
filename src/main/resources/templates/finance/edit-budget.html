@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Budget | FRDMS</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/budget-status.css}">
+
+    <style>
+
+        .edit-container {
+            max-width: 700px;
+            margin: 45px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .edit-header {
+            margin-bottom: 30px;
+        }
+
+        .edit-header .eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: #777;
+        }
+
+        .edit-header h2 {
+            margin: 8px 0;
+            color: #1d3557;
+        }
+
+        .edit-header p {
+            color: #777;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #26384f;
+        }
+
+        .readonly-field {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            border: 1px solid #d9dee7;
+            border-radius: 8px;
+            background: #f2f4f7;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .reason-field {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 130px;
+            padding: 12px 14px;
+            border: 1px solid #d9dee7;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .reason-field:focus {
+            outline: none;
+            border-color: #5278a8;
+        }
+
+        .readonly-note {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .status-display {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #fff3cd;
+            color: #9a6700;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .error-message {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: #fee2e2;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            display: inline-block;
+            padding: 11px 20px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #5278a8;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #3f628e;
+        }
+
+        .cancel-btn {
+            background: #eef1f5;
+            color: #394b61;
+        }
+
+        .cancel-btn:hover {
+            background: #dfe4ea;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            F
+        </div>
+
+        <div>
+
+            <h1>FRDMS</h1>
+
+            <span>
+                Finance Management
+            </span>
+
+        </div>
+
+    </div>
+
+    <a
+            th:href="@{/finance/budgets/status}"
+            class="back-btn">
+
+        ← Budget Status
+
+    </a>
+
+</header>
+
+
+<main class="page-container">
+
+    <div class="edit-container">
+
+        <div class="edit-header">
+
+            <span class="eyebrow">
+                FINANCE MANAGEMENT
+            </span>
+
+            <h2>
+                Edit Pending Budget
+            </h2>
+
+            <p>
+                Only the reason can be changed
+                for a pending budget.
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+                th:if="${error != null}"
+                class="error-message"
+                th:text="${error}">
+
+            Error
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+                th:action="@{/finance/budgets/edit/{id}(id=${budget.id})}"
+                method="post">
+
+
+            <!-- BUDGET ID -->
+
+            <div class="form-group">
+
+                <label>
+                    Budget ID
+                </label>
+
+                <input
+                        type="text"
+                        class="readonly-field"
+                        th:value="${budget.id}"
+                        readonly>
+
+            </div>
+
+
+            <!-- ACTIVITY -->
+
+            <div class="form-group">
+
+                <label>
+                    Activity
+                </label>
+
+                <input
+                        type="text"
+                        class="readonly-field"
+                        th:value="${budget.activity}"
+                        readonly>
+
+                <small class="readonly-note">
+                    Activity cannot be changed.
+                </small>
+
+            </div>
+
+
+            <!-- REQUESTED AMOUNT -->
+
+            <div class="form-group">
+
+                <label>
+                    Requested Amount (LKR)
+                </label>
+
+                <input
+                        type="text"
+                        class="readonly-field"
+                        th:value="${budget.requestedAmount}"
+                        readonly>
+
+                <small class="readonly-note">
+                    Requested amount cannot be changed.
+                </small>
+
+            </div>
+
+
+            <!-- REASON -->
+
+            <div class="form-group">
+
+                <label for="reason">
+                    Reason
+                </label>
+
+                <textarea
+                        id="reason"
+                        name="reason"
+                        class="reason-field"
+                        th:text="${budget.reason}"
+                        required></textarea>
+
+                <small class="readonly-note">
+                    Only the reason can be changed.
+                </small>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                </label>
+
+                <span
+                        class="status-display"
+                        th:text="${budget.status}">
+
+                    PENDING
+
+                </span>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <button
+                        type="submit"
+                        class="save-btn">
+
+                    Update Reason
+
+                </button>
+
+                <a
+                        th:href="@{/finance/budgets/status}"
+                        class="cancel-btn">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+
+</html>
