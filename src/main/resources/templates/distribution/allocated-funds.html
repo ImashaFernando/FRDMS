@@ -33,6 +33,14 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
 
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
         .header h1 {
             margin: 0;
             color: #163a5f;
@@ -40,7 +48,40 @@
 
         .header p {
             color: #6b7280;
-            margin-bottom: 0;
+            margin: 0;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 10px 16px;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition: all 0.2s ease;
+
+            white-space: nowrap;
+        }
+
+        .back-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(37,99,235,0.20);
+        }
+
+        .back-icon {
+            font-size: 17px;
+            line-height: 1;
         }
 
         .table-card {
@@ -98,6 +139,29 @@
             color: #6b7280;
         }
 
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .back-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+        }
+
     </style>
 
 </head>
@@ -111,9 +175,28 @@
 
     <div class="header">
 
-        <h1>
-            Allocated Funds
-        </h1>
+        <div class="header-top">
+
+            <h1>
+                Allocated Funds
+            </h1>
+
+            <!-- BACK TO DASHBOARD -->
+
+            <a th:href="@{/distribution/dashboard}"
+               class="back-button">
+
+                <span class="back-icon">
+                    ←
+                </span>
+
+                <span>
+                    Back to Dashboard
+                </span>
+
+            </a>
+
+        </div>
 
         <p>
             View funds allocated by the Finance Officer
