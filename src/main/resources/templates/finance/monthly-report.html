@@ -57,23 +57,6 @@
 
         <!-- PAGE HEADING -->
 
-        <section class="report-heading">
-
-            <span class="label">
-                FINANCE OFFICER
-            </span>
-
-            <h2>
-                Monthly Financial Report
-            </h2>
-
-            <p>
-                Review monthly donation and expense
-                activities recorded in the FRDMS system.
-            </p>
-
-        </section>
-
 
         <!-- =========================
              MONTH SELECTOR
@@ -239,34 +222,6 @@
 
             </div>
 
-
-            <!-- TOTAL EXPENSES -->
-
-            <div class="summary-card">
-
-                <div class="summary-icon">
-                    E
-                </div>
-
-                <div>
-
-                    <span class="summary-label">
-                        TOTAL EXPENSES
-                    </span>
-
-                    <strong>
-
-                        Rs.
-
-                        <span th:text="${#numbers.formatDecimal(totalExpenses, 1, 2)}">
-                            0.00
-                        </span>
-
-                    </strong>
-
-                </div>
-
-            </div>
 
 
             <!-- MONTHLY BALANCE -->
@@ -455,136 +410,6 @@
             </div>
 
         </section>
-
-
-        <!-- =========================
-             EXPENSE REPORT
-             ========================= -->
-
-        <section class="report-card">
-
-            <div class="report-card-header">
-
-                <div>
-
-                    <span class="section-label">
-                        EXPENSES
-                    </span>
-
-                    <h3>
-                        Monthly Expenses
-                    </h3>
-
-                    <p>
-                        Expenses recorded during the
-                        selected month.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-
-                    </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                    <tr th:each="expense : ${expenses}">
-
-                        <td th:text="${expense.id}">
-                            1
-                        </td>
-
-
-                        <td th:text="${expense.expenseDate}">
-                            2026-09-16
-                        </td>
-
-
-                        <td th:text="${expense.description}">
-                            Food supplies
-                        </td>
-
-
-                        <td>
-
-                            <span class="category"
-                                  th:text="${expense.category}">
-                                Food
-                            </span>
-
-                        </td>
-
-
-                        <td>
-
-                            <strong class="expense-money">
-
-                                Rs.
-
-                                <span th:text="${#numbers.formatDecimal(expense.amount, 1, 2)}">
-                                    0.00
-                                </span>
-
-                            </strong>
-
-                        </td>
-
-                    </tr>
-
-
-                    <!-- EMPTY -->
-
-                    <tr th:if="${#lists.isEmpty(expenses)}">
-
-                        <td colspan="5">
-
-                            <div class="empty-state">
-
-                                <div class="empty-icon">
-                                    E
-                                </div>
-
-                                <h3>
-                                    No Expenses
-                                </h3>
-
-                                <p>
-                                    No expenses were recorded
-                                    during this month.
-                                </p>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
 
     </main>
 

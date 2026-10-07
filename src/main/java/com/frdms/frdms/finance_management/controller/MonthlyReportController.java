@@ -2,8 +2,6 @@ package com.frdms.frdms.finance_management.controller;
 
 import com.frdms.frdms.donation_management.entity.Donation;
 import com.frdms.frdms.donation_management.service.DonationService;
-import com.frdms.frdms.finance_management.entity.Expense;
-import com.frdms.frdms.finance_management.service.ExpenseService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +16,16 @@ import java.util.List;
 public class MonthlyReportController {
 
     private final DonationService donationService;
-    private final ExpenseService expenseService;
 
     public MonthlyReportController(
-            DonationService donationService,
-            ExpenseService expenseService) {
+            DonationService donationService) {
 
         this.donationService = donationService;
-        this.expenseService = expenseService;
     }
-
 
     // =========================
     // F14 - Monthly Financial Report
     // =========================
-
     @GetMapping("/finance/reports/monthly")
     public String generateMonthlyReport(
             @RequestParam(
@@ -52,19 +45,15 @@ public class MonthlyReportController {
         } else {
 
             selectedMonth = YearMonth.parse(month);
-
         }
-
 
         // First day of selected month
         LocalDate startDate =
                 selectedMonth.atDay(1);
 
-
         // Last day of selected month
         LocalDate endDate =
                 selectedMonth.atEndOfMonth();
-
 
         // =========================
         // DONATIONS
@@ -76,62 +65,37 @@ public class MonthlyReportController {
                         endDate
                 );
 
-
         long cashDonationCount =
                 donations.stream()
                         .filter(donation ->
                                 "CASH".equalsIgnoreCase(
-                                        donation.getDonationType()))
+                                        donation.getDonationType()
+                                )
+                        )
                         .count();
-
 
         long goodsDonationCount =
                 donations.stream()
                         .filter(donation ->
                                 "GOODS".equalsIgnoreCase(
-                                        donation.getDonationType()))
+                                        donation.getDonationType()
+                                )
+                        )
                         .count();
-
 
         double totalCashDonations =
                 donations.stream()
                         .filter(donation ->
                                 "CASH".equalsIgnoreCase(
-                                        donation.getDonationType()))
+                                        donation.getDonationType()
+                                )
+                        )
                         .mapToDouble(donation ->
                                 donation.getCashAmount() != null
                                         ? donation.getCashAmount()
-                                        : 0.0)
+                                        : 0.0
+                        )
                         .sum();
-
-
-        // =========================
-        // EXPENSES
-        // =========================
-
-        List<Expense> expenses =
-                expenseService.getExpensesForMonth(
-                        startDate,
-                        endDate
-                );
-
-
-        double totalExpenses =
-                expenses.stream()
-                        .mapToDouble(expense ->
-                                expense.getAmount() != null
-                                        ? expense.getAmount()
-                                        : 0.0)
-                        .sum();
-
-
-        // =========================
-        // MONTHLY BALANCE
-        // =========================
-
-        double financialBalance =
-                totalCashDonations - totalExpenses;
-
 
         // =========================
         // SEND DATA TO HTML
@@ -153,17 +117,10 @@ public class MonthlyReportController {
                 selectedMonth.getYear()
         );
 
-
         model.addAttribute(
                 "donations",
                 donations
         );
-
-        model.addAttribute(
-                "expenses",
-                expenses
-        );
-
 
         model.addAttribute(
                 "totalDonations",
@@ -184,17 +141,6 @@ public class MonthlyReportController {
                 "totalCashDonations",
                 totalCashDonations
         );
-
-        model.addAttribute(
-                "totalExpenses",
-                totalExpenses
-        );
-
-        model.addAttribute(
-                "financialBalance",
-                financialBalance
-        );
-
 
         return "finance/monthly-report";
     }
