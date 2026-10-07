@@ -7,7 +7,7 @@
 
 body {
     font-family: "Segoe UI", Arial, sans-serif;
-    background: #F4F7FB;
+    background: #ffffff;
     color: #172033;
     min-height: 100vh;
 }
@@ -175,7 +175,7 @@ body {
 
 
 .summary-card {
-    background: white;
+    background: #d8eaf8;
 
     border: 1px solid #E4EAF2;
 
@@ -190,6 +190,7 @@ body {
     gap: 14px;
 
     box-shadow: 0 6px 20px rgba(20, 45, 80, 0.05);
+    border-left: 4px solid #2e7d32;
 }
 
 
@@ -586,4 +587,13 @@ footer {
         align-self: flex-start;
     }
 
+}
+/* Available Total Funds */
+
+.available-funds-card {
+    border-left: 4px solid #2e7d32;
+}
+
+.available-funds-card .summary-icon {
+    background: #e8f5e9;
 }
