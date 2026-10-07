@@ -1,18 +1,13 @@
+```html
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Feedback | FRDMS</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -24,15 +19,10 @@
             color: #1F3A60;
         }
 
-        /* HEADER */
-
         .header {
             background: #1F3A60;
             color: white;
             padding: 24px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .header h1 {
@@ -45,34 +35,6 @@
             color: #D8E7F0;
             font-size: 14px;
         }
-
-        .home-button {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            color: #1F3A60;
-            border: 1px solid #85B6D6;
-            border-radius: 10px;
-            text-decoration: none;
-        }
-
-        .home-button:hover {
-            background: #EDF3F6;
-        }
-
-        .home-button svg {
-            width: 21px;
-            height: 21px;
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
-        }
-
-
-        /* MAIN */
 
         .container {
             max-width: 950px;
@@ -91,7 +53,6 @@
         .card h2 {
             margin: 0;
             font-size: 28px;
-            color: #1F3A60;
         }
 
         .description {
@@ -100,9 +61,6 @@
             max-width: 650px;
             line-height: 1.6;
         }
-
-
-        /* SUCCESS */
 
         .success-message {
             background: #E5F4EA;
@@ -113,23 +71,22 @@
             text-align: left;
         }
 
-
-        /* OPTIONS */
-
         .question {
             font-size: 19px;
             font-weight: bold;
             margin-bottom: 22px;
-            color: #1F3A60;
         }
 
         .options {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
         }
 
         .option-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             border: 1px solid #B8CBD8;
             border-radius: 14px;
             padding: 30px 20px;
@@ -173,11 +130,36 @@
             font-size: 14px;
         }
 
+        .my-feedback-section {
+            margin-top: 32px;
+            padding-top: 25px;
+            border-top: 1px solid #D8E3EA;
+        }
 
-        /* MOBILE */
+        .my-feedback-section p {
+            color: #66788A;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .my-feedback-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            color: #1F3A60;
+            border: 2px solid #3582B8;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s ease;
+        }
+
+        .my-feedback-button:hover {
+            background: #EAF4FA;
+        }
 
         @media (max-width: 750px) {
-
             .header {
                 padding: 20px;
             }
@@ -197,154 +179,106 @@
             .options {
                 grid-template-columns: 1fr;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-<!-- HEADER -->
-
 <header class="header">
-
-    <div>
-
-        <h1>Submit Feedback</h1>
-
-        <p>
-            Share your experience and help us improve our relief services
-        </p>
-
-    </div>
-
-
-
+    <h1>Submit Feedback</h1>
+    <p>Share your experience and help us improve our relief services.</p>
 </header>
 
-
-<!-- MAIN -->
-
 <div class="container">
-
     <div class="card">
 
-
-        <h2>
-            Share Your Experience
-        </h2>
-
+        <h2>Share Your Experience</h2>
 
         <p class="description">
             Your feedback helps us understand your experience
             and improve the quality of disaster relief services.
         </p>
 
-
-        <!-- SUCCESS -->
-
-        <div th:if="${param.success}"
-             class="success-message">
-
+        <div th:if="${param.success}" class="success-message">
             ✓ Thank you! Your feedback has been submitted successfully.
-
         </div>
 
-
-        <div class="question">
-            1. Who are you?
-        </div>
-
+        <div class="question">1. Who are you?</div>
 
         <div class="options">
 
-
             <!-- VICTIM -->
-
             <a class="option-card"
                th:href="@{/feedback/submit/victim}">
 
-                <div class="icon">
-                    👤
-                </div>
+                <div class="icon">👤</div>
 
                 <div class="option-title">
                     Victim / Affected Family
                 </div>
 
                 <div class="option-description">
-                    Share your experience receiving
-                    disaster relief assistance.
+                    Share your experience receiving disaster relief assistance.
                 </div>
 
-                <div class="select-button">
-                    Continue
-                </div>
-
+                <div class="select-button">Continue</div>
             </a>
 
-
-            <!-- COMMUNITY -->
-
+            <!-- DONOR -->
             <a class="option-card"
-               th:href="@{/feedback/submit/community}">
+               th:href="@{/feedback/submit/donor}">
 
-                <div class="icon">
-                    👥
-                </div>
+                <div class="icon">🎁</div>
 
-                <div class="option-title">
-                    Community Member
-                </div>
+                <div class="option-title">Donor</div>
 
                 <div class="option-description">
-                    Share your observations and
-                    experience of relief activities.
+                    Share your feedback about donations and their contribution
+                    to disaster relief activities.
                 </div>
 
-                <div class="select-button">
-                    Continue
-                </div>
-
+                <div class="select-button">Continue</div>
             </a>
 
-
             <!-- VOLUNTEER -->
-
             <a class="option-card"
                th:href="@{/feedback/submit/volunteer}">
 
-                <div class="icon">
-                    🦺
-                </div>
+                <div class="icon">🦺</div>
 
-                <div class="option-title">
-                    Volunteer
-                </div>
+                <div class="option-title">Volunteer</div>
 
                 <div class="option-description">
-                    Share your experience participating
-                    in disaster relief activities.
+                    Share your experience participating in disaster relief
+                    activities.
                 </div>
 
-                <div class="select-button">
-                    Continue
-                </div>
-
+                <div class="select-button">Continue</div>
             </a>
 
+        </div>
+
+        <!-- MY FEEDBACK -->
+        <div class="my-feedback-section">
+
+            <div class="option-title">Already submitted feedback?</div>
+
+            <p>
+                Find and view your previously submitted feedback
+                using your name and NIC number.
+            </p>
+
+            <a class="my-feedback-button"
+               th:href="@{/feedback/my-feedback}">
+                My Feedback
+            </a>
 
         </div>
 
     </div>
-
 </div>
 
-
 </body>
-
 </html>
+```

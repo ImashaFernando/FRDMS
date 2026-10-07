@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Feedback | FRDMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #EDF3F6;
+            color: #1F3A60;
+        }
+
+        .header {
+            background: #1F3A60;
+            color: white;
+            padding: 24px 40px;
+        }
+
+        .header h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #D8E7F0;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #3582B8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(31, 58, 96, 0.08);
+        }
+
+        .title {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .description {
+            color: #66788A;
+            margin: 8px 0 25px;
+            line-height: 1.6;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #B8CBD8;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3582B8;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .radio-group,
+        .rating {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option,
+        .rating-option {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid #B8CBD8;
+            border-radius: 9px;
+            padding: 11px 14px;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .radio-option input,
+        .rating-option input {
+            margin: 0;
+        }
+
+        .error {
+            display: block;
+            color: #C0392B;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .submit-button {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 9px;
+            background: #3582B8;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .submit-button:hover {
+            background: #1F3A60;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 22px;
+            }
+
+            .card {
+                padding: 24px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <h1>Donor Feedback</h1>
+    <p>
+        Share how your donations have contributed to disaster relief.
+    </p>
+</header>
+
+<div class="container">
+
+    <a class="back-link" th:href="@{/feedback/submit}">
+        &larr; Back to Feedback Type
+    </a>
+
+    <div class="card">
+
+        <h2 class="title">Share Your Donor Experience</h2>
+
+        <p class="description">
+            Your feedback helps us understand whether donations are
+            contributing effectively to relief activities.
+        </p>
+
+        <form th:action="@{/feedback/save}"
+              th:object="${feedback}"
+              method="post">
+
+            <input type="hidden" th:field="*{feedbackType}">
+
+            <div class="field">
+                <label for="name">Your Name *</label>
+
+                <input id="name"
+                       type="text"
+                       th:field="*{name}"
+                       maxlength="100"
+                       placeholder="Enter your full name"
+                       required>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"></span>
+            </div>
+
+            <div class="field">
+                <label for="nic">NIC Number *</label>
+
+                <input id="nic"
+                       type="text"
+                       th:field="*{nic}"
+                       maxlength="12"
+                       placeholder="Enter your NIC number"
+                       required>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('nic')}"
+                      th:errors="*{nic}"></span>
+            </div>
+
+            <div class="field">
+                <label>
+                    Did your donation contribute to relief activities? *
+                </label>
+
+                <div class="radio-group">
+
+                    <label class="radio-option">
+                        <input type="radio"
+                               th:field="*{peopleReached}"
+                               value="YES"
+                               required>
+                        Yes
+                    </label>
+
+                    <label class="radio-option">
+                        <input type="radio"
+                               th:field="*{peopleReached}"
+                               value="PARTIALLY">
+                        Partially
+                    </label>
+
+                    <label class="radio-option">
+                        <input type="radio"
+                               th:field="*{peopleReached}"
+                               value="NO">
+                        No
+                    </label>
+
+                </div>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('peopleReached')}"
+                      th:errors="*{peopleReached}"></span>
+            </div>
+
+            <div class="field">
+                <label>Rate your donation experience *</label>
+
+                <div class="rating">
+
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="1"
+                               required>
+                        1 - Very Poor
+                    </label>
+
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="2">
+                        2 - Poor
+                    </label>
+
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="3">
+                        3 - Average
+                    </label>
+
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="4">
+                        4 - Good
+                    </label>
+
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="5">
+                        5 - Excellent
+                    </label>
+
+                </div>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('rating')}"
+                      th:errors="*{rating}"></span>
+            </div>
+
+            <div class="field">
+                <label for="comments">Your Written Feedback *</label>
+
+                <textarea id="comments"
+                          th:field="*{comments}"
+                          maxlength="1000"
+                          placeholder="Share your experience and suggestions for improving relief support..."
+                          required></textarea>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('comments')}"
+                      th:errors="*{comments}"></span>
+            </div>
+
+            <button type="submit" class="submit-button">
+                Submit Feedback
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

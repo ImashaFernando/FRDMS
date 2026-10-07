@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager - Feedback Review</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 20px;
+            font-family: Arial, sans-serif;
+            background: #f4f7f6;
+            color: #263238;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #176b50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #667085;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            background: #e3f5e9;
+            color: #176b38;
+        }
+
+        .error {
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            background: #fde8e8;
+            color: #a61b1b;
+        }
+
+        .feedback-card {
+            background: white;
+            padding: 24px;
+            margin-bottom: 22px;
+            border-radius: 10px;
+            border: 1px solid #e1e7e4;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .feedback-card h2 {
+            margin-top: 0;
+            color: #176b50;
+        }
+
+        .detail {
+            margin: 10px 0;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .rating {
+            color: #e5a100;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        .review-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 11px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .approve-button {
+            background: #198754;
+            color: white;
+        }
+
+        .reject-button {
+            background: #dc3545;
+            color: white;
+        }
+
+        .approve-button:hover {
+            background: #146c43;
+        }
+
+        .reject-button:hover {
+            background: #b02a37;
+        }
+
+        .reason-input {
+            width: 100%;
+            min-height: 75px;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccd5d0;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+        }
+
+        .reject-form {
+            flex: 1 1 100%;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 45px 20px;
+            background: white;
+            border-radius: 10px;
+            color: #667085;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #176b50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Feedback Review</h1>
+    <p class="subtitle">
+        Review submitted feedback and decide whether to accept or reject it.
+    </p>
+
+    <div class="message"
+         th:if="${message != null}"
+         th:text="${message}">
+    </div>
+
+    <div class="error"
+         th:if="${errorMessage != null}"
+         th:text="${errorMessage}">
+    </div>
+
+    <div th:if="${feedbackList != null and !feedbackList.isEmpty()}">
+
+        <div class="feedback-card" th:each="feedback : ${feedbackList}">
+
+            <h2>
+                <span th:switch="${feedback.feedbackType}">
+                    <span th:case="'VICTIM'">Victim / Affected Family</span>
+                    <span th:case="'DONOR'">Donor</span>
+                    <span th:case="'VOLUNTEER'">Volunteer</span>
+                    <span th:case="*">Feedback</span>
+                </span>
+            </h2>
+
+            <p class="detail">
+                <strong>Name:</strong>
+                <span th:text="${feedback.name}"></span>
+            </p>
+
+            <p class="detail">
+                <strong>Service:</strong>
+                <span th:text="${feedback.service}"></span>
+            </p>
+
+            <p class="detail">
+                <strong>Submitted date:</strong>
+                <span th:text="${feedback.feedbackDate}"></span>
+            </p>
+
+            <p class="detail">
+                <strong>Rating:</strong>
+                <span class="rating"
+                      th:each="star : ${#numbers.sequence(1, feedback.rating)}">★</span>
+                <span th:text="' (' + ${feedback.rating} + '/5)'"></span>
+            </p>
+
+            <div class="detail"
+                 th:if="${feedback.assistanceProvided != null}">
+                <strong>Was the required relief assistance provided?</strong>
+                <span th:text="${feedback.assistanceProvided}"></span>
+            </div>
+
+            <div class="detail"
+                 th:if="${feedback.peopleReached != null}">
+                <strong>Did the donation contribute to relief activities?</strong>
+                <span th:text="${feedback.peopleReached}"></span>
+            </div>
+
+            <div class="detail"
+                 th:if="${feedback.resourcesAvailable != null}">
+                <strong>Were resources and coordination sufficient?</strong>
+                <span th:text="${feedback.resourcesAvailable}"></span>
+            </div>
+
+            <p class="detail">
+                <strong>Comments:</strong><br>
+                <span th:text="${feedback.comments}"></span>
+            </p>
+
+            <div class="detail"
+                 th:if="${feedback.suggestions != null
+                         and !#strings.isEmpty(feedback.suggestions)}">
+                <strong>Suggestions:</strong><br>
+                <span th:text="${feedback.suggestions}"></span>
+            </div>
+
+            <div class="review-actions">
+
+                <form th:action="@{/feedback/approve/{id}(id=${feedback.id})}"
+                      method="post"
+                      onsubmit="return confirm('Are you sure you want to accept this feedback?');">
+
+                    <button type="submit" class="approve-button">
+                        Accept Feedback
+                    </button>
+                </form>
+
+                <form th:action="@{/feedback/reject/{id}(id=${feedback.id})}"
+                      method="post"
+                      class="reject-form"
+                      onsubmit="return confirm('Are you sure you want to reject this feedback?');">
+
+                    <label>
+                        <strong>Reason for rejection (required)</strong>
+                    </label>
+
+                    <textarea name="rejectionReason"
+                              class="reason-input"
+                              maxlength="1000"
+                              required
+                              placeholder="Explain why this feedback is being rejected..."></textarea>
+
+                    <button type="submit" class="reject-button">
+                        Reject Feedback
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="empty-state"
+         th:if="${feedbackList == null or feedbackList.isEmpty()}">
+
+        <h2>No Pending Feedback</h2>
+        <p>There are currently no feedback submissions awaiting review.</p>
+    </div>
+
+    <a class="back-link" th:href="@{/feedback/submit}">
+        ← Back to Feedback
+    </a>
+
+</div>
+</body>
+</html>

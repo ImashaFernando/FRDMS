@@ -1,18 +1,13 @@
+
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Submitted Feedback | FRDMS</title>
+    <title>Community Feedback | FRDMS</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -24,86 +19,40 @@
             color: #1F3A60;
         }
 
-        /* HEADER */
-
-        .header {
+        header {
             background: #1F3A60;
             color: white;
-            padding: 25px 45px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 30px 20px;
+            text-align: center;
         }
 
-        .header h1 {
-            margin: 0 0 6px;
-            font-size: 29px;
+        header h1 {
+            margin: 0 0 10px;
         }
 
-        .header p {
+        header p {
             margin: 0;
             color: #D8E7F0;
-            font-size: 14px;
+            line-height: 1.6;
         }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* BACK BUTTON */
-
-        .back-button {
-            color: #1F3A60;
-            background: white;
-            text-decoration: none;
-            padding: 11px 17px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .back-button:hover {
-            background: #EDF3F6;
-        }
-
-        /* MAIN */
 
         .container {
-            max-width: 1150px;
+            max-width: 1050px;
             margin: 35px auto;
-            padding: 0 25px;
+            padding: 0 20px;
         }
-
-        .page-heading {
-            margin-bottom: 25px;
-        }
-
-        .page-heading h2 {
-            margin: 0 0 7px;
-            font-size: 25px;
-        }
-
-        .page-heading p {
-            margin: 0;
-            color: #66788A;
-        }
-
-        /* FEEDBACK GRID */
 
         .feedback-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 20px;
+            gap: 22px;
         }
-
-        /* CARD */
 
         .feedback-card {
             background: white;
             border: 1px solid #E0EAF0;
             border-radius: 14px;
-            padding: 24px;
+            padding: 25px;
             box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
         }
 
@@ -111,443 +60,125 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 18px;
-        }
-
-        .type {
-            color: #3582B8;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1F3A60;
-        }
-
-        /* RATING */
-
-        .rating {
-            color: #F7CF59;
-            font-size: 20px;
-            white-space: nowrap;
-        }
-
-        /* DETAILS */
-
-        .details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 18px;
         }
 
-        .detail {
-            background: #F5F8FA;
-            padding: 11px;
-            border-radius: 8px;
+        .name {
+            font-size: 19px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
         }
 
-        .detail-label {
-            display: block;
+        .rating {
+            color: #E6B82E;
+            font-size: 22px;
+            white-space: nowrap;
+        }
+
+        .rating-number {
             color: #718496;
-            font-size: 12px;
-            margin-bottom: 4px;
+            font-size: 13px;
+            margin-left: 5px;
         }
 
-        .detail-value {
-            color: #1F3A60;
-            font-weight: 600;
-            word-break: break-word;
-        }
-
-        /* FEEDBACK */
-
-        .feedback-content {
-            border-top: 1px solid #E2EAF0;
-            padding-top: 16px;
-        }
-
-        .feedback-content strong {
-            display: block;
-            margin-bottom: 7px;
-        }
-
-        .feedback-content p {
+        .feedback-text {
             margin: 0;
-            color: #52697D;
-            line-height: 1.6;
+            padding-top: 16px;
+            border-top: 1px solid #E2EAF0;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            color: #42566B;
         }
-
-        /* SUGGESTIONS */
-
-        .suggestion {
-            margin-top: 15px;
-            padding: 13px;
-            background: #F5F8FA;
-            border-radius: 8px;
-        }
-
-        .suggestion strong {
-            margin-bottom: 6px;
-        }
-
-        /* EMPTY */
 
         .empty-state {
             background: white;
             border-radius: 14px;
-            padding: 60px 25px;
+            padding: 55px 20px;
             text-align: center;
-            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.06);
         }
 
-        .empty-state h3 {
-            margin: 0 0 8px;
+        .empty-state h2 {
+            margin-top: 0;
         }
 
         .empty-state p {
-            margin: 0;
             color: #718496;
+            line-height: 1.6;
         }
 
-        /* MOBILE */
-
-        @media (max-width: 750px) {
-
-            .header {
-                padding: 20px;
-            }
-
-            .container {
-                padding: 0 15px;
+        @media (max-width: 700px) {
+            header {
+                padding: 25px 18px;
             }
 
             .feedback-grid {
                 grid-template-columns: 1fr;
             }
-
-            .details {
-                grid-template-columns: 1fr;
-            }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-<!-- HEADER -->
-
-<header class="header">
-
-    <div>
-
-        <h1>Submitted Feedback</h1>
-
-        <p>
-            Review experiences and concerns shared by victims,
-            community members and volunteers
-        </p>
-
-    </div>
-
-
-
-
+<header>
+    <h1>Community Feedback</h1>
+    <p>Read feedback shared by our community about relief assistance and activities.</p>
 </header>
 
-
-<!-- MAIN -->
-
-<div class="container">
-
-
-    <div class="page-heading">
-
-        <h2>
-            Feedback Records
-        </h2>
-
-        <p>
-            All submitted feedback is displayed below.
-        </p>
-
-    </div>
-
-
-    <!-- FEEDBACK CARDS -->
+<main class="container">
 
     <div class="feedback-grid"
-         th:if="${not #lists.isEmpty(feedbackList)}">
+         th:if="${feedbackList != null and !#lists.isEmpty(feedbackList)}">
 
-
-        <div class="feedback-card"
-             th:each="feedback : ${feedbackList}">
-
-
-            <!-- CARD HEADER -->
+        <article class="feedback-card"
+                 th:each="feedback : ${feedbackList}">
 
             <div class="card-header">
+                <div class="name"
+                     th:text="${feedback.name}">
+                    User Name
+                </div>
 
                 <div>
+                    <span class="rating"
+                          th:each="star : ${#numbers.sequence(1, 5)}"
+                          th:text="${star <= feedback.rating ? '★' : '☆'}">
+                        ★
+                    </span>
 
-                    <div class="type"
-                         th:if="${feedback.feedbackType == 'VICTIM'}">
-                        Victim / Affected Family
-                    </div>
-
-                    <div class="type"
-                         th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
-                        Community Member
-                    </div>
-
-                    <div class="type"
-                         th:if="${feedback.feedbackType == 'VOLUNTEER'}">
-                        Volunteer
-                    </div>
-
-                    <div class="name"
-                         th:text="${feedback.name}">
-                        Sanjula
-                    </div>
-
+                    <span class="rating-number"
+                          th:text="${feedback.rating + '/5'}">
+                        5/5
+                    </span>
                 </div>
-
-
-                <!-- RATING -->
-
-                <div class="rating">
-
-                    <span th:if="${feedback.rating >= 1}">
-                        ★
-                    </span>
-
-                    <span th:if="${feedback.rating >= 2}">
-                        ★
-                    </span>
-
-                    <span th:if="${feedback.rating >= 3}">
-                        ★
-                    </span>
-
-                    <span th:if="${feedback.rating >= 4}">
-                        ★
-                    </span>
-
-                    <span th:if="${feedback.rating >= 5}">
-                        ★
-                    </span>
-
-                </div>
-
             </div>
 
-
-            <!-- DETAILS -->
-
-            <div class="details">
-
-
-                <!-- SERVICE -->
-
-                <div class="detail">
-
-                    <span class="detail-label">
-                        Service / Activity
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.service}">
-                        Relief Distribution
-                    </span>
-
-                </div>
-
-
-                <!-- DATE -->
-
-                <div class="detail">
-
-                    <span class="detail-label">
-                        Date
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.serviceDate}">
-                        2026-09-15
-                    </span>
-
-                </div>
-
-
-                <!-- VICTIM AREA -->
-
-                <div class="detail"
-                     th:if="${feedback.affectedArea != null}">
-
-                    <span class="detail-label">
-                        Affected Area
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.affectedArea}">
-                        Area
-                    </span>
-
-                </div>
-
-
-                <!-- COMMUNITY AREA -->
-
-                <div class="detail"
-                     th:if="${feedback.communityArea != null}">
-
-                    <span class="detail-label">
-                        Community / Area
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.communityArea}">
-                        Community
-                    </span>
-
-                </div>
-
-
-                <!-- VOLUNTEER AREA -->
-
-                <div class="detail"
-                     th:if="${feedback.serviceArea != null}">
-
-                    <span class="detail-label">
-                        Service Area
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.serviceArea}">
-                        Service Area
-                    </span>
-
-                </div>
-
-
-                <!-- LOCATION -->
-
-                <div class="detail"
-                     th:if="${feedback.serviceLocation != null}">
-
-                    <span class="detail-label">
-                        Service Location
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.serviceLocation}">
-                        Shelter
-                    </span>
-
-                </div>
-
-
-                <!-- ASSISTANCE -->
-
-                <div class="detail"
-                     th:if="${feedback.assistanceProvided != null}">
-
-                    <span class="detail-label">
-                        Assistance Provided
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.assistanceProvided}">
-                        YES
-                    </span>
-
-                </div>
-
-
-                <!-- PEOPLE REACHED -->
-
-                <div class="detail"
-                     th:if="${feedback.peopleReached != null}">
-
-                    <span class="detail-label">
-                        People Reached
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.peopleReached}">
-                        YES
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- FEEDBACK -->
-
-            <div class="feedback-content">
-
-                <strong>
-                    Feedback
-                </strong>
-
-                <p th:text="${feedback.comments}">
-                    Feedback comments appear here.
-                </p>
-
-
-                <!-- SUGGESTIONS -->
-
-                <div class="suggestion"
-                     th:if="${feedback.suggestions != null
-                     and !#strings.isEmpty(feedback.suggestions)}">
-
-                    <strong>
-                        Suggestions
-                    </strong>
-
-                    <p th:text="${feedback.suggestions}">
-                        Suggestions appear here.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </div>
+            <p class="feedback-text"
+               th:text="${feedback.comments}">
+                Feedback comments will appear here.
+            </p>
+
+        </article>
 
     </div>
 
-
-    <!-- EMPTY -->
-
     <div class="empty-state"
-         th:if="${#lists.isEmpty(feedbackList)}">
+         th:if="${feedbackList == null or #lists.isEmpty(feedbackList)}">
 
-        <h3>
-            No Feedback Submitted Yet
-        </h3>
+        <h2>No Approved Feedback Yet</h2>
 
         <p>
-            Submitted feedback will appear here.
+            Approved community feedback will appear here once the
+            Project Manager has reviewed and accepted submissions.
         </p>
 
     </div>
 
-
-</div>
+</main>
 
 </body>
-
 </html>
