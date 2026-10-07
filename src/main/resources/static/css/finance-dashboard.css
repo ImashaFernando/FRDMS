@@ -277,90 +277,162 @@ a {
     color: #2a85c1;
 }
 
-
-/* =========================
-   SUMMARY CARDS
-========================= */
+/* =====================================================
+   FINANCIAL OVERVIEW - SUMMARY CARDS
+   ===================================================== */
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 24px;
 }
 
 .summary-card {
-    background: white;
-    border: 1px solid #e1ebf1;
-    border-radius: 17px;
-    padding: 22px;
+    min-height: 128px;
+    width: 100%;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 1px solid #dce8f1;
+    border-radius: 18px;
+
+    padding: 24px 26px;
+
     display: flex;
     align-items: center;
-    gap: 17px;
-    min-height: 120px;
-    box-shadow: 0 8px 25px rgba(31, 78, 108, 0.05);
-    transition: all 0.25s ease;
+    gap: 18px;
+
+    box-shadow: 0 7px 22px rgba(20, 70, 110, 0.05);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
 }
 
 .summary-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 13px 30px rgba(31, 78, 108, 0.09);
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 12px 28px rgba(20, 70, 110, 0.09);
+
+    border-color: #cbdfea;
 }
 
+
+/* =====================================================
+   SUMMARY ICON
+   ===================================================== */
+
 .summary-icon {
-    width: 51px;
-    height: 51px;
-    border-radius: 14px;
+    width: 54px;
+    height: 54px;
+
+    min-width: 54px;
+
+    border-radius: 15px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 19px;
-    flex-shrink: 0;
+
+    font-size: 20px;
 }
+
+
+/* Donations */
 
 .donations-card .summary-icon {
-    background: #e8f5fc;
-    color: #2087c5;
+    background: #e7f5fc;
+    color: #1687c5;
 }
 
-.expense-card .summary-icon {
-    background: #f5efed;
-    color: #a46c59;
-}
+
+/* Budget */
 
 .budget-card .summary-icon {
-    background: #edf1fa;
-    color: #526fa5;
+    background: #eef1fb;
+    color: #5673b5;
 }
 
+
+/* Pending */
+
 .pending-card .summary-icon {
-    background: #fff5d7;
-    color: #d49a00;
+    background: #fff4d5;
+    color: #d89b00;
 }
+
+
+/* =====================================================
+   SUMMARY CONTENT
+   ===================================================== */
 
 .summary-content {
     min-width: 0;
 }
 
 .summary-label {
-    color: #7791a4;
-    font-size: 9px;
+    display: block;
+
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 1px;
+
+    letter-spacing: 1.4px;
+
+    color: #7894aa;
+
+    margin-bottom: 5px;
 }
 
 .summary-content h3 {
-    margin-top: 6px;
-    color: #113a5e;
-    font-size: 19px;
-    font-weight: 800;
+    margin: 0;
+
+    font-size: 22px;
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    color: #123f68;
+
+    white-space: nowrap;
 }
 
 .summary-content p {
-    margin-top: 7px;
-    color: #9aaebb;
-    font-size: 9px;
+    margin: 5px 0 0;
+
+    font-size: 11px;
+
+    color: #9aafbf;
 }
 
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1000px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        min-height: 115px;
+    }
+
+}
 
 /* =========================
    QUICK ACCESS
@@ -398,22 +470,261 @@ a {
 }
 
 
-.quick-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
+/* =====================================================
+   QUICK ACCESS SECTION
+   ===================================================== */
+
+.quick-section {
+    width: 100%;
+    margin-top: 42px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 22px;
+}
+
+.section-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #1782c4;
+    margin-bottom: 6px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #123f68;
+}
+
+.section-description {
+    font-size: 13px;
+    color: #7c98b1;
+    margin-bottom: 4px;
 }
 
 
+/* =====================================================
+   QUICK CARDS
+   ===================================================== */
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
 .quick-card {
-    background: white;
-    border: 1px solid #e0eaf0;
-    border-radius: 17px;
-    padding: 24px;
-    min-height: 225px;
     position: relative;
+    min-height: 235px;
+    width: 100%;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 1px solid #dce8f1;
+    border-radius: 18px;
+
+    padding: 26px 26px 24px;
+
+    display: flex;
+    flex-direction: column;
+
     overflow: hidden;
-    transition: all 0.25s ease;
+
+    box-shadow: 0 8px 24px rgba(20, 70, 110, 0.05);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.quick-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+            0 14px 30px rgba(20, 70, 110, 0.10);
+
+    border-color: #c9deec;
+}
+
+
+/* Decorative circle */
+
+.quick-card::after {
+    content: "";
+    position: absolute;
+
+    width: 105px;
+    height: 105px;
+
+    top: -45px;
+    right: -35px;
+
+    border-radius: 50%;
+
+    background: #f1f8fc;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   CARD TOP
+   ===================================================== */
+
+.quick-top {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 25px;
+}
+
+.quick-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+.donation-icon {
+    background: #e7f5fc;
+    color: #1687c5;
+}
+
+.budget-icon {
+    background: #eef1fb;
+    color: #5673b5;
+}
+
+.report-icon {
+    background: #eaf7f1;
+    color: #23966d;
+}
+
+
+.card-number {
+    position: relative;
+    z-index: 2;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #a0b4c5;
+}
+
+
+/* =====================================================
+   CARD CONTENT
+   ===================================================== */
+
+.quick-card h3 {
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 10px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #123f68;
+}
+
+.quick-card p {
+    position: relative;
+    z-index: 2;
+
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.65;
+
+    color: #7894aa;
+
+    max-width: 95%;
+}
+
+
+/* =====================================================
+   CARD LINK
+   ===================================================== */
+
+.card-link {
+    position: relative;
+    z-index: 2;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: auto;
+    padding-top: 20px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #1682c2;
+
+    transition: gap 0.2s ease;
+}
+
+.card-link i {
+    font-size: 11px;
+}
+
+.card-link:hover {
+    gap: 12px;
+    color: #0c6da8;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 1100px) {
+
+    .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .section-description {
+        margin-bottom: 0;
+    }
+
 }
 
 .quick-card::after {

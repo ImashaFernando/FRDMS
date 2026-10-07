@@ -1,36 +1,41 @@
 package com.frdms.frdms.finance_management.controller;
 
 import com.frdms.frdms.donation_management.service.DonationService;
+import com.frdms.frdms.finance_management.entity.Budget;
 import com.frdms.frdms.finance_management.service.BudgetService;
-import com.frdms.frdms.finance_management.service.ExpenseService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class PmDashboardController {
 
     private final DonationService donationService;
-    private final ExpenseService expenseService;
     private final BudgetService budgetService;
 
     public PmDashboardController(
             DonationService donationService,
-            ExpenseService expenseService,
             BudgetService budgetService) {
 
         this.donationService = donationService;
-        this.expenseService = expenseService;
         this.budgetService = budgetService;
     }
 
 
+    // =====================================================
+    // PROJECT MANAGER DASHBOARD
+    // =====================================================
+
     @GetMapping("/pm/dashboard")
     public String pmDashboard(Model model) {
 
-        // =========================
+
+        // =================================================
         // DONATION INFORMATION
-        // =========================
+        // =================================================
 
         model.addAttribute(
                 "totalDonations",
@@ -48,35 +53,36 @@ public class PmDashboardController {
         );
 
 
-        // =========================
-        // FINANCE INFORMATION
-        // =========================
-
-        model.addAttribute(
-                "totalExpenses",
-                expenseService.getTotalExpenseAmount()
-        );
-
-
-        // =========================
+        // =================================================
         // BUDGET INFORMATION
-        // =========================
+        // =================================================
 
         model.addAttribute(
                 "availableBudget",
                 budgetService.getAvailableBudget()
         );
 
+
+        // Get pending budgets once
+        List<Budget> pendingBudgets =
+                budgetService.getPendingBudgets();
+
+
         model.addAttribute(
                 "pendingRequirements",
-                budgetService.getPendingBudgets().size()
+                pendingBudgets.size()
         );
+
 
         model.addAttribute(
                 "pendingBudgets",
-                budgetService.getPendingBudgets()
+                pendingBudgets
         );
 
+
+        // =================================================
+        // RETURN PM DASHBOARD
+        // =================================================
 
         return "finance/pm-dashboard";
     }
