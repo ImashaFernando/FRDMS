@@ -1,122 +1,431 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Community Feedback | FRDMS</title>
+    <title>Feedback & Voices | FRDMS</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #EDF3F6;
-            color: #1F3A60;
+        html {
+            scroll-behavior: smooth;
         }
 
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #eef6fa 0%, #f8fbfd 100%);
+            color: #173b5d;
+        }
+
+        /* =========================
+           HERO SECTION
+        ========================== */
+
         header {
-            background: #1F3A60;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #123b5d 0%, #1f6389 55%, #2d86aa 100%);
             color: white;
-            padding: 30px 20px;
+            padding: 55px 20px 65px;
             text-align: center;
         }
 
+        header::before,
+        header::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        header::before {
+            width: 280px;
+            height: 280px;
+            top: -150px;
+            left: -80px;
+        }
+
+        header::after {
+            width: 360px;
+            height: 360px;
+            right: -150px;
+            bottom: -220px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .hero-icon {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+        }
+
         header h1 {
-            margin: 0 0 10px;
+            margin: 0 0 15px;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         header p {
-            margin: 0;
-            color: #D8E7F0;
-            line-height: 1.6;
+            max-width: 760px;
+            margin: auto;
+            color: #e3f1f7;
+            font-size: 17px;
+            line-height: 1.8;
         }
 
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
+
         .container {
-            max-width: 1050px;
-            margin: 35px auto;
-            padding: 0 20px;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
         }
+
+        /* =========================
+           BACK BUTTON
+        ========================== */
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 11px 20px;
+
+            border: 1px solid #c9dce8;
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.9);
+            color: #17496b;
+
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+
+            box-shadow: 0 4px 14px rgba(31, 75, 102, 0.08);
+
+            transition: all 0.25s ease;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            background: #1f6f98;
+            border-color: #1f6f98;
+            color: white;
+            box-shadow: 0 7px 18px rgba(31, 111, 152, 0.2);
+        }
+
+        /* =========================
+           SECTION INTRO
+        ========================== */
+
+        .section-heading {
+            text-align: center;
+            margin: 42px auto 32px;
+        }
+
+        .section-heading h2 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            color: #173b5d;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: #718496;
+            font-size: 15px;
+        }
+
+        .heading-line {
+            width: 55px;
+            height: 4px;
+            margin: 15px auto 0;
+            border-radius: 20px;
+            background: #2f80a8;
+        }
+
+        /* =========================
+           FEEDBACK GRID
+        ========================== */
 
         .feedback-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 22px;
+            gap: 24px;
         }
 
+        /* =========================
+           FEEDBACK CARD
+        ========================== */
+
         .feedback-card {
+            position: relative;
             background: white;
-            border: 1px solid #E0EAF0;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+
+            border: 1px solid #e2edf3;
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow: 0 8px 28px rgba(31, 73, 98, 0.08);
+
+            transition: transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            border-color: #c9e0eb;
+            box-shadow: 0 14px 35px rgba(31, 73, 98, 0.13);
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+
+            font-size: 54px;
+            line-height: 1;
+
+            color: #e5f1f6;
+            font-family: Georgia, serif;
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
+            align-items: center;
+
+            gap: 15px;
+            margin-bottom: 22px;
+            padding-right: 35px;
+        }
+
+        /* =========================
+           USER INFO
+        ========================== */
+
+        .user-info {
+            display: flex;
+            align-items: center;
             gap: 12px;
-            margin-bottom: 18px;
+            min-width: 0;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: linear-gradient(135deg, #dceff7, #c5e1ed);
+            color: #1c6386;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+            font-weight: 700;
         }
 
         .name {
-            font-size: 19px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 700;
+            color: #173b5d;
+
             overflow-wrap: anywhere;
         }
 
+        .review-label {
+            margin-top: 3px;
+            font-size: 12px;
+            color: #91a0ad;
+        }
+
+        /* =========================
+           RATING
+        ========================== */
+
+        .rating-area {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
         .rating {
-            color: #E6B82E;
-            font-size: 22px;
+            color: #e6b82e;
+            font-size: 20px;
+            letter-spacing: 1px;
             white-space: nowrap;
         }
 
         .rating-number {
-            color: #718496;
-            font-size: 13px;
-            margin-left: 5px;
+            display: block;
+            margin-top: 3px;
+
+            color: #81909d;
+            font-size: 12px;
         }
+
+        /* =========================
+           FEEDBACK TEXT
+        ========================== */
 
         .feedback-text {
             margin: 0;
-            padding-top: 16px;
-            border-top: 1px solid #E2EAF0;
-            line-height: 1.7;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #edf2f5;
+
+            line-height: 1.8;
+
             white-space: pre-wrap;
             overflow-wrap: anywhere;
-            color: #42566B;
+
+            color: #526777;
+            font-size: 15px;
         }
 
+        /* =========================
+           EMPTY STATE
+        ========================== */
+
         .empty-state {
+            max-width: 680px;
+            margin: 40px auto 0;
+
             background: white;
-            border-radius: 14px;
-            padding: 55px 20px;
+
+            border: 1px solid #e1edf3;
+            border-radius: 20px;
+
+            padding: 65px 30px;
+
             text-align: center;
-            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.06);
+
+            box-shadow: 0 8px 28px rgba(31, 73, 98, 0.07);
+        }
+
+        .empty-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #eaf5f9;
+            color: #2b7699;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
         }
 
         .empty-state h2 {
-            margin-top: 0;
+            margin: 0 0 12px;
+            color: #173b5d;
         }
 
         .empty-state p {
+            max-width: 520px;
+            margin: auto;
+
             color: #718496;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FOOTER NOTE
+        ========================== */
+
+        .footer-note {
+            margin-top: 50px;
+
+            text-align: center;
+
+            color: #81909d;
+            font-size: 13px;
             line-height: 1.6;
         }
 
-        @media (max-width: 700px) {
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 800px) {
+
             header {
-                padding: 25px 18px;
+                padding: 45px 20px 55px;
+            }
+
+            header h1 {
+                font-size: 34px;
+            }
+
+            header p {
+                font-size: 15px;
             }
 
             .feedback-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+
+            .container {
+                padding: 24px 15px 45px;
+            }
+
+            header h1 {
+                font-size: 29px;
+            }
+
+            .card-header {
+                align-items: flex-start;
+            }
+
+            .feedback-card {
+                padding: 22px;
+            }
+
+            .rating {
+                font-size: 17px;
+            }
+
+            .section-heading h2 {
+                font-size: 24px;
             }
         }
     </style>
@@ -124,12 +433,62 @@
 
 <body>
 
+<!-- =========================
+     HERO
+========================== -->
+
 <header>
-    <h1>Community Feedback</h1>
-    <p>Read feedback shared by our community about relief assistance and activities.</p>
+
+    <div class="hero-content">
+
+        <div class="hero-icon">
+            💬
+        </div>
+
+        <h1>Feedback &amp; Voices</h1>
+
+        <p>
+            We value your voice. Your feedback helps us listen, learn,
+            and serve our communities better. Together, we can build
+            a healthier and stronger Sri Lanka.
+        </p>
+
+    </div>
+
 </header>
 
+
+<!-- =========================
+     MAIN CONTENT
+========================== -->
+
 <main class="container">
+
+    <!-- Back to Home -->
+
+    <a th:href="@{/}" class="home-button">
+        ← Back to Home
+    </a>
+
+
+    <!-- Section Heading -->
+
+    <div class="section-heading">
+
+        <h2>What People Have Shared</h2>
+
+        <p>
+            Honest experiences help us understand what matters most.
+        </p>
+
+        <div class="heading-line"></div>
+
+    </div>
+
+
+    <!-- =========================
+         FEEDBACK CARDS
+    ========================== -->
 
     <div class="feedback-grid"
          th:if="${feedbackList != null and !#lists.isEmpty(feedbackList)}">
@@ -137,25 +496,65 @@
         <article class="feedback-card"
                  th:each="feedback : ${feedbackList}">
 
+            <!-- Decorative quotation -->
+
+            <div class="quote-mark">
+                “
+            </div>
+
+
+            <!-- Card Header -->
+
             <div class="card-header">
-                <div class="name"
-                     th:text="${feedback.name}">
-                    User Name
+
+                <div class="user-info">
+
+                    <div class="avatar">
+                        <span th:text="${#strings.substring(feedback.name, 0, 1).toUpperCase()}">
+                            U
+                        </span>
+                    </div>
+
+                    <div>
+
+                        <div class="name"
+                             th:text="${feedback.name}">
+                            User Name
+                        </div>
+
+                        <div class="review-label">
+                            Feedback shared
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div>
-                    <span class="rating"
-                          th:each="star : ${#numbers.sequence(1, 5)}"
-                          th:text="${star <= feedback.rating ? '★' : '☆'}">
-                        ★
-                    </span>
+
+                <!-- Rating -->
+
+                <div class="rating-area">
+
+                    <div class="rating">
+
+                        <span th:each="star : ${#numbers.sequence(1, 5)}"
+                              th:text="${star <= feedback.rating ? '★' : '☆'}">
+                            ★
+                        </span>
+
+                    </div>
 
                     <span class="rating-number"
                           th:text="${feedback.rating + '/5'}">
                         5/5
                     </span>
+
                 </div>
+
             </div>
+
+
+            <!-- Feedback -->
 
             <p class="feedback-text"
                th:text="${feedback.comments}">
@@ -166,15 +565,34 @@
 
     </div>
 
+
+    <!-- =========================
+         EMPTY STATE
+    ========================== -->
+
     <div class="empty-state"
          th:if="${feedbackList == null or #lists.isEmpty(feedbackList)}">
 
-        <h2>No Approved Feedback Yet</h2>
+        <div class="empty-icon">
+            💬
+        </div>
+
+        <h2>No Feedback to Display Yet</h2>
 
         <p>
-            Approved community feedback will appear here once the
-            Project Manager has reviewed and accepted submissions.
+            Approved feedback will appear here once submissions
+            have been reviewed and accepted by the Project Manager.
         </p>
+
+    </div>
+
+
+    <!-- Footer Note -->
+
+    <div class="footer-note">
+
+        Every voice matters. Thank you for helping us improve
+        the way we serve people affected by disasters.
 
     </div>
 

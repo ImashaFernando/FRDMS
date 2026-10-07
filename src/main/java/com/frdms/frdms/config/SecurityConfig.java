@@ -1254,16 +1254,29 @@ public class SecurityConfig {
                         // PUBLIC HOME / COMMON LOGIN / REGISTER
                         // =========================================
 
-                        .requestMatchers(
-                                "/",
-                                "/login",
-                                "/register",
-                                "/access-denied",
-                                "/css/**",
-                                "/js/**",
-                                "/images/**"
-                        )
-                        .permitAll()
+                                .requestMatchers(
+                                        "/",
+                                        "/login",
+                                        "/register",
+                                        "/access-denied",
+                                        "/css/**",
+                                        "/js/**",
+                                        "/images/**",
+
+                                        // =========================
+                                        // FEEDBACK MANAGEMENT - PUBLIC
+                                        // =========================
+                                        "/feedback",
+                                        "/feedback/submit",
+                                        "/feedback/submit/**",
+                                        "/feedback/save",
+                                        "/feedback/view",
+                                        "/feedback/list",
+                                        "/feedback/my-feedback",
+                                        "/feedback/edit/**",
+                                        "/feedback/delete/**"
+                                )
+                                .permitAll()
 
 
                         // =========================================

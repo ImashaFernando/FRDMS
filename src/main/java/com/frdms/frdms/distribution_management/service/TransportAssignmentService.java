@@ -132,4 +132,19 @@ public class TransportAssignmentService {
 
         assignmentRepository.save(assignment);
     }
+    public void completeAssignmentByPackageId(Long packageId) {
+
+        List<TransportAssignment> assignments =
+                assignmentRepository.findByPackageId(packageId);
+
+        for (TransportAssignment assignment : assignments) {
+
+            if ("ACTIVE".equals(assignment.getStatus())) {
+                assignment.setStatus("COMPLETED");
+                assignment.setCompletedAt(LocalDateTime.now());
+
+                assignmentRepository.save(assignment);
+            }
+        }
+    }
 }

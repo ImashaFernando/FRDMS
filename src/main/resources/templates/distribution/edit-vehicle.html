@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Edit Vehicle - Distribution Management</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #EDF3F6;
+      color: #1F3A60;
+    }
+
+    .header {
+      background: #1F3A60;
+      color: white;
+      padding: 22px 40px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      opacity: 0.85;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 4px 15px rgba(31, 58, 96, 0.10);
+    }
+
+    .section-title {
+      margin-top: 0;
+      margin-bottom: 22px;
+      font-size: 20px;
+      color: #1F3A60;
+      border-bottom: 2px solid #85B6D6;
+      padding-bottom: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: #1F3A60;
+    }
+
+    .required {
+      color: #d9534f;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #c7d6df;
+      border-radius: 7px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #3582B8;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .error {
+      color: #d9534f;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .driver-question {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f4f8fa;
+      border-radius: 9px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 30px;
+      margin-top: 12px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
+    }
+
+    .radio-option input {
+      width: auto;
+    }
+
+    #driverDetails {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #dce5ea;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #3582B8;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #286d9d;
+    }
+
+    .btn-secondary {
+      background: #e4ebef;
+      color: #1F3A60;
+    }
+
+    .btn-secondary:hover {
+      background: #d5e0e6;
+    }
+
+    @media (max-width: 700px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .form-card {
+        padding: 22px;
+      }
+
+      .radio-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+  <h1>Edit Vehicle</h1>
+
+  <p>
+    Update the registered vehicle information
+  </p>
+
+</div>
+
+
+<div class="container">
+
+  <div class="form-card">
+
+    <form th:action="@{/distribution/transport/update/{id}(id=${transportResource.id})}"
+          th:object="${transportResource}"
+          method="post">
+
+
+      <!-- ========================================== -->
+      <!-- VEHICLE INFORMATION -->
+      <!-- ========================================== -->
+
+      <h2 class="section-title">
+        Vehicle Information
+      </h2>
+
+
+      <div class="form-grid">
+
+
+        <!-- Vehicle Number -->
+        <div class="form-group">
+
+          <label>
+            Vehicle Number <span class="required">*</span>
+          </label>
+
+          <input type="text"
+                 th:field="*{vehicleNumber}"
+                 placeholder="e.g. WP ABC-1234"
+                 required>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('vehicleNumber')}"
+               th:errors="*{vehicleNumber}">
+          </div>
+
+        </div>
+
+
+        <!-- Vehicle Type -->
+        <div class="form-group">
+
+          <label>
+            Vehicle Type <span class="required">*</span>
+          </label>
+
+          <select th:field="*{vehicleType}" required>
+
+            <option value="">
+              -- Select Vehicle Type --
+            </option>
+
+            <option value="Truck">
+              Truck
+            </option>
+
+            <option value="Lorry">
+              Lorry
+            </option>
+
+            <option value="Van">
+              Van
+            </option>
+
+            <option value="Car">
+              Car
+            </option>
+
+            <option value="Jeep">
+              Jeep
+            </option>
+
+            <option value="Three Wheeler">
+              Three Wheeler
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('vehicleType')}"
+               th:errors="*{vehicleType}">
+          </div>
+
+        </div>
+
+
+        <!-- Vehicle Model -->
+        <div class="form-group">
+
+          <label>
+            Vehicle Model
+          </label>
+
+          <input type="text"
+                 th:field="*{vehicleModel}"
+                 placeholder="e.g. Toyota Dyna">
+
+        </div>
+
+
+        <!-- Vehicle Capacity -->
+        <div class="form-group">
+
+          <label>
+            Vehicle Capacity
+          </label>
+
+          <input type="text"
+                 th:field="*{vehicleCapacity}"
+                 placeholder="e.g. 5000 kg">
+
+        </div>
+
+
+        <!-- Vehicle Owner -->
+        <div class="form-group">
+
+          <label>
+            Vehicle Owner Name <span class="required">*</span>
+          </label>
+
+          <input type="text"
+                 th:field="*{vehicleOwnerName}"
+                 placeholder="Enter owner name"
+                 required>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('vehicleOwnerName')}"
+               th:errors="*{vehicleOwnerName}">
+          </div>
+
+        </div>
+
+
+        <!-- Owner Phone -->
+        <div class="form-group">
+
+          <label>
+            Owner Phone Number <span class="required">*</span>
+          </label>
+
+          <input type="text"
+                 th:field="*{ownerPhoneNumber}"
+                 placeholder="e.g. 0771234567"
+                 required>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('ownerPhoneNumber')}"
+               th:errors="*{ownerPhoneNumber}">
+          </div>
+
+        </div>
+
+
+        <!-- Available Area -->
+        <div class="form-group">
+
+          <label>
+            Available Area <span class="required">*</span>
+          </label>
+
+          <input type="text"
+                 th:field="*{availableArea}"
+                 placeholder="e.g. Colombo"
+                 required>
+
+          <div class="error"
+               th:if="${#fields.hasErrors('availableArea')}"
+               th:errors="*{availableArea}">
+          </div>
+
+        </div>
+
+
+        <!-- Vehicle Description -->
+        <div class="form-group full">
+
+          <label>
+            Vehicle Description / Special Notes
+          </label>
+
+          <textarea th:field="*{vehicleDescription}"
+                    placeholder="Enter any additional vehicle information...">
+                    </textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================== -->
+      <!-- DRIVER INFORMATION -->
+      <!-- ========================================== -->
+
+      <div class="driver-question">
+
+        <h2 class="section-title">
+          Driver Information
+        </h2>
+
+
+        <label>
+          Does the vehicle owner provide a driver?
+        </label>
+
+
+        <div class="radio-group">
+
+          <label class="radio-option">
+
+            <input type="radio"
+                   th:field="*{hasDriver}"
+                   value="true"
+                   onchange="toggleDriverDetails()">
+
+            Yes
+
+          </label>
+
+
+          <label class="radio-option">
+
+            <input type="radio"
+                   th:field="*{hasDriver}"
+                   value="false"
+                   onchange="toggleDriverDetails()">
+
+            No
+
+          </label>
+
+        </div>
+
+
+        <!-- DRIVER DETAILS -->
+
+        <div id="driverDetails">
+
+          <div class="form-grid">
+
+
+            <!-- Driver Name -->
+            <div class="form-group">
+
+              <label>
+                Driver Name <span class="required">*</span>
+              </label>
+
+              <input type="text"
+                     th:field="*{driverName}"
+                     placeholder="Enter driver name">
+
+              <div class="error"
+                   th:if="${#fields.hasErrors('driverName')}"
+                   th:errors="*{driverName}">
+              </div>
+
+            </div>
+
+
+            <!-- Driver Phone -->
+            <div class="form-group">
+
+              <label>
+                Driver Phone Number
+              </label>
+
+              <input type="text"
+                     th:field="*{driverPhoneNumber}"
+                     placeholder="e.g. 0771234567">
+
+            </div>
+
+
+            <!-- Driver License -->
+            <div class="form-group">
+
+              <label>
+                Driver License Number
+              </label>
+
+              <input type="text"
+                     th:field="*{driverLicenseNumber}"
+                     placeholder="Enter license number">
+
+            </div>
+
+
+            <!-- Driver Description -->
+            <div class="form-group full">
+
+              <label>
+                Driver Description / Special Notes
+              </label>
+
+              <textarea th:field="*{driverDescription}"
+                        placeholder="Enter any additional driver information...">
+                            </textarea>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================== -->
+      <!-- BUTTONS -->
+      <!-- ========================================== -->
+
+      <div class="buttons">
+
+        <a th:href="@{/distribution/transport}"
+           class="btn btn-secondary">
+
+          Cancel
+
+        </a>
+
+
+        <button type="submit"
+                class="btn btn-primary">
+
+          Update Vehicle
+
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  function toggleDriverDetails() {
+
+    const yesOption = document.querySelector(
+            'input[name="hasDriver"][value="true"]'
+    );
+
+    const driverDetails =
+            document.getElementById("driverDetails");
+
+
+    if (yesOption && yesOption.checked) {
+
+      driverDetails.style.display = "block";
+
+    } else {
+
+      driverDetails.style.display = "none";
+
+    }
+  }
+
+
+  // Keep the correct state when the page loads
+  document.addEventListener("DOMContentLoaded", function () {
+
+    toggleDriverDetails();
+
+  });
+
+</script>
+
+
+</body>
+</html>

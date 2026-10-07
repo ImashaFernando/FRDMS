@@ -121,6 +121,44 @@
             font-style: italic;
         }
 
+        /* Vehicle Action Buttons */
+        .vehicle-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #e5edf2;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background: #e8f3fb;
+            color: #1f6f9f;
+        }
+
+        .edit-btn:hover {
+            background: #d5eaf7;
+        }
+
+        .delete-btn {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+        .delete-btn:hover {
+            background: #f8d7d7;
+        }
+
         .empty {
             background: white;
             border-radius: 12px;
@@ -152,6 +190,7 @@
                 gap: 15px;
             }
         }
+
         .header-actions {
             display: flex;
             align-items: center;
@@ -179,6 +218,7 @@
             fill: none !important;
         }
     </style>
+
 </head>
 
 <body>
@@ -190,11 +230,9 @@
         <p>Registered vehicles for relief distribution</p>
     </div>
 
-
     <div class="header-actions">
 
         <!-- Back to Distribution Dashboard -->
-
         <a class="dashboard-icon-button"
            th:href="@{/distribution/dashboard}"
            title="Back to Dashboard"
@@ -213,9 +251,7 @@
 
         </a>
 
-
         <!-- Register Vehicle -->
-
         <a th:href="@{/distribution/transport/new}"
            class="btn btn-primary">
 
@@ -242,20 +278,28 @@
         <div class="vehicle-card"
              th:each="vehicle : ${transportResources}">
 
+            <!-- Vehicle Number -->
             <div class="vehicle-number"
                  th:text="${vehicle.vehicleNumber}">
+
                 WP ABC-1234
+
             </div>
 
 
+            <!-- Vehicle Type -->
             <div class="info">
+
                 <span class="label">Vehicle Type:</span>
+
                 <span th:text="${vehicle.vehicleType}">
                     Truck
                 </span>
+
             </div>
 
 
+            <!-- Vehicle Model -->
             <div class="info"
                  th:if="${vehicle.vehicleModel != null and !vehicle.vehicleModel.isEmpty()}">
 
@@ -268,6 +312,7 @@
             </div>
 
 
+            <!-- Vehicle Capacity -->
             <div class="info"
                  th:if="${vehicle.vehicleCapacity != null and !vehicle.vehicleCapacity.isEmpty()}">
 
@@ -280,6 +325,7 @@
             </div>
 
 
+            <!-- Owner -->
             <div class="info">
 
                 <span class="label">Owner:</span>
@@ -291,6 +337,7 @@
             </div>
 
 
+            <!-- Owner Phone -->
             <div class="info">
 
                 <span class="label">Owner Phone:</span>
@@ -302,6 +349,7 @@
             </div>
 
 
+            <!-- Available Area -->
             <div class="info">
 
                 <span class="label">Available Area:</span>
@@ -320,6 +368,8 @@
                     Driver
                 </div>
 
+
+                <!-- Driver Exists -->
                 <div th:if="${vehicle.hasDriver}">
 
                     <div class="info">
@@ -332,6 +382,7 @@
 
                     </div>
 
+
                     <div class="info"
                          th:if="${vehicle.driverPhoneNumber != null and !vehicle.driverPhoneNumber.isEmpty()}">
 
@@ -342,6 +393,7 @@
                         </span>
 
                     </div>
+
 
                     <div class="info"
                          th:if="${vehicle.driverLicenseNumber != null and !vehicle.driverLicenseNumber.isEmpty()}">
@@ -357,12 +409,40 @@
                 </div>
 
 
+                <!-- No Driver -->
                 <div class="no-driver"
                      th:unless="${vehicle.hasDriver}">
 
                     No driver provided by owner.
 
                 </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- VEHICLE ACTIONS -->
+            <!-- ====================================== -->
+
+            <div class="vehicle-actions">
+
+                <!-- Edit Vehicle -->
+                <a th:href="@{/distribution/transport/edit/{id}(id=${vehicle.id})}"
+                   class="action-btn edit-btn">
+
+                    ✏ Edit
+
+                </a>
+
+
+                <!-- Delete Vehicle -->
+                <a th:href="@{/distribution/transport/delete/{id}(id=${vehicle.id})}"
+                   class="action-btn delete-btn"
+                   onclick="return confirm('Are you sure you want to delete this vehicle?');">
+
+                    🗑 Delete
+
+                </a>
 
             </div>
 

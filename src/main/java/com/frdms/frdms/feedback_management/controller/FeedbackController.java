@@ -37,6 +37,16 @@ public class FeedbackController {
     public String showSubmitFeedbackPage() {
         return "feedback/submit-feedback";
     }
+    // Compatibility route for the home page
+    @GetMapping("")
+    public String feedbackHome() {
+        return "redirect:/feedback/submit";
+    }
+    // Compatibility route for the home page
+    @GetMapping("/view")
+    public String viewFeedback() {
+        return "redirect:/feedback/list";
+    }
 
     // Victim feedback form
     @GetMapping("/submit/victim")

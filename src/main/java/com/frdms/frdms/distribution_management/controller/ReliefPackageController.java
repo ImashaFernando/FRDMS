@@ -2,6 +2,7 @@ package com.frdms.frdms.distribution_management.controller;
 
 import com.frdms.frdms.distribution_management.entity.ReliefPackage;
 import com.frdms.frdms.distribution_management.service.ReliefPackageService;
+import com.frdms.frdms.distribution_management.service.TransportAssignmentService;
 import com.frdms.frdms.distribution_management.service.ReliefRequirementService;
 import com.frdms.frdms.victim_management.entity.ReliefRequirement;
 import jakarta.validation.Valid;
@@ -20,12 +21,14 @@ public class ReliefPackageController {
 
     private final ReliefRequirementService reliefRequirementService;
 
+    private final TransportAssignmentService transportAssignmentService;
     public ReliefPackageController(
             ReliefPackageService packageService,
-            ReliefRequirementService reliefRequirementService) {
-
+            ReliefRequirementService reliefRequirementService,
+            TransportAssignmentService transportAssignmentService) {
         this.packageService = packageService;
         this.reliefRequirementService = reliefRequirementService;
+        this.transportAssignmentService = transportAssignmentService;
     }
 
 
@@ -219,6 +222,11 @@ public class ReliefPackageController {
                 && reliefPackage.getDistributionCompletedAt() == null) {
 
             reliefPackage.setDistributionCompletedAt(LocalDateTime.now());
+
+            // Release the assigned vehicle and driver
+            transportAssignmentService.completeAssignmentByPackageId(
+                    reliefPackage.getId()
+            );
         }
 
         packageService.savePackage(reliefPackage);
