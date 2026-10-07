@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -8,419 +9,415 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Budget Status | FRDMS</title>
+    <title>Budget Status</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/budget-status.css}">
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #1f2937;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #6b7280;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #4b5563;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        thead {
+            background: #1f2937;
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        td {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* ACTIONS */
+
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            border: none;
+            padding: 7px 14px;
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .no-action {
+            color: #9ca3af;
+            font-size: 18px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+
+            .container {
+                width: 98%;
+                margin: 20px auto;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-<header class="topbar">
+<div class="container">
 
-    <!-- BRAND -->
+    <!-- PAGE HEADER -->
 
-    <div class="brand">
+    <div class="page-header">
 
-        <div class="brand-icon">
-            F
-        </div>
+        <h1>Budget Status</h1>
 
-        <div>
-            <h1>FRDMS</h1>
-
-            <span>
-                Finance Management
-            </span>
-        </div>
+        <a href="/finance/dashboard"
+           class="back-btn">
+            Back to Dashboard
+        </a>
 
     </div>
 
 
-    <!-- BACK TO FINANCE DASHBOARD -->
+    <!-- TABLE -->
 
-    <a th:href="@{/finance/dashboard}"
-       class="back-btn">
+    <div class="table-container">
 
-        ← Dashboard
+        <table>
 
-    </a>
+            <thead>
 
-</header>
+            <tr>
+
+                <th>Budget ID</th>
+
+                <th>Activity</th>
+
+                <th>Requested Amount</th>
+
+                <th>Reason</th>
+
+                <th>Allocated Amount</th>
+
+                <th>Status</th>
+
+                <th>Allocated Date</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
 
 
-<main class="page-container">
+            <tbody>
+
+            <!-- IMPORTANT:
+                 budget is created here.
+                 Everything using budget.status or budget.id
+                 must be inside this loop.
+            -->
+
+            <tr th:each="budget : ${budgets}">
+
+                <!-- BUDGET ID -->
+
+                <td th:text="${budget.id}">
+                    1
+                </td>
 
 
-    <!-- =====================================================
-         PAGE HEADING
-         ===================================================== -->
+                <!-- ACTIVITY -->
 
-    <div class="page-heading">
+                <td th:text="${budget.activity}">
+                    Activity
+                </td>
 
-        <div>
 
-            <span class="eyebrow">
-                FINANCE MANAGEMENT
-            </span>
+                <!-- REQUESTED AMOUNT -->
 
-            <h2>
-                Budget Status
-            </h2>
+                <td th:text="${budget.requestedAmount}">
+                    0.00
+                </td>
 
-            <p>
-                Monitor budget requirements, approvals and allocations.
-            </p>
 
-        </div>
+                <!-- REASON -->
+
+                <td th:text="${budget.reason}">
+                    Reason
+                </td>
+
+
+                <!-- ALLOCATED AMOUNT -->
+
+                <td th:text="${budget.allocatedAmount}">
+                    0.00
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+                    <span
+                            th:if="${'PENDING'.equalsIgnoreCase(budget.status)}"
+                            class="status status-pending">
+
+                        Pending
+
+                    </span>
+
+
+                    <span
+                            th:if="${'APPROVED'.equalsIgnoreCase(budget.status)}"
+                            class="status status-approved">
+
+                        Approved
+
+                    </span>
+
+
+                    <span
+                            th:if="${'REJECTED'.equalsIgnoreCase(budget.status)}"
+                            class="status status-rejected">
+
+                        Rejected
+
+                    </span>
+
+
+                    <!-- For any other status -->
+
+                    <span
+                            th:if="${budget.status != null
+                                    and budget.status != 'PENDING'
+                                    and budget.status != 'APPROVED'
+                                    and budget.status != 'REJECTED'}"
+                            th:text="${budget.status}"
+                            class="status">
+
+                    </span>
+
+                </td>
+
+
+                <!-- ALLOCATED DATE -->
+
+                <td th:text="${budget.allocatedDate}">
+                    -
+                </td>
+
+
+                <!-- ACTIONS -->
+
+                <td class="actions-cell">
+
+                    <!-- ONLY PENDING BUDGETS CAN BE EDITED/DELETED -->
+
+                    <div
+                            th:if="${budget.status != null
+                                    and 'PENDING'.equalsIgnoreCase(budget.status)}"
+                            class="action-buttons">
+
+                        <!-- EDIT -->
+
+                        <a
+                                th:href="@{/finance/budgets/edit/{id}(id=${budget.id})}"
+                                class="edit-btn">
+
+                            Edit
+
+                        </a>
+
+
+                        <!-- DELETE -->
+
+                        <form
+                                th:action="@{/finance/budgets/delete/{id}(id=${budget.id})}"
+                                method="post"
+                                style="display:inline;">
+
+                            <button
+                                    type="submit"
+                                    class="delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this pending budget?');">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- NO ACTION FOR APPROVED / REJECTED -->
+
+                    <span
+                            th:if="${budget.status == null
+                                    or !'PENDING'.equalsIgnoreCase(budget.status)}"
+                            class="no-action">
+
+                        —
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+
+            <!-- NO BUDGETS -->
+
+            <tr th:if="${#lists.isEmpty(budgets)}">
+
+                <td colspan="8"
+                    class="empty-message">
+
+                    No budget records found.
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
 
     </div>
 
-
-
-    <!-- =====================================================
-         STATUS SUMMARY
-         ===================================================== -->
-
-    <section class="status-grid">
-
-
-        <!-- PENDING -->
-
-        <div class="status-card pending-card">
-
-            <div class="status-icon">
-                ⏳
-            </div>
-
-            <div class="status-content">
-
-                <span class="status-label">
-                    PENDING
-                </span>
-
-                <h3 th:text="${pendingCount}">
-                    0
-                </h3>
-
-                <p>
-                    Awaiting approval
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- APPROVED -->
-
-        <div class="status-card approved-card">
-
-            <div class="status-icon">
-                ✓
-            </div>
-
-            <div class="status-content">
-
-                <span class="status-label">
-                    APPROVED
-                </span>
-
-                <h3 th:text="${approvedCount}">
-                    0
-                </h3>
-
-                <p>
-                    Ready for allocation
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- ALLOCATED -->
-
-        <div class="status-card allocated-card">
-
-            <div class="status-icon">
-                💰
-            </div>
-
-            <div class="status-content">
-
-                <span class="status-label">
-                    ALLOCATED
-                </span>
-
-                <h3 th:text="${allocatedCount}">
-                    0
-                </h3>
-
-                <p>
-                    Funds allocated
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- REJECTED -->
-
-        <div class="status-card rejected-card">
-
-            <div class="status-icon">
-                ✕
-            </div>
-
-            <div class="status-content">
-
-                <span class="status-label">
-                    REJECTED
-                </span>
-
-                <h3 th:text="${rejectedCount}">
-                    0
-                </h3>
-
-                <p>
-                    Rejected requirements
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         BUDGET RECORDS
-         ===================================================== -->
-
-    <section class="table-card">
-
-
-        <!-- TABLE HEADER -->
-
-        <div class="table-header">
-
-            <div>
-
-                <span class="section-label">
-                    FINANCE MANAGEMENT
-                </span>
-
-                <h3>
-                    Budget Records
-                </h3>
-
-            </div>
-
-            <a th:href="@{/finance/budgets/approved}"
-               class="allocate-btn">
-
-                Allocate Approved Budget
-
-            </a>
-
-        </div>
-
-
-
-        <!-- TABLE -->
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                <tr>
-
-                    <th>
-                        ID
-                    </th>
-
-                    <th>
-                        Activity
-                    </th>
-
-                    <th>
-                        Requested Amount
-                    </th>
-
-                    <th>
-                        Allocated Amount
-                    </th>
-
-                    <th>
-                        Reason
-                    </th>
-
-                    <th>
-                        Status
-                    </th>
-
-                    <th>
-                        Allocated Date
-                    </th>
-
-                </tr>
-
-                </thead>
-
-
-
-                <tbody>
-
-                <tr th:each="budget : ${budgets}">
-
-
-                    <!-- ID -->
-
-                    <td th:text="${budget.id}">
-                        1
-                    </td>
-
-
-                    <!-- ACTIVITY -->
-
-                    <td th:text="${budget.activity}">
-                        Food Distribution
-                    </td>
-
-
-                    <!-- REQUESTED AMOUNT -->
-
-                    <td class="amount">
-
-                        <span>
-                            LKR
-                        </span>
-
-                        <span th:text="${#numbers.formatDecimal(budget.requestedAmount, 1, 2)}">
-                            100,000.00
-                        </span>
-
-                    </td>
-
-
-                    <!-- ALLOCATED AMOUNT -->
-
-                    <td class="amount">
-
-                        <span th:if="${budget.allocatedAmount != null}">
-
-                            LKR
-
-                            <span th:text="${#numbers.formatDecimal(budget.allocatedAmount, 1, 2)}">
-                                100,000.00
-                            </span>
-
-                        </span>
-
-                        <span th:if="${budget.allocatedAmount == null}">
-                            —
-                        </span>
-
-                    </td>
-
-
-                    <!-- REASON -->
-
-                    <td th:text="${budget.reason}">
-                        Budget requirement
-                    </td>
-
-
-                    <!-- STATUS -->
-
-                    <td>
-
-                        <span th:if="${budget.status == 'PENDING'}"
-                              class="status-badge pending">
-
-                            PENDING
-
-                        </span>
-
-
-                        <span th:if="${budget.status == 'APPROVED'}"
-                              class="status-badge approved">
-
-                            APPROVED
-
-                        </span>
-
-
-                        <span th:if="${budget.status == 'ALLOCATED'}"
-                              class="status-badge allocated">
-
-                            ALLOCATED
-
-                        </span>
-
-
-                        <span th:if="${budget.status == 'REJECTED'}"
-                              class="status-badge rejected">
-
-                            REJECTED
-
-                        </span>
-
-                    </td>
-
-
-                    <!-- ALLOCATED DATE -->
-
-                    <td>
-
-                        <span th:if="${budget.allocatedDate != null}"
-                              th:text="${budget.allocatedDate}">
-
-                            2026-09-25
-
-                        </span>
-
-                        <span th:if="${budget.allocatedDate == null}">
-                            —
-                        </span>
-
-                    </td>
-
-                </tr>
-
-
-
-                <!-- EMPTY -->
-
-                <tr th:if="${#lists.isEmpty(budgets)}">
-
-                    <td colspan="7"
-                        class="empty-state">
-
-                        No budget records available.
-
-                    </td>
-
-                </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-</main>
+</div>
 
 </body>
 

@@ -8,7 +8,7 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <title>Distribution Requests | FRDMS</title>
+  <title>Inventory Requests | FRDMS</title>
 
   <style>
 
@@ -58,13 +58,16 @@
 
     .page-header {
       padding: 28px 32px 24px;
+
       background: linear-gradient(
               135deg,
               #0f3d66,
               #1d5d91
       );
+
       color: white;
     }
+
 
     .header-content {
       display: flex;
@@ -73,6 +76,7 @@
       gap: 20px;
     }
 
+
     .header-title {
       margin: 0;
       font-size: 28px;
@@ -80,20 +84,77 @@
       letter-spacing: 0.2px;
     }
 
+
     .header-subtitle {
       margin: 8px 0 0;
       color: #dceeff;
       font-size: 14px;
     }
 
+
+    /* =====================================================
+       HEADER RIGHT SIDE
+       ===================================================== */
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+
+    /* =====================================================
+       BACK TO FINANCE DASHBOARD
+       ===================================================== */
+
+    .back-dashboard-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 40px;
+      padding: 0 18px;
+
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 7px;
+
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+
+      transition: all 0.2s ease;
+    }
+
+
+    .back-dashboard-btn:hover {
+      background: white;
+      color: #17466f;
+
+      transform: translateY(-1px);
+
+      box-shadow: 0 4px 9px rgba(0, 0, 0, 0.15);
+    }
+
+
+    /* =====================================================
+       REQUEST ICON
+       ===================================================== */
+
     .request-icon {
       width: 48px;
       height: 48px;
+
       border-radius: 12px;
+
       background: rgba(255,255,255,0.15);
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 23px;
     }
 
@@ -119,11 +180,13 @@
       font-weight: 600;
     }
 
+
     .success {
       background: #e9f8ee;
       color: #237a3b;
       border: 1px solid #bce8c8;
     }
+
 
     .error {
       background: #fff0f0;
@@ -139,6 +202,7 @@
     .table-wrapper {
       width: 100%;
       overflow-x: auto;
+
       border: 1px solid #dce6ef;
       border-radius: 12px;
     }
@@ -151,6 +215,7 @@
     table {
       width: 100%;
       min-width: 1050px;
+
       border-collapse: separate;
       border-spacing: 0;
     }
@@ -163,17 +228,24 @@
     thead th {
       background: #e8f2fc;
       color: #17466f;
+
       padding: 16px 15px;
+
       text-align: left;
+
       font-size: 13px;
       font-weight: 700;
+
       border-bottom: 2px solid #cbddeb;
+
       white-space: nowrap;
     }
+
 
     thead th:first-child {
       border-top-left-radius: 11px;
     }
+
 
     thead th:last-child {
       border-top-right-radius: 11px;
@@ -186,20 +258,28 @@
 
     tbody td {
       padding: 17px 15px;
+
       border-bottom: 1px solid #e6edf3;
+
       color: #243b53;
+
       font-size: 14px;
+
       vertical-align: middle;
+
       background: #ffffff;
     }
+
 
     tbody tr {
       transition: background 0.2s ease;
     }
 
+
     tbody tr:hover td {
       background: #f7fbff;
     }
+
 
     tbody tr:last-child td {
       border-bottom: none;
@@ -252,31 +332,42 @@
 
     .status-badge {
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
+
       min-width: 105px;
+
       padding: 7px 12px;
+
       border-radius: 20px;
+
       font-size: 12px;
       font-weight: 700;
+
       text-transform: uppercase;
+
       letter-spacing: 0.3px;
     }
+
 
     .status-requested {
       background: #e8f2ff;
       color: #1769aa;
     }
 
+
     .status-sent {
       background: #e8f7ed;
       color: #237a3b;
     }
 
+
     .status-low {
       background: #fff4dc;
       color: #a45b00;
     }
+
 
     .status-unavailable {
       background: #fdecec;
@@ -292,6 +383,7 @@
       min-width: 155px;
     }
 
+
     .action-form {
       margin: 0;
     }
@@ -304,17 +396,26 @@
     .action-button {
       width: 130px;
       height: 40px;
+
       border: none;
       border-radius: 7px;
+
       color: white;
+
       font-size: 13px;
       font-weight: 700;
+
       cursor: pointer;
+
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
+
       text-decoration: none;
+
       transition: all 0.2s ease;
+
       box-shadow: 0 2px 5px rgba(0,0,0,0.08);
     }
 
@@ -327,10 +428,14 @@
       background: #2e7d32;
     }
 
+
     .send-button:hover {
       background: #256628;
+
       transform: translateY(-1px);
-      box-shadow: 0 4px 9px rgba(46,125,50,0.25);
+
+      box-shadow:
+              0 4px 9px rgba(46,125,50,0.25);
     }
 
 
@@ -342,10 +447,14 @@
       background: #f59e0b;
     }
 
+
     .low-stock-button:hover {
       background: #d97706;
+
       transform: translateY(-1px);
-      box-shadow: 0 4px 9px rgba(245,158,11,0.25);
+
+      box-shadow:
+              0 4px 9px rgba(245,158,11,0.25);
     }
 
 
@@ -357,10 +466,14 @@
       background: #dc3545;
     }
 
+
     .unavailable-button:hover {
       background: #b92d3b;
+
       transform: translateY(-1px);
-      box-shadow: 0 4px 9px rgba(220,53,69,0.25);
+
+      box-shadow:
+              0 4px 9px rgba(220,53,69,0.25);
     }
 
 
@@ -370,16 +483,24 @@
 
     .already-processed {
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
+
       width: 130px;
       min-height: 40px;
+
       color: #718096;
+
       background: #f3f6f8;
+
       border: 1px solid #dce4ea;
+
       border-radius: 7px;
+
       font-size: 12px;
       font-weight: 700;
+
       text-align: center;
     }
 
@@ -390,8 +511,11 @@
 
     .empty-state {
       padding: 45px 20px;
+
       text-align: center;
+
       color: #718096;
+
       font-size: 14px;
     }
 
@@ -402,7 +526,9 @@
 
     .table-info {
       margin-top: 15px;
+
       color: #718096;
+
       font-size: 13px;
     }
 
@@ -417,21 +543,42 @@
         padding: 15px;
       }
 
+
       .page-header {
         padding: 22px;
       }
+
 
       .content {
         padding: 20px;
       }
 
+
       .header-title {
         font-size: 23px;
       }
 
+
+      .header-content {
+        align-items: flex-start;
+      }
+
+
+      .header-actions {
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+
       .request-icon {
         display: none;
       }
+
+
+      .back-dashboard-btn {
+        white-space: nowrap;
+      }
+
     }
 
   </style>
@@ -440,6 +587,7 @@
 
 
 <body>
+
 
 <div class="page-container">
 
@@ -454,10 +602,13 @@
 
       <div class="header-content">
 
+
+        <!-- TITLE -->
+
         <div>
 
           <h1 class="header-title">
-            Distribution Requests
+            Inventory Requests
           </h1>
 
           <p class="header-subtitle">
@@ -467,8 +618,29 @@
 
         </div>
 
-        <div class="request-icon">
-          📦
+
+        <!-- HEADER RIGHT SIDE -->
+
+        <div class="header-actions">
+
+
+          <!-- BACK TO FINANCE DASHBOARD -->
+
+          <a th:href="@{/finance/dashboard}"
+             class="back-dashboard-btn">
+
+            ← Back to Finance Dashboard
+
+          </a>
+
+
+          <!-- ICON -->
+
+          <div class="request-icon">
+            📦
+          </div>
+
+
         </div>
 
       </div>
@@ -513,32 +685,54 @@
 
         <table>
 
+
+          <!-- TABLE HEADER -->
+
           <thead>
 
           <tr>
 
-            <th>Request ID</th>
+            <th>
+              Request ID
+            </th>
 
-            <th>Disaster</th>
+            <th>
+              Disaster
+            </th>
 
-            <th>Item</th>
+            <th>
+              Item
+            </th>
 
-            <th>Requested Quantity</th>
+            <th>
+              Requested Quantity
+            </th>
 
-            <th>Available Quantity</th>
+            <th>
+              Available Quantity
+            </th>
 
-            <th>Unit</th>
+            <th>
+              Unit
+            </th>
 
-            <th>Status</th>
+            <th>
+              Status
+            </th>
 
-            <th>Action</th>
+            <th>
+              Action
+            </th>
 
           </tr>
 
           </thead>
 
 
+          <!-- TABLE BODY -->
+
           <tbody>
+
 
           <tr th:each="request : ${requests}">
 
@@ -547,8 +741,9 @@
                  REQUEST ID
                  ===================================== -->
 
-            <td class="request-id"
-                th:text="${request.id}">
+            <td
+                    class="request-id"
+                    th:text="${request.id}">
 
               1
 
@@ -559,9 +754,10 @@
                  DISASTER
                  ===================================== -->
 
-            <td th:text="${request.disasterName != null
-                            ? request.disasterName
-                            : 'Unknown Disaster'}">
+            <td
+                    th:text="${request.disasterName != null
+                                ? request.disasterName
+                                : 'Unknown Disaster'}">
 
               Flood
 
@@ -572,8 +768,9 @@
                  ITEM
                  ===================================== -->
 
-            <td class="item-name"
-                th:text="${request.itemName}">
+            <td
+                    class="item-name"
+                    th:text="${request.itemName}">
 
               Rice
 
@@ -584,12 +781,13 @@
                  REQUESTED QUANTITY
                  ===================================== -->
 
-            <td class="quantity"
-                th:text="${request.quantity != null
-                            ? request.quantity
-                                .stripTrailingZeros()
-                                .toPlainString()
-                            : '0'}">
+            <td
+                    class="quantity"
+                    th:text="${request.quantity != null
+                                ? request.quantity
+                                    .stripTrailingZeros()
+                                    .toPlainString()
+                                : '0'}">
 
               20
 
@@ -600,12 +798,13 @@
                  AVAILABLE QUANTITY
                  ===================================== -->
 
-            <td class="quantity"
-                th:text="${availableQuantities[request.itemName] != null
-                            ? availableQuantities[request.itemName]
-                                .stripTrailingZeros()
-                                .toPlainString()
-                            : '0'}">
+            <td
+                    class="quantity"
+                    th:text="${availableQuantities[request.itemName] != null
+                                ? availableQuantities[request.itemName]
+                                    .stripTrailingZeros()
+                                    .toPlainString()
+                                : '0'}">
 
               0
 
@@ -616,10 +815,11 @@
                  UNIT
                  ===================================== -->
 
-            <td class="unit"
-                th:text="${inventoryUnits[request.itemName] != null
-                            ? inventoryUnits[request.itemName]
-                            : 'Not specified'}">
+            <td
+                    class="unit"
+                    th:text="${inventoryUnits[request.itemName] != null
+                                ? inventoryUnits[request.itemName]
+                                : 'Not specified'}">
 
               kg
 
@@ -634,16 +834,18 @@
 
                             <span
                                     class="status-badge"
+
                                     th:classappend="${request.status == 'SENT'
-            ? ' status-sent'
-            : (request.status == 'LOW_STOCK'
-                ? ' status-low'
-                : (request.status == 'NOT_AVAILABLE'
-                    ? ' status-unavailable'
-                    : ' status-requested'))}"
+                                    ? ' status-sent'
+                                    : (request.status == 'LOW_STOCK'
+                                        ? ' status-low'
+                                        : (request.status == 'NOT_AVAILABLE'
+                                            ? ' status-unavailable'
+                                            : ' status-requested'))}"
+
                                     th:text="${request.status}">
 
-    REQUESTED
+                                REQUESTED
 
                             </span>
 
@@ -662,6 +864,7 @@
                    ================================= -->
 
               <form
+
                       th:if="${request.status == 'REQUESTED'
                                     and availableQuantities[request.itemName] != null
                                     and availableQuantities[request.itemName]
@@ -672,7 +875,9 @@
                                     )}"
 
                       method="post"
+
                       class="action-form">
+
 
                 <button
                         type="submit"
@@ -682,6 +887,7 @@
 
                 </button>
 
+
               </form>
 
 
@@ -690,6 +896,7 @@
                    ================================= -->
 
               <form
+
                       th:if="${request.status == 'REQUESTED'
                                     and availableQuantities[request.itemName] != null
                                     and availableQuantities[request.itemName] > 0
@@ -701,7 +908,9 @@
                                     )}"
 
                       method="post"
+
                       class="action-form">
+
 
                 <button
                         type="submit"
@@ -711,6 +920,7 @@
 
                 </button>
 
+
               </form>
 
 
@@ -719,6 +929,7 @@
                    ================================= -->
 
               <form
+
                       th:if="${request.status == 'REQUESTED'
                                     and (availableQuantities[request.itemName] == null
                                     or availableQuantities[request.itemName] == 0)}"
@@ -728,7 +939,9 @@
                                     )}"
 
                       method="post"
+
                       class="action-form">
+
 
                 <button
                         type="submit"
@@ -738,6 +951,7 @@
 
                 </button>
 
+
               </form>
 
 
@@ -746,7 +960,9 @@
                    ================================= -->
 
               <span
+
                       th:if="${request.status != 'REQUESTED'}"
+
                       class="already-processed">
 
                                 Already Processed
@@ -756,6 +972,7 @@
 
             </td>
 
+
           </tr>
 
 
@@ -763,12 +980,15 @@
                EMPTY STATE
                ================================================= -->
 
-          <tr th:if="${#lists.isEmpty(requests)}">
+          <tr
+                  th:if="${requests == null
+                            or #lists.isEmpty(requests)}">
 
-            <td colspan="8"
-                class="empty-state">
+            <td
+                    colspan="8"
+                    class="empty-state">
 
-              No distribution requests found.
+              No inventory requests found.
 
             </td>
 
@@ -781,6 +1001,10 @@
 
       </div>
 
+
+      <!-- =================================================
+           FOOTER INFO
+           ================================================= -->
 
       <div class="table-info">
 
@@ -795,6 +1019,7 @@
   </div>
 
 </div>
+
 
 </body>
 
