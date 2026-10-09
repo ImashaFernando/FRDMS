@@ -65,6 +65,14 @@ public class Disaster {
 
 
     // =========================================================
+    // ARCHIVE STATUS - RECYCLE BIN
+    // =========================================================
+
+    @Column(name = "archived", nullable = false)
+    private boolean archived = false;
+
+
+    // =========================================================
     // AFFECTED AREAS
     // =========================================================
 
@@ -143,6 +151,11 @@ public class Disaster {
     }
 
 
+    public boolean isArchived() {
+        return archived;
+    }
+
+
     public List<AffectedArea> getAffectedAreas() {
         return affectedAreas;
     }
@@ -169,6 +182,11 @@ public class Disaster {
 
     public void setSeverityLevel(String severityLevel) {
         this.severityLevel = severityLevel;
+    }
+
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
 

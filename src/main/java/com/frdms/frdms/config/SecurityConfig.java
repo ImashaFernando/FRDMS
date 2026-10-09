@@ -1336,7 +1336,8 @@ public class SecurityConfig {
                         // =========================================
 
                         .requestMatchers(
-                                "/victims/**"
+                                "/victims/**",
+                                "/victim/dashboard"
                         )
                         .hasAnyRole(
                                 "VICTIM",

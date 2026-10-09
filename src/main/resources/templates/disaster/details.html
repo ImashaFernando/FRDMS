@@ -1516,6 +1516,16 @@
 
                 <div class="action-right">
 
+                    <!-- RECYCLE BIN -->
+
+                    <a th:href="@{/disasters/recycle-bin}"
+                       class="btn btn-back">
+
+                        🗃️ Recycle Bin
+
+                    </a>
+
+
 
                     <!-- ADD AREA -->
 
@@ -1550,7 +1560,7 @@
                         <button type="submit"
                                 class="btn btn-danger">
 
-                            🗑️ Delete Flood Event
+                            🗃️ Archive Flood Event
 
                         </button>
 
@@ -1571,8 +1581,7 @@
 
                 ⚠️
 
-                Deleting this flood event is permanent
-                and cannot be undone.
+                This flood event will be moved to the Recycle Bin and can be restored later.
 
             </div>
 
@@ -1597,9 +1606,9 @@
             form.getAttribute("data-event-name");
 
         const message =
-            "Are you sure you want to delete this flood event?\n\n" +
+            "Are you sure you want to archive this flood event?\n\n" +
             "Flood Event: " + eventName + "\n\n" +
-            "This action cannot be undone.";
+            "You can restore it later from the Recycle Bin.";
 
         return confirm(message);
 

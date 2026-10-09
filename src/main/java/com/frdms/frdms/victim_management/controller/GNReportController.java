@@ -34,7 +34,6 @@ public class GNReportController {
         this.victimService = victimService;
     }
 
-
     // =========================================================
     // VM-03
     // SHOW GN REPORT FORM
@@ -48,7 +47,6 @@ public class GNReportController {
         Victim victim = victimService.getVictimById(victimId);
 
         GNReport gnReport = new GNReport();
-
         gnReport.setVictim(victim);
 
         model.addAttribute("gnReport", gnReport);
@@ -57,7 +55,6 @@ public class GNReportController {
         return "gn-report/form";
     }
 
-
     // =========================================================
     // VM-03
     // SUBMIT GN REPORT
@@ -65,24 +62,12 @@ public class GNReportController {
 
     @PostMapping("/submit/{victimId}")
     public String submitGNReport(
-
             @PathVariable Long victimId,
-
-            @RequestParam("reportNumber")
-            String reportNumber,
-
-            @RequestParam("gnOfficerName")
-            String gnOfficerName,
-
-            @RequestParam("gnDivision")
-            String gnDivision,
-
-            @RequestParam("reportDescription")
-            String reportDescription,
-
-            @RequestParam("reportFile")
-            MultipartFile reportFile,
-
+            @RequestParam("reportNumber") String reportNumber,
+            @RequestParam("gnOfficerName") String gnOfficerName,
+            @RequestParam("gnDivision") String gnDivision,
+            @RequestParam("reportDescription") String reportDescription,
+            @RequestParam("reportFile") MultipartFile reportFile,
             Model model) throws IOException {
 
         // =====================================================
@@ -90,89 +75,88 @@ public class GNReportController {
         // =====================================================
 
         Victim victim = victimService.getVictimById(victimId);
-
         model.addAttribute("victim", victim);
-
 
         // =====================================================
         // CHECK REPORT NUMBER
         // =====================================================
 
-        if (reportNumber == null ||
-                reportNumber.trim().isEmpty()) {
+        if (reportNumber == null || reportNumber.trim().isEmpty()) {
 
             model.addAttribute(
                     "formError",
                     "GN Report Number is required."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
-
 
         // =====================================================
         // CHECK GN OFFICER NAME
         // =====================================================
 
-        if (gnOfficerName == null ||
-                gnOfficerName.trim().isEmpty()) {
+        if (gnOfficerName == null || gnOfficerName.trim().isEmpty()) {
 
             model.addAttribute(
                     "formError",
                     "GN Officer Name is required."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
-
 
         // =====================================================
         // CHECK GN DIVISION
         // =====================================================
 
-        if (gnDivision == null ||
-                gnDivision.trim().isEmpty()) {
+        if (gnDivision == null || gnDivision.trim().isEmpty()) {
 
             model.addAttribute(
                     "formError",
                     "GN Division is required."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
-
 
         // =====================================================
         // CHECK REPORT DESCRIPTION
         // =====================================================
 
-        if (reportDescription == null ||
-                reportDescription.trim().isEmpty()) {
+        if (reportDescription == null
+                || reportDescription.trim().isEmpty()) {
 
             model.addAttribute(
                     "formError",
                     "Report Description is required."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
-
 
         // =====================================================
         // CHECK FILE
         // =====================================================
 
-        if (reportFile == null ||
-                reportFile.isEmpty()) {
+        if (reportFile == null || reportFile.isEmpty()) {
 
             model.addAttribute(
                     "fileError",
                     "Please upload the GN report as a PDF or image."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
-
 
         // =====================================================
         // CHECK FILE TYPE
@@ -182,10 +166,8 @@ public class GNReportController {
 
         boolean validFileType =
                 "application/pdf".equals(contentType)
-                        ||
-                        "image/jpeg".equals(contentType)
-                        ||
-                        "image/png".equals(contentType);
+                        || "image/jpeg".equals(contentType)
+                        || "image/png".equals(contentType);
 
         if (!validFileType) {
 
@@ -194,9 +176,10 @@ public class GNReportController {
                     "Only PDF, JPG, JPEG, and PNG files are allowed."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
-
 
         // =====================================================
         // CHECK DUPLICATE REPORT NUMBER
@@ -214,32 +197,21 @@ public class GNReportController {
                     "A GN report with this report number already exists. Please enter a different number."
             );
 
+            model.addAttribute("gnReport", new GNReport());
+
             return "gn-report/form";
         }
 
-
         // =====================================================
-        // CREATE GN REPORT
+        // CREATE A NEW GN REPORT
         // =====================================================
 
         GNReport gnReport = new GNReport();
 
-        gnReport.setReportNumber(
-                reportNumber.trim()
-        );
-
-        gnReport.setGnOfficerName(
-                gnOfficerName.trim()
-        );
-
-        gnReport.setGnDivision(
-                gnDivision.trim()
-        );
-
-        gnReport.setReportDescription(
-                reportDescription.trim()
-        );
-
+        gnReport.setReportNumber(reportNumber.trim());
+        gnReport.setGnOfficerName(gnOfficerName.trim());
+        gnReport.setGnDivision(gnDivision.trim());
+        gnReport.setReportDescription(reportDescription.trim());
 
         // =====================================================
         // CONNECT REPORT TO VICTIM
@@ -247,23 +219,13 @@ public class GNReportController {
 
         gnReport.setVictim(victim);
 
-
         // =====================================================
         // STORE UPLOADED FILE
         // =====================================================
 
-        gnReport.setReportFile(
-                reportFile.getBytes()
-        );
-
-        gnReport.setFileName(
-                reportFile.getOriginalFilename()
-        );
-
-        gnReport.setFileType(
-                reportFile.getContentType()
-        );
-
+        gnReport.setReportFile(reportFile.getBytes());
+        gnReport.setFileName(reportFile.getOriginalFilename());
+        gnReport.setFileType(reportFile.getContentType());
 
         // =====================================================
         // SAVE GN REPORT
@@ -271,46 +233,23 @@ public class GNReportController {
 
         gnReportService.submitGNReport(gnReport);
 
-
         // =====================================================
         // CONSOLE CONFIRMATION
         // =====================================================
 
-        System.out.println(
-                "========================================"
-        );
-
-        System.out.println(
-                "GN REPORT SUCCESSFULLY SAVED"
-        );
-
-        System.out.println(
-                "Report Number: "
-                        + gnReport.getReportNumber()
-        );
-
-        System.out.println(
-                "Victim ID: "
-                        + victim.getId()
-        );
-
-        System.out.println(
-                "File: "
-                        + gnReport.getFileName()
-        );
-
-        System.out.println(
-                "========================================"
-        );
-
+        System.out.println("========================================");
+        System.out.println("GN REPORT SUCCESSFULLY SAVED");
+        System.out.println("Report Number: " + gnReport.getReportNumber());
+        System.out.println("Victim ID: " + victim.getId());
+        System.out.println("File: " + gnReport.getFileName());
+        System.out.println("========================================");
 
         // =====================================================
-        // GO TO SUCCESS PAGE
+        // GO TO THIS VICTIM'S GN REPORT STATUS PAGE
         // =====================================================
 
-        return "redirect:/gn-reports/success";
+        return "redirect:/gn-reports/status/" + victim.getId();
     }
-
 
     // =========================================================
     // GN REPORT SUCCESS PAGE
@@ -322,7 +261,6 @@ public class GNReportController {
         return "gn-report/success";
     }
 
-
     // =========================================================
     // VICTIM - GN REPORT STATUS
     // =========================================================
@@ -332,25 +270,25 @@ public class GNReportController {
             @PathVariable Long victimId,
             Model model) {
 
-        Victim victim =
-                victimService.getVictimById(victimId);
+        Victim victim = victimService.getVictimById(victimId);
 
         GNReport gnReport =
                 gnReportService.getLatestGNReportByVictim(victim);
 
-        model.addAttribute(
-                "victim",
-                victim
-        );
+        model.addAttribute("victim", victim);
+        model.addAttribute("gnReport", gnReport);
 
-        model.addAttribute(
-                "gnReport",
-                gnReport
-        );
+        // Allow resubmission when the latest report is rejected.
+        boolean canResubmit =
+                gnReport != null
+                        && "REJECTED".equalsIgnoreCase(
+                        gnReport.getVerificationStatus()
+                );
+
+        model.addAttribute("canResubmit", canResubmit);
 
         return "gn-report/status";
     }
-
 
     // =========================================================
     // PM - VIEW ALL GN REPORTS
@@ -367,7 +305,6 @@ public class GNReportController {
         return "gn-report/list";
     }
 
-
     // =========================================================
     // PM - REVIEW GN REPORT
     // =========================================================
@@ -377,17 +314,12 @@ public class GNReportController {
             @PathVariable Long id,
             Model model) {
 
-        GNReport gnReport =
-                gnReportService.getGNReportById(id);
+        GNReport gnReport = gnReportService.getGNReportById(id);
 
-        model.addAttribute(
-                "gnReport",
-                gnReport
-        );
+        model.addAttribute("gnReport", gnReport);
 
         return "gn-report/verify";
     }
-
 
     // =========================================================
     // PM - VIEW / DOWNLOAD GN REPORT FILE
@@ -397,26 +329,22 @@ public class GNReportController {
     public ResponseEntity<byte[]> viewGNReportFile(
             @PathVariable Long id) {
 
-        GNReport gnReport =
-                gnReportService.getGNReportById(id);
+        GNReport gnReport = gnReportService.getGNReportById(id);
 
         return ResponseEntity.ok()
                 .header(
                         HttpHeaders.CONTENT_DISPOSITION,
-                        "inline; filename=\"" +
-                                gnReport.getFileName() +
-                                "\""
+                        "inline; filename=\""
+                                + gnReport.getFileName()
+                                + "\""
                 )
                 .contentType(
                         MediaType.parseMediaType(
                                 gnReport.getFileType()
                         )
                 )
-                .body(
-                        gnReport.getReportFile()
-                );
+                .body(gnReport.getReportFile());
     }
-
 
     // =========================================================
     // PM - APPROVE GN REPORT
@@ -426,20 +354,14 @@ public class GNReportController {
     public String approveGNReport(
             @PathVariable Long id) {
 
-        GNReport gnReport =
-                gnReportService.getGNReportById(id);
+        GNReport gnReport = gnReportService.getGNReportById(id);
 
-        gnReport.setVerificationStatus(
-                "APPROVED"
-        );
+        gnReport.setVerificationStatus("APPROVED");
 
-        gnReportService.submitGNReport(
-                gnReport
-        );
+        gnReportService.submitGNReport(gnReport);
 
         return "redirect:/gn-reports/verify/" + id;
     }
-
 
     // =========================================================
     // PM - REJECT GN REPORT
@@ -449,20 +371,14 @@ public class GNReportController {
     public String rejectGNReport(
             @PathVariable Long id) {
 
-        GNReport gnReport =
-                gnReportService.getGNReportById(id);
+        GNReport gnReport = gnReportService.getGNReportById(id);
 
-        gnReport.setVerificationStatus(
-                "REJECTED"
-        );
+        gnReport.setVerificationStatus("REJECTED");
 
-        gnReportService.submitGNReport(
-                gnReport
-        );
+        gnReportService.submitGNReport(gnReport);
 
         return "redirect:/gn-reports/verify/" + id;
     }
-
 
     // =========================================================
     // ADMIN / PM - VIEW GN REPORT FROM VICTIM INFORMATION

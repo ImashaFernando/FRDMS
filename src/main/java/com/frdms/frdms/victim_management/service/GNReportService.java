@@ -12,7 +12,6 @@ public class GNReportService {
 
     private final GNReportRepository gnReportRepository;
 
-
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
@@ -23,7 +22,6 @@ public class GNReportService {
         this.gnReportRepository =
                 gnReportRepository;
     }
-
 
     // =========================================================
     // SAVE GN REPORT
@@ -37,7 +35,6 @@ public class GNReportService {
         );
     }
 
-
     // =========================================================
     // GET ALL GN REPORTS
     // =========================================================
@@ -46,7 +43,6 @@ public class GNReportService {
 
         return gnReportRepository.findAll();
     }
-
 
     // =========================================================
     // GET GN REPORT BY ID
@@ -63,7 +59,6 @@ public class GNReportService {
                 );
     }
 
-
     // =========================================================
     // GET GN REPORTS BY VICTIM
     // =========================================================
@@ -75,7 +70,6 @@ public class GNReportService {
                 .findByVictim(victim);
     }
 
-
     // =========================================================
     // GET LATEST GN REPORT BY VICTIM
     // =========================================================
@@ -83,21 +77,10 @@ public class GNReportService {
     public GNReport getLatestGNReportByVictim(
             Victim victim) {
 
-        List<GNReport> reports =
-                gnReportRepository
-                        .findByVictim(victim);
-
-        if (reports == null
-                || reports.isEmpty()) {
-
-            return null;
-        }
-
-        return reports.get(
-                reports.size() - 1
-        );
+        return gnReportRepository
+                .findFirstByVictimOrderByIdDesc(victim)
+                .orElse(null);
     }
-
 
     // =========================================================
     // CHECK WHETHER GN REPORT IS APPROVED
@@ -108,21 +91,18 @@ public class GNReportService {
      * ONLY when the latest GN Report is APPROVED.
      *
      * No report  -> false
-     * PENDING     -> false
-     * REJECTED    -> false
-     * APPROVED    -> true
+     * PENDING    -> false
+     * REJECTED   -> false
+     * APPROVED   -> true
      */
 
     public boolean isLatestGNReportApproved(
             Victim victim) {
 
         GNReport latestReport =
-                getLatestGNReportByVictim(
-                        victim
-                );
+                getLatestGNReportByVictim(victim);
 
         if (latestReport == null) {
-
             return false;
         }
 
@@ -130,7 +110,6 @@ public class GNReportService {
                 latestReport.getVerificationStatus()
         );
     }
-
 
     // =========================================================
     // GET GN REPORT BY REPORT NUMBER
@@ -144,7 +123,6 @@ public class GNReportService {
                 .orElse(null);
     }
 
-
     // =========================================================
     // UPDATE GN REPORT
     // =========================================================
@@ -156,32 +134,26 @@ public class GNReportService {
         GNReport existingReport =
                 getGNReportById(id);
 
-
         existingReport.setReportNumber(
                 updatedReport.getReportNumber()
         );
-
 
         existingReport.setGnOfficerName(
                 updatedReport.getGnOfficerName()
         );
 
-
         existingReport.setGnDivision(
                 updatedReport.getGnDivision()
         );
-
 
         existingReport.setReportDescription(
                 updatedReport.getReportDescription()
         );
 
-
         return gnReportRepository.save(
                 existingReport
         );
     }
-
 
     // =========================================================
     // DELETE GN REPORT
@@ -192,8 +164,6 @@ public class GNReportService {
         GNReport gnReport =
                 getGNReportById(id);
 
-        gnReportRepository.delete(
-                gnReport
-        );
+        gnReportRepository.delete(gnReport);
     }
 }

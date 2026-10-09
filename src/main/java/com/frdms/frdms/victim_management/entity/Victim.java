@@ -5,6 +5,7 @@ import com.frdms.frdms.shelter_management.entity.Shelter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
@@ -41,6 +42,10 @@ public class Victim {
     // =========================================================
 
     @NotBlank(message = "NIC number is required")
+    @Pattern(
+            regexp = "\\d{12}",
+            message = "NIC number must contain exactly 12 digits"
+    )
     @Column(
             name = "nic_number",
             nullable = false,
@@ -79,6 +84,10 @@ public class Victim {
     // =========================================================
 
     @NotBlank(message = "Phone number is required")
+    @Pattern(
+            regexp = "\\d{10}",
+            message = "Phone number must contain exactly 10 digits"
+    )
     @Column(
             name = "phone_number",
             nullable = false
