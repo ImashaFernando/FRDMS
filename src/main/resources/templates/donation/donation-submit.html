@@ -111,7 +111,6 @@
       <!-- ============================= -->
 
       <div class="form-group">
-
         <label for="donationDate">
           📅 Donation Date
           <span class="required">*</span>
@@ -119,15 +118,14 @@
 
         <input type="date"
                id="donationDate"
-               th:field="*{donationDate}">
+               th:field="*{donationDate}"
+               th:attr="max=${today}">
 
         <div class="validation-error"
              th:if="${#fields.hasErrors('donationDate')}"
              th:errors="*{donationDate}">
         </div>
-
       </div>
-
 
       <!-- ============================= -->
       <!-- CASH SECTION -->

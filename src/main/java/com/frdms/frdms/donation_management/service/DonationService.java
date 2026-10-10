@@ -38,7 +38,6 @@ public class DonationService {
     // =========================================================
     // CREATE DONATION
     // =========================================================
-
     public Donation submitDonation(Donation donation) {
 
         // Set default status
@@ -48,19 +47,22 @@ public class DonationService {
             donation.setStatus("PENDING");
         }
 
-
-        // Automatically set today's date
+        // Set today's date if no date is provided
         if (donation.getDonationDate() == null) {
 
-            donation.setDonationDate(
-                    LocalDate.now()
+            donation.setDonationDate(LocalDate.now());
+        }
+
+        // Prevent future donation dates
+        if (donation.getDonationDate().isAfter(LocalDate.now())) {
+
+            throw new IllegalArgumentException(
+                    "Donation date cannot be in the future"
             );
         }
 
-
         return donationRepository.save(donation);
     }
-
 
     // =========================================================
     // GET ALL DONATIONS

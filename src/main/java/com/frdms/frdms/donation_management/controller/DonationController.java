@@ -62,6 +62,12 @@ public class DonationController {
                 donation
         );
 
+        // Today's date for donation date field
+        model.addAttribute(
+                "today",
+                java.time.LocalDate.now()
+        );
+
         return "donation/donation-submit";
     }
 
