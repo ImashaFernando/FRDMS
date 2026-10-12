@@ -1,16 +1,14 @@
+
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Inventory Management</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/inventory.css}">
-
+    <link rel="stylesheet" th:href="@{/css/inventory.css}">
 </head>
 
 <body>
@@ -18,7 +16,6 @@
 <div class="page-container">
 
     <div class="page-header">
-
         <div>
             <h1>Inventory Management</h1>
             <p>Available relief goods and supplies</p>
@@ -28,93 +25,82 @@
            class="distribution-button">
             📦 Distribution Requests
         </a>
+    </div>
 
+    <div class="legend">
+        <span><span class="stock-dot stock-red"></span> Out of Stock</span>
+        <span><span class="stock-dot stock-yellow"></span> Low Stock</span>
+        <span><span class="stock-dot stock-green"></span> Available</span>
     </div>
 
     <div class="table-container">
-
         <table>
-
             <thead>
-
             <tr>
-
                 <th>ID</th>
-
                 <th>Item</th>
-
                 <th>Category</th>
-
                 <th>Quantity</th>
-
                 <th>Unit</th>
-
-                <th>Description</th>
-
-
+                <th>Stock Status</th>
             </tr>
-
             </thead>
 
-
             <tbody>
-
             <tr th:each="item : ${inventoryItems}">
+                <td th:text="${item.id}">1</td>
+                <td th:text="${item.itemName}">Rice</td>
+                <td th:text="${item.category}">Food</td>
+                <td th:text="${item.quantity}">0</td>
+                <td th:text="${item.unit}">kg</td>
 
-                <td th:text="${item.id}">
-                    1
-                </td>
 
-                <td th:text="${item.itemName}">
-                    Rice
-                </td>
+                <td>
+    <span class="stock-status">
 
-                <td th:text="${item.category}">
-                    Donated Goods
-                </td>
+        <!-- Red: zero or no stock -->
+        <span th:if="${item.quantity == null or item.quantity.compareTo(T(java.math.BigDecimal).ZERO) <= 0}">
+            <span class="stock-dot stock-red"></span>
+            Out of Stock
+        </span>
 
-                <td th:text="${item.quantity}">
-                    100
-                </td>
+        <!-- Yellow: positive stock at or below minimum -->
+        <span th:if="${item.quantity != null
+                       and item.quantity.compareTo(T(java.math.BigDecimal).ZERO) > 0
+                       and item.minimumStock != null
+                       and item.quantity.compareTo(item.minimumStock) <= 0}">
+            <span class="stock-dot stock-yellow"></span>
+            Low Stock
+        </span>
 
-                <td th:text="${item.unit}">
-                    Units
-                </td>
+        <!-- Green: stock above minimum -->
+        <span th:if="${item.quantity != null
+                       and item.quantity.compareTo(T(java.math.BigDecimal).ZERO) > 0
+                       and (item.minimumStock == null
+                            or item.quantity.compareTo(item.minimumStock) > 0)}">
+            <span class="stock-dot stock-green"></span>
+            Available
+        </span>
 
-                <td th:text="${item.description}">
-                    Relief goods
+    </span>
                 </td>
 
             </tr>
-
 
             <tr th:if="${#lists.isEmpty(inventoryItems)}">
-
-                <td colspan="7"
-                    class="empty">
-
+                <td colspan="6" class="empty">
                     No inventory items available.
-
                 </td>
-
             </tr>
-
             </tbody>
-
         </table>
-
     </div>
 
-
-    <a th:href="@{/finance/dashboard}"
-       class="back-btn">
-
+    <a th:href="@{/finance/dashboard}" class="back-btn">
         ← Back to Finance Dashboard
-
     </a>
 
 </div>
 
 </body>
-
 </html>
