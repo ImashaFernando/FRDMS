@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
@@ -25,7 +26,6 @@
             color: #333;
         }
 
-
         /* =========================
            HEADER
            ========================= */
@@ -33,9 +33,7 @@
         .header {
             background: linear-gradient(135deg, #0b1f3a, #163d70);
             color: white;
-
             padding: 20px 40px;
-
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -45,7 +43,6 @@
             font-size: 24px;
         }
 
-
         /* =========================
            MAIN CONTAINER
            ========================= */
@@ -53,10 +50,8 @@
         .container {
             width: 94%;
             max-width: 1400px;
-
             margin: 30px auto;
         }
-
 
         /* =========================
            PAGE TITLE
@@ -68,16 +63,13 @@
 
         .page-title h2 {
             color: #0b1f3a;
-
             margin-bottom: 6px;
         }
 
         .page-title p {
             color: #666;
-
             font-size: 14px;
         }
-
 
         /* =========================
            ALLOCATION COUNT
@@ -85,28 +77,100 @@
 
         .allocation-count {
             display: inline-block;
-
             margin-top: 15px;
-
             padding: 10px 18px;
-
             background-color: #0b1f3a;
-
             color: white;
-
             border-radius: 6px;
-
             font-size: 14px;
-
             font-weight: bold;
         }
 
         .allocation-count span {
             margin-left: 6px;
-
             font-size: 16px;
         }
 
+        /* =========================
+           SEARCH & FILTER PANEL
+           ========================= */
+
+        .filter-panel {
+            background: linear-gradient(135deg, #edf2f9, #e5ecf6);
+            border: 1px solid #c5d2e5;
+            border-radius: 18px;
+            padding: 25px 28px;
+            margin: 25px 0 28px;
+            box-shadow: 0 8px 22px rgba(11, 31, 58, 0.06);
+        }
+
+        .filter-panel h3 {
+            color: #24395f;
+            font-size: 21px;
+            margin-bottom: 22px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr auto;
+            gap: 18px;
+            align-items: end;
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .filter-field label {
+            font-weight: bold;
+            color: #24395f;
+            font-size: 15px;
+        }
+
+        .filter-field input,
+        .filter-field select {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid #b7c7df;
+            border-radius: 12px;
+            background: white;
+            color: #24395f;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .filter-field input:focus,
+        .filter-field select:focus {
+            border-color: #527fb6;
+            box-shadow: 0 0 0 3px rgba(82, 127, 182, 0.15);
+        }
+
+        .clear-filters {
+            height: 48px;
+            padding: 0 22px;
+            border: none;
+            border-radius: 12px;
+            background: #48515f;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .clear-filters:hover {
+            background: #303946;
+        }
+
+        .results-count {
+            color: #52657d;
+            font-size: 14px;
+            margin: 0 0 14px;
+        }
 
         /* =========================
            TABLE CONTAINER
@@ -114,16 +178,11 @@
 
         .table-container {
             background-color: white;
-
             border-radius: 10px;
-
             padding: 20px;
-
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-
             overflow-x: auto;
         }
-
 
         /* =========================
            TABLE
@@ -131,45 +190,36 @@
 
         table {
             width: 100%;
-
             border-collapse: collapse;
-
             min-width: 1000px;
         }
 
         thead {
             background-color: #0b1f3a;
-
             color: white;
         }
 
         th,
         td {
             padding: 13px 12px;
-
             border-bottom: 1px solid #e5e5e5;
-
             vertical-align: middle;
         }
 
         th {
             font-size: 14px;
-
             white-space: nowrap;
-
             text-align: left;
         }
 
         td {
             font-size: 14px;
-
             text-align: left;
         }
 
         tbody tr:hover {
             background-color: #f7f9fc;
         }
-
 
         /* =========================
            CENTERED COLUMNS
@@ -179,21 +229,24 @@
             text-align: center !important;
         }
 
-
         /* =========================
            EMPTY MESSAGE
            ========================= */
 
         .empty-message {
             text-align: center;
-
             padding: 45px 20px;
-
             color: #777;
-
             font-size: 15px;
         }
 
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 35px 15px;
+            color: #64748b;
+            font-size: 15px;
+        }
 
         /* =========================
            BOTTOM BACK LINK
@@ -201,24 +254,43 @@
 
         .bottom-navigation {
             margin-top: 25px;
-
             padding-top: 25px;
-
             text-align: left;
         }
 
         .back-link {
             color: #000000;
-
             text-decoration: none;
-
             font-size: 15px;
-
             font-weight: bold;
         }
 
         .back-link:hover {
             text-decoration: underline;
+        }
+
+        /* =========================
+           RESPONSIVE FILTER PANEL
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .filter-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 520px) {
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-panel {
+                padding: 20px 16px;
+            }
+
         }
 
     </style>
@@ -282,6 +354,92 @@
 
 
     <!-- =========================
+         SEARCH & FILTER ALLOCATIONS
+         ========================= -->
+
+    <section class="filter-panel">
+
+        <h3>Search &amp; Filter Allocations</h3>
+
+        <div class="filter-grid">
+
+            <!-- VICTIM NAME / NIC SEARCH -->
+
+            <div class="filter-field">
+
+                <label for="allocationSearch">
+                    Victim Name / NIC
+                </label>
+
+                <input type="search"
+                       id="allocationSearch"
+                       placeholder="Search victim name or NIC...">
+
+            </div>
+
+
+            <!-- DISASTER FILTER -->
+
+            <div class="filter-field">
+
+                <label for="disasterFilter">
+                    Disaster Name
+                </label>
+
+                <select id="disasterFilter">
+
+                    <option value="">
+                        All Disasters
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SHELTER LOCATION FILTER -->
+
+            <div class="filter-field">
+
+                <label for="locationFilter">
+                    Shelter Location
+                </label>
+
+                <select id="locationFilter">
+
+                    <option value="">
+                        All Locations
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CLEAR FILTERS BUTTON -->
+
+            <button type="button"
+                    class="clear-filters"
+                    id="clearFilters">
+
+                Clear Filters
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- MATCHING RESULTS COUNT -->
+
+    <p class="results-count"
+       id="resultsCount"
+       aria-live="polite">
+    </p>
+
+
+    <!-- =========================
          ALLOCATION TABLE
          ========================= -->
 
@@ -338,9 +496,7 @@
             <tr th:each="allocation : ${allocations}">
 
 
-                <!-- =========================
-                     FAMILY NAME
-                     ========================= -->
+                <!-- FAMILY NAME -->
 
                 <td th:text="${allocation.affectedFamily.victim.fullName}">
 
@@ -349,9 +505,7 @@
                 </td>
 
 
-                <!-- =========================
-                     NIC
-                     ========================= -->
+                <!-- NIC -->
 
                 <td th:text="${allocation.affectedFamily.victim.nicNumber}">
 
@@ -360,9 +514,7 @@
                 </td>
 
 
-                <!-- =========================
-                     DISASTER
-                     ========================= -->
+                <!-- DISASTER -->
 
                 <td th:text="${allocation.affectedFamily.victim.disaster.eventName}">
 
@@ -371,9 +523,7 @@
                 </td>
 
 
-                <!-- =========================
-                     FAMILY SIZE
-                     ========================= -->
+                <!-- FAMILY SIZE -->
 
                 <td class="center"
                     th:text="${allocation.affectedFamily.totalFamilyMembers}">
@@ -383,9 +533,7 @@
                 </td>
 
 
-                <!-- =========================
-                     SHELTER NAME
-                     ========================= -->
+                <!-- SHELTER NAME -->
 
                 <td th:text="${allocation.shelter.shelterName}">
 
@@ -394,9 +542,7 @@
                 </td>
 
 
-                <!-- =========================
-                     LOCATION
-                     ========================= -->
+                <!-- LOCATION -->
 
                 <td th:text="${allocation.shelter.location}">
 
@@ -405,9 +551,7 @@
                 </td>
 
 
-                <!-- =========================
-                     SHELTER CAPACITY
-                     ========================= -->
+                <!-- SHELTER CAPACITY -->
 
                 <td class="center"
                     th:text="${allocation.shelter.maximumCapacity}">
@@ -417,9 +561,7 @@
                 </td>
 
 
-                <!-- =========================
-                     CURRENT OCCUPANCY
-                     ========================= -->
+                <!-- CURRENT OCCUPANCY -->
 
                 <td class="center"
                     th:text="${allocation.shelter.currentOccupancy}">
@@ -436,14 +578,22 @@
         </table>
 
 
-        <!-- =========================
-             NO ALLOCATIONS
-             ========================= -->
+        <!-- NO ALLOCATIONS -->
 
         <div class="empty-message"
              th:if="${#lists.isEmpty(allocations)}">
 
             No families have been allocated to shelters yet.
+
+        </div>
+
+
+        <!-- NO MATCHING SEARCH RESULTS -->
+
+        <div class="no-results"
+             id="noMatchingAllocations">
+
+            No allocations match your search or filters.
 
         </div>
 
@@ -470,6 +620,238 @@
 </main>
 
 
+<!-- =========================
+     SEARCH & FILTER FUNCTIONALITY
+     ========================= -->
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const searchInput =
+            document.getElementById("allocationSearch");
+
+        const disasterFilter =
+            document.getElementById("disasterFilter");
+
+        const locationFilter =
+            document.getElementById("locationFilter");
+
+        const clearButton =
+            document.getElementById("clearFilters");
+
+        const resultsCount =
+            document.getElementById("resultsCount");
+
+        const noResults =
+            document.getElementById("noMatchingAllocations");
+
+
+        const table =
+            document.querySelector(".table-container table");
+
+        const rows = table
+            ? Array.from(table.querySelectorAll("tbody tr"))
+            : [];
+
+
+        /* =========================
+           EXISTING TABLE COLUMN INDEXES
+           ========================= */
+
+        const NAME_COL = 0;
+        const NIC_COL = 1;
+        const DISASTER_COL = 2;
+        const LOCATION_COL = 5;
+
+
+        /* =========================
+           GET CELL TEXT
+           ========================= */
+
+        function cellText(row, index) {
+
+            return row.cells[index]
+                ? row.cells[index].textContent.trim()
+                : "";
+
+        }
+
+
+        /* =========================
+           POPULATE FILTER OPTIONS
+           ========================= */
+
+        function populateFilter(select, values) {
+
+            const uniqueValues = [...new Set(
+                values.filter(value => value !== "")
+            )].sort((a, b) => a.localeCompare(b));
+
+            uniqueValues.forEach(value => {
+
+                const option = document.createElement("option");
+
+                option.value = value.toLowerCase();
+
+                option.textContent = value;
+
+                select.appendChild(option);
+
+            });
+
+        }
+
+
+        populateFilter(
+            disasterFilter,
+            rows.map(row => cellText(row, DISASTER_COL))
+        );
+
+        populateFilter(
+            locationFilter,
+            rows.map(row => cellText(row, LOCATION_COL))
+        );
+
+
+        /* =========================
+           FILTER ALLOCATIONS
+           ========================= */
+
+        function filterAllocations() {
+
+            const query =
+                searchInput.value.trim().toLowerCase();
+
+            const disaster =
+                disasterFilter.value;
+
+            const location =
+                locationFilter.value;
+
+            let visibleCount = 0;
+
+
+            rows.forEach(row => {
+
+                const name =
+                    cellText(row, NAME_COL).toLowerCase();
+
+                const nic =
+                    cellText(row, NIC_COL).toLowerCase();
+
+                const disasterName =
+                    cellText(row, DISASTER_COL).toLowerCase();
+
+                const shelterLocation =
+                    cellText(row, LOCATION_COL).toLowerCase();
+
+
+                const matchesSearch =
+                    name.includes(query) ||
+                    nic.includes(query);
+
+                const matchesDisaster =
+                    !disaster ||
+                    disasterName === disaster;
+
+                const matchesLocation =
+                    !location ||
+                    shelterLocation === location;
+
+
+                const isVisible =
+                    matchesSearch &&
+                    matchesDisaster &&
+                    matchesLocation;
+
+
+                row.style.display =
+                    isVisible ? "" : "none";
+
+
+                if (isVisible) {
+
+                    visibleCount++;
+
+                }
+
+            });
+
+
+            /* =========================
+               UPDATE RESULTS COUNT
+               ========================= */
+
+            resultsCount.textContent =
+                "Showing " + visibleCount +
+                " of " + rows.length +
+                " allocations";
+
+
+
+            /* =========================
+               SHOW / HIDE NO-RESULTS MESSAGE
+               ========================= */
+
+            noResults.style.display =
+                rows.length > 0 && visibleCount === 0
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        /* =========================
+           SEARCH EVENTS
+           ========================= */
+
+        searchInput.addEventListener(
+            "input",
+            filterAllocations
+        );
+
+        disasterFilter.addEventListener(
+            "change",
+            filterAllocations
+        );
+
+        locationFilter.addEventListener(
+            "change",
+            filterAllocations
+        );
+
+
+        /* =========================
+           CLEAR FILTERS
+           ========================= */
+
+        clearButton.addEventListener("click", function () {
+
+            searchInput.value = "";
+
+            disasterFilter.value = "";
+
+            locationFilter.value = "";
+
+            filterAllocations();
+
+        });
+
+
+        /* =========================
+           INITIAL DISPLAY
+           ========================= */
+
+        filterAllocations();
+
+    });
+
+</script>
+
+
 </body>
 
 </html>
+
+

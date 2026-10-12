@@ -91,7 +91,7 @@ public class ShelterService {
 
     public List<Shelter> getAllShelters() {
 
-        return shelterRepository.findAll();
+        return shelterRepository.findAllByOrderByIdDesc();
     }
 
 
