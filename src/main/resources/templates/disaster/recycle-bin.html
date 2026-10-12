@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flood Event Recycle Bin | FRDMS</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #163b65;
+            --primary-dark: #102c4b;
+            --primary-light: #eaf2fb;
+            --background: #f4f7fb;
+            --white: #ffffff;
+            --text: #243449;
+            --muted: #718096;
+            --border: #e1e8f0;
+            --warning: #b7791f;
+            --warning-bg: #fff8e6;
+            --success: #16805d;
+            --success-bg: #e8f7ef;
+            --shadow: 0 8px 25px rgba(22, 59, 101, 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        .topbar {
+            background: var(--primary-dark);
+            color: white;
+            padding: 17px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.13);
+            font-size: 23px;
+        }
+
+        .brand h2 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .brand p {
+            margin: 5px 0 0;
+            color: #cbd9e9;
+            font-size: 12px;
+        }
+
+        .topbar-label {
+            color: #d9e5f2;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 32px 24px 50px;
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #163b65, #245b8f);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hero-icon {
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            font-size: 32px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+        }
+
+        .hero h1 {
+            margin: 0 0 9px;
+            font-size: clamp(23px, 3vw, 30px);
+            font-weight: 800;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #e0ebf7;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 620px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 17px;
+            border-radius: 9px;
+            background: white;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            background: #edf4fc;
+            transform: translateY(-1px);
+        }
+
+        .notice {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: var(--warning-bg);
+            border: 1px solid #f1dfad;
+            color: #805b17;
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin-bottom: 27px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .notice-icon {
+            font-size: 19px;
+            flex-shrink: 0;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: var(--primary-dark);
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .count-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 30px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 23px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-width: 0;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(22, 59, 101, 0.11);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .event-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: var(--primary-light);
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .archived-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 30px;
+            padding: 7px 10px;
+            color: var(--warning);
+            background: var(--warning-bg);
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .event-name {
+            margin: 0 0 8px;
+            color: var(--primary-dark);
+            font-size: 18px;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .event-description {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+            white-space: pre-line;
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 0;
+            margin-top: 14px;
+            border-top: 1px solid var(--border);
+            color: #52647a;
+            font-size: 13px;
+        }
+
+        .event-meta strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 7px;
+        }
+
+        .restore-button {
+            flex: 1;
+            border: none;
+            border-radius: 9px;
+            padding: 12px 15px;
+            background: var(--success-bg);
+            color: var(--success);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .restore-button:hover {
+            background: #d4f0e1;
+        }
+
+        .empty-state {
+            background: white;
+            border: 1px dashed #c8d5e4;
+            border-radius: 16px;
+            text-align: center;
+            padding: 55px 24px;
+        }
+
+        .empty-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            background: var(--primary-light);
+            border-radius: 50%;
+            font-size: 35px;
+        }
+
+        .empty-state h3 {
+            margin: 0 0 10px;
+            color: var(--primary-dark);
+            font-size: 20px;
+        }
+
+        .empty-state p {
+            max-width: 430px;
+            margin: 0 auto 22px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            border-radius: 9px;
+            padding: 12px 17px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .primary-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .feedback-message {
+            padding: 13px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .feedback-success {
+            background: var(--success-bg);
+            border: 1px solid #b7e5cc;
+            color: var(--success);
+        }
+
+        footer {
+            margin-top: 35px;
+            text-align: center;
+            color: #8a98aa;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 760px) {
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 23px;
+            }
+
+            .hero-content {
+                align-items: flex-start;
+            }
+
+            .back-button {
+                width: 100%;
+            }
+
+            .container {
+                padding: 23px 15px 35px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .hero-content {
+                flex-direction: column;
+            }
+
+            .event-card {
+                padding: 18px;
+            }
+
+            .card-top {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">🌊</div>
+        <div>
+            <h2>FRDMS</h2>
+            <p>Flood Relief &amp; Disaster Management System</p>
+        </div>
+    </div>
+
+    <div class="topbar-label">
+        Disaster Management
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="breadcrumb">
+        <a th:href="@{/disasters}">Flood Events</a>
+        <span> / </span>
+        <span>Recycle Bin</span>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">🗃️</div>
+            <div>
+                <h1>Flood Event Recycle Bin</h1>
+                <p>
+                    Manage archived flood events in one place.
+                    Restore an event whenever it needs to become
+                    active again in the Disaster Management system.
+                </p>
+            </div>
+        </div>
+
+        <a class="back-button" th:href="@{/disasters}">
+            <span>←</span> Back to Flood Events
+        </a>
+    </section>
+
+    <div class="notice">
+        <span class="notice-icon">ⓘ</span>
+        <div>
+            <strong>About archived events</strong><br>
+            Archived events are hidden from the active flood event list.
+            Use the Restore button to return an event to the active list.
+            Restoring an event does not create a new event.
+        </div>
+    </div>
+
+    <div th:if="${param.restored}" class="feedback-message feedback-success">
+        ✓ Flood event restored successfully.
+    </div>
+
+    <div class="section-heading">
+        <h2>Archived Flood Events</h2>
+
+        <span class="count-badge">
+            <span>🗂️</span>
+            <span th:text="${#lists.size(disasters)} + ' archived event(s)'">
+                0 archived events
+            </span>
+        </span>
+    </div>
+
+    <!-- Display archived events -->
+    <div class="event-grid" th:if="${not #lists.isEmpty(disasters)}">
+
+        <article class="event-card" th:each="disaster : ${disasters}">
+
+            <div class="card-top">
+                <div class="event-icon">🌊</div>
+
+                <span class="archived-badge">
+                    🗃️ Archived
+                </span>
+            </div>
+
+            <h3 class="event-name"
+                th:text="${disaster.eventName}">
+                Flood Event Name
+            </h3>
+
+            <p class="event-description"
+               th:text="${disaster.description != null and !#strings.isEmpty(disaster.description) ? disaster.description : 'No description provided.'}">
+                Flood event description
+            </p>
+
+            <div class="event-meta">
+                <span>📅</span>
+                <strong>Event date:</strong>
+                <span th:text="${disaster.eventDate != null ? #temporals.format(disaster.eventDate, 'dd MMM yyyy') : 'Not provided'}">
+                    Event date
+                </span>
+            </div>
+
+            <div class="event-meta">
+                <span>⚠️</span>
+                <strong>Severity:</strong>
+                <span th:text="${disaster.severityLevel != null ? disaster.severityLevel : 'Not specified'}">
+                    Severity
+                </span>
+            </div>
+
+            <div class="card-actions">
+                <form th:action="@{/disasters/restore/{id}(id=${disaster.id})}"
+                      method="post"
+                      style="display: flex; flex: 1;"
+                      onsubmit="return confirm('Restore this flood event to the active flood event list?');">
+
+                    <button type="submit" class="restore-button">
+                        ↻ Restore Flood Event
+                    </button>
+
+                </form>
+            </div>
+
+        </article>
+
+    </div>
+
+    <!-- Displayed when there are no archived events -->
+    <section class="empty-state"
+             th:if="${#lists.isEmpty(disasters)}">
+
+        <div class="empty-icon">🗃️</div>
+
+        <h3>Your Recycle Bin is Empty</h3>
+
+        <p>
+            There are no archived flood events at the moment.
+            When you archive a flood event, it will appear here
+            and you can restore it whenever necessary.
+        </p>
+
+        <a class="primary-button" th:href="@{/disasters}">
+            ← View Active Flood Events
+        </a>
+
+    </section>
+
+    <footer>
+        Flood Relief &amp; Disaster Management System<br>
+        Disaster Management Module
+    </footer>
+
+</main>
+
+</body>
+</html>

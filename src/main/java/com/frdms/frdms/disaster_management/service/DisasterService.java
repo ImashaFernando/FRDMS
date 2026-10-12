@@ -41,7 +41,7 @@ public class DisasterService {
 
     public List<Disaster> getAllDisasters() {
 
-        return disasterRepository.findAll();
+        return disasterRepository.findByArchivedFalse();
     }
 
 
@@ -55,13 +55,16 @@ public class DisasterService {
         if (keyword == null ||
                 keyword.trim().isEmpty()) {
 
-            return disasterRepository.findAll();
+            return disasterRepository.findByArchivedFalse();
         }
 
         return disasterRepository
                 .findByEventNameContainingIgnoreCase(
                         keyword.trim()
-                );
+                )
+                .stream()
+                .filter(disaster -> !disaster.isArchived())
+                .toList();
     }
 
 
@@ -145,28 +148,44 @@ public class DisasterService {
 
 
     // =========================================================
-    // DELETE FLOOD EVENT
+    // MOVE FLOOD EVENT TO RECYCLE BIN
     // =========================================================
 
     public void deleteDisaster(
             Long id) {
 
-        // Check whether the flood event exists
-
+        // Find the existing flood event
         Disaster disaster =
                 getDisasterById(id);
 
+        // Mark as archived instead of permanently deleting
+        disaster.setArchived(true);
 
-        /*
-         * Delete the selected flood event.
-         *
-         * The Disaster entity uses CascadeType.ALL and
-         * orphanRemoval for affected areas.
-         *
-         * Therefore, affected areas belonging to this
-         * disaster will also be removed.
-         */
+        // Save the archived flood event
+        disasterRepository.save(disaster);
+    }
 
-        disasterRepository.delete(disaster);
+
+    // =========================================================
+    // GET ARCHIVED FLOOD EVENTS
+    // =========================================================
+
+    public List<Disaster> getArchivedDisasters() {
+
+        return disasterRepository.findByArchivedTrue();
+    }
+
+
+    // =========================================================
+    // RESTORE FLOOD EVENT FROM RECYCLE BIN
+    // =========================================================
+
+    public Disaster restoreDisaster(Long id) {
+
+        Disaster disaster = getDisasterById(id);
+
+        disaster.setArchived(false);
+
+        return disasterRepository.save(disaster);
     }
 }

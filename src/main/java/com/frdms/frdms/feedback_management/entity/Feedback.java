@@ -1,3 +1,4 @@
+
 package com.frdms.frdms.feedback_management.entity;
 
 import jakarta.persistence.*;
@@ -13,10 +14,20 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // User's name
     @NotBlank(message = "Name is required")
     @Size(max = 100, message = "Name cannot exceed 100 characters")
     @Column(name = "name", nullable = false, length = 100)
     private String name;
+
+    // NIC used to identify the feedback submitter
+    @NotBlank(message = "NIC number is required")
+    @Pattern(
+            regexp = "(?i)^(\\d{9}[VX]|\\d{12})$",
+            message = "Enter a valid Sri Lankan NIC number"
+    )
+    @Column(name = "nic", length = 12)
+    private String nic;
 
     @Size(max = 20, message = "Contact number cannot exceed 20 characters")
     @Pattern(
@@ -25,6 +36,7 @@ public class Feedback {
     )
     @Column(name = "contact_number", length = 20)
     private String contactNumber;
+
     @NotBlank(message = "Please select who you are")
     @Column(name = "feedback_type", nullable = false, length = 30)
     private String feedbackType;
@@ -36,12 +48,14 @@ public class Feedback {
     @Size(max = 100, message = "Affected area cannot exceed 100 characters")
     @Column(name = "affected_area", length = 100)
     private String affectedArea;
+
     @Size(max = 100, message = "Shelter name cannot exceed 100 characters")
     @Column(name = "shelter", length = 100)
     private String shelter;
 
     @Column(name = "service_date")
     private LocalDate serviceDate;
+
     @Column(name = "assistance_provided", length = 20)
     private String assistanceProvided;
 
@@ -77,6 +91,7 @@ public class Feedback {
     @Size(max = 1000, message = "Difficulties cannot exceed 1000 characters")
     @Column(name = "difficulties", length = 1000)
     private String difficulties;
+
     @NotNull(message = "Please give a rating")
     @Min(value = 1, message = "Rating must be at least 1")
     @Max(value = 5, message = "Rating cannot exceed 5")
@@ -92,7 +107,15 @@ public class Feedback {
     private LocalDate feedbackDate = LocalDate.now();
 
 
-    // Getters and Setters
+    // Project Manager's review
+    @Column(name = "approval_status", nullable = false, length = 20)
+    private String approvalStatus = "PENDING";
+
+    @Column(name = "rejection_reason", length = 1000)
+    private String rejectionReason;
+
+
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -108,6 +131,14 @@ public class Feedback {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
     }
 
     public String getContactNumber() {
@@ -134,29 +165,6 @@ public class Feedback {
         this.service = service;
     }
 
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public LocalDate getFeedbackDate() {
-        return feedbackDate;
-    }
-
-    public void setFeedbackDate(LocalDate feedbackDate) {
-        this.feedbackDate = feedbackDate;
-    }
     public String getAffectedArea() {
         return affectedArea;
     }
@@ -188,6 +196,7 @@ public class Feedback {
     public void setAssistanceProvided(String assistanceProvided) {
         this.assistanceProvided = assistanceProvided;
     }
+
     public String getCommunityArea() {
         return communityArea;
     }
@@ -219,6 +228,7 @@ public class Feedback {
     public void setSuggestions(String suggestions) {
         this.suggestions = suggestions;
     }
+
     public String getServiceArea() {
         return serviceArea;
     }
@@ -257,6 +267,46 @@ public class Feedback {
 
     public void setDifficulties(String difficulties) {
         this.difficulties = difficulties;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public LocalDate getFeedbackDate() {
+        return feedbackDate;
+    }
+
+    public void setFeedbackDate(LocalDate feedbackDate) {
+        this.feedbackDate = feedbackDate;
+    }
+
+    public String getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    public void setApprovalStatus(String approvalStatus) {
+        this.approvalStatus = approvalStatus;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
     }
 
 }

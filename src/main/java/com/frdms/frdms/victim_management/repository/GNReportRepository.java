@@ -14,4 +14,7 @@ public interface GNReportRepository extends JpaRepository<GNReport, Long> {
     Optional<GNReport> findByReportNumber(String reportNumber);
 
     List<GNReport> findByVictim(Victim victim);
+
+    // Get the latest GN report for a victim
+    Optional<GNReport> findFirstByVictimOrderByIdDesc(Victim victim);
 }

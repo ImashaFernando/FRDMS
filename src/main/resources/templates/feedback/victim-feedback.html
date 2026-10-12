@@ -1,18 +1,12 @@
+
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Victim Feedback | FRDMS</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -24,668 +18,313 @@
             color: #1F3A60;
         }
 
-        /* =========================
-           HEADER
-           ========================= */
-
         .header {
             background: #1F3A60;
             color: white;
-            padding: 28px 45px;
+            padding: 24px 40px;
         }
 
         .header h1 {
-            margin: 0 0 8px;
-            font-size: 32px;
+            margin: 0 0 6px;
+            font-size: 28px;
         }
 
         .header p {
             margin: 0;
             color: #D8E7F0;
-            font-size: 16px;
+            font-size: 14px;
         }
-
-        /* =========================
-           MAIN CONTENT
-           ========================= */
 
         .container {
-            max-width: 900px;
+            max-width: 750px;
             margin: 35px auto;
-            padding: 0 25px;
+            padding: 0 20px;
         }
 
-        /* =========================
-           BACK BUTTON
-           ========================= */
-
-        .container > a {
+        .back-link {
             display: inline-block;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             color: #3582B8;
-            font-size: 15px;
-            font-weight: 600;
             text-decoration: none;
+            font-weight: 600;
         }
 
-        .container > a:hover {
-            color: #1F3A60;
-            text-decoration: underline;
-        }
-
-        /* =========================
-           MAIN TITLE
-           ========================= */
-
-        .container h2 {
-            color: #1F3A60;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .container > p {
-            color: #526B7A;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-
-        /* =========================
-           FORM
-           ========================= */
-
-        form {
+        .card {
             background: white;
+            border-radius: 16px;
             padding: 35px;
-            border-radius: 18px;
-            box-shadow: 0 8px 25px rgba(31, 58, 96, 0.10);
+            box-shadow: 0 5px 20px rgba(31, 58, 96, 0.08);
         }
 
-        /* =========================
-           SECTION HEADINGS
-           ========================= */
-
-        .section-title {
-            margin: 28px 0 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #85B6D6;
-            color: #1F3A60;
-            font-size: 20px;
+        .title {
+            margin: 0;
+            font-size: 25px;
         }
 
-        /* =========================
-           LABELS
-           ========================= */
+        .description {
+            color: #66788A;
+            margin: 8px 0 25px;
+            line-height: 1.6;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 7px;
-            color: #1F3A60;
-            font-size: 15px;
             font-weight: 600;
+            margin-bottom: 8px;
         }
-
-        /* =========================
-           INPUTS
-           ========================= */
 
         input[type="text"],
-        input[type="tel"],
-        input[type="date"],
-        input[type="number"],
-        input[type="email"],
-        select,
         textarea {
             width: 100%;
-            padding: 13px 14px;
-            border: 1px solid #C9DCE8;
-            border-radius: 9px;
-            background: #F8FBFC;
-            color: #1F3A60;
-            font-family: Arial, sans-serif;
+            padding: 12px;
+            border: 1px solid #B8CBD8;
+            border-radius: 8px;
             font-size: 15px;
-            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
-        /* Focus */
-
-        input[type="text"]:focus,
-        input[type="tel"]:focus,
-        input[type="date"]:focus,
-        input[type="number"]:focus,
-        input[type="email"]:focus,
-        select:focus,
+        input:focus,
         textarea:focus {
             outline: none;
             border-color: #3582B8;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
         }
-
-        /* Textarea */
 
         textarea {
             min-height: 120px;
             resize: vertical;
         }
 
-        /* =========================
-           RADIO BUTTONS
-           ========================= */
-
-        input[type="radio"] {
-            width: auto;
-            margin-right: 8px;
-            accent-color: #3582B8;
+        .radio-group,
+        .rating {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        /* =========================
-           RADIO OPTIONS
-           ========================= */
-
-        .radio-option {
-            display: inline-flex;
+        .radio-option,
+        .rating-option {
+            display: flex;
             align-items: center;
-            padding: 13px 20px;
-            margin: 5px 10px 5px 0;
-            border: 1px solid #C9DCE8;
-            border-radius: 10px;
-            background: #F8FBFC;
-            color: #1F3A60;
+            gap: 7px;
+            border: 1px solid #B8CBD8;
+            border-radius: 9px;
+            padding: 11px 14px;
             cursor: pointer;
+            font-weight: normal;
         }
 
-        .radio-option:hover {
-            border-color: #3582B8;
-            background: #EDF3F6;
+        .radio-option input,
+        .rating-option input {
+            margin: 0;
         }
-
-        /* =========================
-           ERROR
-           ========================= */
 
         .error {
             display: block;
-            margin-top: 5px;
             color: #C0392B;
             font-size: 13px;
+            margin-top: 6px;
         }
 
-        /* =========================
-           BUTTONS
-           ========================= */
-
-        button,
-        input[type="submit"] {
-            padding: 13px 28px;
+        .submit-button {
+            width: 100%;
             border: none;
+            padding: 14px;
             border-radius: 9px;
             background: #3582B8;
             color: white;
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: 0.2s ease;
+            margin-top: 8px;
         }
 
-        button:hover,
-        input[type="submit"]:hover {
+        .submit-button:hover {
             background: #1F3A60;
         }
 
-        /* =========================
-           FORM ACTIONS
-           ========================= */
-
-        .form-actions {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            padding: 13px 28px;
-            border-radius: 9px;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background: #3582B8;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1F3A60;
-        }
-
-        .btn-secondary {
-            background: #EDF3F6;
-            color: #1F3A60;
-            border: 1px solid #C9DCE8;
-        }
-
-        .btn-secondary:hover {
-            background: #D8E7F0;
-        }
-
-        /* =========================
-           MOBILE
-           ========================= */
-
-        @media (max-width: 700px) {
-
+        @media (max-width: 600px) {
             .header {
                 padding: 22px;
             }
 
-            .container {
-                margin: 20px auto;
-                padding: 0 15px;
-            }
-
-            form {
-                padding: 23px;
-            }
-
-            .container h2 {
-                font-size: 24px;
-            }
-
-            .form-actions {
-                flex-direction: column;
-            }
-
-            button,
-            input[type="submit"],
-            .btn {
-                width: 100%;
-                text-align: center;
+            .card {
+                padding: 24px 18px;
             }
         }
-
     </style>
-
 </head>
 
 <body>
 
 <header class="header">
-
     <h1>Victim Feedback</h1>
-
     <p>
-        Tell us about your experience receiving disaster relief assistance
+        Share your experience receiving disaster relief assistance.
     </p>
-
 </header>
-
 
 <div class="container">
 
-    <a class="back-link"
-       th:href="@{/feedback/submit}">
-        ← Back to Feedback Type
+    <a class="back-link" th:href="@{/feedback/submit}">
+        &larr; Back to Feedback Type
     </a>
-
 
     <div class="card">
 
-        <h2 class="title">
-            Share Your Experience
-        </h2>
+        <h2 class="title">Share Your Experience</h2>
 
         <p class="description">
-            Your feedback helps us improve the support provided
-            to affected families and communities.
+            Your feedback helps us understand whether affected
+            individuals and families receive the relief assistance
+            they need.
         </p>
-
 
         <form th:action="@{/feedback/save}"
               th:object="${feedback}"
               method="post">
-            <input type="hidden"
-                   th:field="*{feedbackType}">
 
+            <input type="hidden" th:field="*{feedbackType}">
 
-            <!-- ================= ABOUT YOU ================= -->
+            <div class="field">
+                <label for="name">Your Name *</label>
 
-            <div class="section">
+                <input id="name"
+                       type="text"
+                       th:field="*{name}"
+                       maxlength="100"
+                       placeholder="Enter your full name"
+                       required>
 
-                <div class="section-title">
-                    1. About You
-                </div>
-
-
-                <div class="field">
-
-                    <label for="name">
-                        Full Name *
-                    </label>
-
-                    <input id="name"
-                           type="text"
-                           th:field="*{name}"
-                           maxlength="100"
-                           placeholder="Enter your full name">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('name')}"
-                          th:errors="*{name}">
-                    </span>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="contactNumber">
-                        Contact Number
-                    </label>
-
-                    <input id="contactNumber"
-                           type="text"
-                           th:field="*{contactNumber}"
-                           maxlength="20"
-                           placeholder="e.g. 0712345678">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('contactNumber')}"
-                          th:errors="*{contactNumber}">
-                    </span>
-
-                </div>
-
+                <span class="error"
+                      th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"></span>
             </div>
 
+            <div class="field">
+                <label for="nic">NIC Number *</label>
 
-            <!-- ================= SITUATION ================= -->
+                <input id="nic"
+                       type="text"
+                       th:field="*{nic}"
+                       maxlength="12"
+                       placeholder="Enter your NIC number"
+                       required>
 
-            <div class="section">
-
-                <div class="section-title">
-                    2. Your Situation
-                </div>
-
-
-                <div class="field">
-
-                    <label for="affectedArea">
-                        Affected Area *
-                    </label>
-
-                    <input id="affectedArea"
-                           type="text"
-                           th:field="*{affectedArea}"
-                           maxlength="100"
-                           placeholder="Enter your affected area">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('affectedArea')}"
-                          th:errors="*{affectedArea}">
-                    </span>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="shelter">
-                        Shelter / Relief Centre
-                    </label>
-
-                    <input id="shelter"
-                           type="text"
-                           th:field="*{shelter}"
-                           maxlength="100"
-                           placeholder="Enter shelter or relief centre">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('shelter')}"
-                          th:errors="*{shelter}">
-                    </span>
-
-                </div>
-
+                <span class="error"
+                      th:if="${#fields.hasErrors('nic')}"
+                      th:errors="*{nic}"></span>
             </div>
 
+            <div class="field">
+                <label>
+                    Was the required relief assistance provided? *
+                </label>
 
-            <!-- ================= SERVICE ================= -->
+                <div class="radio-group">
 
-            <div class="section">
-
-                <div class="section-title">
-                    3. Relief Service
-                </div>
-
-
-                <div class="field">
-
-                    <label for="service">
-                        What service did you receive? *
+                    <label class="radio-option">
+                        <input type="radio"
+                               th:field="*{assistanceProvided}"
+                               value="YES"
+                               required>
+                        Yes
                     </label>
 
-                    <select id="service"
-                            th:field="*{service}">
-
-                        <option value="">
-                            -- Select a service --
-                        </option>
-
-                        <option value="Emergency / Disaster Response">
-                            Emergency / Disaster Response
-                        </option>
-
-                        <option value="Victim Assistance">
-                            Victim Assistance
-                        </option>
-
-                        <option value="Shelter Service">
-                            Shelter Service
-                        </option>
-
-                        <option value="Relief Distribution">
-                            Relief Distribution
-                        </option>
-
-                        <option value="Relief / Donation Support">
-                            Relief / Donation Support
-                        </option>
-
-                        <option value="Transportation Service">
-                            Transportation Service
-                        </option>
-
-                        <option value="Relief Package Service">
-                            Relief Package Service
-                        </option>
-
-                        <option value="Volunteer Support">
-                            Volunteer Support
-                        </option>
-
-                        <option value="Other Relief Service">
-                            Other Relief Service
-                        </option>
-
-                    </select>
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('service')}"
-                          th:errors="*{service}">
-                    </span>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="serviceDate">
-                        Date of Service *
+                    <label class="radio-option">
+                        <input type="radio"
+                               th:field="*{assistanceProvided}"
+                               value="PARTIALLY">
+                        Partially
                     </label>
 
-                    <input id="serviceDate"
-                           type="date"
-                           th:field="*{serviceDate}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('serviceDate')}"
-                          th:errors="*{serviceDate}">
-                    </span>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        Was the required assistance provided? *
+                    <label class="radio-option">
+                        <input type="radio"
+                               th:field="*{assistanceProvided}"
+                               value="NO">
+                        No
                     </label>
 
-                    <div class="radio-group">
-
-                        <label class="radio-option">
-
-                            <input type="radio"
-                                   th:field="*{assistanceProvided}"
-                                   value="YES">
-
-                            Yes
-
-                        </label>
-
-
-                        <label class="radio-option">
-
-                            <input type="radio"
-                                   th:field="*{assistanceProvided}"
-                                   value="PARTIALLY">
-
-                            Partially
-
-                        </label>
-
-
-                        <label class="radio-option">
-
-                            <input type="radio"
-                                   th:field="*{assistanceProvided}"
-                                   value="NO">
-
-                            No
-
-                        </label>
-
-                    </div>
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('assistanceProvided')}"
-                          th:errors="*{assistanceProvided}">
-                    </span>
-
                 </div>
 
+                <span class="error"
+                      th:if="${#fields.hasErrors('assistanceProvided')}"
+                      th:errors="*{assistanceProvided}"></span>
             </div>
 
+            <div class="field">
+                <label>Rate your relief assistance experience *</label>
 
-            <!-- ================= EXPERIENCE ================= -->
+                <div class="rating">
 
-            <div class="section">
-
-                <div class="section-title">
-                    4. Your Experience
-                </div>
-
-
-                <div class="field">
-
-                    <label>
-                        How would you rate the service? *
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="1"
+                               required>
+                        1 - Very Poor
                     </label>
 
-                    <div class="rating">
-
-                        <label class="rating-option">
-                            <input type="radio"
-                                   th:field="*{rating}"
-                                   value="1">
-                            1 - Very Poor
-                        </label>
-
-                        <label class="rating-option">
-                            <input type="radio"
-                                   th:field="*{rating}"
-                                   value="2">
-                            2 - Poor
-                        </label>
-
-                        <label class="rating-option">
-                            <input type="radio"
-                                   th:field="*{rating}"
-                                   value="3">
-                            3 - Average
-                        </label>
-
-                        <label class="rating-option">
-                            <input type="radio"
-                                   th:field="*{rating}"
-                                   value="4">
-                            4 - Good
-                        </label>
-
-                        <label class="rating-option">
-                            <input type="radio"
-                                   th:field="*{rating}"
-                                   value="5">
-                            5 - Excellent
-                        </label>
-
-                    </div>
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('rating')}"
-                          th:errors="*{rating}">
-                    </span>
-
-                </div>
-
-
-                <div class="field">
-
-                    <label for="comments">
-                        Tell us about your experience *
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="2">
+                        2 - Poor
                     </label>
 
-                    <textarea id="comments"
-                              th:field="*{comments}"
-                              maxlength="1000"
-                              placeholder="Tell us what went well, what problems you faced, or what we can improve...">
-                    </textarea>
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="3">
+                        3 - Average
+                    </label>
 
-                    <span class="error"
-                          th:if="${#fields.hasErrors('comments')}"
-                          th:errors="*{comments}">
-                    </span>
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="4">
+                        4 - Good
+                    </label>
+
+                    <label class="rating-option">
+                        <input type="radio"
+                               th:field="*{rating}"
+                               value="5">
+                        5 - Excellent
+                    </label>
 
                 </div>
 
+                <span class="error"
+                      th:if="${#fields.hasErrors('rating')}"
+                      th:errors="*{rating}"></span>
             </div>
 
+            <div class="field">
+                <label for="comments">Your Written Feedback *</label>
 
-            <button type="submit"
-                    class="submit-button">
+                <textarea id="comments"
+                          th:field="*{comments}"
+                          maxlength="1000"
+                          placeholder="Describe your experience and any assistance you still need..."
+                          required></textarea>
 
+                <span class="error"
+                      th:if="${#fields.hasErrors('comments')}"
+                      th:errors="*{comments}"></span>
+            </div>
+
+            <button type="submit" class="submit-button">
                 Submit Feedback
-
             </button>
 
         </form>
 
     </div>
-
 </div>
 
 </body>
-
 </html>

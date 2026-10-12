@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Edit Feedback</title>
+    <title>Edit Feedback - FRDMS</title>
 
     <style>
 
@@ -20,185 +20,228 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #EDF3F6;
-            color: #1F3A60;
+            background: #eef6fa;
+            color: #173f63;
         }
 
+        /* ================= HEADER ================= */
+
         .header {
-            background: #1F3A60;
+            background: linear-gradient(135deg, #174b70, #2f82b2);
             color: white;
-            padding: 28px 45px;
+            padding: 42px 25px;
+            text-align: center;
         }
 
         .header h1 {
-            margin: 0 0 6px;
-            font-size: 28px;
+            margin: 0 0 10px;
+            font-size: 32px;
         }
 
         .header p {
             margin: 0;
-            color: #D9E8F2;
+            font-size: 16px;
+            color: #e7f5fb;
         }
+
+        /* ================= CONTAINER ================= */
 
         .container {
             max-width: 850px;
             margin: 0 auto;
-            padding: 35px 25px 50px;
+            padding: 35px 20px 60px;
         }
 
         .form-card {
             background: white;
-            border-radius: 14px;
-            padding: 30px;
-            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
-            border: 1px solid #DCE8EF;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(31, 58, 96, 0.10);
+            border: 1px solid #dceaf2;
         }
+
+        /* ================= TYPE BADGE ================= */
 
         .type-badge {
             display: inline-block;
-            background: #E7F2F8;
-            color: #3582B8;
-            padding: 7px 13px;
-            border-radius: 20px;
-            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: #e4f3fa;
+            color: #2477a5;
             font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 14px;
+            margin-bottom: 25px;
         }
+
+        /* ================= SECTION ================= */
 
         .section-title {
-            color: #1F3A60;
-            font-size: 18px;
+            margin: 28px 0 18px;
+            padding-bottom: 9px;
+            border-bottom: 2px solid #e6eef3;
+            color: #174b70;
+            font-size: 20px;
             font-weight: 700;
-            margin: 25px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #EDF3F6;
         }
 
+        /* ================= FORM ================= */
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 22px;
         }
 
         label {
             display: block;
+            margin-bottom: 8px;
             font-weight: 600;
-            margin-bottom: 7px;
-            color: #1F3A60;
+            color: #174b70;
         }
 
         .required {
-            color: #B91C1C;
+            color: #d62828;
         }
 
         input[type="text"],
-        input[type="date"],
         select,
         textarea {
             width: 100%;
-            padding: 11px 12px;
-            border: 1px solid #CBD5E1;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 13px 14px;
+            border: 1px solid #c9dbe5;
+            border-radius: 9px;
+            background: #ffffff;
+            color: #173f63;
             font-family: inherit;
-            color: #1F3A60;
-            background: white;
-        }
-
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #3582B8;
-            box-shadow: 0 0 0 3px rgba(53, 130, 184, 0.12);
+            font-size: 15px;
         }
 
         textarea {
-            min-height: 120px;
+            min-height: 130px;
             resize: vertical;
         }
 
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2f82b2;
+            box-shadow: 0 0 0 3px rgba(47, 130, 178, 0.12);
+        }
+
+        /* ================= READ ONLY SERVICE ================= */
+
+        .readonly-field {
+            background: #f2f7fa !important;
+            color: #536b7b !important;
+            cursor: not-allowed;
+        }
+
+        /* ================= RADIO ================= */
+
         .radio-group {
             display: flex;
-            gap: 22px;
+            gap: 25px;
             flex-wrap: wrap;
         }
 
         .radio-option {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 8px;
             font-weight: normal;
             margin: 0;
         }
 
-        .radio-option input[type="radio"] {
+        .radio-option input {
             width: auto;
         }
 
+        /* ================= ERRORS ================= */
+
         .error {
             display: block;
-            color: #B91C1C;
+            margin-top: 6px;
+            color: #c62828;
             font-size: 13px;
-            margin-top: 5px;
         }
 
-        .buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #E2E8F0;
-        }
+        /* ================= INFORMATION ================= */
 
-        .btn {
-            text-decoration: none;
-            border: none;
-            border-radius: 8px;
-            padding: 11px 20px;
-            font-weight: 600;
-            cursor: pointer;
+        .review-note {
+            margin-top: 25px;
+            padding: 15px 18px;
+            border-radius: 10px;
+            background: #eef8fc;
+            border-left: 4px solid #2f82b2;
+            color: #416579;
+            line-height: 1.5;
             font-size: 14px;
         }
 
-        .btn-cancel {
-            background: #E2E8F0;
-            color: #475569;
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e1e9ee;
         }
 
-        .btn-cancel:hover {
-            background: #CBD5E1;
+        .btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 9px;
+            text-decoration: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-back {
+            background: #edf2f5;
+            color: #38566b;
+        }
+
+        .btn-back:hover {
+            background: #dfe8ed;
         }
 
         .btn-update {
-            background: #3582B8;
+            background: #2f82b2;
             color: white;
         }
 
         .btn-update:hover {
-            background: #2C6E9C;
+            background: #246b94;
         }
+
+        /* ================= RESPONSIVE ================= */
 
         @media (max-width: 650px) {
 
             .header {
-                padding: 22px;
+                padding: 32px 20px;
             }
 
-            .container {
-                padding: 22px 15px 40px;
+            .header h1 {
+                font-size: 26px;
             }
 
             .form-card {
-                padding: 20px;
+                padding: 23px;
             }
 
             .buttons {
-                flex-direction: column;
+                flex-direction: column-reverse;
+                align-items: stretch;
             }
 
             .btn {
                 text-align: center;
+                width: 100%;
             }
 
         }
@@ -212,7 +255,7 @@
 
 <header class="header">
 
-    <h1>Edit Feedback</h1>
+    <h1>Edit Your Feedback</h1>
 
     <p>
         Update the feedback you previously submitted
@@ -225,70 +268,80 @@
 
     <div class="form-card">
 
-        <!-- ================================================= -->
-        <!-- MAIN EDIT FORM -->
-        <!-- ================================================= -->
+        <!-- =========================
+             FEEDBACK TYPE
+        ========================== -->
 
-        <form th:action="@{/feedback/update}"
+        <div class="type-badge"
+             th:if="${feedback.feedbackType == 'VICTIM'}">
+
+            👥 Victim Feedback
+
+        </div>
+
+
+        <div class="type-badge"
+             th:if="${feedback.feedbackType == 'DONOR'}">
+
+            💰 Donor Feedback
+
+        </div>
+
+
+        <div class="type-badge"
+             th:if="${feedback.feedbackType == 'VOLUNTEER'}">
+
+            👤 Volunteer Feedback
+
+        </div>
+
+
+        <!-- =========================
+             EDIT FORM
+        ========================== -->
+
+        <form th:action="@{/feedback/edit/{id}(id=${feedback.id})}"
               th:object="${feedback}"
               method="post">
 
 
-            <!-- Hidden ID -->
+            <!-- Feedback ID -->
 
             <input type="hidden"
                    th:field="*{id}">
 
 
-            <!-- Hidden feedback type -->
+            <!-- Feedback Type -->
 
             <input type="hidden"
                    th:field="*{feedbackType}">
 
 
-            <!-- ================================================= -->
-            <!-- FEEDBACK TYPE -->
-            <!-- ================================================= -->
+            <!-- Ownership information -->
 
-            <div class="type-badge"
-                 th:if="${feedback.feedbackType == 'VICTIM'}">
+            <input type="hidden"
+                   name="ownerName"
+                   th:value="${ownerName}">
 
-                Victim / Affected Family
-
-            </div>
-
-
-            <div class="type-badge"
-                 th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
-
-                Community Member
-
-            </div>
+            <input type="hidden"
+                   name="ownerNic"
+                   th:value="${ownerNic}">
 
 
-            <div class="type-badge"
-                 th:if="${feedback.feedbackType == 'VOLUNTEER'}">
-
-                Volunteer
-
-            </div>
-
-
-            <!-- ================================================= -->
-            <!-- BASIC INFORMATION -->
-            <!-- ================================================= -->
+            <!-- =========================
+                 NAME
+            ========================== -->
 
             <div class="section-title">
-                Basic Information
+                Your Information
             </div>
 
-
-            <!-- Name -->
 
             <div class="form-group">
 
                 <label>
-                    Name <span class="required">*</span>
+                    Name
+                    <span class="required">*</span>
                 </label>
 
                 <input type="text"
@@ -302,166 +355,38 @@
             </div>
 
 
-            <!-- Contact -->
+            <!-- =========================
+                 SERVICE
+            ========================== -->
 
             <div class="form-group">
 
                 <label>
-                    Contact Number
+                    Service
                 </label>
 
                 <input type="text"
-                       th:field="*{contactNumber}">
-
-                <span class="error"
-                      th:if="${#fields.hasErrors('contactNumber')}"
-                      th:errors="*{contactNumber}">
-                </span>
+                       th:field="*{service}"
+                       class="readonly-field"
+                       readonly>
 
             </div>
 
 
-            <!-- Service -->
-
-            <div class="form-group">
-
-                <label>
-                    Service / Activity
-                    <span class="required">*</span>
-                </label>
-
-                <select th:field="*{service}">
-
-                    <option value="">
-                        -- Select Service / Activity --
-                    </option>
-
-                    <option value="Emergency / Disaster Response">
-                        Emergency / Disaster Response
-                    </option>
-
-                    <option value="Victim Assistance">
-                        Victim Assistance
-                    </option>
-
-                    <option value="Shelter Service / Shelter Support">
-                        Shelter Service / Shelter Support
-                    </option>
-
-                    <option value="Relief Distribution">
-                        Relief Distribution
-                    </option>
-
-                    <option value="Relief / Donation Support">
-                        Relief / Donation Support
-                    </option>
-
-                    <option value="Transportation Service / Transportation Support">
-                        Transportation Service / Transportation Support
-                    </option>
-
-                    <option value="Relief Package Service / Relief Package Preparation">
-                        Relief Package Service / Relief Package Preparation
-                    </option>
-
-                    <option value="Volunteer Service">
-                        Volunteer Service
-                    </option>
-
-                    <option value="Community Support">
-                        Community Support
-                    </option>
-
-                    <option value="Other Relief Service">
-                        Other Relief Service
-                    </option>
-
-                </select>
-
-                <span class="error"
-                      th:if="${#fields.hasErrors('service')}"
-                      th:errors="*{service}">
-                </span>
-
-            </div>
-
-
-            <!-- ================================================= -->
-            <!-- VICTIM FIELDS -->
-            <!-- ================================================= -->
+            <!-- =========================
+                 VICTIM FEEDBACK
+            ========================== -->
 
             <div th:if="${feedback.feedbackType == 'VICTIM'}">
 
                 <div class="section-title">
-                    Victim / Affected Family Details
+                    Your Experience
                 </div>
-
-
-                <!-- Affected Area -->
 
                 <div class="form-group">
 
                     <label>
-                        Affected Area
-                        <span class="required">*</span>
-                    </label>
-
-                    <input type="text"
-                           th:field="*{affectedArea}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('affectedArea')}"
-                          th:errors="*{affectedArea}">
-                    </span>
-
-                </div>
-
-
-                <!-- Shelter -->
-
-                <div class="form-group">
-
-                    <label>
-                        Shelter / Relief Centre
-                    </label>
-
-                    <input type="text"
-                           th:field="*{shelter}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('shelter')}"
-                          th:errors="*{shelter}">
-                    </span>
-
-                </div>
-
-
-                <!-- Service Date -->
-
-                <div class="form-group">
-
-                    <label>
-                        Date of Service
-                        <span class="required">*</span>
-                    </label>
-
-                    <input type="date"
-                           th:field="*{serviceDate}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('serviceDate')}"
-                          th:errors="*{serviceDate}">
-                    </span>
-
-                </div>
-
-
-                <!-- Assistance -->
-
-                <div class="form-group">
-
-                    <label>
-                        Assistance Provided?
+                        Was the required assistance provided?
                         <span class="required">*</span>
                     </label>
 
@@ -511,83 +436,21 @@
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- COMMUNITY MEMBER FIELDS -->
-            <!-- ================================================= -->
+            <!-- =========================
+                 DONOR FEEDBACK
+            ========================== -->
 
-            <div th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
+            <div th:if="${feedback.feedbackType == 'DONOR'}">
 
                 <div class="section-title">
-                    Community Details
+                    Your Experience
                 </div>
-
-
-                <!-- Community Area -->
 
                 <div class="form-group">
 
                     <label>
-                        Community / Area
+                        Did your donation contribute to relief activities?
                         <span class="required">*</span>
-                    </label>
-
-                    <input type="text"
-                           th:field="*{communityArea}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('communityArea')}"
-                          th:errors="*{communityArea}">
-                    </span>
-
-                </div>
-
-
-                <!-- Activity Location -->
-
-                <div class="form-group">
-
-                    <label>
-                        Activity Location
-                        <span class="required">*</span>
-                    </label>
-
-                    <input type="text"
-                           th:field="*{activityLocation}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('activityLocation')}"
-                          th:errors="*{activityLocation}">
-                    </span>
-
-                </div>
-
-
-                <!-- Activity Date -->
-
-                <div class="form-group">
-
-                    <label>
-                        Date of Activity
-                        <span class="required">*</span>
-                    </label>
-
-                    <input type="date"
-                           th:field="*{serviceDate}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('serviceDate')}"
-                          th:errors="*{serviceDate}">
-                    </span>
-
-                </div>
-
-
-                <!-- People Reached -->
-
-                <div class="form-group">
-
-                    <label>
-                        People Reached?
                     </label>
 
                     <div class="radio-group">
@@ -626,87 +489,31 @@
 
                     </div>
 
+                    <span class="error"
+                          th:if="${#fields.hasErrors('peopleReached')}"
+                          th:errors="*{peopleReached}">
+                    </span>
+
                 </div>
 
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- VOLUNTEER FIELDS -->
-            <!-- ================================================= -->
+            <!-- =========================
+                 VOLUNTEER FEEDBACK
+            ========================== -->
 
             <div th:if="${feedback.feedbackType == 'VOLUNTEER'}">
 
                 <div class="section-title">
-                    Volunteer Details
+                    Your Experience
                 </div>
-
-
-                <!-- Service Area -->
 
                 <div class="form-group">
 
                     <label>
-                        Service Area
+                        Were the required resources available?
                         <span class="required">*</span>
-                    </label>
-
-                    <input type="text"
-                           th:field="*{serviceArea}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('serviceArea')}"
-                          th:errors="*{serviceArea}">
-                    </span>
-
-                </div>
-
-
-                <!-- Service Location -->
-
-                <div class="form-group">
-
-                    <label>
-                        Shelter / Relief Centre
-                    </label>
-
-                    <input type="text"
-                           th:field="*{serviceLocation}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('serviceLocation')}"
-                          th:errors="*{serviceLocation}">
-                    </span>
-
-                </div>
-
-
-                <!-- Service Date -->
-
-                <div class="form-group">
-
-                    <label>
-                        Service Date
-                        <span class="required">*</span>
-                    </label>
-
-                    <input type="date"
-                           th:field="*{serviceDate}">
-
-                    <span class="error"
-                          th:if="${#fields.hasErrors('serviceDate')}"
-                          th:errors="*{serviceDate}">
-                    </span>
-
-                </div>
-
-
-                <!-- Resources Available -->
-
-                <div class="form-group">
-
-                    <label>
-                        Resources Available?
                     </label>
 
                     <div class="radio-group">
@@ -745,57 +552,9 @@
 
                     </div>
 
-                </div>
-
-
-                <!-- Coordination -->
-
-                <div class="form-group">
-
-                    <label>
-                        Coordination with Relief Team
-                    </label>
-
-                    <select th:field="*{coordinationRating}">
-
-                        <option value="">
-                            -- Select --
-                        </option>
-
-                        <option value="Excellent">
-                            Excellent
-                        </option>
-
-                        <option value="Good">
-                            Good
-                        </option>
-
-                        <option value="Average">
-                            Average
-                        </option>
-
-                        <option value="Poor">
-                            Poor
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- Difficulties -->
-
-                <div class="form-group">
-
-                    <label>
-                        Difficulties
-                    </label>
-
-                    <textarea th:field="*{difficulties}"></textarea>
-
                     <span class="error"
-                          th:if="${#fields.hasErrors('difficulties')}"
-                          th:errors="*{difficulties}">
+                          th:if="${#fields.hasErrors('resourcesAvailable')}"
+                          th:errors="*{resourcesAvailable}">
                     </span>
 
                 </div>
@@ -803,16 +562,14 @@
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- COMMON EXPERIENCE -->
-            <!-- ================================================= -->
+            <!-- =========================
+                 RATING
+            ========================== -->
 
             <div class="section-title">
-                Your Experience
+                Overall Experience
             </div>
 
-
-            <!-- Rating -->
 
             <div class="form-group">
 
@@ -857,12 +614,14 @@
             </div>
 
 
-            <!-- Comments -->
+            <!-- =========================
+                 FEEDBACK / COMMENTS
+            ========================== -->
 
             <div class="form-group">
 
                 <label>
-                    Feedback
+                    Your Feedback
                     <span class="required">*</span>
                 </label>
 
@@ -877,35 +636,31 @@
             </div>
 
 
-            <!-- Suggestions -->
+            <!-- =========================
+                 REVIEW NOTE
+            ========================== -->
 
-            <div class="form-group">
+            <div class="review-note">
 
-                <label>
-                    Suggestions
-                </label>
+                <strong>Note:</strong>
 
-                <textarea th:field="*{suggestions}"
-                          placeholder="How can we improve our services?"></textarea>
-
-                <span class="error"
-                      th:if="${#fields.hasErrors('suggestions')}"
-                      th:errors="*{suggestions}">
-                </span>
+                After updating your feedback, it will be
+                sent for review again before appearing on
+                the public feedback page.
 
             </div>
 
 
-            <!-- ================================================= -->
-            <!-- BUTTONS -->
-            <!-- ================================================= -->
+            <!-- =========================
+                 BUTTONS
+            ========================== -->
 
             <div class="buttons">
 
-                <a th:href="@{/feedback/my}"
-                   class="btn btn-cancel">
+                <a th:href="@{/feedback/my-feedback}"
+                   class="btn btn-back">
 
-                    Cancel
+                    ← Back to My Feedback
 
                 </a>
 
@@ -925,7 +680,6 @@
     </div>
 
 </main>
-
 
 </body>
 

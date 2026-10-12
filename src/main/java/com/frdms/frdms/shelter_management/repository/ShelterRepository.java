@@ -10,8 +10,11 @@ public interface ShelterRepository
 
     boolean existsByLocationIgnoreCase(String location);
 
+    List<Shelter> findAllByOrderByIdDesc();
+
     List<Shelter> findByDisasterNameIgnoreCaseAndStatus(
             String disasterName,
             Shelter.ShelterStatus status
+
     );
 }

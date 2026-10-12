@@ -443,6 +443,15 @@
         }
 
 
+        /* ================= READ ONLY DISASTER INFORMATION ================= */
+
+        .readonly-field {
+            background: #f1f5f9;
+            color: #475569;
+            cursor: not-allowed;
+        }
+
+
         /* ================= PASSWORD ================= */
 
         .password-help {
@@ -794,7 +803,12 @@
                             type="text"
                             id="nicNumber"
                             th:field="*{nicNumber}"
-                            placeholder="Enter your NIC number"
+                            placeholder="Enter 12 digit NIC number"
+                            maxlength="12"
+                            pattern="[0-9]{12}"
+                            inputmode="numeric"
+                            oninvalid="this.setCustomValidity('NIC must contain exactly 12 digits.')"
+                            oninput="this.setCustomValidity('')"
                             required>
 
                     <div
@@ -826,6 +840,10 @@
                             th:field="*{phoneNumber}"
                             placeholder="Enter 10 digit phone number"
                             maxlength="10"
+                            pattern="[0-9]{10}"
+                            inputmode="numeric"
+                            oninvalid="this.setCustomValidity('Phone number must contain exactly 10 digits.')"
+                            oninput="this.setCustomValidity('')"
                             required>
 
                     <div
@@ -877,20 +895,22 @@
                             🌊
                         </div>
 
-                        <h3>
-                            Select Affected Flood Event
-                        </h3>
+                        <div>
+
+                            <h3>
+                                Select Affected Flood Event
+                            </h3>
+
+                            <div class="disaster-help">
+                                Select the flood/disaster that affected you.
+                            </div>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="disaster-help">
-
-                        Select the flood/disaster that
-                        affected you.
-
-                    </div>
-
+                    <!-- ================= AFFECTED FLOOD EVENT ================= -->
 
                     <label for="disasterId">
 
@@ -906,15 +926,11 @@
                     <select
                             id="disasterId"
                             name="disasterId"
-                            required>
+                            required
+                            onchange="showDisasterDetails(this)">
 
-                        <option
-                                value=""
-                                selected
-                                disabled>
-
+                        <option value="" selected disabled>
                             -- Select a flood event --
-
                         </option>
 
 
@@ -927,6 +943,44 @@
                     </select>
 
 
+                    <!-- ================= EVENT DATE ================= -->
+
+                    <div class="form-group full">
+
+                        <label for="eventDate">
+                            Event Date
+                        </label>
+
+                        <input
+                                type="date"
+                                id="eventDate"
+                                readonly
+                                class="readonly-field"
+                                placeholder="Automatically displayed">
+
+                    </div>
+
+
+                    <!-- ================= AFFECTED AREAS ================= -->
+
+                    <div class="form-group full">
+
+                        <label for="affectedAreas">
+                            Affected Areas
+                        </label>
+
+                        <textarea
+                                id="affectedAreas"
+                                readonly
+                                rows="3"
+                                class="readonly-field"
+                                placeholder="Affected areas will appear automatically"></textarea>
+
+                    </div>
+
+
+                    <!-- ================= DISASTER ERROR ================= -->
+
                     <div
                             class="error"
                             th:if="${disasterError}"
@@ -934,6 +988,94 @@
                     </div>
 
                 </div>
+
+
+                <!-- ================= DISASTER JAVASCRIPT ================= -->
+
+                <script>
+
+                    function showDisasterDetails(select) {
+
+                        const disasterId = select.value;
+
+
+                        // Clear fields if no disaster is selected
+                        if (!disasterId) {
+
+                            document.getElementById("eventDate").value = "";
+
+                            document.getElementById("affectedAreas").value = "";
+
+                            return;
+                        }
+
+
+                        // Get disaster details from backend
+                        fetch(
+                            "/victims/disaster/"
+                            + disasterId
+                            + "/details"
+                        )
+
+                            .then(response => {
+
+                                if (!response.ok) {
+
+                                    throw new Error(
+                                        "Failed to load disaster details"
+                                    );
+
+                                }
+
+                                return response.json();
+
+                            })
+
+                            .then(data => {
+
+                                // ================= EVENT DATE =================
+
+                                document.getElementById("eventDate").value =
+                                    data.eventDate || "";
+
+
+                                // ================= AFFECTED AREAS =================
+
+                                if (
+                                    data.affectedAreas &&
+                                    data.affectedAreas.length > 0
+                                ) {
+
+                                    document.getElementById("affectedAreas").value =
+                                        data.affectedAreas.join(", ");
+
+                                } else {
+
+                                    document.getElementById("affectedAreas").value =
+                                        "No affected areas recorded";
+
+                                }
+
+                            })
+
+                            .catch(error => {
+
+                                console.error(
+                                    "Error loading disaster details:",
+                                    error
+                                );
+
+
+                                document.getElementById("eventDate").value = "";
+
+                                document.getElementById("affectedAreas").value =
+                                    "Unable to load affected areas";
+
+                            });
+
+                    }
+
+                </script>
 
 
                 <!-- ================= PASSWORD ================= -->

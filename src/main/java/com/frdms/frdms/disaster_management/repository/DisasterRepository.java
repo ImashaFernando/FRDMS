@@ -12,4 +12,10 @@ public interface DisasterRepository
     List<Disaster> findByEventNameContainingIgnoreCase(
             String eventName
     );
+
+    // Get active flood events
+    List<Disaster> findByArchivedFalse();
+
+    // Get archived flood events for the Recycle Bin
+    List<Disaster> findByArchivedTrue();
 }

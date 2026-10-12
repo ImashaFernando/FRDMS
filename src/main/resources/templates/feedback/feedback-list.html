@@ -1,350 +1,552 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Submitted Feedback | FRDMS</title>
+    <title>Feedback & Voices | FRDMS</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #EDF3F6;
-            color: #1F3A60;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #eef6fa 0%, #f8fbfd 100%);
+            color: #173b5d;
         }
 
-        /* HEADER */
+        /* =========================
+           HERO SECTION
+        ========================== */
 
-        .header {
-            background: #1F3A60;
+        header {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #123b5d 0%, #1f6389 55%, #2d86aa 100%);
             color: white;
-            padding: 25px 45px;
+            padding: 55px 20px 65px;
+            text-align: center;
+        }
+
+        header::before,
+        header::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        header::before {
+            width: 280px;
+            height: 280px;
+            top: -150px;
+            left: -80px;
+        }
+
+        header::after {
+            width: 360px;
+            height: 360px;
+            right: -150px;
+            bottom: -220px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .hero-icon {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
         }
 
-        .header h1 {
-            margin: 0 0 6px;
-            font-size: 29px;
+        header h1 {
+            margin: 0 0 15px;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
-        .header p {
-            margin: 0;
-            color: #D8E7F0;
-            font-size: 14px;
+        header p {
+            max-width: 760px;
+            margin: auto;
+            color: #e3f1f7;
+            font-size: 17px;
+            line-height: 1.8;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* BACK BUTTON */
-
-        .back-button {
-            color: #1F3A60;
-            background: white;
-            text-decoration: none;
-            padding: 11px 17px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .back-button:hover {
-            background: #EDF3F6;
-        }
-
-        /* MAIN */
+        /* =========================
+           MAIN CONTAINER
+        ========================== */
 
         .container {
-            max-width: 1150px;
-            margin: 35px auto;
-            padding: 0 25px;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
         }
 
-        .page-heading {
-            margin-bottom: 25px;
+        /* =========================
+           BACK BUTTON
+        ========================== */
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 11px 20px;
+
+            border: 1px solid #c9dce8;
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.9);
+            color: #17496b;
+
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+
+            box-shadow: 0 4px 14px rgba(31, 75, 102, 0.08);
+
+            transition: all 0.25s ease;
         }
 
-        .page-heading h2 {
-            margin: 0 0 7px;
-            font-size: 25px;
+        .home-button:hover {
+            transform: translateY(-2px);
+            background: #1f6f98;
+            border-color: #1f6f98;
+            color: white;
+            box-shadow: 0 7px 18px rgba(31, 111, 152, 0.2);
         }
 
-        .page-heading p {
+        /* =========================
+           SECTION INTRO
+        ========================== */
+
+        .section-heading {
+            text-align: center;
+            margin: 42px auto 32px;
+        }
+
+        .section-heading h2 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            color: #173b5d;
+        }
+
+        .section-heading p {
             margin: 0;
-            color: #66788A;
+            color: #718496;
+            font-size: 15px;
         }
 
-        /* FEEDBACK GRID */
+        .heading-line {
+            width: 55px;
+            height: 4px;
+            margin: 15px auto 0;
+            border-radius: 20px;
+            background: #2f80a8;
+        }
+
+        /* =========================
+           FEEDBACK GRID
+        ========================== */
 
         .feedback-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 20px;
+            gap: 24px;
         }
 
-        /* CARD */
+        /* =========================
+           FEEDBACK CARD
+        ========================== */
 
         .feedback-card {
+            position: relative;
             background: white;
-            border: 1px solid #E0EAF0;
-            border-radius: 14px;
-            padding: 24px;
-            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+
+            border: 1px solid #e2edf3;
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow: 0 8px 28px rgba(31, 73, 98, 0.08);
+
+            transition: transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+        }
+
+        .feedback-card:hover {
+            transform: translateY(-5px);
+            border-color: #c9e0eb;
+            box-shadow: 0 14px 35px rgba(31, 73, 98, 0.13);
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+
+            font-size: 54px;
+            line-height: 1;
+
+            color: #e5f1f6;
+            font-family: Georgia, serif;
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+
             gap: 15px;
-            margin-bottom: 18px;
+            margin-bottom: 22px;
+            padding-right: 35px;
         }
 
-        .type {
-            color: #3582B8;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 5px;
+        /* =========================
+           USER INFO
+        ========================== */
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: linear-gradient(135deg, #dceff7, #c5e1ed);
+            color: #1c6386;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+            font-weight: 700;
         }
 
         .name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #1F3A60;
+            font-size: 16px;
+            font-weight: 700;
+            color: #173b5d;
+
+            overflow-wrap: anywhere;
         }
 
-        /* RATING */
+        .review-label {
+            margin-top: 3px;
+            font-size: 12px;
+            color: #91a0ad;
+        }
+
+        /* =========================
+           RATING
+        ========================== */
+
+        .rating-area {
+            text-align: right;
+            flex-shrink: 0;
+        }
 
         .rating {
-            color: #F7CF59;
+            color: #e6b82e;
             font-size: 20px;
+            letter-spacing: 1px;
             white-space: nowrap;
         }
 
-        /* DETAILS */
-
-        .details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .detail {
-            background: #F5F8FA;
-            padding: 11px;
-            border-radius: 8px;
-        }
-
-        .detail-label {
+        .rating-number {
             display: block;
-            color: #718496;
+            margin-top: 3px;
+
+            color: #81909d;
             font-size: 12px;
-            margin-bottom: 4px;
         }
 
-        .detail-value {
-            color: #1F3A60;
-            font-weight: 600;
-            word-break: break-word;
-        }
+        /* =========================
+           FEEDBACK TEXT
+        ========================== */
 
-        /* FEEDBACK */
-
-        .feedback-content {
-            border-top: 1px solid #E2EAF0;
-            padding-top: 16px;
-        }
-
-        .feedback-content strong {
-            display: block;
-            margin-bottom: 7px;
-        }
-
-        .feedback-content p {
+        .feedback-text {
             margin: 0;
-            color: #52697D;
-            line-height: 1.6;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #edf2f5;
+
+            line-height: 1.8;
+
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+
+            color: #526777;
+            font-size: 15px;
         }
 
-        /* SUGGESTIONS */
-
-        .suggestion {
-            margin-top: 15px;
-            padding: 13px;
-            background: #F5F8FA;
-            border-radius: 8px;
-        }
-
-        .suggestion strong {
-            margin-bottom: 6px;
-        }
-
-        /* EMPTY */
+        /* =========================
+           EMPTY STATE
+        ========================== */
 
         .empty-state {
+            max-width: 680px;
+            margin: 40px auto 0;
+
             background: white;
-            border-radius: 14px;
-            padding: 60px 25px;
+
+            border: 1px solid #e1edf3;
+            border-radius: 20px;
+
+            padding: 65px 30px;
+
             text-align: center;
-            box-shadow: 0 5px 18px rgba(31, 58, 96, 0.08);
+
+            box-shadow: 0 8px 28px rgba(31, 73, 98, 0.07);
         }
 
-        .empty-state h3 {
-            margin: 0 0 8px;
+        .empty-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #eaf5f9;
+            color: #2b7699;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        .empty-state h2 {
+            margin: 0 0 12px;
+            color: #173b5d;
         }
 
         .empty-state p {
-            margin: 0;
+            max-width: 520px;
+            margin: auto;
+
             color: #718496;
+            line-height: 1.7;
         }
 
-        /* MOBILE */
+        /* =========================
+           FOOTER NOTE
+        ========================== */
 
-        @media (max-width: 750px) {
+        .footer-note {
+            margin-top: 50px;
 
-            .header {
-                padding: 20px;
+            text-align: center;
+
+            color: #81909d;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 800px) {
+
+            header {
+                padding: 45px 20px 55px;
             }
 
-            .container {
-                padding: 0 15px;
+            header h1 {
+                font-size: 34px;
+            }
+
+            header p {
+                font-size: 15px;
             }
 
             .feedback-grid {
                 grid-template-columns: 1fr;
             }
-
-            .details {
-                grid-template-columns: 1fr;
-            }
-
         }
 
+        @media (max-width: 520px) {
+
+            .container {
+                padding: 24px 15px 45px;
+            }
+
+            header h1 {
+                font-size: 29px;
+            }
+
+            .card-header {
+                align-items: flex-start;
+            }
+
+            .feedback-card {
+                padding: 22px;
+            }
+
+            .rating {
+                font-size: 17px;
+            }
+
+            .section-heading h2 {
+                font-size: 24px;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+<!-- =========================
+     HERO
+========================== -->
 
-<!-- HEADER -->
+<header>
 
-<header class="header">
+    <div class="hero-content">
 
-    <div>
+        <div class="hero-icon">
+            💬
+        </div>
 
-        <h1>Submitted Feedback</h1>
+        <h1>Feedback &amp; Voices</h1>
 
         <p>
-            Review experiences and concerns shared by victims,
-            community members and volunteers
+            We value your voice. Your feedback helps us listen, learn,
+            and serve our communities better. Together, we can build
+            a healthier and stronger Sri Lanka.
         </p>
 
     </div>
-
-
-
 
 </header>
 
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN CONTENT
+========================== -->
 
-<div class="container">
+<main class="container">
+
+    <!-- Back to Home -->
+
+    <a th:href="@{/}" class="home-button">
+        ← Back to Home
+    </a>
 
 
-    <div class="page-heading">
+    <!-- Section Heading -->
 
-        <h2>
-            Feedback Records
-        </h2>
+    <div class="section-heading">
+
+        <h2>What People Have Shared</h2>
 
         <p>
-            All submitted feedback is displayed below.
+            Honest experiences help us understand what matters most.
         </p>
+
+        <div class="heading-line"></div>
 
     </div>
 
 
-    <!-- FEEDBACK CARDS -->
+    <!-- =========================
+         FEEDBACK CARDS
+    ========================== -->
 
     <div class="feedback-grid"
-         th:if="${not #lists.isEmpty(feedbackList)}">
+         th:if="${feedbackList != null and !#lists.isEmpty(feedbackList)}">
+
+        <article class="feedback-card"
+                 th:each="feedback : ${feedbackList}">
+
+            <!-- Decorative quotation -->
+
+            <div class="quote-mark">
+                “
+            </div>
 
 
-        <div class="feedback-card"
-             th:each="feedback : ${feedbackList}">
-
-
-            <!-- CARD HEADER -->
+            <!-- Card Header -->
 
             <div class="card-header">
 
-                <div>
+                <div class="user-info">
 
-                    <div class="type"
-                         th:if="${feedback.feedbackType == 'VICTIM'}">
-                        Victim / Affected Family
+                    <div class="avatar">
+                        <span th:text="${#strings.substring(feedback.name, 0, 1).toUpperCase()}">
+                            U
+                        </span>
                     </div>
 
-                    <div class="type"
-                         th:if="${feedback.feedbackType == 'COMMUNITY_MEMBER'}">
-                        Community Member
-                    </div>
+                    <div>
 
-                    <div class="type"
-                         th:if="${feedback.feedbackType == 'VOLUNTEER'}">
-                        Volunteer
-                    </div>
+                        <div class="name"
+                             th:text="${feedback.name}">
+                            User Name
+                        </div>
 
-                    <div class="name"
-                         th:text="${feedback.name}">
-                        Sanjula
+                        <div class="review-label">
+                            Feedback shared
+                        </div>
+
                     </div>
 
                 </div>
 
 
-                <!-- RATING -->
+                <!-- Rating -->
 
-                <div class="rating">
+                <div class="rating-area">
 
-                    <span th:if="${feedback.rating >= 1}">
-                        ★
-                    </span>
+                    <div class="rating">
 
-                    <span th:if="${feedback.rating >= 2}">
-                        ★
-                    </span>
+                        <span th:each="star : ${#numbers.sequence(1, 5)}"
+                              th:text="${star <= feedback.rating ? '★' : '☆'}">
+                            ★
+                        </span>
 
-                    <span th:if="${feedback.rating >= 3}">
-                        ★
-                    </span>
+                    </div>
 
-                    <span th:if="${feedback.rating >= 4}">
-                        ★
-                    </span>
-
-                    <span th:if="${feedback.rating >= 5}">
-                        ★
+                    <span class="rating-number"
+                          th:text="${feedback.rating + '/5'}">
+                        5/5
                     </span>
 
                 </div>
@@ -352,202 +554,49 @@
             </div>
 
 
-            <!-- DETAILS -->
+            <!-- Feedback -->
 
-            <div class="details">
+            <p class="feedback-text"
+               th:text="${feedback.comments}">
+                Feedback comments will appear here.
+            </p>
 
-
-                <!-- SERVICE -->
-
-                <div class="detail">
-
-                    <span class="detail-label">
-                        Service / Activity
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.service}">
-                        Relief Distribution
-                    </span>
-
-                </div>
-
-
-                <!-- DATE -->
-
-                <div class="detail">
-
-                    <span class="detail-label">
-                        Date
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.serviceDate}">
-                        2026-09-15
-                    </span>
-
-                </div>
-
-
-                <!-- VICTIM AREA -->
-
-                <div class="detail"
-                     th:if="${feedback.affectedArea != null}">
-
-                    <span class="detail-label">
-                        Affected Area
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.affectedArea}">
-                        Area
-                    </span>
-
-                </div>
-
-
-                <!-- COMMUNITY AREA -->
-
-                <div class="detail"
-                     th:if="${feedback.communityArea != null}">
-
-                    <span class="detail-label">
-                        Community / Area
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.communityArea}">
-                        Community
-                    </span>
-
-                </div>
-
-
-                <!-- VOLUNTEER AREA -->
-
-                <div class="detail"
-                     th:if="${feedback.serviceArea != null}">
-
-                    <span class="detail-label">
-                        Service Area
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.serviceArea}">
-                        Service Area
-                    </span>
-
-                </div>
-
-
-                <!-- LOCATION -->
-
-                <div class="detail"
-                     th:if="${feedback.serviceLocation != null}">
-
-                    <span class="detail-label">
-                        Service Location
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.serviceLocation}">
-                        Shelter
-                    </span>
-
-                </div>
-
-
-                <!-- ASSISTANCE -->
-
-                <div class="detail"
-                     th:if="${feedback.assistanceProvided != null}">
-
-                    <span class="detail-label">
-                        Assistance Provided
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.assistanceProvided}">
-                        YES
-                    </span>
-
-                </div>
-
-
-                <!-- PEOPLE REACHED -->
-
-                <div class="detail"
-                     th:if="${feedback.peopleReached != null}">
-
-                    <span class="detail-label">
-                        People Reached
-                    </span>
-
-                    <span class="detail-value"
-                          th:text="${feedback.peopleReached}">
-                        YES
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- FEEDBACK -->
-
-            <div class="feedback-content">
-
-                <strong>
-                    Feedback
-                </strong>
-
-                <p th:text="${feedback.comments}">
-                    Feedback comments appear here.
-                </p>
-
-
-                <!-- SUGGESTIONS -->
-
-                <div class="suggestion"
-                     th:if="${feedback.suggestions != null
-                     and !#strings.isEmpty(feedback.suggestions)}">
-
-                    <strong>
-                        Suggestions
-                    </strong>
-
-                    <p th:text="${feedback.suggestions}">
-                        Suggestions appear here.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </div>
+        </article>
 
     </div>
 
 
-    <!-- EMPTY -->
+    <!-- =========================
+         EMPTY STATE
+    ========================== -->
 
     <div class="empty-state"
-         th:if="${#lists.isEmpty(feedbackList)}">
+         th:if="${feedbackList == null or #lists.isEmpty(feedbackList)}">
 
-        <h3>
-            No Feedback Submitted Yet
-        </h3>
+        <div class="empty-icon">
+            💬
+        </div>
+
+        <h2>No Feedback to Display Yet</h2>
 
         <p>
-            Submitted feedback will appear here.
+            Approved feedback will appear here once submissions
+            have been reviewed and accepted by the Project Manager.
         </p>
 
     </div>
 
 
-</div>
+    <!-- Footer Note -->
+
+    <div class="footer-note">
+
+        Every voice matters. Thank you for helping us improve
+        the way we serve people affected by disasters.
+
+    </div>
+
+</main>
 
 </body>
-
 </html>

@@ -1,6 +1,8 @@
 package com.frdms.frdms.victim_management.controller;
 
+import com.frdms.frdms.disaster_management.entity.AffectedArea;
 import com.frdms.frdms.disaster_management.entity.Disaster;
+import com.frdms.frdms.disaster_management.service.AffectedAreaService;
 import com.frdms.frdms.disaster_management.service.DisasterService;
 import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
 import com.frdms.frdms.victim_management.entity.GNReport;
@@ -29,6 +31,7 @@ public class VictimController {
     private final GNReportService gnReportService;
     private final AffectedFamilyInformationService informationService;
     private final DisasterService disasterService;
+    private final AffectedAreaService affectedAreaService;
 
 
     // =========================================================
@@ -39,12 +42,14 @@ public class VictimController {
             VictimService victimService,
             GNReportService gnReportService,
             AffectedFamilyInformationService informationService,
-            DisasterService disasterService) {
+            DisasterService disasterService,
+            AffectedAreaService affectedAreaService) {
 
         this.victimService = victimService;
         this.gnReportService = gnReportService;
         this.informationService = informationService;
         this.disasterService = disasterService;
+        this.affectedAreaService = affectedAreaService;
     }
 
 
@@ -61,11 +66,13 @@ public class VictimController {
                 new Victim()
         );
 
+
         // Load available flood events
         model.addAttribute(
                 "disasters",
                 disasterService.getAllDisasters()
         );
+
 
         return "victim/form";
     }
@@ -163,6 +170,7 @@ public class VictimController {
                         victim.getNicNumber()
                 );
 
+
         if (existingVictim != null) {
 
             model.addAttribute(
@@ -197,6 +205,45 @@ public class VictimController {
         // -----------------------------------------------------
 
         return "redirect:/login";
+    }
+
+
+    // =========================================================
+    // GET SELECTED DISASTER DETAILS FOR VICTIM REGISTRATION
+    // =========================================================
+
+    @GetMapping("/disaster/{id}/details")
+    @ResponseBody
+    public Map<String, Object> getDisasterDetails(
+            @PathVariable Long id) {
+
+        Disaster disaster =
+                disasterService.getDisasterById(id);
+
+        List<AffectedArea> affectedAreas =
+                affectedAreaService
+                        .getAffectedAreasByDisaster(disaster);
+
+        List<String> areaNames =
+                affectedAreas
+                        .stream()
+                        .map(AffectedArea::getAreaName)
+                        .toList();
+
+        Map<String, Object> details =
+                new HashMap<>();
+
+        details.put(
+                "eventDate",
+                disaster.getEventDate()
+        );
+
+        details.put(
+                "affectedAreas",
+                areaNames
+        );
+
+        return details;
     }
 
 
