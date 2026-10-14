@@ -1,4 +1,8 @@
+
 package com.frdms.frdms.victim_management.controller;
+
+import com.frdms.frdms.distribution_management.entity.ReliefPackage;
+import com.frdms.frdms.distribution_management.repository.ReliefPackageRepository;
 
 import com.frdms.frdms.victim_management.entity.AffectedFamilyInformation;
 import com.frdms.frdms.victim_management.entity.GNReport;
@@ -30,316 +34,138 @@ import java.util.List;
 public class VictimDashboardController {
 
     private final VictimService victimService;
-
     private final GNReportService gnReportService;
-
-    private final AffectedFamilyInformationService
-            affectedFamilyInformationService;
-
-    private final ShelterAllocationService
-            shelterAllocationService;
-
-    private final ReliefRequirementService
-            reliefRequirementService;
-
-    private final NeedsAssessmentService
-            needsAssessmentService;
-
+    private final AffectedFamilyInformationService affectedFamilyInformationService;
+    private final ShelterAllocationService shelterAllocationService;
+    private final ReliefRequirementService reliefRequirementService;
+    private final NeedsAssessmentService needsAssessmentService;
+    private final ReliefPackageRepository reliefPackageRepository;
 
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
 
     public VictimDashboardController(
-
             VictimService victimService,
-
             GNReportService gnReportService,
+            AffectedFamilyInformationService affectedFamilyInformationService,
+            ShelterAllocationService shelterAllocationService,
+            ReliefRequirementService reliefRequirementService,
+            NeedsAssessmentService needsAssessmentService,
+            ReliefPackageRepository reliefPackageRepository) {
 
-            AffectedFamilyInformationService
-                    affectedFamilyInformationService,
-
-            ShelterAllocationService
-                    shelterAllocationService,
-
-            ReliefRequirementService
-                    reliefRequirementService,
-
-            NeedsAssessmentService
-                    needsAssessmentService) {
-
-        this.victimService =
-                victimService;
-
-        this.gnReportService =
-                gnReportService;
-
-        this.affectedFamilyInformationService =
-                affectedFamilyInformationService;
-
-        this.shelterAllocationService =
-                shelterAllocationService;
-
-        this.reliefRequirementService =
-                reliefRequirementService;
-
-        this.needsAssessmentService =
-                needsAssessmentService;
+        this.victimService = victimService;
+        this.gnReportService = gnReportService;
+        this.affectedFamilyInformationService = affectedFamilyInformationService;
+        this.shelterAllocationService = shelterAllocationService;
+        this.reliefRequirementService = reliefRequirementService;
+        this.needsAssessmentService = needsAssessmentService;
+        this.reliefPackageRepository = reliefPackageRepository;
     }
-
 
     // =========================================================
     // VICTIM DASHBOARD
     // =========================================================
 
     @GetMapping("/victim/dashboard")
-    public String showDashboard(
-            HttpSession session,
-            Model model) {
+    public String showDashboard(HttpSession session, Model model) {
 
-
-        // =====================================================
-        // CHECK VICTIM LOGIN
-        // =====================================================
-
-        Long victimId =
-                (Long) session.getAttribute(
-                        "victimId"
-                );
-
+        // Check victim login
+        Long victimId = (Long) session.getAttribute("victimId");
 
         if (victimId == null) {
-
             return "redirect:/login";
         }
 
-
-        // =====================================================
-        // GET LOGGED-IN VICTIM
-        // =====================================================
-
+        // Get logged-in victim
         Victim victim;
 
         try {
-
-            victim =
-                    victimService.getVictimById(
-                            victimId
-                    );
-
+            victim = victimService.getVictimById(victimId);
         } catch (Exception e) {
-
             session.invalidate();
-
             return "redirect:/login";
         }
-
-
-        // =====================================================
-        // VICTIM NOT FOUND
-        // =====================================================
 
         if (victim == null) {
-
             session.invalidate();
-
             return "redirect:/login";
         }
 
-
-        // =====================================================
-        // GET LATEST GN REPORT
-        // =====================================================
-
+        // Get latest GN report
         GNReport gnReport =
-                gnReportService
-                        .getLatestGNReportByVictim(
-                                victim
-                        );
+                gnReportService.getLatestGNReportByVictim(victim);
 
-
-        // =====================================================
-        // GET FAMILY INFORMATION
-        // =====================================================
-
+        // Get family information
         AffectedFamilyInformation familyInformation =
-                affectedFamilyInformationService
-                        .getByVictim(victim)
+                affectedFamilyInformationService.getByVictim(victim)
                         .orElse(null);
 
-
-        // =====================================================
-        // GET SHELTER ALLOCATION
-        // =====================================================
-
-        ShelterAllocation shelterAllocation =
-                null;
-
+        // Get shelter allocation
+        ShelterAllocation shelterAllocation = null;
 
         if (familyInformation != null
-                && Boolean.TRUE.equals(
-                familyInformation
-                        .getShelterRequired())) {
+                && Boolean.TRUE.equals(familyInformation.getShelterRequired())) {
 
-
-            if (shelterAllocationService
-                    .isFamilyAllocated(
-                            familyInformation.getId()
-                    )) {
-
+            if (shelterAllocationService.isFamilyAllocated(
+                    familyInformation.getId())) {
 
                 shelterAllocation =
-                        shelterAllocationService
-                                .getAllocationByFamilyId(
-                                        familyInformation.getId()
-                                );
+                        shelterAllocationService.getAllocationByFamilyId(
+                                familyInformation.getId());
             }
         }
 
-
-        // =====================================================
-        // GET LATEST NEEDS ASSESSMENT
-        // =====================================================
-
-        /*
-         * This is important.
-         *
-         * The Victim Dashboard needs to know whether
-         * the victim has already submitted a Needs Assessment.
-         *
-         * If an assessment exists but there is no Relief
-         * Requirement yet, the dashboard will display:
-         *
-         * "Needs Assessment Submitted - PENDING"
-         *
-         * The victim must wait until the Relief Coordinator
-         * reviews the assessment.
-         */
-
+        // Get latest needs assessment
         NeedsAssessment needsAssessment =
-                needsAssessmentService
-                        .getLatestAssessmentByVictim(victim);
+                needsAssessmentService.getLatestAssessmentByVictim(victim);
 
-
-        // =====================================================
-        // GET RELIEF REQUIREMENTS
-        // =====================================================
-
-        /*
-         * Get all Relief Requirements belonging to
-         * the currently logged-in victim.
-         */
-
+        // Get relief requirements belonging to this victim
         List<ReliefRequirement> reliefRequirements =
-                reliefRequirementService
-                        .getByVictim(victim);
-
+                reliefRequirementService.getByVictim(victim);
 
         // =====================================================
-        // GET LATEST RELIEF REQUIREMENT
+        // GET THIS VICTIM'S RELIEF PACKAGE STATUSES
         // =====================================================
 
-        ReliefRequirement latestReliefRequirement =
-                null;
+        List<ReliefPackage> reliefPackages = List.of();
 
+        if (reliefRequirements != null && !reliefRequirements.isEmpty()) {
 
-        if (reliefRequirements != null
-                && !reliefRequirements.isEmpty()) {
+            List<Long> requirementIds = reliefRequirements.stream()
+                    .map(ReliefRequirement::getId)
+                    .filter(id -> id != null)
+                    .toList();
 
-            latestReliefRequirement =
-                    reliefRequirements.get(
-                            reliefRequirements.size() - 1
-                    );
+            if (!requirementIds.isEmpty()) {
+                reliefPackages =
+                        reliefPackageRepository.findByRequirementIdIn(
+                                requirementIds);
+            }
         }
 
+        // Get latest relief requirement
+        ReliefRequirement latestReliefRequirement = null;
 
-        // =====================================================
-        // SEND VICTIM INFORMATION TO DASHBOARD
-        // =====================================================
+        if (reliefRequirements != null && !reliefRequirements.isEmpty()) {
+            latestReliefRequirement =
+                    reliefRequirements.get(reliefRequirements.size() - 1);
+        }
 
-        model.addAttribute(
-                "victim",
-                victim
-        );
+        // Send information to dashboard
+        model.addAttribute("victim", victim);
+        model.addAttribute("gnReport", gnReport);
+        model.addAttribute("familyInformation", familyInformation);
+        model.addAttribute("shelterAllocation", shelterAllocation);
+        model.addAttribute("needsAssessment", needsAssessment);
+        model.addAttribute("reliefRequirements", reliefRequirements);
+        model.addAttribute("latestReliefRequirement", latestReliefRequirement);
 
-
-        // =====================================================
-        // SEND GN REPORT INFORMATION
-        // =====================================================
-
-        model.addAttribute(
-                "gnReport",
-                gnReport
-        );
-
-
-        // =====================================================
-        // SEND FAMILY INFORMATION
-        // =====================================================
-
-        model.addAttribute(
-                "familyInformation",
-                familyInformation
-        );
-
-
-        // =====================================================
-        // SEND SHELTER ALLOCATION
-        // =====================================================
-
-        model.addAttribute(
-                "shelterAllocation",
-                shelterAllocation
-        );
-
-
-        // =====================================================
-        // SEND NEEDS ASSESSMENT
-        // =====================================================
-
-        /*
-         * This allows dashboard.html to check:
-         *
-         * needsAssessment == null
-         *
-         * OR
-         *
-         * needsAssessment != null
-         */
-
-        model.addAttribute(
-                "needsAssessment",
-                needsAssessment
-        );
-
-
-        // =====================================================
-        // SEND ALL RELIEF REQUIREMENTS
-        // =====================================================
-
-        model.addAttribute(
-                "reliefRequirements",
-                reliefRequirements
-        );
-
-
-        // =====================================================
-        // SEND LATEST RELIEF REQUIREMENT
-        // =====================================================
-
-        model.addAttribute(
-                "latestReliefRequirement",
-                latestReliefRequirement
-        );
-
-
-        // =====================================================
-        // OPEN VICTIM DASHBOARD
-        // =====================================================
+        // Send package status information to dashboard
+        model.addAttribute("reliefPackages", reliefPackages);
 
         return "victim/dashboard";
     }
-
 
     // =========================================================
     // UPDATE VICTIM PROFILE
@@ -347,143 +173,63 @@ public class VictimDashboardController {
 
     @PostMapping("/victim/dashboard/update-profile")
     public String updateProfile(
-
             @RequestParam String fullName,
-
             @RequestParam String phoneNumber,
-
             @RequestParam String address,
-
             HttpSession session,
-
             RedirectAttributes redirectAttributes) {
 
-
-        // =====================================================
-        // CHECK VICTIM LOGIN
-        // =====================================================
-
-        Long victimId =
-                (Long) session.getAttribute(
-                        "victimId"
-                );
-
+        // Check victim login
+        Long victimId = (Long) session.getAttribute("victimId");
 
         if (victimId == null) {
-
             return "redirect:/login";
         }
 
-
-        // =====================================================
-        // GET LOGGED-IN VICTIM
-        // =====================================================
-
+        // Get logged-in victim
         Victim victim;
 
         try {
-
-            victim =
-                    victimService.getVictimById(
-                            victimId
-                    );
-
+            victim = victimService.getVictimById(victimId);
         } catch (Exception e) {
-
             session.invalidate();
-
             return "redirect:/login";
         }
-
-
-        // =====================================================
-        // CHECK VICTIM EXISTS
-        // =====================================================
 
         if (victim == null) {
-
             session.invalidate();
-
             return "redirect:/login";
         }
 
-
-        // =====================================================
-        // VALIDATE INPUT
-        // =====================================================
-
-        if (fullName == null
-                || fullName.trim().isEmpty()
-                || phoneNumber == null
-                || phoneNumber.trim().isEmpty()
-                || address == null
-                || address.trim().isEmpty()) {
-
+        // Validate input
+        if (fullName == null || fullName.trim().isEmpty()
+                || phoneNumber == null || phoneNumber.trim().isEmpty()
+                || address == null || address.trim().isEmpty()) {
 
             redirectAttributes.addFlashAttribute(
                     "profileError",
-                    "Full Name, Phone Number and Address are required."
-            );
-
+                    "Full Name, Phone Number and Address are required.");
 
             return "redirect:/victim/dashboard";
         }
 
+        // Create updated victim
+        Victim updatedVictim = new Victim();
 
-        // =====================================================
-        // CREATE UPDATED VICTIM
-        // =====================================================
+        updatedVictim.setFullName(fullName.trim());
+        updatedVictim.setPhoneNumber(phoneNumber.trim());
+        updatedVictim.setAddress(address.trim());
 
-        Victim updatedVictim =
-                new Victim();
+        // Keep the existing NIC because it is the login username
+        updatedVictim.setNicNumber(victim.getNicNumber());
 
+        // Update database
+        victimService.updateVictim(victimId, updatedVictim);
 
-        updatedVictim.setFullName(
-                fullName.trim()
-        );
-
-
-        updatedVictim.setPhoneNumber(
-                phoneNumber.trim()
-        );
-
-
-        updatedVictim.setAddress(
-                address.trim()
-        );
-
-
-        /*
-         * NIC is NOT editable.
-         *
-         * The existing NIC is kept because
-         * NIC is used as the victim's login username.
-         */
-
-        updatedVictim.setNicNumber(
-                victim.getNicNumber()
-        );
-
-
-        // =====================================================
-        // UPDATE DATABASE
-        // =====================================================
-
-        victimService.updateVictim(
-                victimId,
-                updatedVictim
-        );
-
-
-        // =====================================================
-        // SUCCESS MESSAGE
-        // =====================================================
-
+        // Success message
         redirectAttributes.addFlashAttribute(
                 "profileSuccess",
-                "Your profile has been updated successfully."
-        );
-
+                "Your profile has been updated successfully.");
 
         return "redirect:/victim/dashboard";
     }

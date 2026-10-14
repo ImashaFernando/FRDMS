@@ -218,6 +218,15 @@ public class ReliefPackageController {
             return "distribution/edit-package";
         }
 
+        // Retrieve the existing package
+        ReliefPackage existingPackage =
+                packageService.getPackageById(reliefPackage.getId());
+
+        // Preserve the existing requirement relationship
+        reliefPackage.setRequirementId(
+                existingPackage.getRequirementId()
+        );
+
         if (reliefPackage.getStatus() == PackageStatus.SUCCESSFUL
                 && reliefPackage.getDistributionCompletedAt() == null) {
 

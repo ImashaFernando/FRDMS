@@ -11,7 +11,6 @@
 
     <title>Victim Dashboard | FRDMS</title>
 
-
     <style>
 
         * {
@@ -834,6 +833,101 @@
             }
 
         }
+               /* RELIEF PACKAGE STATUS */
+                   .relief-package-card {
+                       border-top: 4px solid #28888F;
+                       margin-top: 25px;
+                   }
+
+
+        .package-empty {
+            background: #F4F9FC;
+            border: 1px dashed #B9CDD8;
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+        }
+
+        .package-empty-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .package-empty h4 {
+            color: #0B2A4A;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .package-empty p {
+            color: #557080;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .package-status-item {
+            background: #F8FAFB;
+            border: 1px solid #E1E8EC;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .package-status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .package-status-header h4 {
+            color: #0B2A4A;
+            margin-top: 7px;
+            font-size: 18px;
+        }
+
+        .package-status-badge {
+            display: inline-block;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: #FFF3CD;
+            color: #856404;
+            overflow-wrap: anywhere;
+        }
+
+        .package-status-badge.status-success {
+            background: #D1E7DD;
+            color: #0F5132;
+        }
+
+        .package-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .package-status-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .package-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        css
+               /* FIX GAP ABOVE RELIEF PACKAGE STATUS */
+           main.container > .relief-package-card {
+               margin-top: 30px !important;
+               position: relative;
+               clear: both;
+           }
 
     </style>
 
@@ -1654,6 +1748,68 @@
         </a>
 
 
+
+    </section>
+
+    <!-- MY RELIEF PACKAGE STATUS -->
+    <section class="profile-card relief-package-card">
+
+        <div class="profile-title">
+            <h3>📦 My Relief Package Status</h3>
+        </div>
+
+        <div th:if="${#lists.isEmpty(reliefPackages)}"
+             class="package-empty">
+
+            <div class="package-empty-icon">📦</div>
+
+            <h4>No Relief Package Available Yet</h4>
+
+            <p>
+                Your relief requirements have been received.
+                Package details will appear here once a package
+                has been created for your requirements.
+            </p>
+        </div>
+
+        <div th:each="reliefPackage : ${reliefPackages}"
+             class="package-status-item">
+
+            <div class="package-status-header">
+                <div>
+                    <span class="info-label">Package Code</span>
+                    <h4 th:text="${reliefPackage.packageCode}">PKG-001</h4>
+                </div>
+
+                <span class="package-status-badge"
+                      th:text="${reliefPackage.status}"
+                      th:classappend="${reliefPackage.status != null
+                      and #strings.equalsIgnoreCase(
+                          reliefPackage.status.toString(), 'SUCCESSFUL')
+                      ? ' status-success' : ' status-pending'}">
+                PENDING
+            </span>
+            </div>
+
+            <div class="package-details-grid">
+                <div class="info-box">
+                    <span class="info-label">Disaster</span>
+                    <span class="info-value"
+                          th:text="${reliefPackage.disasterName}">
+                    Disaster name
+                </span>
+                </div>
+
+                <div class="info-box">
+                    <span class="info-label">Package Status</span>
+                    <span class="info-value"
+                          th:text="${reliefPackage.status}">
+                    Pending
+                </span>
+                </div>
+            </div>
+
+        </div>
 
     </section>
 
