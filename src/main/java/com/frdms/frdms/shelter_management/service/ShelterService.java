@@ -49,7 +49,7 @@ public class ShelterService {
             shelter.setStatus(
                     Shelter.ShelterStatus.FULL
             );
-
+//shelter can not be full when there is space
         } else {
 
             if (shelter.getStatus() == Shelter.ShelterStatus.FULL) {

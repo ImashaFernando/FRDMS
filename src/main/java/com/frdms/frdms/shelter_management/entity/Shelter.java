@@ -137,6 +137,7 @@ public class Shelter {
         this.status = status;
     }
 
+     // calculate available capacity
     public Integer getAvailableCapacity() {
 
         if (maximumCapacity == null || currentOccupancy == null) {

@@ -30,3 +30,4 @@ public interface FundRequestRepository
     // Find fund requests linked to a particular budget
     List<FundRequest> findByBudgetId(Long budgetId);
 }
+
