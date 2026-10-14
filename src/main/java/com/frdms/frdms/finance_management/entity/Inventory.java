@@ -1,3 +1,4 @@
+
 package com.frdms.frdms.finance_management.entity;
 
 import jakarta.persistence.*;
@@ -28,22 +29,29 @@ public class Inventory {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal quantity = BigDecimal.ZERO;
 
+    @Column(name = "minimum_stock", precision = 12, scale = 2)
+    private BigDecimal minimumStock = BigDecimal.TEN;
+
     private String unit;
 
     private String description;
 
-
-    // =========================================================
-    // CONSTRUCTOR
-    // =========================================================
-
     public Inventory() {
     }
 
+    public String getStockStatus() {
+        if (quantity == null ||
+                quantity.compareTo(BigDecimal.ZERO) <= 0) {
+            return "OUT_OF_STOCK";
+        }
 
-    // =========================================================
-    // GETTERS AND SETTERS
-    // =========================================================
+        if (minimumStock != null &&
+                quantity.compareTo(minimumStock) <= 0) {
+            return "LOW_STOCK";
+        }
+
+        return "AVAILABLE";
+    }
 
     public Long getId() {
         return id;
@@ -53,7 +61,6 @@ public class Inventory {
         this.id = id;
     }
 
-
     public String getItemName() {
         return itemName;
     }
@@ -61,7 +68,6 @@ public class Inventory {
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
-
 
     public String getCategory() {
         return category;
@@ -71,7 +77,6 @@ public class Inventory {
         this.category = category;
     }
 
-
     public BigDecimal getQuantity() {
         return quantity;
     }
@@ -80,6 +85,13 @@ public class Inventory {
         this.quantity = quantity;
     }
 
+    public BigDecimal getMinimumStock() {
+        return minimumStock;
+    }
+
+    public void setMinimumStock(BigDecimal minimumStock) {
+        this.minimumStock = minimumStock;
+    }
 
     public String getUnit() {
         return unit;
@@ -88,7 +100,6 @@ public class Inventory {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-
 
     public String getDescription() {
         return description;
