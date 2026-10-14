@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.frdms.frdms.distribution_management.service.NecessaryItemSummary;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,6 +36,23 @@ public class NecessaryItemsController {
 
         List<NecessaryItemSummary> necessaryItems =
                 summaryService.getNecessaryItems();
+
+
+        Set<String> requestedItemKeys = new HashSet<>();
+
+        for (NecessaryItemSummary item : necessaryItems) {
+            if (resourceRequestService.hasAlreadyBeenRequested(
+                    item.getDisasterName(),
+                    item.getItemName())) {
+
+                requestedItemKeys.add(
+                        item.getDisasterName() + "::" + item.getItemName()
+                );
+            }
+        }
+
+        model.addAttribute("requestedItemKeys", requestedItemKeys);
+
 
         Map<String, List<NecessaryItemSummary>> itemsByDisaster =
                 new LinkedHashMap<>();
@@ -75,6 +94,6 @@ public class NecessaryItemsController {
                 unit
         );
 
-        return "redirect:/distribution/stock-status";
+        return "redirect:/distribution/necessary-items";
     }
 }
