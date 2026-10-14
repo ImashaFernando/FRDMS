@@ -1,9 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta name="viewport"
@@ -14,6 +14,17 @@
   <link rel="stylesheet"
         th:href="@{/css/distribution.css}">
 
+  <style>
+    .requested-status {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: #e0f2f1;
+      color: #00695c;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 
 <body>
@@ -22,6 +33,7 @@
 
   <div class="requirements-section">
 
+    <!-- Page title and dashboard button -->
     <div class="requirements-title-row">
 
       <h1>Necessary Relief Items</h1>
@@ -44,11 +56,13 @@
 
     </div>
 
+    <!-- Relief supply status -->
     <a th:href="@{/distribution/stock-status}"
        class="relief-supply-status-button">
       📦 Relief Supply Status
     </a>
 
+    <!-- Total item count -->
     <div class="requirements-count">
 
       Total Item Types:
@@ -56,48 +70,42 @@
 
     </div>
 
+    <!-- Items grouped by disaster -->
     <div th:if="${!#maps.isEmpty(itemsByDisaster)}">
 
       <div th:each="entry : ${itemsByDisaster}"
            style="margin-bottom: 30px;
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 4px 14px rgba(31, 58, 96, 0.12);">
+                        border-radius: 12px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 14px rgba(31, 58, 96, 0.12);">
 
-        <!-- Disaster Header -->
+        <!-- Disaster header -->
         <div style="background: linear-gradient(135deg, #1F3A60, #3582B8);
-                    color: white;
-                    padding: 18px 22px;
-                    font-size: 20px;
-                    font-weight: 700;">
+                            color: white;
+                            padding: 18px 22px;
+                            font-size: 20px;
+                            font-weight: 700;">
 
           🌊 DISASTER:
           <span th:text="${entry.key}">
-                Kelani River Flood
-            </span>
+                        Kelani River Flood
+                    </span>
 
         </div>
 
-        <!-- Items for this disaster -->
+        <!-- Relief items table -->
         <table class="requirements-table"
                style="margin: 0;
-                      border-radius: 0;
-                      box-shadow: none;">
+                              border-radius: 0;
+                              box-shadow: none;">
 
           <thead>
-
           <tr>
-
             <th>Relief Item</th>
-
             <th>Total Required</th>
-
             <th>Unit</th>
-
             <th>Action</th>
-
           </tr>
-
           </thead>
 
           <tbody>
@@ -118,31 +126,47 @@
 
             <td>
 
-              <form th:action="@{/distribution/necessary-items/request}"
-                    method="post">
+              <!-- Show Request button only when not requested -->
+              <div th:if="${!requestedItemKeys.contains(
+                                item.disasterName + '::' + item.itemName)}">
 
-                <input type="hidden"
-                       name="disasterName"
-                       th:value="${item.disasterName}">
+                <form th:action="@{/distribution/necessary-items/request}"
+                      method="post">
 
-                <input type="hidden"
-                       name="itemName"
-                       th:value="${item.itemName}">
+                  <input type="hidden"
+                         name="disasterName"
+                         th:value="${item.disasterName}">
 
-                <input type="hidden"
-                       name="quantity"
-                       th:value="${item.totalRequired}">
+                  <input type="hidden"
+                         name="itemName"
+                         th:value="${item.itemName}">
 
-                <input type="hidden"
-                       name="unit"
-                       th:value="${item.unit}">
+                  <input type="hidden"
+                         name="quantity"
+                         th:value="${item.totalRequired}">
 
-                <button type="submit"
-                        class="request-item-button">
-                  Request
-                </button>
+                  <input type="hidden"
+                         name="unit"
+                         th:value="${item.unit}">
 
-              </form>
+                  <button type="submit"
+                          class="request-item-button">
+                    Request
+                  </button>
+
+                </form>
+
+              </div>
+
+              <!-- Show Requested status when already requested -->
+              <div th:if="${requestedItemKeys.contains(
+                                item.disasterName + '::' + item.itemName)}">
+
+                                <span class="requested-status">
+                                    Requested
+                                </span>
+
+              </div>
 
             </td>
 
@@ -156,7 +180,7 @@
 
     </div>
 
-    <!-- No necessary items -->
+    <!-- Empty state -->
     <div th:if="${#maps.isEmpty(itemsByDisaster)}"
          class="no-requirements">
 
@@ -169,5 +193,4 @@
 </div>
 
 </body>
-
 </html>

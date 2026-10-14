@@ -1,8 +1,12 @@
+
 package com.frdms.frdms.distribution_management.service;
 
 import com.frdms.frdms.distribution_management.entity.ResourceRequest;
 import com.frdms.frdms.distribution_management.repository.ResourceRequestRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 @Service
 public class ResourceRequestService {
@@ -14,14 +18,19 @@ public class ResourceRequestService {
         this.repository = repository;
     }
 
+    @Transactional
     public ResourceRequest createRequest(
             String disasterName,
             String itemName,
-            java.math.BigDecimal quantity,
+            BigDecimal quantity,
             String unit) {
 
-        ResourceRequest request = new ResourceRequest();
+        if (repository.existsByDisasterNameAndItemName(
+                disasterName, itemName)) {
+            return null;
+        }
 
+        ResourceRequest request = new ResourceRequest();
         request.setDisasterName(disasterName);
         request.setItemName(itemName);
         request.setQuantity(quantity);
@@ -29,5 +38,13 @@ public class ResourceRequestService {
         request.setStatus("REQUESTED");
 
         return repository.save(request);
+    }
+
+    public boolean hasAlreadyBeenRequested(
+            String disasterName,
+            String itemName) {
+
+        return repository.existsByDisasterNameAndItemName(
+                disasterName, itemName);
     }
 }
