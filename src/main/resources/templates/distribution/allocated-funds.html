@@ -1,18 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>Allocated Funds | FRDMS</title>
 
     <style>
-
         body {
             margin: 0;
             padding: 30px;
@@ -30,7 +28,7 @@
             padding: 25px;
             border-radius: 15px;
             margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
         .header-top {
@@ -55,28 +53,21 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-
             padding: 10px 16px;
-
             border-radius: 9px;
-
             background: #2563eb;
             color: #ffffff;
-
             font-size: 14px;
             font-weight: 700;
-
             text-decoration: none;
-
             transition: all 0.2s ease;
-
             white-space: nowrap;
         }
 
         .back-button:hover {
             background: #1d4ed8;
             transform: translateY(-1px);
-            box-shadow: 0 5px 12px rgba(37,99,235,0.20);
+            box-shadow: 0 5px 12px rgba(37, 99, 235, 0.20);
         }
 
         .back-icon {
@@ -88,7 +79,7 @@
             background: white;
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             overflow-x: auto;
         }
 
@@ -102,6 +93,7 @@
             color: #163a5f;
             padding: 14px;
             text-align: left;
+            white-space: nowrap;
         }
 
         td {
@@ -109,7 +101,7 @@
             border-bottom: 1px solid #e5e7eb;
         }
 
-        tr:hover {
+        tbody tr:hover {
             background: #f8fbff;
         }
 
@@ -121,16 +113,26 @@
         .amount {
             font-weight: bold;
             color: #0b2c4a;
+            white-space: nowrap;
         }
 
         .status {
             display: inline-block;
             padding: 6px 12px;
             border-radius: 20px;
-            background: #b2d6ff;
-            color: #0b2c4a;
             font-size: 13px;
             font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .status-allocated {
+            background: #b2d6ff;
+            color: #0b2c4a;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #b91c1c;
         }
 
         .empty {
@@ -139,13 +141,7 @@
             color: #6b7280;
         }
 
-
-        /* =========================================================
-           RESPONSIVE
-           ========================================================= */
-
         @media (max-width: 700px) {
-
             body {
                 padding: 20px;
             }
@@ -158,157 +154,137 @@
             .back-button {
                 width: 100%;
                 justify-content: center;
+                box-sizing: border-box;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
 <div class="container">
 
     <!-- HEADER -->
-
     <div class="header">
 
         <div class="header-top">
 
-            <h1>
-                Allocated Funds
-            </h1>
-
-            <!-- BACK TO DASHBOARD -->
+            <h1>Allocated Funds</h1>
 
             <a th:href="@{/distribution/dashboard}"
                class="back-button">
-
-                <span class="back-icon">
-                    ←
-                </span>
-
-                <span>
-                    Back to Dashboard
-                </span>
-
+                <span class="back-icon">←</span>
+                <span>Back to Dashboard</span>
             </a>
 
         </div>
 
         <p>
-            View funds allocated by the Finance Officer
-            for approved disaster-relief budgets.
+            View allocated and rejected disaster-relief budgets
+            processed by the Finance Officer and Project Manager.
         </p>
 
     </div>
 
-
-    <!-- TABLE -->
-
+    <!-- FUNDS TABLE -->
     <div class="table-card">
 
         <table>
 
             <thead>
-
             <tr>
-
                 <th>ID</th>
-
                 <th>Disaster</th>
-
                 <th>Activity</th>
-
-                <th>Allocated Amount</th>
-
-                <th>Allocated Date</th>
-
+                <th>Amount</th>
+                <th>Date</th>
                 <th>Status</th>
-
             </tr>
-
             </thead>
-
 
             <tbody>
 
+            <!-- ALLOCATED BUDGETS -->
             <tr th:each="budget : ${budgets}">
 
-                <!-- ID -->
-
-                <td th:text="${budget.id}">
-                    20
-                </td>
-
-
-                <!-- DISASTER -->
+                <td th:text="${budget.id}">1</td>
 
                 <td class="disaster"
                     th:text="${budget.disasterName}">
-                    Mahawali
+                    Gampaha Flood event 2026
                 </td>
-
-
-                <!-- ACTIVITY -->
 
                 <td th:text="${budget.activity}">
                     Emergency Relief
                 </td>
 
-
-                <!-- ALLOCATED AMOUNT -->
-
                 <td class="amount">
-
                     LKR
-
-                    <span
-                            th:text="${#numbers.formatDecimal(
-                            budget.allocatedAmount,
-                            1,
-                            2
-                        )}">
-                        11,735.00
+                    <span th:text="${budget.allocatedAmount != null
+                        ? #numbers.formatDecimal(budget.allocatedAmount, 1, 2)
+                        : '0.00'}">
+                        5440.00
                     </span>
-
                 </td>
 
-
-                <!-- DATE -->
-
-                <td th:text="${budget.allocatedDate}">
-                    2026-10-07
+                <td th:text="${budget.allocatedDate != null
+                    ? budget.allocatedDate : '-'}">
+                    2026-10-14
                 </td>
-
-
-                <!-- STATUS -->
 
                 <td>
-
-                    <span class="status"
+                    <span class="status status-allocated"
                           th:text="${budget.status}">
-
                         ALLOCATED
-
                     </span>
-
                 </td>
 
             </tr>
 
+            <!-- REJECTED BUDGETS BY PROJECT MANAGER -->
+            <tr th:each="budget : ${rejectedBudgets}">
 
-            <!-- EMPTY -->
+                <td th:text="${budget.id}">4</td>
 
-            <tr th:if="${#lists.isEmpty(budgets)}">
+                <td class="disaster"
+                    th:text="${budget.disasterName}">
+                    Gampaha Flood event 2026
+                </td>
 
-                <td colspan="6"
-                    class="empty">
+                <td th:text="${budget.activity}">
+                    Emergency Relief
+                </td>
 
-                    No allocated funds are currently available.
+                <td class="amount">
+                    LKR
+                    <span th:text="${budget.requestedAmount != null
+                        ? #numbers.formatDecimal(budget.requestedAmount, 1, 2)
+                        : '0.00'}">
+                        1750.00
+                    </span>
+                </td>
 
+                <!-- CORRECT REJECTION DATE -->
+                <td th:text="${budget.rejectedDate != null
+                    ? budget.rejectedDate : '-'}">
+                    -
+                </td>
+
+                <td>
+                    <span class="status status-rejected"
+                          th:text="${budget.status}">
+                        REJECTED
+                    </span>
+                </td>
+
+            </tr>
+
+            <!-- EMPTY STATE -->
+            <tr th:if="${#lists.isEmpty(budgets)
+                         and #lists.isEmpty(rejectedBudgets)}">
+
+                <td colspan="6" class="empty">
+                    No allocated or rejected budgets are currently available.
                 </td>
 
             </tr>
@@ -322,5 +298,4 @@
 </div>
 
 </body>
-
 </html>

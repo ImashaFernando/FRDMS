@@ -1,3 +1,4 @@
+
 package com.frdms.frdms.distribution_management.entity;
 
 import jakarta.persistence.*;
@@ -21,16 +22,23 @@ public class FundRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // =========================================================
+    // BUDGET LINK
+    // =========================================================
+
+    @Column(name = "budget_id")
+    private Long budgetId;
 
     // =========================================================
     // ORIGINAL DISTRIBUTION REQUEST
     // =========================================================
 
-    @Column(name = "resource_request_id",
+    @Column(
+            name = "resource_request_id",
             nullable = false,
-            unique = true)
+            unique = true
+    )
     private Long resourceRequestId;
-
 
     // =========================================================
     // REQUEST INFORMATION
@@ -39,38 +47,41 @@ public class FundRequest {
     @Column(name = "disaster_name")
     private String disasterName;
 
-    @Column(name = "item_name",
-            nullable = false)
+    @Column(name = "item_name", nullable = false)
     private String itemName;
 
-    @Column(name = "requested_quantity",
+    @Column(
+            name = "requested_quantity",
             nullable = false,
             precision = 12,
-            scale = 2)
+            scale = 2
+    )
     private BigDecimal requestedQuantity;
 
-    @Column(name = "available_quantity",
+    @Column(
+            name = "available_quantity",
             nullable = false,
             precision = 12,
-            scale = 2)
+            scale = 2
+    )
     private BigDecimal availableQuantity;
 
-    @Column(name = "shortage_quantity",
+    @Column(
+            name = "shortage_quantity",
             nullable = false,
             precision = 12,
-            scale = 2)
+            scale = 2
+    )
     private BigDecimal shortageQuantity;
 
     @Column(name = "unit")
     private String unit;
 
-
     // =========================================================
     // FUND REQUEST TYPE
     // =========================================================
 
-    @Column(name = "request_type",
-            nullable = false)
+    @Column(name = "request_type", nullable = false)
     private String requestType;
 
     /*
@@ -78,30 +89,30 @@ public class FundRequest {
        NOT_AVAILABLE
     */
 
-
     // =========================================================
     // PURPOSE
     // =========================================================
 
-    @Column(name = "purpose",
-            length = 1000)
+    @Column(name = "purpose", length = 1000)
     private String purpose;
-
 
     // =========================================================
     // FINANCIAL INFORMATION
     // =========================================================
 
-    @Column(name = "estimated_unit_price",
+    @Column(
+            name = "estimated_unit_price",
             precision = 12,
-            scale = 2)
+            scale = 2
+    )
     private BigDecimal estimatedUnitPrice;
 
-    @Column(name = "estimated_total_cost",
+    @Column(
+            name = "estimated_total_cost",
             precision = 12,
-            scale = 2)
+            scale = 2
+    )
     private BigDecimal estimatedTotalCost;
-
 
     // =========================================================
     // PRIORITY
@@ -110,40 +121,34 @@ public class FundRequest {
     @Column(name = "priority")
     private String priority;
 
-
     // =========================================================
     // ADDITIONAL NOTES
     // =========================================================
 
-    @Column(name = "notes",
-            length = 1000)
+    @Column(name = "notes", length = 1000)
     private String notes;
-
 
     // =========================================================
     // STATUS
     // =========================================================
 
-    @Column(name = "status",
-            nullable = false)
+    @Column(name = "status", nullable = false)
     private String status = "FUND_REQUESTED";
 
     /*
        FUND_REQUESTED
+       IN_BUDGET
        APPROVED
        REJECTED
        COMPLETED
     */
 
-
     // =========================================================
     // CREATED DATE
     // =========================================================
 
-    @Column(name = "created_at",
-            nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
-
 
     @PrePersist
     public void onCreate() {
@@ -157,13 +162,20 @@ public class FundRequest {
         }
     }
 
-
     // =========================================================
     // GETTERS AND SETTERS
     // =========================================================
 
     public Long getId() {
         return id;
+    }
+
+    public Long getBudgetId() {
+        return budgetId;
+    }
+
+    public void setBudgetId(Long budgetId) {
+        this.budgetId = budgetId;
     }
 
     public Long getResourceRequestId() {
@@ -194,9 +206,7 @@ public class FundRequest {
         return requestedQuantity;
     }
 
-    public void setRequestedQuantity(
-            BigDecimal requestedQuantity) {
-
+    public void setRequestedQuantity(BigDecimal requestedQuantity) {
         this.requestedQuantity = requestedQuantity;
     }
 
@@ -204,9 +214,7 @@ public class FundRequest {
         return availableQuantity;
     }
 
-    public void setAvailableQuantity(
-            BigDecimal availableQuantity) {
-
+    public void setAvailableQuantity(BigDecimal availableQuantity) {
         this.availableQuantity = availableQuantity;
     }
 
@@ -214,9 +222,7 @@ public class FundRequest {
         return shortageQuantity;
     }
 
-    public void setShortageQuantity(
-            BigDecimal shortageQuantity) {
-
+    public void setShortageQuantity(BigDecimal shortageQuantity) {
         this.shortageQuantity = shortageQuantity;
     }
 
@@ -248,9 +254,7 @@ public class FundRequest {
         return estimatedUnitPrice;
     }
 
-    public void setEstimatedUnitPrice(
-            BigDecimal estimatedUnitPrice) {
-
+    public void setEstimatedUnitPrice(BigDecimal estimatedUnitPrice) {
         this.estimatedUnitPrice = estimatedUnitPrice;
     }
 
@@ -258,9 +262,7 @@ public class FundRequest {
         return estimatedTotalCost;
     }
 
-    public void setEstimatedTotalCost(
-            BigDecimal estimatedTotalCost) {
-
+    public void setEstimatedTotalCost(BigDecimal estimatedTotalCost) {
         this.estimatedTotalCost = estimatedTotalCost;
     }
 
@@ -292,9 +294,7 @@ public class FundRequest {
         return createdAt;
     }
 
-    public void setCreatedAt(
-            LocalDateTime createdAt) {
-
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }

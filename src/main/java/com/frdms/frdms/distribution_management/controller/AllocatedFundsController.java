@@ -1,3 +1,4 @@
+
 package com.frdms.frdms.distribution_management.controller;
 
 import com.frdms.frdms.finance_management.service.BudgetService;
@@ -12,15 +13,9 @@ public class AllocatedFundsController {
 
     private final BudgetService budgetService;
 
-    public AllocatedFundsController(
-            BudgetService budgetService) {
-
+    public AllocatedFundsController(BudgetService budgetService) {
         this.budgetService = budgetService;
     }
-
-    // =========================================================
-    // DISTRIBUTION OFFICER - VIEW ALLOCATED FUNDS
-    // =========================================================
 
     @GetMapping("/allocated-funds")
     public String viewAllocatedFunds(Model model) {
@@ -28,6 +23,11 @@ public class AllocatedFundsController {
         model.addAttribute(
                 "budgets",
                 budgetService.getAllocatedBudgets()
+        );
+
+        model.addAttribute(
+                "rejectedBudgets",
+                budgetService.getRejectedBudgets()
         );
 
         return "distribution/allocated-funds";

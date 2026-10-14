@@ -1,3 +1,4 @@
+
 package com.frdms.frdms.finance_management.entity;
 
 import jakarta.persistence.*;
@@ -69,6 +70,13 @@ public class Budget {
     // =========================================================
 
     private LocalDate allocatedDate;
+
+    // =========================================================
+    // REJECTED DATE
+    // =========================================================
+
+    @Column(name = "rejected_date")
+    private LocalDate rejectedDate;
 
     // =========================================================
     // CONSTRUCTOR
@@ -143,5 +151,13 @@ public class Budget {
 
     public void setAllocatedDate(LocalDate allocatedDate) {
         this.allocatedDate = allocatedDate;
+    }
+
+    public LocalDate getRejectedDate() {
+        return rejectedDate;
+    }
+
+    public void setRejectedDate(LocalDate rejectedDate) {
+        this.rejectedDate = rejectedDate;
     }
 }

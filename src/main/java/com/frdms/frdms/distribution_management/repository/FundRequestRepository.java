@@ -1,3 +1,4 @@
+
 package com.frdms.frdms.distribution_management.repository;
 
 import com.frdms.frdms.distribution_management.entity.FundRequest;
@@ -25,4 +26,7 @@ public interface FundRequestRepository
             List<Long> ids,
             String status
     );
+
+    // Find fund requests linked to a particular budget
+    List<FundRequest> findByBudgetId(Long budgetId);
 }
