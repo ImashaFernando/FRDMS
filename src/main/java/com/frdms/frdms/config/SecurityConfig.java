@@ -1294,10 +1294,11 @@ public class SecurityConfig {
                         // VICTIM REGISTRATION
                         // =========================================
 
-                        .requestMatchers(
-                                "/victims/register"
-                        )
-                        .permitAll()
+                                .requestMatchers(
+                                        "/victims/register",
+                                        "/victims/disaster/*/details"
+                                )
+                                .permitAll()
 
 
                         // -------------------------------------------------
