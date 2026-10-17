@@ -1,207 +1,142 @@
 # 🌊 Flood Relief & Disaster Management System (FRDMS)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Java-17-0F172A?style=for-the-badge&logo=openjdk&logoColor=white" />
-  <img src="https://img.shields.io/badge/Spring%20Boot-Backend-2563EB?style=for-the-badge&logo=springboot&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-Database-1D4ED8?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/Thymeleaf-Frontend-0F766E?style=for-the-badge&logo=thymeleaf&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java-17-0F172A?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-Backend-2563EB?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot"/>
+  <img src="https://img.shields.io/badge/MySQL-Database-1D4ED8?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL"/>
+  <img src="https://img.shields.io/badge/Thymeleaf-Frontend-0F766E?style=for-the-badge&logo=thymeleaf&logoColor=white" alt="Thymeleaf"/>
 </p>
 
 <p align="center">
-  <strong>💙 Technology with a purpose — helping communities recover, together.</strong>
+  <strong>💙 Technology for Relief. Innovation for Communities.</strong>
+  <br/>
+  A centralized platform supporting disaster response and relief management.
 </p>
 
 ---
 
 ## 🌷 About the Project
 
-The **Flood Relief and Disaster Management System (FRDMS)** is a web-based application developed to support the disaster relief activities of the **Healthy Lanka Alliance for Development**.
+The **Flood Relief & Disaster Management System (FRDMS)** is a collaborative web-based application developed to support the disaster relief activities of **Healthy Lanka Alliance for Development**.
 
-The system aims to improve how disaster-related information, affected people, volunteers, relief supplies, donations, finances, and feedback are managed through a centralized platform.
+The system brings essential relief operations into one platform, helping improve coordination, information management, resource distribution, donation tracking, financial transparency, and feedback collection.
 
-By reducing reliance on paper records, spreadsheets, phone calls, and manual reporting, FRDMS supports more organized, transparent, and efficient relief operations.
-
-## 🎯 Project Objectives
+## 🎯 Key Objectives
 
 - 🌊 Centralize disaster-related information.
-- 🧑‍🤝‍🧑 Maintain information about disaster-affected people.
-- 🤝 Support volunteer coordination and feedback management.
-- 📦 Improve the coordination of shelters and relief distribution.
-- 💰 Strengthen donation, budgeting, and financial record management.
-- 📊 Provide financial insights through reports and analytics.
-- 💙 Support transparent and well-organized disaster relief operations.
+- 🧑‍🤝‍🧑 Manage information about affected people and volunteers.
+- 🏠 Organize shelter information and resources.
+- 🚚 Coordinate relief distribution and requests.
+- 💝 Maintain cash and goods donation records.
+- 💙 Manage budgets, expenses, and fund allocations.
+- 📊 Support financial analytics and monthly reporting.
+- 💬 Collect feedback to improve relief services.
 
-## ✨ Main System Modules
+## ✨ System Modules
 
-| Module | Description |
+| 💠 Module | 📝 Description |
 |---|---|
-| 🌊 **Disaster Management** | Manage disaster-related information and records. |
-| 🧑‍🤝‍🧑 **Victim Management** | Maintain information about people affected by disasters. |
-| 🤝 **Volunteer Management** | Support volunteer information and coordination. |
-| 💬 **Feedback Management** | Collect and manage feedback related to relief activities and services. |
-| 🏠 **Shelter Management** | Manage shelter-related information and resources. |
-| 🚚 **Distribution Management** | Coordinate relief item distribution and related requests. |
-| 💙 **Donation & Finance Management** | Manage donation records, budgets, expenses, and fund allocations. |
-| 📈 **Financial Analytics & Reports** | Visualize financial information and generate monthly financial reports. |
+| 🌊 **Disaster Management** | Maintain disaster information and records. |
+| 🧑‍🤝‍🧑 **Victim Management** | Manage information about disaster-affected people. |
+| 🤝 **Volunteer Management** | Maintain volunteer records and support coordination. |
+| 🏠 **Shelter Management** | Manage shelter information and related resources. |
+| 🚚 **Distribution Management** | Coordinate relief distribution activities and requests. |
+| 💝 **Donation Management** | Record and manage cash and goods donations. |
+| 💙 **Finance Management** | Manage budgets, expenses, approvals, and fund allocations, with financial analytics, monthly reports, and PDF downloads. |
+| 💬 **Feedback Management** | Collect and manage feedback about relief activities. |
 
 ## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| ☕ Java 17 | Backend programming |
+| ☕ Java | Backend programming |
 | 🍃 Spring Boot | Application framework |
-| 🎨 Thymeleaf | Server-side page rendering |
-| 🗄️ MySQL | Relational database |
-| 🧱 Maven | Dependency and build management |
+| 🎨 Thymeleaf | Dynamic web pages |
+| 🐬 MySQL | Database management |
+| 🧱 Maven | Build and dependency management |
 | 📊 Chart.js | Financial data visualization |
-| 🌐 HTML5 & CSS3 | Page structure and styling |
-| ⚡ JavaScript | Interactive functionality |
-| 🖥️ Bootstrap | Responsive user interface components |
+| 🌐 HTML, CSS & JavaScript | User interface |
 
-## 🏗️ System Architecture
-
-The application follows a layered structure to separate user interface handling, business logic, and database operations.
+## 🔄 How It Works
 
 ```text
-                 👤 User
-                    |
-                    ▼
-          🌐 Thymeleaf Web Pages
-                    |
-                    ▼
-          🎮 Spring Boot Controllers
-                    |
-                    ▼
-              ⚙️ Service Layer
-                    |
-                    ▼
-             🗄️ Repository Layer
-                    |
-                    ▼
-                🐬 MySQL
+🌊 Disaster Information
+          ↓
+🧑‍🤝‍🧑 People & Volunteer Management
+          ↓
+🏠 Shelter & Resource Coordination
+          ↓
+🚚 Relief Distribution
+          ↓
+💝 Donation Management
+          ↓
+💙 Finance & Fund Allocation
+          ↓
+📊 Reports & Analytics
+          ↓
+💬 Feedback & Improvement
 ```
 
-## 💙 Donation & Finance Management
-
-The Donation & Finance Management module supports the financial side of disaster relief operations.
-
-Key functionality includes:
-
-- 💝 Recording and managing donations.
-- 🧾 Maintaining financial expense records.
-- 📋 Managing budget requests and their statuses.
-- ✅ Supporting budget approval and fund allocation workflows.
-- 📊 Displaying financial analytics using charts.
-- 📅 Generating monthly financial reports.
-- 📄 Downloading monthly reports as PDF files.
-
-*The exact availability of each feature depends on the implemented application version.*
+*This diagram provides a high-level overview; individual workflows depend on the functionality implemented in each module.*
 
 ## 🚀 Getting Started
 
-Follow these steps to run the project locally.
+### Prerequisites
 
-### 1. Prerequisites
+- Java Development Kit compatible with the project
+- MySQL Server
+- IntelliJ IDEA or another Java IDE
 
-Make sure you have installed:
-
-- ☕ JDK 17
-- 🧱 Maven, or use the Maven Wrapper included with the project
-- 🐬 MySQL Server
-- 💻 IntelliJ IDEA or another Java IDE
-- 🌐 A modern web browser
-
-### 2. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ImashaFernando/FRDMS.git
 cd FRDMS
 ```
 
-### 3. Create the Database
-
-Open MySQL and create the database:
+### 2. Create the Database
 
 ```sql
 CREATE DATABASE frdms_db;
 ```
 
-### 4. Configure Database Connection
+### 3. Configure MySQL
 
-Open `src/main/resources/application.properties` and configure the connection using your local MySQL username and password.
+Update the database username and password in `src/main/resources/application.properties`.
 
-Example:
+### 4. Run the Application
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/frdms_db
-spring.datasource.username=YOUR_MYSQL_USERNAME
-spring.datasource.password=YOUR_MYSQL_PASSWORD
-
-spring.jpa.hibernate.ddl-auto=update
-```
-
-**Note:** Keep your actual database password private. Check the existing project configuration before changing any settings.
-
-### 5. Run the Application
-
-On Windows PowerShell, from the project root:
+On Windows PowerShell:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
 ```
 
-Alternatively, open the project in IntelliJ IDEA and run the main Spring Boot application class.
+### 5. Open the Application
 
-### 6. Open the Application
+Once the application starts successfully, visit:
 
-After the application starts successfully, open the local URL configured for the project, usually:
+**http://localhost:8080**
 
-```text
-http://localhost:8080
-```
+## 🌟 Project Impact
 
-## 📁 Project Structure
+FRDMS aims to support:
 
-```text
-FRDMS/
-├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/frdms/frdms/
-│       │       ├── controllers/
-│       │       ├── services/
-│       │       ├── repositories/
-│       │       └── ...
-│       └── resources/
-│           ├── templates/
-│           ├── static/
-│           └── application.properties
-├── pom.xml
-├── mvnw
-├── mvnw.cmd
-└── README.md
-```
+- 📌 Better organization of disaster-related information.
+- 🤝 Improved coordination among relief activities.
+- 📦 More organized distribution and resource management.
+- 💰 Better financial visibility and accountability.
+- 📈 Data-informed decisions through reports and analytics.
+- 💬 Continuous improvement through feedback.
 
-*The package and folder names above are illustrative. Refer to the actual source tree for the complete structure.*
+## 👩‍💻 Project Information
 
-## 🌟 Why FRDMS Matters
+**Organization:** Healthy Lanka Alliance for Development
 
-Disaster relief requires timely coordination, reliable information, and responsible resource management. FRDMS aims to bring these activities together in one digital platform, helping the organization manage information more effectively and support communities during difficult times.
-
-## 👩‍💻 Development Team
-
-FRDMS is a collaborative academic software engineering project developed by a student team.
-
-**Project Organization:** Healthy Lanka Alliance for Development
-
-**Repository:** [FRDMS on GitHub](https://github.com/ImashaFernando/FRDMS)
-
-## 💫 Our Vision
-
-> To support a more connected, transparent, and efficient disaster relief process through technology — because every helping hand matters. 💙
+**Repository:** [🚀 ImashaFernando/FRDMS](https://github.com/ImashaFernando/FRDMS)
 
 ---
 
 <p align="center">
-  Made with 💙, teamwork, and a purpose to make a difference.
+  <strong>💙 Built with teamwork, technology, and a commitment to helping communities.</strong>
 </p>
