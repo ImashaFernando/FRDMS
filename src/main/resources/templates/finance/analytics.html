@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Analytics | FRDMS</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #c8e1f8;
+            color: #172554;
+        }
+
+        header {
+            background: #10264f;
+            color: white;
+            padding: 24px 5%;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 26px;
+        }
+
+        header p {
+            margin: 0;
+            color: #cbdaf5;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: auto;
+            padding: 28px 5%;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .top-bar h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            background: #173557;
+            color: white;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .charts {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(16, 38, 79, 0.08);
+            min-width: 0;
+        }
+
+        .chart-card h3 {
+            margin: 0 0 8px;
+            font-size: 18px;
+        }
+
+        .chart-card p {
+            margin: 0 0 20px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        .wide {
+            grid-column: 1 / -1;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            padding: 25px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 760px) {
+            .charts {
+                grid-template-columns: 1fr;
+            }
+
+            .wide {
+                grid-column: auto;
+            }
+
+            .chart-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Financial Analytics Dashboard</h1>
+    <p>Flood Relief and Disaster Management System</p>
+</header>
+
+<main>
+
+    <div class="top-bar">
+        <h2>Financial Overview</h2>
+
+        <a class="back-link"
+           th:href="@{/finance/dashboard}">
+            ← Back to Finance Dashboard
+        </a>
+    </div>
+
+    <section class="charts">
+
+        <!-- Chart 1: Monthly Cash Donation Trends -->
+        <div class="chart-card wide">
+            <h3>Monthly Donation Trends</h3>
+            <p>Cash donations received over the last 12 months.</p>
+
+            <div class="chart-container">
+                <canvas id="monthlyDonationsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 2: Donation Status Breakdown -->
+        <div class="chart-card">
+            <h3>Donation Status Breakdown</h3>
+            <p>Number of donations grouped by their recorded status.</p>
+
+            <div class="chart-container">
+                <canvas id="donationStatusChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Chart 3: Requested vs Allocated -->
+        <div class="chart-card">
+            <h3>Budget vs. Fund Allocation</h3>
+            <p>Requested amounts compared with allocated amounts.</p>
+
+            <div class="chart-container">
+                <canvas id="budgetAllocationChart"></canvas>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    FRDMS · Financial Analytics
+</footer>
+
+<!-- Pass Spring Boot data safely to JavaScript as JSON -->
+<script th:inline="javascript">
+    const monthlyData = /*[[${monthlyDonationTrends}]]*/ {
+        labels: [],
+        values: []
+    };
+
+    const statusData = /*[[${donationStatusBreakdown}]]*/ {};
+
+    const budgetData = /*[[${budgetAllocationComparison}]]*/ {
+        labels: [],
+        requestedAmounts: [],
+        allocatedAmounts: []
+    };
+
+    // Chart 1: Monthly Donation Trends
+    new Chart(document.getElementById('monthlyDonationsChart'), {
+        type: 'line',
+        data: {
+            labels: monthlyData.labels,
+            datasets: [{
+                label: 'Cash Donations (LKR)',
+                data: monthlyData.values,
+                borderColor: '#2563eb',
+                backgroundColor: 'rgba(37, 99, 235, 0.12)',
+                fill: true,
+                tension: 0.35,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Amount (LKR)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Donation Status Breakdown
+    const statusLabels = Object.keys(statusData);
+    const statusValues = Object.values(statusData);
+
+    new Chart(document.getElementById('donationStatusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: statusLabels,
+            datasets: [{
+                label: 'Donations',
+                data: statusValues,
+                backgroundColor: [
+                    '#2563eb',
+                    '#10b981',
+                    '#f59e0b',
+                    '#ef4444',
+                    '#8b5cf6',
+                    '#64748b'
+                ],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Chart 3: Requested vs Allocated Amounts
+    new Chart(document.getElementById('budgetAllocationChart'), {
+        type: 'bar',
+        data: {
+            labels: budgetData.labels,
+            datasets: [
+                {
+                    label: 'Requested Amount (LKR)',
+                    data: budgetData.requestedAmounts,
+                    backgroundColor: '#60a5fa'
+                },
+                {
+                    label: 'Allocated Amount (LKR)',
+                    data: budgetData.allocatedAmounts,
+                    backgroundColor: '#1e3a8a'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation: 45,
+                        minRotation: 0
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Amount (LKR)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
